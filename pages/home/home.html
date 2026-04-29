@@ -42,6 +42,9 @@
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        html, body {
+            overscroll-behavior: none;
+        }
         body {
             min-height: max(884px, 100dvh);
         }
@@ -238,7 +241,7 @@
     <img src="../assets/COPPA.png" alt="" aria-hidden="true"
          class="absolute pointer-events-none select-none"
          style="height:160%;width:auto;opacity:0.05;object-fit:contain;top:-15%;right:-8%;transform:rotate(12deg);">
-    <p class="font-headline font-black italic text-white uppercase leading-[1.1] tracking-tight relative z-10" style="font-size:1.15rem;">REGOLAMENTO<br>PUNTI</p>
+    <p class="font-headline font-black italic text-white uppercase leading-[1.1] tracking-tight relative z-10" style="font-size:0.95rem;">REGOLAMENTO<br>PUNTI</p>
     <span class="relative z-10 flex items-center gap-1 text-[#D1FF4B] font-headline font-black italic uppercase mt-2" style="font-size:0.72rem;letter-spacing:0.13em;">
       INFO &nbsp;›
     </span>

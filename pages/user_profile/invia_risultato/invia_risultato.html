@@ -2,7 +2,7 @@
 
 <html class="dark" lang="it"><head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1" name="viewport"/>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
@@ -84,9 +84,11 @@
         .text-shadow-glow {
             text-shadow: 0 0 20px rgba(209, 255, 75, 0.4);
         }
+        html, body { overscroll-behavior: none; }
         body {
             min-height: max(884px, 100dvh);
         }
+        input, select { font-size: 16px !important; }
     </style>
 </head>
 <body class="bg-surface-container-lowest text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container relative">
@@ -106,31 +108,31 @@
 <div class="space-y-6">
 <section class="relative bg-surface-container rounded-3xl p-6 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/5 overflow-hidden">
 <div class="absolute top-0 right-0 w-32 h-32 bg-[#D1FF4B]/5 blur-3xl -mr-10 -mt-10"></div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-12 relative z-10">
+<div class="grid grid-cols-1 gap-8 relative z-10">
 <div class="flex flex-col items-center">
 <span class="font-label uppercase tracking-[0.2em] text-on-surface-variant mb-6 text-xs italic">TU</span>
-<div class="flex items-center gap-6 w-full justify-between max-w-[280px]">
-<button class="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-2xl bg-[#D1FF4B] text-[#161f00] hover:opacity-90 active:scale-90 transition-all" type="button" onclick="changeScore('tu', -1)">
+<div class="flex items-center gap-6 w-full justify-between max-w-[340px]">
+<button class="w-16 h-16 flex items-center justify-center rounded-2xl bg-[#D1FF4B] text-[#161f00] hover:opacity-90 active:scale-90 transition-all" type="button" onclick="changeScore('tu', -1)">
 <span class="material-symbols-outlined text-2xl font-bold" data-icon="remove">remove</span>
 </button>
 <div class="flex-1 text-center">
 <div class="text-8xl md:text-9xl font-headline font-black italic text-[#D1FF4B] text-shadow-glow leading-none" id="score-tu">0</div>
 </div>
-<button class="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-2xl bg-[#D1FF4B] text-[#161f00] hover:opacity-90 active:scale-90 transition-all" type="button" onclick="changeScore('tu', 1)">
+<button class="w-16 h-16 flex items-center justify-center rounded-2xl bg-[#D1FF4B] text-[#161f00] hover:opacity-90 active:scale-90 transition-all" type="button" onclick="changeScore('tu', 1)">
 <span class="material-symbols-outlined text-2xl font-bold" data-icon="add">add</span>
 </button>
 </div>
 </div>
 <div class="flex flex-col items-center">
 <span class="font-label uppercase tracking-[0.2em] text-on-surface-variant mb-6 text-xs italic">AVVERSARIO</span>
-<div class="flex items-center gap-6 w-full justify-between max-w-[280px]">
-<button class="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-2xl bg-surface-container-high border border-outline-variant/20 hover:bg-surface-container-highest active:scale-90 transition-all" type="button" onclick="changeScore('avv', -1)">
+<div class="flex items-center gap-6 w-full justify-between max-w-[340px]">
+<button class="w-16 h-16 flex items-center justify-center rounded-2xl bg-surface-container-high border border-outline-variant/20 hover:bg-surface-container-highest active:scale-90 transition-all" type="button" onclick="changeScore('avv', -1)">
 <span class="material-symbols-outlined text-2xl" data-icon="remove">remove</span>
 </button>
 <div class="flex-1 text-center">
 <div class="text-8xl md:text-9xl font-headline font-black italic text-on-surface-variant leading-none" id="score-avv">0</div>
 </div>
-<button class="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-2xl bg-surface-container-high border border-outline-variant/20 hover:bg-surface-container-highest active:scale-90 transition-all" type="button" onclick="changeScore('avv', 1)">
+<button class="w-16 h-16 flex items-center justify-center rounded-2xl bg-surface-container-high border border-outline-variant/20 hover:bg-surface-container-highest active:scale-90 transition-all" type="button" onclick="changeScore('avv', 1)">
 <span class="material-symbols-outlined text-2xl font-bold" data-icon="add">add</span>
 </button>
 </div>
