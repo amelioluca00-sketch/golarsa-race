@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="it"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed-variant": "#004395",
+                      "primary-container": "#c6f33f",
+                      "surface-container-highest": "#353534",
+                      "background": "#131313",
+                      "error": "#ffb4ab",
+                      "surface-container": "#201f1f",
+                      "inverse-primary": "#4f6600",
+                      "on-secondary": "#002e6a",
+                      "primary-fixed": "#c6f33f",
+                      "on-surface": "#e5e2e1",
+                      "on-secondary-container": "#b3c9ff",
+                      "on-primary-fixed": "#161f00",
+                      "surface-dim": "#131313",
+                      "on-tertiary-fixed": "#410004",
+                      "outline": "#8e937b",
+                      "inverse-on-surface": "#313030",
+                      "tertiary-fixed": "#ffdad7",
+                      "tertiary-container": "#ffdad7",
+                      "inverse-surface": "#e5e2e1",
+                      "surface-container-lowest": "#0e0e0e",
+                      "secondary-fixed-dim": "#aec6ff",
+                      "surface-container-high": "#2a2a2a",
+                      "surface-tint": "#aad61e",
+                      "secondary-container": "#0351b0",
+                      "on-tertiary-fixed-variant": "#930012",
+                      "tertiary": "#ffffff",
+                      "on-tertiary": "#680009",
+                      "on-tertiary-container": "#c71623",
+                      "on-error-container": "#ffdad6",
+                      "secondary-fixed": "#d8e2ff",
+                      "secondary": "#aec6ff",
+                      "primary": "#ffffff",
+                      "tertiary-fixed-dim": "#ffb3ad",
+                      "on-background": "#e5e2e1",
+                      "on-surface-variant": "#c4c9af",
+                      "on-primary": "#283500",
+                      "outline-variant": "#444935",
+                      "surface-bright": "#3a3939",
+                      "surface": "#131313",
+                      "error-container": "#93000a",
+                      "on-primary-fixed-variant": "#3b4d00",
+                      "primary-fixed-dim": "#aad61e",
+                      "on-error": "#690005",
+                      "on-secondary-fixed": "#001a42",
+                      "on-primary-container": "#546d00",
+                      "surface-variant": "#353534",
+                      "surface-container-low": "#1c1b1b"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Epilogue"],
+                      "body": ["Inter"],
+                      "label": ["Inter"]
+              }
+            },
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .text-shadow-glow {
+            text-shadow: 0 0 20px rgba(209, 255, 75, 0.4);
+        }
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container relative">
+<!-- Close Button Only -->
+<div class="fixed top-6 right-6 z-50">
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-high hover:opacity-80 transition-opacity active:scale-95 duration-150 shadow-lg" type="button" onclick="history.back()">
+<span class="material-symbols-outlined text-on-surface" data-icon="close">close</span>
+</button>
+</div>
+<main class="pt-16 pb-12 px-4 max-w-4xl mx-auto min-h-screen">
+<section class="mb-8 px-2">
+<h2 class="text-4xl md:text-6xl font-headline font-black italic tracking-tighter uppercase mb-1">
+            INSERISCI <span class="text-[#D1FF4B]">RISULTATO</span>
+</h2>
+<p class="text-on-surface-variant font-label uppercase tracking-widest text-[10px]">Inserisci il punteggio finale</p>
+</section>
+<div class="space-y-6">
+<section class="relative bg-surface-container rounded-3xl p-6 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/5 overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-[#D1FF4B]/5 blur-3xl -mr-10 -mt-10"></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 relative z-10">
+<div class="flex flex-col items-center">
+<span class="font-label uppercase tracking-[0.2em] text-on-surface-variant mb-6 text-xs italic">TU</span>
+<div class="flex items-center gap-6 w-full justify-between max-w-[280px]">
+<button class="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-2xl bg-[#D1FF4B] text-[#161f00] hover:opacity-90 active:scale-90 transition-all" type="button" onclick="changeScore('tu', -1)">
+<span class="material-symbols-outlined text-2xl font-bold" data-icon="remove">remove</span>
+</button>
+<div class="flex-1 text-center">
+<div class="text-8xl md:text-9xl font-headline font-black italic text-[#D1FF4B] text-shadow-glow leading-none" id="score-tu">0</div>
+</div>
+<button class="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-2xl bg-[#D1FF4B] text-[#161f00] hover:opacity-90 active:scale-90 transition-all" type="button" onclick="changeScore('tu', 1)">
+<span class="material-symbols-outlined text-2xl font-bold" data-icon="add">add</span>
+</button>
+</div>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-label uppercase tracking-[0.2em] text-on-surface-variant mb-6 text-xs italic">AVVERSARIO</span>
+<div class="flex items-center gap-6 w-full justify-between max-w-[280px]">
+<button class="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-2xl bg-surface-container-high border border-outline-variant/20 hover:bg-surface-container-highest active:scale-90 transition-all" type="button" onclick="changeScore('avv', -1)">
+<span class="material-symbols-outlined text-2xl" data-icon="remove">remove</span>
+</button>
+<div class="flex-1 text-center">
+<div class="text-8xl md:text-9xl font-headline font-black italic text-on-surface-variant leading-none" id="score-avv">0</div>
+</div>
+<button class="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-2xl bg-surface-container-high border border-outline-variant/20 hover:bg-surface-container-highest active:scale-90 transition-all" type="button" onclick="changeScore('avv', 1)">
+<span class="material-symbols-outlined text-2xl font-bold" data-icon="add">add</span>
+</button>
+</div>
+</div>
+</div>
+<div class="absolute left-1/2 top-[55%] -translate-x-1/2 -translate-y-1/2 hidden md:block opacity-20">
+<span class="text-4xl font-headline font-black italic text-surface-container-highest tracking-tighter">VS</span>
+</div>
+</section>
+<form class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="text-[10px] font-label uppercase tracking-widest text-on-surface-variant ml-2">Data Incontro</label>
+<div class="relative group">
+<input class="w-full bg-surface-container-high border-none rounded-2xl py-4 px-5 text-on-surface focus:ring-2 focus:ring-[#D1FF4B] transition-all outline-none appearance-none font-body" type="date" id="data-incontro"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none" data-icon="calendar_today">calendar_today</span>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-[10px] font-label uppercase tracking-widest text-on-surface-variant ml-2">Scegli Avversario</label>
+<div class="relative group">
+<select id="select-avv" class="w-full bg-surface-container-high border-none rounded-2xl py-4 px-5 pr-12 text-on-surface focus:ring-2 focus:ring-[#D1FF4B] transition-all outline-none appearance-none font-body relative z-0" style="background-image: none;">
+<option disabled="" selected="" value="">Seleziona Player</option>
+</select>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none z-10" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<div class="pt-4">
+<button class="w-full bg-gradient-to-b from-[#E2FF85] to-[#D1FF4B] text-[#161f00] font-headline font-black italic uppercase text-lg py-5 rounded-2xl border-t border-white/40 shadow-lg hover:brightness-110 transition-all active:scale-[0.98] flex items-center justify-center gap-3 group relative overflow-hidden" type="button" onclick="inviaRisultato()">
+                    INVIA RISULTATO
+                </button>
+</div>
+</form>
+</div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../../../src/storage-manager.js?v=14"></script>
+<script>
+    var scores = { tu: 0, avv: 0 };
+
+    // Data odierna come valore di default
+    var today = new Date();
+    var yyyy  = today.getFullYear();
+    var mm    = String(today.getMonth() + 1).padStart(2, '0');
+    var dd    = String(today.getDate()).padStart(2, '0');
+    var todayStr = yyyy + '-' + mm + '-' + dd;
+    document.getElementById('data-incontro').value = todayStr;
+    document.getElementById('data-incontro').max   = todayStr;
+
+    function changeScore(player, delta) {
+        scores[player] = Math.max(0, scores[player] + delta);
+        document.getElementById('score-' + player).textContent = scores[player];
+    }
+
+    // Carica dati dal torneo e popola il dropdown avversari
+    document.addEventListener('DOMContentLoaded', async function () {
+        var SM = window.StorageManager;
+        var torneoId = localStorage.getItem('gr_torneo_id');
+        if (!SM || !torneoId) return;
+
+        var data;
+        try { data = await SM.load(torneoId); } catch(e) { return; }
+        if (!data || !data.players.length) return;
+
+        var userId = localStorage.getItem('gr_user_id');
+        var utente = userId ? data.players.find(function(p) { return p.id === userId; }) : null;
+
+        var sel = document.getElementById('select-avv');
+        if (!sel) return;
+        sel.innerHTML = '<option value="" disabled selected>Seleziona Player</option>';
+        data.players
+            .filter(function (p) { return !utente || p.id !== utente.id; })
+            .filter(function (p) { return p.stato === 'approvato'; })
+            .forEach(function (p) {
+                var opt = document.createElement('option');
+                opt.value = p.id;
+                var capitalizza = function(str) { return str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : ''; };
+                opt.textContent = capitalizza(p.nome) + ' ' + capitalizza(p.cognome);
+                sel.appendChild(opt);
+            });
+    });
+
+    async function inviaRisultato() {
+        var s1 = scores.tu, s2 = scores.avv;
+        var SM = window.StorageManager;
+        var torneoId = localStorage.getItem('gr_torneo_id');
+
+        // Punti di fallback (solo game points) nel caso di uscita anticipata
+        var puntiGuadagnati = s1 * 10;
+
+        if (!SM || !torneoId) {
+            window.location.href = 'risultato_inviato/risultato_inviato.html?tu=' + s1 + '&avv=' + s2 + '&punti=' + puntiGuadagnati;
+            return;
+        }
+
+        // Leggi dalla cache (già caricata da DOMContentLoaded)
+        var data = SM.getTournamentData(torneoId);
+        if (!data) {
+            window.location.href = 'risultato_inviato/risultato_inviato.html?tu=' + s1 + '&avv=' + s2 + '&punti=' + puntiGuadagnati;
+            return;
+        }
+
+        var userId = localStorage.getItem('gr_user_id');
+        var utente = userId ? data.players.find(function(p) { return p.id === userId; }) : null;
+        if (!utente && data.standings.length) utente = data.standings[0];
+        if (!utente) {
+            window.location.href = 'risultato_inviato/risultato_inviato.html?tu=' + s1 + '&avv=' + s2 + '&punti=' + puntiGuadagnati;
+            return;
+        }
+
+        var sel   = document.getElementById('select-avv');
+        var avvId = sel && sel.value;
+        if (!avvId) {
+            alert('Seleziona un avversario prima di inviare.');
+            return;
+        }
+
+        // ── Controllo: stesso avversario già sfidato questa settimana (Lun–Dom) ──
+        var dataIncontro = (document.getElementById('data-incontro') || {}).value
+                           || new Date().toISOString().split('T')[0];
+        if (userId) {
+          var dObj = new Date(dataIncontro + 'T12:00:00');
+          var dow  = dObj.getDay();
+          var toMon = (dow === 0) ? -6 : (1 - dow);
+          var mon = new Date(dObj); mon.setDate(dObj.getDate() + toMon);
+          var sun = new Date(mon);  sun.setDate(mon.getDate() + 6);
+          var monStr = mon.toISOString().split('T')[0];
+          var sunStr = sun.toISOString().split('T')[0];
+          var dupl = SM.getMatches(torneoId).find(function(m) {
+            if (m.stato === 'rifiutata') return false;
+            var md = m.data || m.date || '';
+            if (md < monStr || md > sunStr) return false;
+            return (m.giocatore1_id === userId && m.giocatore2_id === avvId) ||
+                   (m.giocatore1_id === avvId  && m.giocatore2_id === userId);
+          });
+          if (dupl) {
+            alert('⚠️ Hai già sfidato questo avversario questa settimana. Puoi sfidarlo di nuovo dalla prossima settimana (lunedì).');
+            var btn2 = document.querySelector('button[onclick="inviaRisultato()"]');
+            if (btn2) { btn2.disabled = false; btn2.textContent = 'INVIA RISULTATO'; }
+            return;
+          }
+        }
+
+        var avv = data.players.find(function(p) { return p.id === avvId; });
+
+        // Ricalcola punti con la logica completa (Fase 1 / Fase 2)
+        var isFase1 = false;
+        if (data.torneo && data.torneo.inizio && dataIncontro) {
+            var inizioD = new Date(data.torneo.inizio);
+            var matchD  = new Date(dataIncontro);
+            isFase1 = (matchD - inizioD) / (1000 * 60 * 60 * 24) < 7;
+        }
+        var preP1 = utente ? (utente.punti || 0) : 0;
+        var preP2 = avv    ? (avv.punti    || 0) : 0;
+        puntiGuadagnati = s1 * 10; // +10 punti per ogni game vinto (sempre)
+        if (s1 > s2 && !isFase1) {
+            // Bonus vittoria: scala in base alla differenza di punti pre-partita
+            var diffP = Math.abs(preP1 - preP2);
+            puntiGuadagnati += diffP <= 50 ? 10 : diffP <= 150 ? 20 : 30;
+            // Bonus dominanza: vittoria con almeno 4 game di scarto
+            if (s1 - s2 >= 4) puntiGuadagnati += 10;
+        }
+
+        // Disabilita bottone durante l'invio
+        var btn = document.querySelector('button[onclick="inviaRisultato()"]');
+        if (btn) { btn.disabled = true; btn.textContent = 'INVIO IN CORSO…'; }
+
+        var nuovoMatch = {
+            id:              'user_result_' + Date.now(),
+            data:            dataIncontro,
+            date:            dataIncontro,
+            giocatore1_id:   utente.id,
+            giocatore1_nome: utente.nomeCompleto || (utente.nome + ' ' + utente.cognome),
+            giocatore2_id:   avvId,
+            giocatore2_nome: avv ? (avv.nomeCompleto || avv.nome + ' ' + avv.cognome) : 'Avversario',
+            score1:          s1,
+            score2:          s2,
+            punteggio:       s1 + '-' + s2,
+            vincitore_id:    s1 > s2 ? utente.id : s2 > s1 ? avvId : null,
+            stato:           'in_attesa'
+        };
+
+        try {
+            await SM.addPendingMatch(torneoId, nuovoMatch);
+        } catch(e) {
+            console.error('Errore invio risultato:', e);
+        }
+
+        window.location.href = 'risultato_inviato/risultato_inviato.html?tu=' + s1 + '&avv=' + s2 + '&punti=' + puntiGuadagnati;
+    }
+</script>
+<div class="fixed inset-0 -z-20 overflow-hidden pointer-events-none">
+<div class="absolute -top-[10%] -right-[10%] w-[70%] h-[70%] bg-[#D1FF4B]/5 blur-[150px] rounded-full"></div>
+<div class="absolute bottom-0 left-0 w-full h-[50%] bg-gradient-to-t from-black/60 to-transparent"></div>
+</div>
+</body></html>

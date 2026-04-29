@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html class="dark" lang="it" style="background:#0a0a0a"><head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,900;1,900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary": "#ffffff",
+                        "surface-bright": "#3a3939",
+                        "primary-fixed": "#d1ff4b",
+                        "tertiary-container": "#ffdad7",
+                        "surface-container-highest": "#353534",
+                        "primary": "#ffffff",
+                        "on-surface": "#f5f3f2",
+                        "on-secondary-fixed": "#001a42",
+                        "on-error-container": "#ffdad6",
+                        "outline": "#8e937b",
+                        "inverse-surface": "#e5e2e1",
+                        "error": "#ffb4ab",
+                        "surface-container-low": "#1c1b1b",
+                        "surface-container-high": "#2a2a2a",
+                        "secondary-fixed-dim": "#aec6ff",
+                        "outline-variant": "#444935",
+                        "on-tertiary-fixed-variant": "#930012",
+                        "error-container": "#93000a",
+                        "surface": "#131313",
+                        "surface-variant": "#353534",
+                        "on-background": "#f5f3f2",
+                        "on-tertiary": "#680009",
+                        "surface-container-lowest": "#0e0e0e",
+                        "on-secondary-container": "#b3c9ff",
+                        "inverse-on-surface": "#313030",
+                        "on-secondary": "#002e6a",
+                        "inverse-primary": "#4f6600",
+                        "secondary-fixed": "#d8e2ff",
+                        "tertiary-fixed-dim": "#ffb3ad",
+                        "on-tertiary-container": "#c71623",
+                        "on-secondary-fixed-variant": "#004395",
+                        "on-primary-fixed": "#161f00",
+                        "primary-container": "#d1ff4b",
+                        "surface-container": "#201f1f",
+                        "primary-fixed-dim": "#aad61e",
+                        "surface-dim": "#131313",
+                        "on-primary": "#283500",
+                        "surface-tint": "#aad61e",
+                        "secondary": "#aec6ff",
+                        "on-tertiary-fixed": "#410004",
+                        "on-primary-fixed-variant": "#3b4d00",
+                        "tertiary-fixed": "#ffdad7",
+                        "on-error": "#690005",
+                        "on-primary-container": "#546d00",
+                        "background": "#131313",
+                        "on-surface-variant": "#c4c9af",
+                        "secondary-container": "#0351b0"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Epilogue"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .rim-light {
+            box-shadow: inset 0 1px 0 0 rgba(209, 255, 75, 0.25);
+        }
+        .ambient-glow {
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.9), 0 0 50px rgba(209, 255, 75, 0.08);
+        }
+        .court-gradient {
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.3) 0%, rgba(10, 10, 10, 0.85) 60%, rgba(10, 10, 10, 1) 100%);
+        }
+        .stroke-text {
+            -webkit-text-stroke: 1px #d1ff4b;
+        }
+        .input-glow:focus {
+            box-shadow: none !important;
+        }
+
+        /* Form field collapse animation */
+        .form-collapsible {
+            overflow: hidden;
+            transition: max-height 0.35s ease, opacity 0.35s ease, margin-top 0.35s ease;
+        }
+        .form-collapsible.collapsed {
+            max-height: 0 !important;
+            opacity: 0;
+            margin-top: 0 !important;
+        }
+
+        /* iOS zoom & highlight fix + no glow on focus */
+        input:focus, select:focus, textarea:focus {
+            outline: none !important;
+            box-shadow: none !important;
+            --tw-ring-shadow: 0 0 #0000 !important;
+            --tw-ring-color: transparent !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+            -webkit-tap-highlight-color: transparent;
+        }
+        input, select, textarea {
+            font-size: 16px;
+            -webkit-tap-highlight-color: transparent;
+            transition: none !important;
+        }
+
+        /* Pop-up Button Effect from SCREEN_183 */
+        .popup-button {
+            background: linear-gradient(180deg, #e3ff8c 0%, #D1FF4B 100%) !important;
+            box-shadow:
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.4) !important;
+            position: relative;
+            overflow: hidden;
+        }
+        .popup-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.6);
+            opacity: 0.8;
+        }
+    /* Legal prose inside modal */
+    .legal-prose h3 {
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #d1ff4b;
+        margin-top: 1.1rem;
+        margin-bottom: 0.3rem;
+    }
+    .legal-prose h3:first-child { margin-top: 0; }
+    .legal-prose p { color: rgba(255,255,255,0.65); line-height: 1.6; font-size: 0.8rem; }
+    </style>
+</head>
+<body class="bg-[#0a0a0a] text-on-surface font-body min-h-screen selection:bg-primary-container selection:text-on-primary-container relative">
+<!-- Cinematic Background Container -->
+<div class="fixed inset-0 -z-10 w-full h-full overflow-hidden">
+<!-- Background Image (Increased opacity for visibility) -->
+<div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1595435064219-510ccbdb4975?q=80&amp;w=2000&amp;auto=format&amp;fit=crop')] bg-cover bg-center opacity-50"></div>
+<!-- Gradient Overlay -->
+<div class="absolute inset-0 court-gradient"></div>
+<!-- Grid overlay -->
+<div class="absolute inset-0 opacity-[0.05]" style="background-image: linear-gradient(#000000 1px, transparent 1px), linear-gradient(90deg, #000000 1px, transparent 1px); background-size: 40px 40px;"></div>
+</div>
+<main class="pt-12 pb-12 px-4 flex flex-col items-center justify-center min-h-screen relative z-10">
+<!-- Welcome Header -->
+<div class="text-center mb-8">
+<div class="flex justify-center mb-6"><img alt="GA RACE Logo" class="w-auto object-contain h-7" src="../assets/GA-RACE.png" style=""/></div><h1 class="font-headline font-black italic text-5xl md:text-7xl uppercase tracking-tighter text-white mb-2 drop-shadow-[0_4px_12px_rgba(255,255,255,0.3)]" style="">
+                BENVENUTO
+            </h1>
+<p class="font-label uppercase text-[11px] tracking-[0.4em] text-white/90 font-semibold drop-shadow-sm" style="">
+                SCALA LA RACE UFFICIALE DI GOLARSA ACADEMY</p>
+</div>
+<!-- Registration Pop-up Card -->
+<div class="w-full max-w-md bg-gradient-to-b from-[#222222] to-[#141414] rounded-[32px] p-8 rim-light ambient-glow relative overflow-hidden border border-white/20 backdrop-blur-md" style="z-index: 10;">
+<!-- Close Button -->
+<!-- Auth Switcher Pill -->
+<div id="authSwitcherPill" class="relative flex p-1 bg-black/70 rounded-full w-full border border-white/10" style="margin-bottom: 2.5rem; transition: margin-bottom 0.35s ease;">
+    <!-- Sliding indicator -->
+    <div id="switchSlider" style="position:absolute; top:4px; bottom:4px; left:4px; width:calc(50% - 4px); background:linear-gradient(180deg,#e3ff8c 0%,#D1FF4B 100%); border-radius:9999px; transition:transform 0.35s cubic-bezier(0.4,0,0.2,1); box-shadow:inset 0 1px 0 0 rgba(255,255,255,0.4); will-change:transform;"></div>
+    <button id="btnIscriviti" onclick="switchAuth('iscriviti')" class="relative flex-1 z-10 py-3 px-4 rounded-full font-headline font-black italic text-[11px] tracking-widest uppercase transition-colors duration-300 text-[#0a0a0a]">ISCRIVITI</button>
+    <button id="btnAccedi" onclick="switchAuth('accedi')" class="relative flex-1 z-10 py-3 px-4 rounded-full font-headline font-black italic text-[11px] tracking-widest uppercase transition-colors duration-300 text-white/60 hover:text-white">ACCEDI</button>
+</div>
+<!-- Registration Form -->
+<form action="#" class="space-y-5">
+<!-- NOME + COGNOME (collassabile) -->
+<div id="fieldsNomeCognome" class="form-collapsible" style="max-height: 120px; opacity: 1;">
+<div class="grid grid-cols-2 gap-4">
+<!-- Nome -->
+<div class="space-y-1.5">
+<label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/80 font-bold ml-1" style="">NOME</label>
+<input id="inp-nome" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#d1ff4b]/60 focus:border-[#d1ff4b] outline-none transition-all placeholder:text-white/40 input-glow" placeholder="Es. Marco" type="text" required/>
+</div>
+<!-- Cognome -->
+<div class="space-y-1.5">
+<label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/80 font-bold ml-1" style="">COGNOME</label>
+<input id="inp-cognome" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#d1ff4b]/60 focus:border-[#d1ff4b] outline-none transition-all placeholder:text-white/40 input-glow" placeholder="Es. Rossi" type="text" required/>
+</div>
+</div>
+</div>
+<!-- Email (sempre visibile) -->
+<div class="space-y-1.5">
+<label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/80 font-bold ml-1" style="">EMAIL</label>
+<input id="inp-email" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#d1ff4b]/60 focus:border-[#d1ff4b] outline-none transition-all placeholder:text-white/40 input-glow" placeholder="nome@esempio.com" type="email" required/>
+</div>
+<!-- TELEFONO + NAZIONALITÀ + COACH (collassabili) -->
+<div id="fieldsExtra" class="form-collapsible space-y-5" style="max-height: 400px; opacity: 1;">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Telefono -->
+<div class="space-y-1.5">
+<label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/80 font-bold ml-1" style="">TELEFONO</label>
+<input id="inp-tel" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#d1ff4b]/60 focus:border-[#d1ff4b] outline-none transition-all placeholder:text-white/40 input-glow" value="+39" placeholder="+39 000 0000000" type="tel" required/>
+</div>
+<!-- Nazionalità -->
+<div class="space-y-1.5">
+<label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/80 font-bold ml-1" style="">NAZIONALITÀ</label>
+<div class="relative">
+<select id="inp-naz" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#d1ff4b]/60 focus:border-[#d1ff4b] outline-none appearance-none transition-all cursor-pointer" style="-webkit-appearance:none;-moz-appearance:none;appearance:none;">
+<option class="bg-[#1c1c1c]">🇮🇹 Italia</option>
+<option class="bg-[#1c1c1c]">🇦🇫 Afghanistan</option>
+<option class="bg-[#1c1c1c]">🇦🇱 Albania</option>
+<option class="bg-[#1c1c1c]">🇩🇿 Algeria</option>
+<option class="bg-[#1c1c1c]">🇦🇩 Andorra</option>
+<option class="bg-[#1c1c1c]">🇦🇴 Angola</option>
+<option class="bg-[#1c1c1c]">🇦🇬 Antigua e Barbuda</option>
+<option class="bg-[#1c1c1c]">🇦🇷 Argentina</option>
+<option class="bg-[#1c1c1c]">🇦🇲 Armenia</option>
+<option class="bg-[#1c1c1c]">🇦🇺 Australia</option>
+<option class="bg-[#1c1c1c]">🇦🇹 Austria</option>
+<option class="bg-[#1c1c1c]">🇦🇿 Azerbaigian</option>
+<option class="bg-[#1c1c1c]">🇧🇸 Bahamas</option>
+<option class="bg-[#1c1c1c]">🇧🇭 Bahrain</option>
+<option class="bg-[#1c1c1c]">🇧🇩 Bangladesh</option>
+<option class="bg-[#1c1c1c]">🇧🇧 Barbados</option>
+<option class="bg-[#1c1c1c]">🇧🇾 Bielorussia</option>
+<option class="bg-[#1c1c1c]">🇧🇪 Belgio</option>
+<option class="bg-[#1c1c1c]">🇧🇿 Belize</option>
+<option class="bg-[#1c1c1c]">🇧🇯 Benin</option>
+<option class="bg-[#1c1c1c]">🇧🇹 Bhutan</option>
+<option class="bg-[#1c1c1c]">🇧🇴 Bolivia</option>
+<option class="bg-[#1c1c1c]">🇧🇦 Bosnia ed Erzegovina</option>
+<option class="bg-[#1c1c1c]">🇧🇼 Botswana</option>
+<option class="bg-[#1c1c1c]">🇧🇷 Brasile</option>
+<option class="bg-[#1c1c1c]">🇧🇳 Brunei</option>
+<option class="bg-[#1c1c1c]">🇧🇬 Bulgaria</option>
+<option class="bg-[#1c1c1c]">🇧🇫 Burkina Faso</option>
+<option class="bg-[#1c1c1c]">🇧🇮 Burundi</option>
+<option class="bg-[#1c1c1c]">🇨🇻 Capo Verde</option>
+<option class="bg-[#1c1c1c]">🇰🇭 Cambogia</option>
+<option class="bg-[#1c1c1c]">🇨🇲 Camerun</option>
+<option class="bg-[#1c1c1c]">🇨🇦 Canada</option>
+<option class="bg-[#1c1c1c]">🇨🇫 Repubblica Centrafricana</option>
+<option class="bg-[#1c1c1c]">🇹🇩 Ciad</option>
+<option class="bg-[#1c1c1c]">🇨🇱 Cile</option>
+<option class="bg-[#1c1c1c]">🇨🇳 Cina</option>
+<option class="bg-[#1c1c1c]">🇨🇾 Cipro</option>
+<option class="bg-[#1c1c1c]">🇨🇴 Colombia</option>
+<option class="bg-[#1c1c1c]">🇰🇲 Comore</option>
+<option class="bg-[#1c1c1c]">🇨🇩 Congo (RDC)</option>
+<option class="bg-[#1c1c1c]">🇨🇬 Congo</option>
+<option class="bg-[#1c1c1c]">🇰🇵 Corea del Nord</option>
+<option class="bg-[#1c1c1c]">🇰🇷 Corea del Sud</option>
+<option class="bg-[#1c1c1c]">🇨🇷 Costa Rica</option>
+<option class="bg-[#1c1c1c]">🇨🇮 Costa d'Avorio</option>
+<option class="bg-[#1c1c1c]">🇭🇷 Croazia</option>
+<option class="bg-[#1c1c1c]">🇨🇺 Cuba</option>
+<option class="bg-[#1c1c1c]">🇨🇿 Repubblica Ceca</option>
+<option class="bg-[#1c1c1c]">🇩🇰 Danimarca</option>
+<option class="bg-[#1c1c1c]">🇩🇯 Gibuti</option>
+<option class="bg-[#1c1c1c]">🇩🇲 Dominica</option>
+<option class="bg-[#1c1c1c]">🇩🇴 Repubblica Dominicana</option>
+<option class="bg-[#1c1c1c]">🇪🇨 Ecuador</option>
+<option class="bg-[#1c1c1c]">🇪🇬 Egitto</option>
+<option class="bg-[#1c1c1c]">🇸🇻 El Salvador</option>
+<option class="bg-[#1c1c1c]">🇦🇪 Emirati Arabi Uniti</option>
+<option class="bg-[#1c1c1c]">🇬🇶 Guinea Equatoriale</option>
+<option class="bg-[#1c1c1c]">🇪🇷 Eritrea</option>
+<option class="bg-[#1c1c1c]">🇪🇪 Estonia</option>
+<option class="bg-[#1c1c1c]">🇸🇿 Eswatini</option>
+<option class="bg-[#1c1c1c]">🇪🇹 Etiopia</option>
+<option class="bg-[#1c1c1c]">🇫🇯 Figi</option>
+<option class="bg-[#1c1c1c]">🇵🇭 Filippine</option>
+<option class="bg-[#1c1c1c]">🇫🇮 Finlandia</option>
+<option class="bg-[#1c1c1c]">🇫🇷 Francia</option>
+<option class="bg-[#1c1c1c]">🇬🇦 Gabon</option>
+<option class="bg-[#1c1c1c]">🇬🇲 Gambia</option>
+<option class="bg-[#1c1c1c]">🇬🇪 Georgia</option>
+<option class="bg-[#1c1c1c]">🇩🇪 Germania</option>
+<option class="bg-[#1c1c1c]">🇬🇭 Ghana</option>
+<option class="bg-[#1c1c1c]">🇯🇲 Giamaica</option>
+<option class="bg-[#1c1c1c]">🇯🇵 Giappone</option>
+<option class="bg-[#1c1c1c]">🇯🇴 Giordania</option>
+<option class="bg-[#1c1c1c]">🇬🇷 Grecia</option>
+<option class="bg-[#1c1c1c]">🇬🇩 Grenada</option>
+<option class="bg-[#1c1c1c]">🇬🇹 Guatemala</option>
+<option class="bg-[#1c1c1c]">🇬🇳 Guinea</option>
+<option class="bg-[#1c1c1c]">🇬🇼 Guinea-Bissau</option>
+<option class="bg-[#1c1c1c]">🇬🇾 Guyana</option>
+<option class="bg-[#1c1c1c]">🇭🇹 Haiti</option>
+<option class="bg-[#1c1c1c]">🇭🇳 Honduras</option>
+<option class="bg-[#1c1c1c]">🇮🇳 India</option>
+<option class="bg-[#1c1c1c]">🇮🇩 Indonesia</option>
+<option class="bg-[#1c1c1c]">🇮🇷 Iran</option>
+<option class="bg-[#1c1c1c]">🇮🇶 Iraq</option>
+<option class="bg-[#1c1c1c]">🇮🇪 Irlanda</option>
+<option class="bg-[#1c1c1c]">🇮🇸 Islanda</option>
+<option class="bg-[#1c1c1c]">🇲🇭 Isole Marshall</option>
+<option class="bg-[#1c1c1c]">🇸🇧 Isole Salomone</option>
+<option class="bg-[#1c1c1c]">🇮🇱 Israele</option>
+<option class="bg-[#1c1c1c]">🇰🇿 Kazakhstan</option>
+<option class="bg-[#1c1c1c]">🇰🇪 Kenya</option>
+<option class="bg-[#1c1c1c]">🇰🇬 Kirghizistan</option>
+<option class="bg-[#1c1c1c]">🇰🇮 Kiribati</option>
+<option class="bg-[#1c1c1c]">🇰🇼 Kuwait</option>
+<option class="bg-[#1c1c1c]">🇱🇦 Laos</option>
+<option class="bg-[#1c1c1c]">🇱🇸 Lesotho</option>
+<option class="bg-[#1c1c1c]">🇱🇻 Lettonia</option>
+<option class="bg-[#1c1c1c]">🇱🇧 Libano</option>
+<option class="bg-[#1c1c1c]">🇱🇷 Liberia</option>
+<option class="bg-[#1c1c1c]">🇱🇾 Libia</option>
+<option class="bg-[#1c1c1c]">🇱🇮 Liechtenstein</option>
+<option class="bg-[#1c1c1c]">🇱🇹 Lituania</option>
+<option class="bg-[#1c1c1c]">🇱🇺 Lussemburgo</option>
+<option class="bg-[#1c1c1c]">🇲🇰 Macedonia del Nord</option>
+<option class="bg-[#1c1c1c]">🇲🇬 Madagascar</option>
+<option class="bg-[#1c1c1c]">🇲🇼 Malawi</option>
+<option class="bg-[#1c1c1c]">🇲🇾 Malaysia</option>
+<option class="bg-[#1c1c1c]">🇲🇻 Maldive</option>
+<option class="bg-[#1c1c1c]">🇲🇱 Mali</option>
+<option class="bg-[#1c1c1c]">🇲🇹 Malta</option>
+<option class="bg-[#1c1c1c]">🇲🇦 Marocco</option>
+<option class="bg-[#1c1c1c]">🇲🇷 Mauritania</option>
+<option class="bg-[#1c1c1c]">🇲🇺 Mauritius</option>
+<option class="bg-[#1c1c1c]">🇲🇽 Messico</option>
+<option class="bg-[#1c1c1c]">🇫🇲 Micronesia</option>
+<option class="bg-[#1c1c1c]">🇲🇩 Moldavia</option>
+<option class="bg-[#1c1c1c]">🇲🇨 Monaco</option>
+<option class="bg-[#1c1c1c]">🇲🇳 Mongolia</option>
+<option class="bg-[#1c1c1c]">🇲🇪 Montenegro</option>
+<option class="bg-[#1c1c1c]">🇲🇿 Mozambico</option>
+<option class="bg-[#1c1c1c]">🇲🇲 Myanmar</option>
+<option class="bg-[#1c1c1c]">🇳🇦 Namibia</option>
+<option class="bg-[#1c1c1c]">🇳🇷 Nauru</option>
+<option class="bg-[#1c1c1c]">🇳🇵 Nepal</option>
+<option class="bg-[#1c1c1c]">🇳🇮 Nicaragua</option>
+<option class="bg-[#1c1c1c]">🇳🇪 Niger</option>
+<option class="bg-[#1c1c1c]">🇳🇬 Nigeria</option>
+<option class="bg-[#1c1c1c]">🇳🇴 Norvegia</option>
+<option class="bg-[#1c1c1c]">🇳🇿 Nuova Zelanda</option>
+<option class="bg-[#1c1c1c]">🇴🇲 Oman</option>
+<option class="bg-[#1c1c1c]">🇳🇱 Paesi Bassi</option>
+<option class="bg-[#1c1c1c]">🇵🇰 Pakistan</option>
+<option class="bg-[#1c1c1c]">🇵🇼 Palau</option>
+<option class="bg-[#1c1c1c]">🇵🇸 Palestina</option>
+<option class="bg-[#1c1c1c]">🇵🇦 Panama</option>
+<option class="bg-[#1c1c1c]">🇵🇬 Papua Nuova Guinea</option>
+<option class="bg-[#1c1c1c]">🇵🇾 Paraguay</option>
+<option class="bg-[#1c1c1c]">🇵🇪 Perù</option>
+<option class="bg-[#1c1c1c]">🇵🇱 Polonia</option>
+<option class="bg-[#1c1c1c]">🇵🇹 Portogallo</option>
+<option class="bg-[#1c1c1c]">🇶🇦 Qatar</option>
+<option class="bg-[#1c1c1c]">🇬🇧 Regno Unito</option>
+<option class="bg-[#1c1c1c]">🇷🇴 Romania</option>
+<option class="bg-[#1c1c1c]">🇷🇼 Ruanda</option>
+<option class="bg-[#1c1c1c]">🇷🇺 Russia</option>
+<option class="bg-[#1c1c1c]">🇰🇳 Saint Kitts e Nevis</option>
+<option class="bg-[#1c1c1c]">🇱🇨 Santa Lucia</option>
+<option class="bg-[#1c1c1c]">🇻🇨 Saint Vincent e Grenadine</option>
+<option class="bg-[#1c1c1c]">🇼🇸 Samoa</option>
+<option class="bg-[#1c1c1c]">🇸🇲 San Marino</option>
+<option class="bg-[#1c1c1c]">🇸🇹 São Tomé e Príncipe</option>
+<option class="bg-[#1c1c1c]">🇸🇦 Arabia Saudita</option>
+<option class="bg-[#1c1c1c]">🇸🇳 Senegal</option>
+<option class="bg-[#1c1c1c]">🇷🇸 Serbia</option>
+<option class="bg-[#1c1c1c]">🇸🇨 Seychelles</option>
+<option class="bg-[#1c1c1c]">🇸🇱 Sierra Leone</option>
+<option class="bg-[#1c1c1c]">🇸🇬 Singapore</option>
+<option class="bg-[#1c1c1c]">🇸🇾 Siria</option>
+<option class="bg-[#1c1c1c]">🇸🇰 Slovacchia</option>
+<option class="bg-[#1c1c1c]">🇸🇮 Slovenia</option>
+<option class="bg-[#1c1c1c]">🇸🇴 Somalia</option>
+<option class="bg-[#1c1c1c]">🇪🇸 Spagna</option>
+<option class="bg-[#1c1c1c]">🇱🇰 Sri Lanka</option>
+<option class="bg-[#1c1c1c]">🇺🇸 Stati Uniti</option>
+<option class="bg-[#1c1c1c]">🇸🇩 Sudan</option>
+<option class="bg-[#1c1c1c]">🇸🇸 Sudan del Sud</option>
+<option class="bg-[#1c1c1c]">🇸🇷 Suriname</option>
+<option class="bg-[#1c1c1c]">🇸🇪 Svezia</option>
+<option class="bg-[#1c1c1c]">🇨🇭 Svizzera</option>
+<option class="bg-[#1c1c1c]">🇹🇯 Tagikistan</option>
+<option class="bg-[#1c1c1c]">🇹🇼 Taiwan</option>
+<option class="bg-[#1c1c1c]">🇹🇿 Tanzania</option>
+<option class="bg-[#1c1c1c]">🇹🇭 Thailandia</option>
+<option class="bg-[#1c1c1c]">🇹🇱 Timor-Leste</option>
+<option class="bg-[#1c1c1c]">🇹🇬 Togo</option>
+<option class="bg-[#1c1c1c]">🇹🇴 Tonga</option>
+<option class="bg-[#1c1c1c]">🇹🇹 Trinidad e Tobago</option>
+<option class="bg-[#1c1c1c]">🇹🇳 Tunisia</option>
+<option class="bg-[#1c1c1c]">🇹🇷 Turchia</option>
+<option class="bg-[#1c1c1c]">🇹🇲 Turkmenistan</option>
+<option class="bg-[#1c1c1c]">🇹🇻 Tuvalu</option>
+<option class="bg-[#1c1c1c]">🇺🇦 Ucraina</option>
+<option class="bg-[#1c1c1c]">🇺🇬 Uganda</option>
+<option class="bg-[#1c1c1c]">🇭🇺 Ungheria</option>
+<option class="bg-[#1c1c1c]">🇺🇾 Uruguay</option>
+<option class="bg-[#1c1c1c]">🇺🇿 Uzbekistan</option>
+<option class="bg-[#1c1c1c]">🇻🇺 Vanuatu</option>
+<option class="bg-[#1c1c1c]">🇻🇦 Città del Vaticano</option>
+<option class="bg-[#1c1c1c]">🇻🇪 Venezuela</option>
+<option class="bg-[#1c1c1c]">🇻🇳 Vietnam</option>
+<option class="bg-[#1c1c1c]">🇾🇪 Yemen</option>
+<option class="bg-[#1c1c1c]">🇿🇲 Zambia</option>
+<option class="bg-[#1c1c1c]">🇿🇼 Zimbabwe</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-white/60 pointer-events-none text-lg" style="">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Coach di riferimento -->
+<div class="space-y-1.5">
+<label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/80 font-bold ml-1" style="">COACH DI RIFERIMENTO</label>
+<input id="inp-coach" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#d1ff4b]/60 focus:border-[#d1ff4b] outline-none transition-all placeholder:text-white/40 input-glow" placeholder="Nome del Tecnico" type="text" required/>
+</div>
+</div>
+<!-- Selettore Torneo (solo iscriviti) -->
+<div id="fieldsTorneo" class="form-collapsible space-y-5" style="max-height: 200px; opacity: 1;">
+  <div class="space-y-1.5">
+    <label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/80 font-bold ml-1">TORNEO</label>
+    <div class="relative">
+      <select id="inp-torneo" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white outline-none appearance-none cursor-pointer" style="-webkit-appearance:none;-moz-appearance:none;appearance:none;">
+        <option value="" disabled selected>Caricamento tornei…</option>
+      </select>
+      <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-white/60 pointer-events-none text-lg">expand_more</span>
+    </div>
+    <!-- Messaggio nessun torneo attivo -->
+    <p id="noTorneiMsg" class="hidden text-[10px] text-[#ffb4ab]/80 ml-1 mt-1 font-medium">Nessun torneo disponibile. Contatta l'organizzatore.</p>
+  </div>
+</div>
+<!-- Submit Button -->
+<div class="pt-4">
+<button id="submitBtn" class="w-full text-[#0a0a0a] font-headline font-black italic text-xl py-5 rounded-2xl uppercase tracking-tighter active:scale-[0.97] hover:brightness-105 transition-all duration-200 popup-button" style="" type="submit">
+                        ISCRIVITI ORA
+                    </button>
+<p class="text-center mt-6 text-[9px] text-white/50 uppercase tracking-[0.2em] leading-relaxed px-6 font-medium" style="">
+                        Iscrivendoti accetti i <button type="button" onclick="openLegalModal('termini')" class="text-white/80 underline decoration-[#d1ff4b]/50 underline-offset-2 cursor-pointer hover:text-[#d1ff4b] transition-colors">termini del servizio</button> e la <button type="button" onclick="openLegalModal('privacy')" class="text-white/80 underline decoration-[#d1ff4b]/50 underline-offset-2 cursor-pointer hover:text-[#d1ff4b] transition-colors">privacy policy</button> di GOLARSA RACE.
+                    </p>
+</div>
+</form>
+</div>
+<!-- Admin Button (barely visible) -->
+<div class="mt-4 text-center">
+    <button
+        id="adminBtn"
+        onclick="document.getElementById('adminModal').classList.remove('hidden')"
+        class="text-[9px] text-white/15 hover:text-white/30 transition-colors duration-300 font-label uppercase tracking-widest cursor-default select-none"
+        style="letter-spacing: 0.3em;"
+    >admin</button>
+</div>
+<!-- Footnote / Decorative Element -->
+</main>
+
+<!-- Legal Modal (Termini / Privacy) -->
+<div id="legalModal" class="hidden fixed inset-0 z-[100] flex items-end justify-center sm:items-center">
+    <div class="absolute inset-0 bg-black/70 backdrop-blur-sm" onclick="closeLegalModal()"></div>
+    <div class="relative z-10 bg-gradient-to-b from-[#222222] to-[#141414] border border-white/10 rounded-t-3xl sm:rounded-2xl w-full max-w-md shadow-2xl flex flex-col" style="max-height:85vh">
+        <!-- Header -->
+        <div class="flex items-center justify-between px-6 pt-5 pb-4 border-b border-white/10 flex-shrink-0">
+            <h3 id="legalModalTitle" class="font-headline font-black italic text-white uppercase tracking-tighter text-lg"></h3>
+            <button onclick="closeLegalModal()" class="text-white/40 hover:text-white transition-colors ml-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <!-- Content -->
+        <div id="legalModalBody" class="overflow-y-auto px-6 py-5 text-white/70 text-sm leading-relaxed space-y-3 legal-prose"></div>
+    </div>
+</div>
+
+<!-- Admin Password Modal -->
+<div id="adminModal" class="hidden fixed inset-0 z-[100] flex items-center justify-center">
+    <!-- Backdrop -->
+    <div
+        class="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onclick="closeAdminModal()"
+    ></div>
+    <!-- Box -->
+    <div class="relative z-10 bg-gradient-to-b from-[#222222] to-[#141414] border border-white/10 rounded-2xl p-7 w-full max-w-xs shadow-2xl rim-light">
+        <h3 class="font-headline font-black italic text-white uppercase tracking-tighter text-xl mb-5">Accesso Admin</h3>
+        <div class="space-y-4">
+            <div class="space-y-1.5">
+                <label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/60 font-bold ml-1">Password</label>
+                <input
+                    id="adminPasswordInput"
+                    type="password"
+                    placeholder="••••••••"
+                    class="w-full bg-white/5 border border-white/20 rounded-xl py-3 px-4 text-sm text-white focus:ring-2 focus:ring-[#d1ff4b]/60 focus:border-[#d1ff4b] outline-none transition-all placeholder:text-white/30 input-glow"
+                    onkeydown="if(event.key==='Enter') submitAdminPassword()"
+                />
+                <p id="adminError" class="hidden text-[10px] text-red-400/80 ml-1 mt-1">Password errata.</p>
+            </div>
+            <div class="flex gap-3 pt-1">
+                <button
+                    onclick="submitAdminPassword()"
+                    class="flex-1 py-2.5 rounded-xl text-[#0a0a0a] font-headline font-black italic text-sm uppercase tracking-tight popup-button"
+                >Entra</button>
+                <button
+                    onclick="closeAdminModal()"
+                    class="flex-1 py-2.5 rounded-xl text-white/50 font-headline font-black italic text-sm uppercase tracking-tight bg-white/5 border border-white/10 hover:text-white/80 transition-colors"
+                >Annulla</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function switchAuth(tab) {
+        const slider            = document.getElementById('switchSlider');
+        const btnI              = document.getElementById('btnIscriviti');
+        const btnA              = document.getElementById('btnAccedi');
+        const fieldsNomeCognome = document.getElementById('fieldsNomeCognome');
+        const fieldsExtra       = document.getElementById('fieldsExtra');
+        const fieldsTorneo      = document.getElementById('fieldsTorneo');
+        const submitBtn         = document.getElementById('submitBtn');
+        const pill              = document.getElementById('authSwitcherPill');
+
+        // Campi obbligatori solo nella modalità iscriviti
+        var iscrivitiOnlyFields = ['inp-nome', 'inp-cognome', 'inp-tel', 'inp-coach'];
+
+        if (tab === 'accedi') {
+            slider.style.transform = 'translateX(100%)';
+            btnI.style.color = 'rgba(255,255,255,0.5)';
+            btnA.style.color = '#0a0a0a';
+            fieldsNomeCognome.classList.add('collapsed');
+            fieldsExtra.classList.add('collapsed');
+            fieldsTorneo.classList.add('collapsed');
+            pill.style.marginBottom = '1rem';
+            submitBtn.textContent = 'ACCEDI';
+            // Rimuovi required dai campi nascosti
+            iscrivitiOnlyFields.forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) el.removeAttribute('required');
+            });
+            // Sempre abilitato in modalità login
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '';
+        } else {
+            slider.style.transform = 'translateX(0)';
+            btnA.style.color = 'rgba(255,255,255,0.5)';
+            btnI.style.color = '#0a0a0a';
+            fieldsNomeCognome.classList.remove('collapsed');
+            fieldsExtra.classList.remove('collapsed');
+            fieldsTorneo.classList.remove('collapsed');
+            pill.style.marginBottom = '2.5rem';
+            submitBtn.textContent = 'ISCRIVITI ORA';
+            // Ripristina required sui campi visibili
+            iscrivitiOnlyFields.forEach(function(id) {
+                var el = document.getElementById(id);
+                if (el) el.setAttribute('required', '');
+            });
+            // Ricalcola stato pulsante in base ai tornei disponibili
+            var selT = document.getElementById('inp-torneo');
+            var hasOptions = selT && selT.options.length > 1;
+            submitBtn.disabled = !hasOptions;
+            submitBtn.style.opacity = hasOptions ? '' : '0.5';
+        }
+    }
+
+    /* ── Legal Modal ── */
+    const legalDefaults = {
+        termini: `<h3>1. Accettazione</h3><p>Utilizzando la piattaforma GOLARSA RACE accetti in pieno i presenti termini e condizioni. Se non li accetti, ti preghiamo di non utilizzare il servizio.</p><h3>2. Utilizzo della piattaforma</h3><p>La piattaforma è riservata agli utenti registrati e agli amministratori dei tornei. Ogni utente è responsabile delle informazioni inserite e dei risultati dichiarati.</p><h3>3. Iscrizioni e quote</h3><p>Le quote di iscrizione ai tornei sono stabilite dall'organizzatore e devono essere versate entro il termine indicato. L'iscrizione si considera confermata solo dopo il pagamento.</p><h3>4. Modifiche ai tornei</h3><p>L'organizzatore si riserva il diritto di modificare date, quote e regolamenti dandone comunicazione agli iscritti con congruo anticipo.</p><h3>5. Responsabilità</h3><p>GOLARSA RACE declina ogni responsabilità per danni diretti o indiretti derivanti dall'utilizzo della piattaforma o dalla partecipazione ai tornei.</p><h3>6. Legge applicabile</h3><p>I presenti termini sono regolati dalla legge italiana. Per qualsiasi controversia è competente il foro di residenza dell'organizzatore.</p>`,
+        privacy: `<h3>Titolare del trattamento</h3><p>Il titolare del trattamento dei dati personali è l'organizzatore del torneo registrato sulla piattaforma GOLARSA RACE.</p><h3>Dati raccolti</h3><p>Raccogliamo esclusivamente i dati necessari alla partecipazione ai tornei: nome, cognome, indirizzo e-mail e, se previsto, i dati di pagamento della quota di iscrizione.</p><h3>Finalità del trattamento</h3><p>I tuoi dati vengono utilizzati per: gestire l'iscrizione al torneo, comunicare aggiornamenti sul torneo, elaborare i pagamenti delle quote di partecipazione.</p><h3>Conservazione dei dati</h3><p>I dati personali vengono conservati per il tempo strettamente necessario alle finalità indicate e comunque non oltre 12 mesi dalla chiusura del torneo.</p><h3>Diritti dell'interessato</h3><p>Hai il diritto di accedere ai tuoi dati, rettificarli, cancellarli o limitarne il trattamento. Per esercitare questi diritti contatta l'organizzatore attraverso la piattaforma.</p><h3>Cookie</h3><p>La piattaforma utilizza solo cookie tecnici essenziali al funzionamento. Non vengono utilizzati cookie di profilazione o di terze parti a fini pubblicitari.</p>`
+    };
+    const legalTitles = { termini: 'Termini e Condizioni', privacy: 'Privacy Policy' };
+
+    function openLegalModal(section) {
+        const saved = localStorage.getItem('gr_content_' + section);
+        document.getElementById('legalModalTitle').textContent = legalTitles[section];
+        document.getElementById('legalModalBody').innerHTML = saved || legalDefaults[section];
+        document.getElementById('legalModal').classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeLegalModal() {
+        document.getElementById('legalModal').classList.add('hidden');
+        document.body.style.overflow = '';
+    }
+
+    function closeAdminModal() {
+        document.getElementById('adminModal').classList.add('hidden');
+        document.getElementById('adminPasswordInput').value = '';
+        document.getElementById('adminError').classList.add('hidden');
+    }
+    function submitAdminPassword() {
+        const pw = document.getElementById('adminPasswordInput').value;
+        const err = document.getElementById('adminError');
+        if (pw === 'golarsa2025') {
+            closeAdminModal();
+            localStorage.setItem('gr_role', 'admin');
+            sessionStorage.setItem('gr_admin_auth', '1');
+            window.location.href = '../dashboard/accesso_dashboard.html';
+        } else {
+            err.classList.remove('hidden');
+            document.getElementById('adminPasswordInput').value = '';
+            document.getElementById('adminPasswordInput').focus();
+        }
+    }
+
+    // ── Messaggio errore/successo login ──
+    function showLoginError(msg) {
+        let el = document.getElementById('loginError');
+        if (!el) {
+            el = document.createElement('p');
+            el.id = 'loginError';
+            el.style.cssText = 'margin-top:12px;font-size:11px;font-weight:700;text-align:center;letter-spacing:.05em;color:rgba(255,180,171,0.9);padding:10px 14px;background:rgba(255,80,80,0.08);border:1px solid rgba(255,80,80,0.2);border-radius:12px;';
+            document.getElementById('submitBtn').insertAdjacentElement('afterend', el);
+        }
+        el.textContent = msg;
+        el.style.display = 'block';
+    }
+    function clearLoginError() {
+        const el = document.getElementById('loginError');
+        if (el) el.style.display = 'none';
+    }
+
+    // ── Carica tornei nel dropdown ──
+    async function caricaTornei() {
+        const SM = window.StorageManager;
+        if (!SM) return;
+        const sel = document.getElementById('inp-torneo');
+        const noMsg = document.getElementById('noTorneiMsg');
+        const submitBtn = document.getElementById('submitBtn');
+        try {
+            const tornei = await SM.loadTournaments();
+            sel.innerHTML = '';
+            if (!tornei || tornei.length === 0) {
+                sel.innerHTML = '<option value="" disabled selected>Nessun torneo disponibile</option>';
+                noMsg.classList.remove('hidden');
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.5';
+            } else {
+                const placeholder = document.createElement('option');
+                placeholder.value = '';
+                placeholder.disabled = true;
+                placeholder.selected = true;
+                placeholder.textContent = 'Seleziona torneo';
+                sel.appendChild(placeholder);
+                tornei.forEach(function(t) {
+                    const opt = document.createElement('option');
+                    opt.value = t.id;
+                    opt.textContent = t.nome;
+                    sel.appendChild(opt);
+                });
+                noMsg.classList.add('hidden');
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = '';
+            }
+        } catch(err) {
+            console.error('[signup] caricaTornei:', err);
+        }
+    }
+
+    // ── Form submit: accedi → home, iscriviti → richiesta_inviata ──
+    document.querySelector('form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const isAccedi = document.getElementById('submitBtn').textContent.trim() === 'ACCEDI';
+        const submitBtn = document.getElementById('submitBtn');
+        const SM = window.StorageManager;
+        if (!SM) { showLoginError('Errore di sistema. Ricarica la pagina.'); return; }
+
+        // Disabilita pulsante durante la richiesta
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.6';
+        clearLoginError();
+
+        try {
+            if (isAccedi) {
+                const email = document.getElementById('inp-email').value.trim().toLowerCase();
+                if (!email) { submitBtn.disabled = false; submitBtn.style.opacity = ''; return; }
+
+                const risultato = await SM.findPlayerByEmail(email);
+                if (risultato) {
+                    SM.setSession(risultato.torneo.id, risultato.player.id, email, 'player');
+                    window.location.href = '../home/home.html';
+                } else {
+                    showLoginError('Nessun account trovato per questa email. Contatta l\'organizzatore.');
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '';
+                }
+            } else {
+                // Iscriviti
+                const torneoId = document.getElementById('inp-torneo').value;
+                if (!torneoId) {
+                    showLoginError('Seleziona un torneo prima di iscriverti.');
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '';
+                    return;
+                }
+                const nome    = document.getElementById('inp-nome').value.trim();
+                const cognome = document.getElementById('inp-cognome').value.trim();
+                const email   = document.getElementById('inp-email').value.trim().toLowerCase();
+                const telefono = document.getElementById('inp-tel').value.trim();
+                const coach   = document.getElementById('inp-coach').value.trim();
+                const telValido = telefono && telefono !== '+39' && telefono.length > 4;
+                if (!nome || !cognome || !email || !telValido || !coach) {
+                    showLoginError('Tutti i campi sono obbligatori.');
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '';
+                    return;
+                }
+                const nazSel  = document.getElementById('inp-naz');
+                const nazTesto = nazSel ? nazSel.options[nazSel.selectedIndex].text : 'Italia';
+                // Estrai bandiera ed etichetta
+                const bandiera = nazTesto.split(' ')[0] || '';
+                const nazionalita = nazTesto.split(' ').slice(1).join(' ') || nazTesto;
+
+                const playerData = {
+                    nome:         nome,
+                    cognome:      cognome,
+                    nomeCompleto: nome + ' ' + cognome,
+                    email:        email,
+                    telefono:     document.getElementById('inp-tel').value.trim(),
+                    nazionalita:  nazionalita,
+                    bandiera:     bandiera,
+                    coach:        document.getElementById('inp-coach').value.trim(),
+                };
+
+                const player = await SM.registerPlayer(torneoId, playerData);
+                if (player) {
+                    window.location.href = 'richiesta_inviata/richiesta_inviata_.html';
+                } else {
+                    showLoginError('Errore durante l\'iscrizione. Riprova.');
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '';
+                }
+            }
+        } catch(err) {
+            console.error('[signup] submit:', err);
+            showLoginError('Errore di connessione. Riprova.');
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '';
+        }
+    });
+
+    // ── Avvia caricamento tornei al caricamento pagina ──
+    document.addEventListener('DOMContentLoaded', function() {
+        // Attendi che StorageManager sia pronto (caricato dopo questo script)
+        var pollSM = setInterval(function() {
+            if (window.StorageManager) {
+                clearInterval(pollSM);
+                caricaTornei();
+            }
+        }, 50);
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../../src/storage-manager.js?v=14"></script>
+
+</body></html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="it" style="background:#0a0a0a"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#004395",
+                        "primary-container": "#c6f33f",
+                        "surface-container-highest": "#353534",
+                        "background": "#131313",
+                        "error": "#ffb4ab",
+                        "surface-container": "#201f1f",
+                        "inverse-primary": "#4f6600",
+                        "on-secondary": "#002e6a",
+                        "primary-fixed": "#c6f33f",
+                        "on-surface": "#e5e2e1",
+                        "on-secondary-container": "#b3c9ff",
+                        "on-primary-fixed": "#161f00",
+                        "surface-dim": "#131313",
+                        "on-tertiary-fixed": "#410004",
+                        "outline": "#8e937b",
+                        "inverse-on-surface": "#313030",
+                        "tertiary-fixed": "#ffdad7",
+                        "tertiary-container": "#ffdad7",
+                        "inverse-surface": "#e5e2e1",
+                        "surface-container-lowest": "#0e0e0e",
+                        "secondary-fixed-dim": "#aec6ff",
+                        "surface-container-high": "#2a2a2a",
+                        "surface-tint": "#aad61e",
+                        "secondary-container": "#0351b0",
+                        "on-tertiary-fixed-variant": "#930012",
+                        "tertiary": "#ffffff",
+                        "on-tertiary": "#680009",
+                        "on-tertiary-container": "#c71623",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed": "#d8e2ff",
+                        "secondary": "#aec6ff",
+                        "primary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb3ad",
+                        "on-background": "#e5e2e1",
+                        "on-surface-variant": "#c4c9af",
+                        "on-primary": "#283500",
+                        "outline-variant": "#444935",
+                        "surface-bright": "#3a3939",
+                        "surface": "#131313",
+                        "error-container": "#93000a",
+                        "on-primary-fixed-variant": "#3b4d00",
+                        "primary-fixed-dim": "#aad61e",
+                        "on-error": "#690005",
+                        "on-secondary-fixed": "#001a42",
+                        "on-primary-container": "#546d00",
+                        "surface-variant": "#353534",
+                        "surface-container-low": "#1c1b1b"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Epilogue"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .text-small-caps { font-variant: small-caps; }
+        .win-rate-gauge { transform: rotate(-90deg); }
+        .gauge-path { stroke-dasharray: 283; stroke-dashoffset: 70; transition: stroke-dashoffset 2s ease-out; }
+        body { background-color: #0e0e0e; color: #e5e2e1; font-family: 'Inter', sans-serif; }
+        
+        /* Cinematic Card Style */
+        .cinematic-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), #161616;
+            box-shadow: 
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.1),
+                0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            position: relative;
+            overflow: hidden;
+        }
+        .cinematic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(209, 255, 75, 0.2), transparent);
+        }
+
+        /* Pop-up Button Effect */
+        .popup-button {
+            background: linear-gradient(180deg, #e3ff8c 0%, #D1FF4B 100%);
+            box-shadow: 
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.4),
+                0 4px 15px rgba(209, 255, 75, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .popup-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.6);
+            opacity: 0.8;
+        }
+
+        /* Entry Animations */
+        @keyframes cardFlip {
+            from {
+                opacity: 0;
+                transform: perspective(700px) rotateX(-80deg);
+                transform-origin: top center;
+            }
+            60% { opacity: 1; }
+            to {
+                opacity: 1;
+                transform: perspective(700px) rotateX(0deg);
+                transform-origin: top center;
+            }
+        }
+        .anim-in {
+            opacity: 0;
+            animation: cardFlip 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        @keyframes pageExit {
+            from { transform: translateY(0);    opacity: 1; }
+            to   { transform: translateY(60px); opacity: 0; }
+        }
+        .page-exit {
+            animation: pageExit 0.28s cubic-bezier(0.4, 0, 1, 1) forwards;
+        }
+    </style>
+</head>
+<body class="bg-surface-container-lowest min-h-screen">
+<!-- Close Icon Header -->
+<header class="fixed top-0 w-full z-50 flex justify-end items-center px-6 h-16">
+<button class="text-[#888888] hover:opacity-80 transition-opacity active:scale-95 duration-150" style="">
+<span class="material-symbols-outlined text-3xl" style="">close</span>
+</button>
+</header>
+<main class="pt-16 px-6 max-w-lg mx-auto space-y-8 pb-12">
+<!-- Profile Header Area -->
+<section class="flex flex-col items-center text-center space-y-4 pt-4 anim-in" style="animation-delay: 0.05s;">
+<div class="space-y-1">
+<p id="pp-firstname" class="text-small-caps text-[#888888] tracking-[0.25em] text-sm font-bold uppercase mb-1" style="">—</p>
+<h1 id="pp-lastname" class="font-['Epilogue'] font-black italic text-4xl text-white uppercase -mt-1" style="">—</h1>
+<div class="flex flex-col items-center gap-3 pt-2">
+<div class="flex items-center gap-2">
+<span id="pp-punti" class="font-['Epilogue'] font-black italic text-lg text-white uppercase tracking-tight" style="">— PUNTI</span>
+</div>
+<div class="flex items-center gap-3 px-3 py-1.5 bg-[#1c1c1c] rounded-lg border border-white/10 shadow-lg">
+<div class="flex items-center gap-1.5">
+<span class="text-[9px] text-[#888888] font-black uppercase tracking-widest" style="">RANK</span>
+<span id="pp-rank" class="font-['Epilogue'] font-black italic text-[#D1FF4B] text-sm uppercase" style="">#—</span>
+</div>
+<div class="w-[1px] h-3 bg-white/10"></div>
+<img id="pp-flag" src="https://flagcdn.com/w40/it.png" class="w-5 h-[13px] rounded-sm border border-white/5 object-cover" alt=""/>
+<div class="w-[1px] h-3 bg-white/10"></div>
+<span id="pp-gruppo" class="text-[9px] uppercase tracking-[0.1em] font-black text-[#e5e2e1] italic" style="">—</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Primary CTA -->
+<a id="btn-sfida" href="#" class="flex items-center justify-center w-full h-14 rounded-[14px] font-['Epilogue'] font-black italic uppercase tracking-[0.1em] text-sm text-[#4a6000] active:scale-[0.97] transition-all duration-200 bg-[#D1FF4B] popup-button anim-in" style="animation-delay: 0.13s; text-decoration: none;">
+        SFIDA AVVERSARIO</a>
+<!-- Win Rate Gauge Section -->
+<section class="cinematic-card rounded-[24px] p-6 flex justify-between items-center anim-in" style="animation-delay: 0.21s;">
+<div class="">
+<p class="text-[10px] font-[900] text-[#888888]/80 uppercase tracking-[0.2em] italic mb-2" style="">WIN RATE</p>
+<div>
+<p id="pp-wr-label" class="font-['Epilogue'] font-black italic text-2xl text-[#D1FF4B] uppercase leading-none" style="">—</p>
+<p class="text-[10px] font-medium text-[#888888] italic mt-1" style="">Ultime 10 partite</p>
+</div>
+</div>
+<div class="relative w-20 h-20">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="transparent" r="45" stroke="#2a2a2a" stroke-width="8"></circle>
+<circle class="gauge-path" cx="50" cy="50" fill="transparent" r="45" stroke="#D1FF4B" stroke-linecap="round" stroke-width="8" style="stroke-dasharray: 283; stroke-dashoffset: 70;"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span id="pp-wr-pct" class="font-['Epilogue'] font-black italic text-xl text-white" style="">—%</span>
+</div>
+</div>
+</section>
+<!-- Stats Grid -->
+<section class="grid grid-cols-2 gap-4 anim-in" style="animation-delay: 0.29s;">
+<div class="cinematic-card rounded-[24px] space-y-1 py-3 px-5">
+<span class="uppercase tracking-widest text-[#888888] font-bold text-[11px] italic" style="">MATCH VINTI</span>
+<p id="pp-stat-vittorie" class="font-['Epilogue'] font-black italic text-3xl text-white" style="">—</p>
+</div>
+<div class="cinematic-card rounded-[24px] space-y-1 py-3 px-5">
+<span class="uppercase tracking-widest text-[#888888] font-bold text-[11px] italic" style="">MATCH GIOCATI</span>
+<p id="pp-stat-match" class="font-['Epilogue'] font-black italic text-3xl text-white" style="">—</p>
+</div>
+<div class="cinematic-card rounded-[24px] space-y-1 py-3 px-5">
+<span class="uppercase tracking-widest text-[#888888] font-bold text-[11px] italic" style="">SCONFITTE</span>
+<p id="pp-stat-sconfitte" class="font-['Epilogue'] font-black italic text-3xl text-white" style="">—</p>
+</div>
+<div class="cinematic-card rounded-[24px] space-y-1 py-3 px-5">
+<span class="uppercase tracking-widest text-[#888888] font-bold text-[11px] italic" style="">PUNTI</span>
+<p id="pp-stat-punti" class="font-['Epilogue'] font-black italic text-3xl text-white" style="">—</p>
+</div>
+</section>
+<!-- Trend Dots -->
+<section class="cinematic-card rounded-[24px] p-6 flex justify-between items-center anim-in" style="animation-delay: 0.37s;">
+<span class="text-[11px] uppercase tracking-[0.2em] text-[#888888] font-[900] italic" style="">TREND</span>
+<div id="pp-trend" class="flex gap-2"></div>
+</section>
+<!-- Match History List -->
+<section class="space-y-4 anim-in" style="animation-delay: 0.45s;">
+<div class="flex justify-between items-baseline px-1">
+<h3 class="font-['Epilogue'] font-black italic text-xl text-white uppercase tracking-tight" style="">ULTIMI MATCH</h3>
+</div>
+<div id="pp-matches" class="space-y-3">
+<p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-4">Nessun match disponibile</p>
+</div>
+</section>
+</main>
+<!-- Navigation Drawer -->
+<div class="hidden h-full w-80 fixed left-0 top-0 z-[60] bg-[#131313] shadow-[20px_0_40px_rgba(209,255,75,0.04)] flex flex-col p-8 space-y-6" id="sideNav">
+<div class="text-[#D1FF4B] font-['Epilogue'] font-black italic text-2xl uppercase tracking-tighter mb-8" style="">
+        RACE CONTROL
+    </div>
+<nav class="flex flex-col space-y-2">
+<a class="flex items-center gap-4 p-4 rounded-lg bg-[#222222] text-[#D1FF4B] border-l-4 border-[#D1FF4B] font-['Epilogue'] font-bold italic uppercase" href="#" style="">
+<span class="material-symbols-outlined" style="">gavel</span>
+            Regolamento
+        </a>
+<a class="flex items-center gap-4 p-4 rounded-lg text-[#888888] font-['Epilogue'] font-bold italic uppercase hover:bg-[#262626] hover:text-white" href="#" style="">
+<span class="material-symbols-outlined" style="">help</span>
+            FAQ
+        </a>
+</nav>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const gaugePath = document.querySelector('.gauge-path');
+        if (!gaugePath) return;
+        gaugePath.style.transition = 'none';
+        gaugePath.style.strokeDashoffset = '283';
+        setTimeout(function () {
+            gaugePath.style.transition = 'stroke-dashoffset 1.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            gaugePath.style.strokeDashoffset = '70'; // 75% su cerchio r=45, circumference=283
+        }, 500);
+    });
+</script>
+<script>
+  // Back button handler (keep independent of demo data)
+  document.addEventListener('DOMContentLoaded', function () {
+    const backBtn = document.querySelector('header button');
+    if (backBtn) backBtn.addEventListener('click', () => {
+      document.body.classList.add('page-exit');
+      setTimeout(() => window.location.href = '../home/home.html', 280);
+    });
+  });
+</script>
+<script>
+  function setBtnSfida(telefono, nome) {
+    var btn = document.getElementById('btn-sfida');
+    if (!btn) return;
+    var tel = (telefono || '').toString().replace(/\D/g, '');
+    if (tel.indexOf('00') === 0) tel = tel.substring(2);
+    if (tel && tel.length > 6) {
+      var msg = encodeURIComponent('Ciao ' + (nome || '') + '! Ti sfido a una partita di Golarsa Race.');
+      btn.href = 'https://wa.me/' + tel + '?text=' + msg;
+      btn.setAttribute('target', '_blank');
+      btn.setAttribute('rel', 'noopener');
+      btn.style.opacity = '1';
+      btn.style.pointerEvents = 'auto';
+      btn.removeAttribute('title');
+    } else {
+      btn.removeAttribute('href');
+      btn.style.opacity = '0.5';
+      btn.style.pointerEvents = 'none';
+      btn.title = 'Numero non disponibile';
+    }
+  }
+  window.setBtnSfida = setBtnSfida;
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../../src/storage-manager.js?v=14"></script>
+<script src="../../src/ui-binder.js?v=14"></script>
+<script src="../../src/main.js?v=14"></script>
+</body></html>

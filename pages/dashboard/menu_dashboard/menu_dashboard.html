@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html class="dark" lang="it">
+<head>
+<script>if(sessionStorage.getItem("gr_admin_auth")!=="1"){location.replace("../accesso_dashboard.html");}</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GOLARSA RACE - MENU</title>
+  <script src="https://cdn.tailwindcss.com?plugins=container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,900;1,900&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-container-low": "#1c1b1b",
+            "surface-container-lowest": "#0e0e0e",
+            "surface-container-high": "#2a2a2a",
+            "surface-container": "#201f1f",
+            "background": "#131313",
+            "on-surface": "#e5e2e1",
+            "primary-fixed": "#c6f33f",
+            "primary-container": "#c6f33f",
+            "on-primary-container": "#546d00",
+            "secondary-container": "#0351b0",
+          },
+          fontFamily: {
+            "headline": ["Epilogue"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0e0e0e;
+      color: #e5e2e1;
+      min-height: max(884px, 100dvh);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    /* Card form style — stesso di accesso_dashboard */
+    .rim-light { box-shadow: inset 0 1px 0 0 rgba(209,255,75,0.25); }
+    .ambient-glow { box-shadow: 0 30px 60px -12px rgba(0,0,0,0.9), 0 0 50px rgba(209,255,75,0.08); }
+
+    /* Input scuri con testo bianco */
+    .field-input {
+      width: 100%;
+      background: #1a1a1a;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 13px 14px;
+      font-size: 14px;
+      color: #ffffff;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+      transition: border-color 0.2s ease;
+      box-sizing: border-box;
+    }
+    .field-input:focus {
+      border-color: rgba(209,255,75,0.5);
+    }
+    .field-input::placeholder {
+      color: #555555;
+      font-weight: 400;
+    }
+    input[type="date"] { color-scheme: dark; }
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.6);
+      cursor: pointer;
+    }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+    input[type="number"] { -moz-appearance: textfield; }
+
+    /* Sezione tab nav */
+    .menu-tab {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 10px 6px 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      cursor: pointer;
+      background: transparent;
+      color: #6b7280;
+      transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .menu-tab.active {
+      background: rgba(209,255,75,0.1);
+      color: #d1ff4b;
+      border-color: rgba(209,255,75,0.2);
+    }
+    .menu-tab:not(.active):hover {
+      background: rgba(255,255,255,0.04);
+      color: #e5e2e1;
+    }
+    .menu-tab.active .material-symbols-outlined {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+
+    /* Sezione contenuto */
+    .section-panel { display: none; }
+    .section-panel.active { display: block; }
+
+    /* Animazione fade in */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .section-panel.active { animation: fadeInUp 0.35s ease forwards; }
+
+    /* Testo corpo per T&C e Privacy */
+    .prose-dark {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.55);
+    }
+    .prose-dark h3 {
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #D1FF4B;
+      margin-bottom: 7px;
+      margin-top: 22px;
+      padding-left: 10px;
+      border-left: 2px solid rgba(209,255,75,0.6);
+      display: block;
+    }
+    .prose-dark p { margin-bottom: 10px; }
+    .prose-dark strong { color: rgba(255,255,255,0.85); }
+
+    /* Prose editabile — blocco unico */
+    .prose-dark[contenteditable="true"] {
+      outline: none;
+      border-radius: 12px;
+      border: 1px solid rgba(209,255,75,0.4);
+      background: rgba(209,255,75,0.04);
+      padding: 12px 14px;
+      margin: -12px -14px;
+      transition: border-color 0.2s ease, background 0.2s ease;
+      cursor: text;
+    }
+    .prose-dark[contenteditable="true"]:focus {
+      border-color: rgba(209,255,75,0.65);
+      background: rgba(209,255,75,0.07);
+    }
+    .edit-section-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(209,255,75,0.3);
+      background: rgba(209,255,75,0.08);
+      color: #d1ff4b;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.18s ease, border-color 0.18s ease;
+    }
+    .edit-section-btn:hover {
+      background: rgba(209,255,75,0.15);
+      border-color: rgba(209,255,75,0.5);
+    }
+
+    /* Toast conferma */
+    #toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #d1ff4b;
+      color: #283500;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 12px 24px;
+      border-radius: 999px;
+      z-index: 999;
+      opacity: 0;
+      transition: transform 0.3s cubic-bezier(0.34,1.3,0.64,1), opacity 0.25s ease;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="font-body selection:bg-primary-container selection:text-on-primary-container">
+
+  <!-- ─── Header fisso ─── -->
+  <header class="fixed top-0 w-full z-50 bg-[#0e0e0e] backdrop-blur-xl bg-opacity-90 flex items-center px-6 py-4 h-16 border-b border-white/[0.04]">
+    <button onclick="history.back()" class="flex items-center justify-center w-9 h-9 -ml-1 rounded-full hover:bg-white/5 transition-colors mr-3">
+      <span class="material-symbols-outlined text-[#d1ff4b] text-2xl">arrow_back</span>
+    </button>
+    <img alt="GA Race" class="h-5 w-auto" src="../../assets/GA-RACE.png">
+  </header>
+
+  <main class="pt-28 px-6 max-w-lg mx-auto pb-16">
+
+    <!-- TAB NAV -->
+    <div class="flex gap-2 mb-8">
+      <button class="menu-tab active" id="tab-impostazioni" onclick="switchTab('impostazioni')">
+        <span class="material-symbols-outlined text-lg">settings</span>
+        Impostazioni
+      </button>
+      <button class="menu-tab" id="tab-regolamento" onclick="switchTab('regolamento')">
+        <span class="material-symbols-outlined text-lg">gavel</span>
+        Regolamento
+      </button>
+      <button class="menu-tab" id="tab-termini" onclick="switchTab('termini')">
+        <span class="material-symbols-outlined text-lg">description</span>
+        Termini
+      </button>
+      <button class="menu-tab" id="tab-privacy" onclick="switchTab('privacy')">
+        <span class="material-symbols-outlined text-lg">policy</span>
+        Privacy
+      </button>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         SEZIONE: IMPOSTAZIONI
+    ════════════════════════════════════════ -->
+    <div id="panel-impostazioni" class="section-panel active">
+
+      <!-- Intestazione sezione -->
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-xl font-headline font-black italic uppercase tracking-tight">IMPOSTAZIONI</h2>
+        <div class="h-[1px] flex-1 ml-4 bg-white/10"></div>
+      </div>
+
+      <!-- Card info torneo modificabile -->
+      <div class="bg-gradient-to-b from-[#222222] to-[#141414] rounded-[32px] px-8 pt-7 pb-8 rim-light ambient-glow border border-white/20 space-y-4">
+
+        <!-- Header card -->
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-8 h-8 rounded-xl bg-[#d1ff4b]/10 flex items-center justify-center">
+            <span class="material-symbols-outlined text-[#d1ff4b] text-base">edit_note</span>
+          </div>
+          <h3 class="text-base font-headline font-black italic uppercase tracking-tight text-white">INFO TORNEO</h3>
+        </div>
+
+        <!-- Nome torneo -->
+        <div class="space-y-1.5">
+          <label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/70 font-bold ml-1">NOME TORNEO</label>
+          <input id="set-nome" type="text" placeholder="Es. Torneo 1" class="field-input" />
+        </div>
+
+        <!-- Data inizio / fine -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="space-y-1.5">
+            <label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/70 font-bold ml-1">DATA INIZIO</label>
+            <input id="set-inizio" type="date" class="field-input" />
+          </div>
+          <div class="space-y-1.5">
+            <label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/70 font-bold ml-1">DATA FINE</label>
+            <input id="set-fine" type="date" class="field-input" />
+          </div>
+        </div>
+
+        <!-- Partecipanti -->
+        <div class="space-y-1.5">
+          <label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/70 font-bold ml-1">PARTECIPANTI (MAX)</label>
+          <input id="set-partecipanti" type="number" placeholder="Es. 64" min="1" class="field-input" />
+        </div>
+
+        <!-- Quota iscrizione -->
+        <div class="space-y-1.5">
+          <label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/70 font-bold ml-1">QUOTA ISCRIZIONE (€)</label>
+          <input id="set-quota" type="number" placeholder="30" value="30" min="0" class="field-input" />
+        </div>
+
+        <!-- Termine iscrizioni -->
+        <div class="space-y-1.5">
+          <label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/70 font-bold ml-1">TERMINE ISCRIZIONI</label>
+          <input id="set-termine" type="date" class="field-input" />
+        </div>
+
+        <!-- Divider -->
+        <div class="h-px bg-white/[0.07] my-2"></div>
+
+        <!-- Bottone conferma -->
+        <button onclick="confermaMod()"
+          style="background: linear-gradient(180deg, #e3ff8c 0%, #D1FF4B 100%); box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4);"
+          class="w-full text-[#283500] font-headline font-black italic uppercase px-6 py-4 rounded-full flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
+          <span class="material-symbols-outlined text-[1.1rem]" style="font-variation-settings:'FILL' 1,'wght' 600,'GRAD' 0,'opsz' 24;">check_circle</span>
+          CONFERMA MODIFICA
+        </button>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         SEZIONE: REGOLAMENTO
+    ════════════════════════════════════════ -->
+    <div id="panel-regolamento" class="section-panel">
+
+      <div class="flex items-center gap-3 mb-6">
+        <h2 class="text-xl font-headline font-black italic uppercase tracking-tight">REGOLAMENTO</h2>
+        <div class="h-[1px] flex-1 bg-white/10"></div>
+        <button id="btn-edit-regolamento" class="edit-section-btn" onclick="toggleEdit('regolamento')">
+          <span class="material-symbols-outlined text-sm">edit</span>Modifica
+        </button>
+      </div>
+
+      <div class="bg-gradient-to-b from-[#1e1e1e] to-[#141414] rounded-[28px] px-7 pt-6 pb-8 border border-white/10">
+        <div class="prose-dark" id="prose-regolamento">
+
+          <!-- ══ MACRO 1: DURATA E SVOLGIMENTO ══ -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);">
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">calendar_month</span>
+              <span style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Durata e Svolgimento</span>
+            </div>
+
+            <h3 style="margin-top:0;">Durata</h3>
+            <p>GOLARSA RACE è un torneo individuale di tennis a formula libera. La competizione si svolge dal <strong>[DATA_INIZIO]</strong> al <strong>[DATA_FINE]</strong>.</p>
+
+            <h3>Fase 1 — Campionato</h3>
+            <p>Per tutta la durata del torneo ogni giocatore può sfidare qualsiasi altro partecipante, previo accordo reciproco tra i due. Le sfide avvengono liberamente, senza un calendario prestabilito. È vietato disputare più di un match contro lo stesso avversario nella stessa settimana solare (lunedì–domenica). La classifica è aggiornata in tempo reale: al termine della fase regolare i <strong>4 giocatori</strong> con il punteggio più alto accedono ai playoff.</p>
+
+            <h3>Fase 2 — Semifinali e Finale</h3>
+            <p style="margin-bottom:0;">Semifinale 1: 1° vs 4° classificato. Semifinale 2: 2° vs 3° classificato. I vincitori si affrontano in finale. Il formato dei match di playoff è identico a quello della fase regolare.</p>
+          </div>
+
+          <!-- ══ MACRO 2: REGOLAMENTO E SISTEMA PUNTI ══ -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);">
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">sports_tennis</span>
+              <span style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Regolamento e Sistema Punti</span>
+            </div>
+
+            <h3 style="margin-top:0;">Partecipazione</h3>
+            <p>Possono partecipare tutti i giocatori regolarmente iscritti entro la scadenza indicata. L'iscrizione è personale e non cedibile. La quota di iscrizione deve essere versata per confermare la propria partecipazione.</p>
+
+            <h3>Il Match</h3>
+            <p>Ogni partita ha una durata massima di <strong>60 minuti</strong>. Vince chi totalizza il maggior numero di game nel tempo a disposizione. Il vincitore deve essere decretato al termine di ogni match: non sono ammessi pareggi.</p>
+
+            <div style="background:rgba(209,255,75,0.07);border:1px solid rgba(209,255,75,0.3);border-radius:12px;padding:12px 14px;margin:10px 0 14px;">
+              <div style="display:flex;align-items:flex-start;gap:8px;">
+                <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#D1FF4B;font-size:1.1rem;flex-shrink:0;margin-top:2px;">timer</span>
+                <div>
+                  <span style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:0.63rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;display:block;margin-bottom:5px;">Regola dei 10 minuti</span>
+                  <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.6);">Entro <strong style="color:rgba(255,255,255,0.9);">10 minuti dalla scadenza</strong> i due giocatori devono accordarsi su quale sarà l'ultimo game da disputare; tale game fungerà da <strong style="color:rgba(255,255,255,0.9);">spareggio in caso di parità</strong> nel conteggio totale dei game.</p>
+                </div>
+              </div>
+            </div>
+
+            <h3>Sistema di Punti</h3>
+            <p>I punti vengono assegnati al solo vincitore al termine di ogni match:</p>
+            <p><strong>Punti base:</strong> +10 punti per ogni game vinto (es. 6–3 → +60 pt).</p>
+            <p><strong>Bonus vittoria</strong> in base alla differenza di punti tra i due giocatori prima del match: 0–50 pt → +10; 51–150 pt → +20; oltre 150 pt → +30.</p>
+            <p style="margin-bottom:0;"><strong>Bonus dominanza:</strong> +10 punti aggiuntivi se il margine di vittoria è di almeno 4 game (es. 6–2, 6–1, 6–0). I punti vengono confermati in classifica solo dopo la validazione del risultato.</p>
+          </div>
+
+          <!-- ══ MACRO 3: RISULTATI, FAIR PLAY E PREMI ══ -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:4px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);">
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">emoji_events</span>
+              <span style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Risultati, Fair Play e Premi</span>
+            </div>
+
+            <h3 style="margin-top:0;">Risultati e Contestazioni</h3>
+            <p>Il vincitore deve inserire il risultato sulla piattaforma entro <strong>24 ore</strong> dalla fine del match. L'avversario riceverà una notifica e avrà 24 ore per confermare o contestare l'esito. Trascorse 24 ore senza contestazione, il risultato è confermato automaticamente. In caso di contestazione l'organizzatore prenderà una decisione definitiva e inappellabile.</p>
+
+            <h3>Fair Play</h3>
+            <p>Ogni partecipante è tenuto a comportarsi con lealtà e rispetto verso tutti gli avversari. Non sono tollerati comportamenti scorretti, risultati alterati o qualsiasi forma di scorrettezza sportiva. L'organizzatore potrà escludere dal torneo qualsiasi partecipante a suo insindacabile giudizio.</p>
+
+            <h3>Premi</h3>
+            <p style="margin-bottom:0;">I premi saranno comunicati dall'organizzatore prima dell'inizio del torneo e potranno variare in base al numero finale di iscritti.</p>
+          </div>
+
+        </div>
+
+        <!-- Bottone conferma (nascosto di default) -->
+        <div id="confirm-regolamento" class="mt-6 hidden">
+          <div class="h-px bg-white/[0.07] mb-5"></div>
+          <button onclick="confermaEdit('regolamento')"
+            style="background: linear-gradient(180deg, #e3ff8c 0%, #D1FF4B 100%); box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4);"
+            class="w-full text-[#283500] font-headline font-black italic uppercase px-6 py-4 rounded-full flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
+            <span class="material-symbols-outlined text-[1.1rem]" style="font-variation-settings:'FILL' 1,'wght' 600,'GRAD' 0,'opsz' 24;">check_circle</span>
+            CONFERMA MODIFICA
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         SEZIONE: TERMINI E CONDIZIONI
+    ════════════════════════════════════════ -->
+    <div id="panel-termini" class="section-panel">
+
+      <div class="flex items-center gap-3 mb-6">
+        <h2 class="text-xl font-headline font-black italic uppercase tracking-tight">TERMINI E CONDIZIONI</h2>
+        <div class="h-[1px] flex-1 bg-white/10"></div>
+        <button id="btn-edit-termini" class="edit-section-btn" onclick="toggleEdit('termini')">
+          <span class="material-symbols-outlined text-sm">edit</span>Modifica
+        </button>
+      </div>
+
+      <div class="bg-gradient-to-b from-[#1e1e1e] to-[#141414] rounded-[28px] px-7 pt-6 pb-8 border border-white/10">
+        <div class="prose-dark" id="prose-termini">
+
+          <!-- ══ MACRO 1: UTILIZZO E ISCRIZIONI ══ -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);">
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">fact_check</span>
+              <span style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Utilizzo e Iscrizioni</span>
+            </div>
+
+            <h3 style="margin-top:0;">Accettazione</h3>
+            <p>Utilizzando la piattaforma GOLARSA RACE accetti in pieno i presenti termini e condizioni. Se non li accetti, ti preghiamo di non utilizzare il servizio.</p>
+
+            <h3>Utilizzo della piattaforma</h3>
+            <p>La piattaforma è riservata agli utenti registrati e agli amministratori dei tornei. Ogni utente è responsabile delle informazioni inserite e dei risultati dichiarati. Non è consentito l'uso della piattaforma per fini diversi dalla partecipazione ai tornei.</p>
+
+            <h3>Iscrizioni e quote</h3>
+            <p style="margin-bottom:0;">Le quote di iscrizione sono stabilite dall'organizzatore e devono essere versate entro il termine indicato. L'iscrizione si considera confermata solo dopo il pagamento. In caso di ritiro prima dell'inizio del torneo, il rimborso è a discrezione dell'organizzatore.</p>
+          </div>
+
+          <!-- ══ MACRO 2: RESPONSABILITÀ E NORME ══ -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:4px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);">
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">balance</span>
+              <span style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Responsabilità e Norme</span>
+            </div>
+
+            <h3 style="margin-top:0;">Modifiche ai tornei</h3>
+            <p>L'organizzatore si riserva il diritto di modificare date, quote e regolamenti dandone comunicazione agli iscritti con congruo anticipo. In caso di cancellazione del torneo, l'organizzatore provvederà al rimborso delle quote versate.</p>
+
+            <h3>Limitazione di responsabilità</h3>
+            <p>GOLARSA RACE declina ogni responsabilità per danni diretti o indiretti derivanti dall'utilizzo della piattaforma o dalla partecipazione ai tornei. L'organizzatore non è responsabile per infortuni o incidenti occorsi durante lo svolgimento delle partite.</p>
+
+            <h3>Legge applicabile</h3>
+            <p style="margin-bottom:0;">I presenti termini sono regolati dalla legge italiana. Per qualsiasi controversia è competente il foro di residenza dell'organizzatore.</p>
+          </div>
+
+        </div>
+
+        <!-- Bottone conferma (nascosto di default) -->
+        <div id="confirm-termini" class="mt-6 hidden">
+          <div class="h-px bg-white/[0.07] mb-5"></div>
+          <button onclick="confermaEdit('termini')"
+            style="background: linear-gradient(180deg, #e3ff8c 0%, #D1FF4B 100%); box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4);"
+            class="w-full text-[#283500] font-headline font-black italic uppercase px-6 py-4 rounded-full flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
+            <span class="material-symbols-outlined text-[1.1rem]" style="font-variation-settings:'FILL' 1,'wght' 600,'GRAD' 0,'opsz' 24;">check_circle</span>
+            CONFERMA MODIFICA
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         SEZIONE: PRIVACY POLICY
+    ════════════════════════════════════════ -->
+    <div id="panel-privacy" class="section-panel">
+
+      <div class="flex items-center gap-3 mb-6">
+        <h2 class="text-xl font-headline font-black italic uppercase tracking-tight">PRIVACY POLICY</h2>
+        <div class="h-[1px] flex-1 bg-white/10"></div>
+        <button id="btn-edit-privacy" class="edit-section-btn" onclick="toggleEdit('privacy')">
+          <span class="material-symbols-outlined text-sm">edit</span>Modifica
+        </button>
+      </div>
+
+      <div class="bg-gradient-to-b from-[#1e1e1e] to-[#141414] rounded-[28px] px-7 pt-6 pb-8 border border-white/10">
+        <div class="prose-dark" id="prose-privacy">
+
+          <!-- ══ MACRO 1: DATI E TRATTAMENTO ══ -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);">
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">lock</span>
+              <span style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Dati e Trattamento</span>
+            </div>
+
+            <h3 style="margin-top:0;">Titolare del trattamento</h3>
+            <p>Il titolare del trattamento dei dati personali è l'organizzatore del torneo registrato sulla piattaforma GOLARSA RACE.</p>
+
+            <h3>Dati raccolti</h3>
+            <p>Raccogliamo esclusivamente i dati necessari alla partecipazione ai tornei: nome, cognome, indirizzo e-mail e, se previsto, i dati di pagamento della quota di iscrizione.</p>
+
+            <h3>Finalità del trattamento</h3>
+            <p style="margin-bottom:0;">I tuoi dati vengono utilizzati per gestire l'iscrizione al torneo, comunicare aggiornamenti e, dove applicabile, elaborare i pagamenti. I dati non vengono ceduti a terzi né utilizzati per finalità di marketing senza consenso esplicito.</p>
+          </div>
+
+          <!-- ══ MACRO 2: CONSERVAZIONE E DIRITTI ══ -->
+          <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:4px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);">
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">shield</span>
+              <span style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Conservazione e Diritti</span>
+            </div>
+
+            <h3 style="margin-top:0;">Conservazione dei dati</h3>
+            <p>I dati personali vengono conservati per il tempo strettamente necessario alle finalità indicate e comunque non oltre <strong>12 mesi</strong> dalla chiusura del torneo, salvo obblighi di legge.</p>
+
+            <h3>Diritti dell'interessato</h3>
+            <p>Ai sensi del GDPR hai il diritto di accedere ai tuoi dati, rettificarli, cancellarli o limitarne il trattamento. Per esercitare questi diritti contatta l'organizzatore attraverso la piattaforma.</p>
+
+            <h3>Cookie</h3>
+            <p style="margin-bottom:0;">La piattaforma utilizza solo cookie tecnici essenziali al funzionamento. Non vengono utilizzati cookie di profilazione o di terze parti a fini pubblicitari.</p>
+          </div>
+
+        </div>
+
+        <!-- Bottone conferma (nascosto di default) -->
+        <div id="confirm-privacy" class="mt-6 hidden">
+          <div class="h-px bg-white/[0.07] mb-5"></div>
+          <button onclick="confermaEdit('privacy')"
+            style="background: linear-gradient(180deg, #e3ff8c 0%, #D1FF4B 100%); box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4);"
+            class="w-full text-[#283500] font-headline font-black italic uppercase px-6 py-4 rounded-full flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
+            <span class="material-symbols-outlined text-[1.1rem]" style="font-variation-settings:'FILL' 1,'wght' 600,'GRAD' 0,'opsz' 24;">check_circle</span>
+            CONFERMA MODIFICA
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Toast notifica -->
+  <div id="toast">Modifiche salvate</div>
+
+  <script>
+    function formatDateIT(iso) {
+      if (!iso) return '—';
+      const [y, m, d] = iso.split('-');
+      return `${d}/${m}/${y}`;
+    }
+
+    function injectDatesIntoRegolamento() {
+      const prose = document.getElementById('prose-regolamento');
+      if (!prose.innerHTML.includes('[DATA_INIZIO]') && !prose.innerHTML.includes('[DATA_FINE]')) return;
+      const inizio = document.getElementById('set-inizio').value;
+      const fine   = document.getElementById('set-fine').value;
+      prose.innerHTML = prose.innerHTML
+        .replace('[DATA_INIZIO]', formatDateIT(inizio))
+        .replace('[DATA_FINE]',   formatDateIT(fine));
+    }
+
+    function switchTab(name) {
+      // Tabs
+      document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('tab-' + name).classList.add('active');
+
+      // Panels
+      document.querySelectorAll('.section-panel').forEach(p => {
+        p.classList.remove('active');
+      });
+      const panel = document.getElementById('panel-' + name);
+      panel.classList.add('active');
+
+      // Auto-inietta date nel regolamento se vengono dalle impostazioni
+      if (name === 'regolamento') injectDatesIntoRegolamento();
+    }
+
+    const editStates = { regolamento: false, termini: false, privacy: false };
+
+    function toggleEdit(section) {
+      const isEditing = editStates[section];
+      const prose = document.getElementById('prose-' + section);
+      const confirmDiv = document.getElementById('confirm-' + section);
+      const btn = document.getElementById('btn-edit-' + section);
+
+      if (!isEditing) {
+        prose.setAttribute('contenteditable', 'true');
+        confirmDiv.classList.remove('hidden');
+        btn.innerHTML = '<span class="material-symbols-outlined text-sm">close</span>Annulla';
+        editStates[section] = true;
+        prose.focus();
+        // Cursore alla fine
+        const range = document.createRange();
+        range.selectNodeContents(prose);
+        range.collapse(false);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      } else {
+        prose.setAttribute('contenteditable', 'false');
+        confirmDiv.classList.add('hidden');
+        btn.innerHTML = '<span class="material-symbols-outlined text-sm">edit</span>Modifica';
+        editStates[section] = false;
+      }
+    }
+
+    function confermaEdit(section) {
+      const prose = document.getElementById('prose-' + section);
+      const confirmDiv = document.getElementById('confirm-' + section);
+      const btn = document.getElementById('btn-edit-' + section);
+
+      prose.setAttribute('contenteditable', 'false');
+      confirmDiv.classList.add('hidden');
+      btn.innerHTML = '<span class="material-symbols-outlined text-sm">edit</span>Modifica';
+      editStates[section] = false;
+
+      // Persisti in localStorage
+      localStorage.setItem('gr_content_v2_' + section, prose.innerHTML);
+
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+
+    // Ripristina contenuti salvati da localStorage
+    ['regolamento', 'termini', 'privacy'].forEach(function(s) {
+      const saved = localStorage.getItem('gr_content_v2_' + s);
+      if (saved) document.getElementById('prose-' + s).innerHTML = saved;
+    });
+
+    function confermaMod() {
+      const nome    = document.getElementById('set-nome').value.trim();
+      const inizio  = document.getElementById('set-inizio').value;
+      const fine    = document.getElementById('set-fine').value;
+      const partec  = document.getElementById('set-partecipanti').value;
+      const quota   = document.getElementById('set-quota').value;
+      const termine = document.getElementById('set-termine').value;
+
+      // Validazione base: almeno il nome
+      if (!nome) {
+        document.getElementById('set-nome').focus();
+        document.getElementById('set-nome').style.borderColor = 'rgba(255,100,100,0.6)';
+        setTimeout(() => {
+          document.getElementById('set-nome').style.borderColor = '';
+        }, 1500);
+        return;
+      }
+
+      // Toast
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2200);
+    }
+  </script>
+
+</body>
+</html>

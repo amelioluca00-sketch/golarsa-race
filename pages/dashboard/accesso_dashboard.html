@@ -1,0 +1,383 @@
+<!DOCTYPE html><html class="dark" lang="it"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>GOLARSA RACE - MISSION CONTROL</title>
+<script src="https://cdn.tailwindcss.com?plugins=container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,900;1,900&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "surface-container-low": "#1c1b1b",
+          "surface-container-lowest": "#0e0e0e",
+          "surface-container-high": "#2a2a2a",
+          "surface-container": "#201f1f",
+          "background": "#131313",
+          "on-surface": "#e5e2e1",
+          "primary-fixed": "#c6f33f",
+          "primary-container": "#c6f33f",
+          "on-primary-container": "#546d00",
+          "secondary-container": "#0351b0",
+        },
+        fontFamily: {
+          "headline": ["Epilogue"],
+          "body": ["Inter"],
+          "label": ["Inter"]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body {
+    background-color: #0e0e0e;
+    color: #e5e2e1;
+    min-height: max(884px, 100dvh);
+  }
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  details > summary { list-style: none; }
+  details > summary::-webkit-details-marker { display: none; }
+
+  /* Card signup style */
+  .rim-light { box-shadow: inset 0 1px 0 0 rgba(209,255,75,0.25); }
+  .ambient-glow { box-shadow: 0 30px 60px -12px rgba(0,0,0,0.9), 0 0 50px rgba(209,255,75,0.08); }
+
+  /* Animazione collassabile */
+  .panel-collapsible {
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1),
+                opacity 0.35s ease,
+                margin-bottom 0.35s ease;
+  }
+  .panel-collapsible.collapsed {
+    max-height: 0 !important;
+    opacity: 0;
+    margin-bottom: 0 !important;
+    pointer-events: none;
+  }
+
+  /* Input scuri con testo bianco */
+  .field-input {
+    width: 100%;
+    background: #1a1a1a;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 13px 14px;
+    font-size: 14px;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
+  }
+  .field-input:focus {
+    border-color: rgba(209,255,75,0.5);
+  }
+  .field-input::placeholder {
+    color: #555555;
+    font-weight: 400;
+  }
+  input[type="date"] { color-scheme: dark; }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.6);
+    cursor: pointer;
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+  }
+
+  /* Card torneo — pulsante cliccabile */
+  .card-torneo {
+    width: 100%;
+    text-align: left;
+    background: linear-gradient(to bottom, #252525, #1c1b1b);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-top-color: rgba(255,255,255,0.1);
+    border-radius: 1rem;
+    padding: 20px;
+    cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease;
+    display: block;
+  }
+  .card-torneo:active {
+    transform: scale(0.98);
+  }
+  .card-torneo:hover {
+    background: linear-gradient(to bottom, #2d2d2d, #222222);
+  }
+
+  /* Wrapper card con menu 3 pallini */
+  .card-torneo-wrap {
+    position: relative;
+  }
+  .card-delete-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: rgba(255,180,171,0.45);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s ease, color 0.15s ease;
+    z-index: 2;
+  }
+  .card-delete-btn:hover {
+    background: rgba(255,180,171,0.12);
+    color: #ffb4ab;
+  }
+</style>
+</head>
+<body class="font-body selection:bg-primary-container selection:text-on-primary-container">
+<div id="auth-wall" style="position:fixed;inset:0;background:#0e0e0e;z-index:99999;display:flex;align-items:center;justify-content:center;padding:24px;"><div style="width:100%;max-width:360px;"><p style="font-family:Inter,sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.18em;color:rgba(255,255,255,0.35);margin-bottom:6px;text-align:center;">GOLARSA RACE</p><h1 style="font-family:Epilogue,sans-serif;font-style:italic;font-weight:900;font-size:2.2rem;color:white;text-transform:uppercase;text-align:center;margin-bottom:32px;line-height:1;">MISSION<br><span style="color:#d1ff4b;">CONTROL</span></h1><div style="position:relative;margin-bottom:12px;"><input id="auth-input" type="password" placeholder="Password admin" autocomplete="current-password" style="width:100%;background:#1a1a1a;border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:16px 18px;font-size:16px;color:white;font-family:Inter,sans-serif;outline:none;box-sizing:border-box;"></div><p id="auth-error" style="font-family:Inter,sans-serif;font-size:11px;color:#ffb4ab;text-align:center;margin-bottom:10px;min-height:16px;"></p><button id="auth-btn" style="width:100%;background:linear-gradient(180deg,#e3ff8c 0%,#d1ff4b 100%);border:none;border-radius:16px;padding:17px;font-family:Epilogue,sans-serif;font-style:italic;font-weight:900;font-size:17px;color:#0a1a00;text-transform:uppercase;cursor:pointer;letter-spacing:0.02em;">Accedi</button></div></div>
+<main class="px-6 max-w-lg mx-auto pt-12 pb-12">
+
+  <!-- TITOLO + BOTTONE -->
+  <div class="mb-10">
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-4xl font-headline font-black italic tracking-tighter uppercase">DASHBOARD</h1>
+      <button onclick="resetTutti()" title="Cancella tutti i dati" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#ffb4ab]/20 text-[#ffb4ab] hover:bg-[#ffb4ab]/10 transition-all" style="background:rgba(147,0,10,0.15);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-family:'Inter',sans-serif">
+        <span class="material-symbols-outlined" style="font-size:14px">delete_sweep</span>
+        RESET
+      </button>
+    </div>
+    <div id="wrap-btn" class="panel-collapsible" style="max-height:120px; opacity:1;">
+      <button onclick="apriForm()" class="w-full bg-gradient-to-b from-[#252525] to-[#1c1b1b] text-[#d1ff4b] border border-white/5 border-t-white/10 font-headline font-black italic uppercase px-6 py-5 rounded-2xl flex items-center justify-center gap-3 transition-all active:scale-[0.98] shadow-2xl shadow-black/50">
+        <span class="material-symbols-outlined font-bold">add</span>
+        CREA TORNEO
+      </button>
+    </div>
+  </div>
+
+  <!-- FORM CREA TORNEO -->
+  <div id="form-torneo" class="panel-collapsible collapsed mb-10" style="max-height: 700px;">
+    <div class="bg-gradient-to-b from-[#222222] to-[#141414] rounded-[32px] px-8 pt-7 pb-8 rim-light ambient-glow border border-white/20 space-y-4">
+
+      <!-- Header -->
+      <div class="flex items-center justify-between mb-1">
+        <h2 class="text-base font-headline font-black italic uppercase tracking-tight text-white">NUOVO TORNEO</h2>
+        <button onclick="chiudiForm()" class="text-white/40 hover:text-white transition-colors">
+          <span class="material-symbols-outlined text-lg">close</span>
+        </button>
+      </div>
+
+      <!-- Nome torneo -->
+      <div class="space-y-1.5">
+        <label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/70 font-bold ml-1">NOME TORNEO</label>
+        <input id="inp-nome" type="text" placeholder="Es. Torneo 4" class="field-input" />
+      </div>
+
+      <!-- Data inizio / fine -->
+      <div class="grid grid-cols-2 gap-3">
+        <div class="space-y-1.5">
+          <label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/70 font-bold ml-1">DATA INIZIO</label>
+          <input id="inp-inizio" type="date" class="field-input" />
+        </div>
+        <div class="space-y-1.5">
+          <label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/70 font-bold ml-1">DATA FINE</label>
+          <input id="inp-fine" type="date" class="field-input" />
+        </div>
+      </div>
+
+      <!-- Max iscritti -->
+      <div class="space-y-1.5">
+        <label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/70 font-bold ml-1">NUMERO MAX ISCRITTI</label>
+        <input id="inp-max" type="number" placeholder="Es. 64" min="1" class="field-input" />
+      </div>
+
+      <!-- Termine iscrizioni -->
+      <div class="space-y-1.5">
+        <label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/70 font-bold ml-1">TERMINE ISCRIZIONI</label>
+        <input id="inp-termine" type="date" class="field-input" />
+      </div>
+
+      <!-- Bottone conferma -->
+      <button onclick="creaTorneo()"
+        style="background: linear-gradient(180deg, #e3ff8c 0%, #D1FF4B 100%); box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4);"
+        class="w-full text-[#283500] font-headline font-black italic uppercase px-6 py-4 rounded-full flex items-center justify-center gap-2 transition-all active:scale-[0.98] mt-2">
+        CREA TORNEO
+      </button>
+
+    </div>
+  </div>
+
+  <!-- TORNEI IN CORSO -->
+  <section id="sezione-tornei" class="panel-collapsible" style="max-height: 2000px; opacity: 1;">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-xl font-headline font-black italic uppercase tracking-tight">TORNEI IN CORSO</h2>
+      <div class="h-[1px] flex-1 ml-4 bg-[#494847]/30"></div>
+    </div>
+    <div id="lista-tornei" class="space-y-3">
+
+      <!-- Stato vuoto: scompare quando ci sono tornei -->
+      <p id="empty-tornei" class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-8">
+        Nessun torneo creato
+      </p>
+
+    </div>
+  </section>
+
+</main>
+
+<script>
+  const MESI = ['GENNAIO','FEBBRAIO','MARZO','APRILE','MAGGIO','GIUGNO',
+                'LUGLIO','AGOSTO','SETTEMBRE','OTTOBRE','NOVEMBRE','DICEMBRE'];
+
+  function formatData(str) {
+    if (!str) return '—';
+    const [y, m, d] = str.split('-');
+    return `${parseInt(d)} ${MESI[parseInt(m) - 1]} ${y}`;
+  }
+
+  function apriForm() {
+    document.getElementById('sezione-tornei').classList.add('collapsed');
+    document.getElementById('wrap-btn').classList.add('collapsed');
+    setTimeout(() => {
+      document.getElementById('form-torneo').classList.remove('collapsed');
+    }, 60);
+  }
+
+  function chiudiForm() {
+    document.getElementById('form-torneo').classList.add('collapsed');
+    setTimeout(() => {
+      document.getElementById('sezione-tornei').classList.remove('collapsed');
+      document.getElementById('wrap-btn').classList.remove('collapsed');
+    }, 80);
+  }
+
+  function creaTorneo() {
+    const nome    = document.getElementById('inp-nome').value.trim();
+    const inizio  = document.getElementById('inp-inizio').value;
+    const fine    = document.getElementById('inp-fine').value;
+    const maxIsc  = parseInt(document.getElementById('inp-max').value) || 0;
+
+    if (!nome) {
+      document.getElementById('inp-nome').focus();
+      return;
+    }
+
+    const dateLabel = (inizio || fine)
+      ? `${formatData(inizio)} – ${formatData(fine)}`
+      : '—';
+
+    // Crea la card cliccabile e la aggiunge alla lista
+    const id = 'torneo-' + Date.now();
+
+    const wrap = document.createElement('div');
+    wrap.className = 'card-torneo-wrap';
+    wrap.id = id;
+
+    const btn = document.createElement('button');
+    btn.className = 'card-torneo';
+    btn.onclick = () => apriTorneo(id);
+    btn.innerHTML = `
+      <h3 class="text-sm font-headline font-black italic text-white uppercase tracking-tight pr-8">${nome.toUpperCase()}</h3>
+      <span class="text-[#D1FF4B] text-[9px] font-black italic mt-1 block">${dateLabel}</span>
+    `;
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'card-delete-btn';
+    deleteBtn.title = 'Elimina torneo';
+    deleteBtn.onclick = (e) => { e.stopPropagation(); cancellaTorneo(id); };
+    deleteBtn.innerHTML = `<span class="material-symbols-outlined" style="font-size:20px">delete</span>`;
+
+    wrap.appendChild(btn);
+    wrap.appendChild(deleteBtn);
+
+    // Inserisce in cima alla lista
+    const lista = document.getElementById('lista-tornei');
+    lista.insertBefore(wrap, lista.firstChild);
+
+    // Salva metadati torneo in localStorage
+    const meta = { nome, inizio, fine, maxIscritti: maxIsc };
+    localStorage.setItem('gr_torneo_meta_' + id, JSON.stringify(meta));
+
+    // Reset campi
+    ['inp-nome','inp-inizio','inp-fine','inp-max','inp-termine']
+      .forEach(id => document.getElementById(id).value = '');
+
+    chiudiForm();
+  }
+
+  function apriTorneo(id) {
+    localStorage.setItem('gr_torneo_id', id);
+    window.location.href = 'home_dashboard/home_dashbaord.html';
+  }
+
+  function cancellaTorneo(id) {
+    if (!confirm('Eliminare questo torneo?')) return;
+    // Rimuovi dal DOM
+    const wrap = document.getElementById(id);
+    if (wrap) wrap.remove();
+    // Rimuovi da localStorage
+    Object.keys(localStorage)
+      .filter(k => k.includes(id))
+      .forEach(k => localStorage.removeItem(k));
+    // Se era il torneo attivo, pulisci
+    if (localStorage.getItem('gr_torneo_id') === id) {
+      localStorage.removeItem('gr_torneo_id');
+    }
+    // Mostra stato vuoto se non ci sono più tornei
+    const lista = document.getElementById('lista-tornei');
+    const cards = lista.querySelectorAll('.card-torneo-wrap');
+    document.getElementById('empty-tornei').style.display = cards.length === 0 ? '' : 'none';
+  }
+
+  function resetTutti() {
+    if (!confirm('Cancella tutti i tornei e i relativi dati?')) return;
+    // Rimuove tutte le chiavi golarsa_ e gr_
+    Object.keys(localStorage)
+      .filter(k => k.startsWith('golarsa_') || k.startsWith('gr_'))
+      .forEach(k => localStorage.removeItem(k));
+    window.location.reload();
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../../src/storage-manager.js?v=14"></script>
+<script src="../../src/ui-binder.js?v=14"></script>
+<script src="../../src/main.js?v=14"></script>
+
+<script>
+(function(){
+  var HASH="a171686d707570c856c3e1fc59df6a4a342715d5b5aae12583dfaaab9e02bfb3";
+  if(sessionStorage.getItem("gr_admin_auth")==="1"){var w=document.getElementById("auth-wall");if(w)w.style.display="none";return;}
+  document.body.style.overflow="hidden";
+  async function check(){
+    var val=document.getElementById("auth-input").value;
+    if(!val)return;
+    var buf=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(val));
+    var hash=Array.from(new Uint8Array(buf)).map(function(b){return b.toString(16).padStart(2,"0");}).join("");
+    if(hash===HASH){
+      sessionStorage.setItem("gr_admin_auth","1");
+      var w=document.getElementById("auth-wall");
+      w.style.transition="opacity 0.3s ease";w.style.opacity="0";
+      setTimeout(function(){w.style.display="none";document.body.style.overflow="";},300);
+    } else {
+      var err=document.getElementById("auth-error");
+      err.textContent="Password errata.";
+      var inp=document.getElementById("auth-input");
+      inp.style.borderColor="rgba(255,100,80,0.5)";inp.value="";
+      setTimeout(function(){inp.style.borderColor="rgba(255,255,255,0.1)";err.textContent="";},2000);
+    }
+  }
+  document.getElementById("auth-btn").addEventListener("click",check);
+  document.getElementById("auth-input").addEventListener("keydown",function(e){if(e.key==="Enter")check();});
+  setTimeout(function(){document.getElementById("auth-input").focus();},100);
+})();
+</script>
+</body></html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html class="dark" lang="it">
+<head>
+<script>if(sessionStorage.getItem("gr_admin_auth")!=="1"){location.replace("../../accesso_dashboard.html");}</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PODIUM ADMIN - CONTESTAZIONI</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;1,900&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-fixed": "#001a42",
+            "surface-bright": "#3a3939",
+            "primary": "#ffffff",
+            "secondary": "#aec6ff",
+            "primary-container": "#c6f33f",
+            "on-primary-fixed": "#161f00",
+            "surface-variant": "#353534",
+            "on-primary-fixed-variant": "#3b4d00",
+            "on-error-container": "#ffdad6",
+            "outline": "#8e937b",
+            "on-secondary-container": "#b3c9ff",
+            "on-primary-container": "#546d00",
+            "inverse-surface": "#e5e2e1",
+            "primary-fixed": "#c6f33f",
+            "on-surface-variant": "#c4c9af",
+            "surface-container-highest": "#353534",
+            "surface-dim": "#131313",
+            "surface-container-high": "#2a2a2a",
+            "on-error": "#690005",
+            "background": "#131313",
+            "on-tertiary": "#680009",
+            "surface-container-lowest": "#0e0e0e",
+            "error": "#ffb4ab",
+            "surface-container-low": "#1c1b1b",
+            "on-tertiary-fixed": "#410004",
+            "on-secondary-fixed-variant": "#004395",
+            "secondary-fixed": "#d8e2ff",
+            "secondary-fixed-dim": "#aec6ff",
+            "tertiary": "#ffffff",
+            "inverse-primary": "#4f6600",
+            "on-surface": "#e5e2e1",
+            "on-primary": "#283500",
+            "tertiary-fixed-dim": "#ffb3ad",
+            "secondary-container": "#0351b0",
+            "on-background": "#e5e2e1",
+            "tertiary-fixed": "#ffdad7",
+            "on-secondary": "#002e6a",
+            "primary-fixed-dim": "#aad61e",
+            "outline-variant": "#444935",
+            "inverse-on-surface": "#313030",
+            "tertiary-container": "#ffdad7",
+            "surface-container": "#201f1f",
+            "surface": "#131313",
+            "on-tertiary-container": "#c71623",
+            "surface-tint": "#aad61e",
+            "on-tertiary-fixed-variant": "#930012",
+            "error-container": "#93000a"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          fontFamily: {
+            "headline": ["Epilogue"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+    .bg-noise {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 200px 200px;
+      opacity: 0.04;
+    }
+    .cinematic-card {
+      background: linear-gradient(180deg, #2a2a2a 0%, #222222 100%);
+      box-shadow: 0 4px 24px -2px rgba(0,0,0,0.5), inset 0 1px 1px 0 rgba(255,255,255,0.1);
+    }
+    .cinematic-icon {
+      background: linear-gradient(180deg, #2a2a2a 0%, #222222 100%);
+      box-shadow: 0 2px 8px -1px rgba(0,0,0,0.4), inset 0 1px 1px 0 rgba(255,255,255,0.1);
+    }
+    .ambient-glow {
+      box-shadow: 0 30px 60px -12px rgba(0,0,0,0.9), 0 0 50px rgba(255,180,171,0.06);
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .anim-fade-up   { opacity: 0; animation: fadeInUp   0.5s ease forwards; }
+    .anim-fade-down { opacity: 0; animation: fadeInDown 0.4s ease forwards; }
+    .contest-card { opacity: 0; animation: fadeInUp 0.45s ease forwards; }
+    .contest-card:nth-child(1) { animation-delay: 0.10s; }
+    .contest-card:nth-child(2) { animation-delay: 0.18s; }
+    .contest-card:nth-child(3) { animation-delay: 0.26s; }
+    .contest-card:nth-child(4) { animation-delay: 0.34s; }
+    .contest-card:nth-child(5) { animation-delay: 0.42s; }
+
+    body { min-height: max(884px, 100dvh); }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* ─── Hamburger Drawer ─── */
+    .drawer-backdrop {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      z-index: 300;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .drawer-backdrop.open { opacity: 1; pointer-events: all; }
+    .drawer-panel {
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: 72vw; max-width: 280px;
+      background: #1a1a1a;
+      box-shadow: -8px 0 40px rgba(0,0,0,0.6), inset 1px 0 0 rgba(255,255,255,0.06);
+      transform: translateX(100%);
+      transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex; flex-direction: column;
+      padding: 0 0 40px;
+    }
+    .drawer-backdrop.open .drawer-panel { transform: translateX(0); }
+
+    /* ─── Nav Icon Bar ─── */
+    .nav-slider { display: flex; gap: 6px; }
+    .nav-tab {
+      display: flex; align-items: center; justify-content: center; flex-direction: column;
+      flex: 1;
+      padding: 9px 4px 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+      cursor: pointer;
+      background: transparent;
+      color: #6b7280;
+      gap: 3px;
+    }
+    .nav-tab.active {
+      background: #ffb4ab;
+      color: #93000a;
+      border-color: transparent;
+    }
+    .nav-tab:not(.active):hover {
+      background: rgba(255,255,255,0.05);
+      color: #e5e2e1;
+    }
+    .nav-tab .nav-label {
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-family: 'Inter', sans-serif;
+      line-height: 1;
+      opacity: 0.85;
+    }
+
+    /* ─── Score display ─── */
+    .score-badge {
+      font-family: 'Epilogue', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: 1.4rem;
+      letter-spacing: -0.04em;
+      color: #ffb4ab;
+      line-height: 1;
+    }
+    .vs-dot {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.25);
+      text-transform: uppercase;
+    }
+
+    /* ─── Alert banner ─── */
+    .alert-banner {
+      background: linear-gradient(135deg, rgba(147,0,10,0.3) 0%, rgba(93,0,5,0.2) 100%);
+      border: 1px solid rgba(255,180,171,0.2);
+      border-radius: 16px;
+      padding: 14px 16px;
+    }
+
+    /* ─── Page transition ─── */
+    #page-out {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #0e0e0e;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.18s ease;
+    }
+    #page-out.active { opacity: 1; pointer-events: all; }
+  </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+
+  <div id="page-out"></div>
+
+  <!-- ─── Header ─── -->
+  <header class="fixed top-0 w-full z-50 bg-[#0e0e0e] backdrop-blur-xl bg-opacity-90 flex justify-between items-center px-6 py-4 h-16 border-b border-white/[0.04]">
+    <div class="flex items-center gap-3">
+      <button onclick="navigateTo('../home_dashbaord.html')" class="flex items-center justify-center w-9 h-9 rounded-full hover:bg-white/5 transition-colors">
+        <span class="material-symbols-outlined text-gray-400 text-xl">arrow_back</span>
+      </button>
+      <img alt="GA Race" class="h-5 w-auto" src="../../../assets/GA-RACE.png">
+    </div>
+    <button onclick="openDrawer()" class="flex items-center justify-center w-9 h-9 rounded-full hover:bg-white/5 transition-colors">
+      <span class="material-symbols-outlined text-[#ffb4ab] text-2xl">menu</span>
+    </button>
+  </header>
+
+  <main class="pt-28 px-4 max-w-md mx-auto pb-12">
+
+    <!-- ─── Title ─── -->
+    <section class="mb-6">
+      <h2 class="text-4xl font-black italic tracking-tighter font-headline uppercase leading-none anim-fade-down" style="animation-delay:0.1s">CONTESTAZIONI</h2>
+      <p class="font-label text-[0.62rem] text-gray-500 uppercase tracking-widest mt-1.5 anim-fade-down" style="animation-delay:0.18s">
+        GOLARSA RACE · STAGIONE 2026 ·
+        <span id="contestazioni-count" class="text-[#ffb4ab] font-bold">0</span> APERTE
+      </p>
+    </section>
+
+    <!-- ─── Nav Icon Bar ─── -->
+    <section class="mb-6 anim-fade-down" style="animation-delay:0.22s">
+      <div class="nav-slider">
+        <button class="nav-tab" onclick="navigateTo('../home_dashbaord.html')" title="Dashboard">
+          <span class="material-symbols-outlined text-[1.25rem]">dashboard</span>
+          <span class="nav-label">Home</span>
+        </button>
+        <button class="nav-tab" onclick="navigateTo('../iscrizioni_dashbaord/iscrizioni_dashboard.html')" title="Iscrizioni">
+          <span class="material-symbols-outlined text-[1.25rem]">person_add</span>
+          <span class="nav-label">Iscrizioni</span>
+        </button>
+        <button class="nav-tab" onclick="navigateTo('../giocatori_dashboard/giocatori_dashboard.html')" title="Giocatori">
+          <span class="material-symbols-outlined text-[1.25rem]">group</span>
+          <span class="nav-label">Giocatori</span>
+        </button>
+        <button class="nav-tab" onclick="navigateTo('../match_dashboard/match_dashboard.html')" title="Match">
+          <span class="material-symbols-outlined text-[1.25rem]">sports_tennis</span>
+          <span class="nav-label">Match</span>
+        </button>
+        <button class="nav-tab active" title="Contestazioni">
+          <span class="material-symbols-outlined text-[1.25rem]" style="font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24">gavel</span>
+          <span class="nav-label">Contesta</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ─── Info banner ─── -->
+    <section class="mb-6 anim-fade-up" style="animation-delay:0.28s">
+      <div class="alert-banner flex items-start gap-3">
+        <span class="material-symbols-outlined text-[#ffb4ab] text-lg flex-shrink-0 mt-0.5">info</span>
+        <div>
+          <p class="font-label text-[0.65rem] font-bold text-[#ffb4ab] uppercase tracking-wider mb-1">Come funziona</p>
+          <p class="font-label text-[0.62rem] text-gray-400 leading-relaxed">
+            Quando un avversario contesta un risultato, la partita appare qui. Puoi <strong class="text-white">confermare</strong> il punteggio inviato (classifica si aggiorna) oppure <strong class="text-white">annullare</strong> il match (torna a programmata, da rigiocare).
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Lista contestazioni ─── -->
+    <section id="contestazioni-list" class="anim-fade-up" style="animation-delay:0.34s">
+      <p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-12">Caricamento...</p>
+    </section>
+
+  </main>
+
+  <!-- Grain Overlay -->
+  <div class="fixed inset-0 pointer-events-none bg-noise z-[100]"></div>
+
+  <!-- ─── Hamburger Drawer ─── -->
+  <div id="drawer-backdrop" class="drawer-backdrop" onclick="closeDrawer(event)">
+    <div class="drawer-panel">
+      <div class="flex items-center justify-between px-6 h-16 border-b border-white/[0.06]">
+        <img alt="GA Race" class="h-5 w-auto opacity-60" src="../../../assets/GA-RACE.png">
+        <button onclick="closeDrawer()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/5 transition-colors">
+          <span class="material-symbols-outlined text-gray-500 text-xl">close</span>
+        </button>
+      </div>
+      <nav class="flex-1 px-4 pt-6 flex flex-col gap-1">
+        <a href="#" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-colors group">
+          <span class="material-symbols-outlined text-gray-500 text-lg group-hover:text-gray-300 transition-colors">settings</span>
+          <span class="font-label text-[0.75rem] font-semibold text-gray-300 uppercase tracking-wider">Impostazioni</span>
+        </a>
+        <a href="#" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-colors group">
+          <span class="material-symbols-outlined text-gray-500 text-lg group-hover:text-gray-300 transition-colors">description</span>
+          <span class="font-label text-[0.75rem] font-semibold text-gray-300 uppercase tracking-wider">Termini e Condizioni</span>
+        </a>
+        <a href="#" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-colors group">
+          <span class="material-symbols-outlined text-gray-500 text-lg group-hover:text-gray-300 transition-colors">policy</span>
+          <span class="font-label text-[0.75rem] font-semibold text-gray-300 uppercase tracking-wider">Privacy Policy</span>
+        </a>
+      </nav>
+      <div class="px-4 pt-2">
+        <div class="h-px bg-white/[0.06] mb-4"></div>
+        <a href="#" onclick="['gr_role','gr_user_id','gr_user_email'].forEach(k=>localStorage.removeItem(k));window.location.href='../../../signup/signup.html';return false;" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-red-500/10 transition-colors group">
+          <span class="material-symbols-outlined text-[#ffb4ab] text-lg">logout</span>
+          <span class="font-label text-[0.75rem] font-bold text-[#ffb4ab] uppercase tracking-wider">Esci</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function navigateTo(url) {
+      var overlay = document.getElementById('page-out');
+      if (overlay) overlay.classList.add('active');
+      setTimeout(function() { location.href = url; }, 180);
+    }
+
+    function openDrawer() {
+      document.getElementById('drawer-backdrop').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer(e) {
+      if (e && e.target !== e.currentTarget) return;
+      document.getElementById('drawer-backdrop').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="../../../../src/storage-manager.js?v=14"></script>
+  <script src="../../../../src/ui-binder.js?v=14"></script>
+  <script src="../../../../src/main.js?v=14"></script>
+</body>
+</html>

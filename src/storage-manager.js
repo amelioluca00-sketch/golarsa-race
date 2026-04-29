@@ -1,0 +1,473 @@
+/**
+ * storage-manager.js
+ * Data layer Supabase per Golarsa Race.
+ * Tutte le funzioni di scrittura sono async.
+ * Le funzioni di lettura leggono da una cache in memoria,
+ * caricata con SM.load(torneoId) prima del render.
+ */
+
+(function () {
+  var SUPABASE_URL = 'https://efkavbdfzhyuixuvgtqd.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_pBMN8gWe5KDrAAPvAAIMkQ_g8GI-KzP';
+  var db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // ── Cache in memoria ──────────────────────────────────────────────
+  // Struttura: { [torneoId]: { torneo, players, matches, standings } }
+  var _cache = {};
+
+  // ── Helpers ───────────────────────────────────────────────────────
+  function playerFromRow(row) {
+    return Object.assign({}, row.payload, { id: row.id, email: row.email, stato: row.stato });
+  }
+  function matchFromRow(row) {
+    return Object.assign({}, row.payload, { id: row.id, stato: row.stato });
+  }
+  function torneoFromRow(t) {
+    return {
+      id:          t.id,
+      nome:        t.nome,
+      inizio:      t.inizio,
+      fine:        t.fine,
+      maxIscritti: t.max_iscritti,
+      stato:       t.stato,
+      standings:   t.standings || [],
+    };
+  }
+
+  var SM = {
+
+    // ── CARICAMENTO (async, popola cache) ─────────────────────────
+
+    /** Carica dati completi di un torneo in cache. Restituisce i dati. */
+    load: async function (torneoId) {
+      if (!torneoId) return null;
+      var tRes = await db.from('tournaments').select('*').eq('id', torneoId).single();
+      if (!tRes.data) return null;
+      var pRes = await db.from('players').select('*').eq('tournament_id', torneoId);
+      var mRes = await db.from('matches').select('*').eq('tournament_id', torneoId);
+      var torneo    = torneoFromRow(tRes.data);
+      var players   = (pRes.data || []).map(playerFromRow);
+      var matches   = (mRes.data || []).map(matchFromRow);
+      var standings = tRes.data.standings || [];
+      var data = { torneo, players, matches, standings: standings };
+      _cache[torneoId] = data;
+
+      // Auto-heal: standings vuoti ma giocatori approvati → ricalcola una volta
+      var hasApproved = players.some(function (p) { return p.stato === 'approvato'; });
+      if (!standings.length && hasApproved) {
+        await SM._recompute(torneoId, players, matches);
+        // Rileggi standings aggiornati dal server
+        var healed = await db.from('tournaments').select('standings').eq('id', torneoId).single();
+        if (healed.data) {
+          data.standings = healed.data.standings || [];
+          _cache[torneoId].standings = data.standings;
+          if (_cache[torneoId].torneo) _cache[torneoId].torneo.standings = data.standings;
+        }
+      }
+
+      return data;
+    },
+
+    /** Carica lista tornei e la restituisce (non va in cache per-torneo). */
+    loadTournaments: async function () {
+      var res = await db.from('tournaments').select('*').order('created_at', { ascending: false });
+      return (res.data || []).map(torneoFromRow);
+    },
+
+    // ── LETTURE SINCRONE (dalla cache) ─────────────────────────────
+
+    getTournamentData: function (id) {
+      return _cache[id] || null;
+    },
+
+    getPlayers: function (id) {
+      return (_cache[id] || {}).players || [];
+    },
+
+    getMatches: function (id) {
+      return (_cache[id] || {}).matches || [];
+    },
+
+    // ── SCRITTURE ASYNC ───────────────────────────────────────────
+
+    /** Crea o aggiorna un torneo. */
+    saveTournament: async function (torneo) {
+      var res = await db.from('tournaments').upsert({
+        id:          torneo.id,
+        nome:        torneo.nome,
+        inizio:      torneo.inizio  || null,
+        fine:        torneo.fine    || null,
+        max_iscritti: torneo.maxIscritti || 0,
+        stato:       torneo.stato   || 'in corso',
+        standings:   torneo.standings || [],
+      });
+      if (res.error) console.error('[SM] saveTournament:', res.error);
+    },
+
+    /** Elimina un torneo (cascade su players e matches). */
+    deleteTournament: async function (torneoId) {
+      await db.from('tournaments').delete().eq('id', torneoId);
+      delete _cache[torneoId];
+    },
+
+    /** Elimina tutti i tornei (cascade su players e matches). */
+    clearAll: async function () {
+      await db.from('tournaments').delete().neq('id', '');
+      _cache = {};
+    },
+
+    /** Sovrascrive la lista giocatori di un torneo + ricalcola standings.
+     *  Usa upsert + delete selettivo per evitare finestre di perdita dati. */
+    savePlayers: async function (torneoId, players) {
+      // 1. Leggi gli ID attualmente presenti nel DB
+      var existingRes = await db.from('players').select('id').eq('tournament_id', torneoId);
+      var existingIds = (existingRes.data || []).map(function (r) { return r.id; });
+      var newIds = players.map(function (p) { return p.id; });
+
+      // 2. Upsert tutti i giocatori dell'array (insert o update, mai delete totale)
+      if (players.length) {
+        var rows = players.map(function (p) {
+          return { id: p.id, tournament_id: torneoId, email: p.email || '', stato: p.stato || 'pendente', payload: p };
+        });
+        var res = await db.from('players').upsert(rows);
+        if (res.error) console.error('[SM] savePlayers upsert:', res.error);
+      }
+
+      // 3. Cancella solo i giocatori rimossi dall'array
+      var toDelete = existingIds.filter(function (id) { return newIds.indexOf(id) === -1; });
+      if (toDelete.length) {
+        var delRes = await db.from('players').delete().in('id', toDelete);
+        if (delRes.error) console.error('[SM] savePlayers delete:', delRes.error);
+      }
+
+      await SM._recompute(torneoId, players, null);
+    },
+
+    /** Sovrascrive la lista partite di un torneo + ricalcola stats.
+     *  Usa upsert + delete selettivo per evitare finestre di perdita dati. */
+    saveMatches: async function (torneoId, matches) {
+      // 1. Leggi gli ID attualmente presenti nel DB
+      var existingRes = await db.from('matches').select('id').eq('tournament_id', torneoId);
+      var existingIds = (existingRes.data || []).map(function (r) { return r.id; });
+      var newIds = matches.map(function (m) { return m.id; });
+
+      // 2. Upsert tutti i match dell'array (insert o update, mai delete totale)
+      if (matches.length) {
+        var rows = matches.map(function (m) {
+          return { id: m.id, tournament_id: torneoId, stato: m.stato || 'programmata', payload: m };
+        });
+        var res = await db.from('matches').upsert(rows);
+        if (res.error) console.error('[SM] saveMatches upsert:', res.error);
+      }
+
+      // 3. Cancella solo i match rimossi dall'array
+      var toDelete = existingIds.filter(function (id) { return newIds.indexOf(id) === -1; });
+      if (toDelete.length) {
+        var delRes = await db.from('matches').delete().in('id', toDelete);
+        if (delRes.error) console.error('[SM] saveMatches delete:', delRes.error);
+      }
+
+      await SM._recompute(torneoId, null, matches);
+    },
+
+    /** Cambia stato iscrizione (pendente → approvato/rifiutato). */
+    updatePlayerStatus: async function (torneoId, playerId, stato) {
+      // Aggiorna riga player
+      var pRes = await db.from('players').select('payload').eq('id', playerId).single();
+      if (pRes.data) {
+        var payload = Object.assign({}, pRes.data.payload, { stato: stato });
+        await db.from('players').update({ stato: stato, payload: payload }).eq('id', playerId);
+      }
+      // Ricarica tutti i giocatori del torneo e ricalcola standings da zero
+      // (il semplice map non aggiunge nuovi giocatori se non erano già in standings)
+      var allRes = await db.from('players').select('*').eq('tournament_id', torneoId);
+      var freshPlayers = (allRes.data || []).map(playerFromRow);
+      var mRes = await db.from('matches').select('*').eq('tournament_id', torneoId);
+      var freshMatches = (mRes.data || []).map(matchFromRow);
+      await SM._recompute(torneoId, freshPlayers, freshMatches);
+    },
+
+    /** Aggiunge un singolo match in attesa di approvazione (non sovrascrive gli esistenti). */
+    addPendingMatch: async function (torneoId, matchData) {
+      var id = matchData.id || ('match_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5));
+      var match = Object.assign({}, matchData, { id: id, stato: 'in_attesa', inviato_il: new Date().toISOString() });
+      var res = await db.from('matches').insert({
+        id:            id,
+        tournament_id: torneoId,
+        stato:         'in_attesa',
+        payload:       match,
+      });
+      if (res.error) { console.error('[SM] addPendingMatch:', res.error); return null; }
+      return match;
+    },
+
+    /**
+     * Salva i punti di un singolo giocatore senza rieseguire _recompute.
+     * Usato per le modifiche manuali alla classifica dalla dashboard.
+     */
+    saveManualPoints: async function (torneoId, playerId, newPunti) {
+      // 1. Aggiorna il payload del giocatore in DB
+      var pRes = await db.from('players').select('payload').eq('id', playerId).single();
+      if (!pRes.data) { console.error('[SM] saveManualPoints: giocatore non trovato', playerId); return; }
+
+      // Registra il timestamp del reset manuale e il valore base impostato dall'admin.
+      // _recompute() userà stats_reset_at per ignorare i match precedenti a questa data,
+      // e partirà da punti_base invece che da 0. In questo modo le modifiche manuali
+      // sopravvivono ai ricalcoli successivi (es. approvazione match contestati).
+      var resetAt = new Date().toISOString();
+      var payload = Object.assign({}, pRes.data.payload, {
+        punti:          newPunti,
+        punti_base:     newPunti,
+        stats_reset_at: resetAt,
+      });
+      var updRes = await db.from('players').update({ payload: payload }).eq('id', playerId);
+      if (updRes.error) { console.error('[SM] saveManualPoints player update:', updRes.error); }
+
+      // 2. Usa la cache per costruire i nuovi standings (evita read-after-write stale)
+      //    Poi aggiorna il giocatore direttamente nell'array in memoria.
+      var allPlayers;
+      if (_cache[torneoId] && _cache[torneoId].players && _cache[torneoId].players.length) {
+        allPlayers = _cache[torneoId].players.map(function (p) { return Object.assign({}, p); });
+        var target = allPlayers.find(function (p) { return p.id === playerId; });
+        if (target) { target.punti = newPunti; target.punti_base = newPunti; target.stats_reset_at = resetAt; }
+      } else {
+        // Fallback: rilegge dal DB (improbabile ma sicuro)
+        var allRes = await db.from('players').select('*').eq('tournament_id', torneoId);
+        allPlayers = (allRes.data || []).map(playerFromRow);
+        var t2 = allPlayers.find(function (p) { return p.id === playerId; });
+        if (t2) { t2.punti = newPunti; t2.punti_base = newPunti; t2.stats_reset_at = resetAt; }
+      }
+
+      // 3. Ricalcola classifica (solo ordinamento, nessun reset delle stats)
+      var standings = allPlayers.slice()
+        .sort(function (a, b) {
+          if (b.punti !== a.punti) return b.punti - a.punti;
+          if (b.vittorie !== a.vittorie) return b.vittorie - a.vittorie;
+          return (b.gol_fatti - b.gol_subiti) - (a.gol_fatti - a.gol_subiti);
+        })
+        .map(function (p, i) { return Object.assign({}, p, { rank: i + 1 }); });
+
+      // 4. Salva standings su Supabase (home page li legge da qui)
+      var stRes = await db.from('tournaments').update({ standings: standings }).eq('id', torneoId);
+      if (stRes.error) { console.error('[SM] saveManualPoints standings update:', stRes.error); }
+
+      // 5. Aggiorna cache locale
+      if (_cache[torneoId]) {
+        _cache[torneoId].players   = allPlayers;
+        _cache[torneoId].standings = standings;
+        if (_cache[torneoId].torneo) _cache[torneoId].torneo.standings = standings;
+      }
+    },
+
+    /** Aggiorna lo stato di un singolo match e ricalcola le standings. */
+    updateMatchStatus: async function (torneoId, matchId, newStato, extraPayload) {
+      var mRes = await db.from('matches').select('payload').eq('id', matchId).single();
+      if (mRes.data) {
+        // Quando il match diventa "completata" (approvato o 24h scadute),
+        // aggiorna il campo "data" con la data locale odierna così "ultimi match"
+        // mostra la data in cui il risultato è diventato ufficiale.
+        var dataExtra = {};
+        if (newStato === 'completata') {
+          var now = new Date();
+          var dataOggi = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+          dataExtra = { data: dataOggi, date: dataOggi };
+        }
+        var payload = Object.assign({}, mRes.data.payload, { stato: newStato }, dataExtra, extraPayload || {});
+        await db.from('matches').update({ stato: newStato, payload: payload }).eq('id', matchId);
+      }
+      var allRes  = await db.from('players').select('*').eq('tournament_id', torneoId);
+      var freshPlayers = (allRes.data || []).map(playerFromRow);
+      var allMRes = await db.from('matches').select('*').eq('tournament_id', torneoId);
+      var freshMatches = (allMRes.data || []).map(matchFromRow);
+      await SM._recompute(torneoId, freshPlayers, freshMatches);
+      if (_cache[torneoId]) _cache[torneoId].matches = freshMatches;
+    },
+
+    /** Salva una nuova iscrizione utente (stato = pendente). */
+    registerPlayer: async function (torneoId, playerData) {
+      var id = 'player_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+      var player = Object.assign({}, playerData, {
+        id: id,
+        vittorie: 0, pareggi: 0, sconfitte: 0,
+        gol_fatti: 0, gol_subiti: 0, punti: 0, match_giocati: 0,
+        rank: 0, stato: 'pendente',
+      });
+      var res = await db.from('players').insert({
+        id:            id,
+        tournament_id: torneoId,
+        email:         playerData.email || '',
+        stato:         'pendente',
+        payload:       player,
+      });
+      if (res.error) { console.error('[SM] registerPlayer:', res.error); return null; }
+      return player;
+    },
+
+    // ── RICALCOLO STANDINGS ───────────────────────────────────────
+
+    _recompute: async function (torneoId, playersOverride, matchesOverride) {
+      var players = playersOverride !== null ? playersOverride : SM.getPlayers(torneoId);
+      var matches = matchesOverride  !== null ? matchesOverride  : SM.getMatches(torneoId);
+      if (!players.length) return;
+
+      // reset stats — i punti partono dal valore base impostato manualmente (punti_base),
+      // così i reset admin sopravvivono ai ricalcoli successivi.
+      players.forEach(function (p) {
+        p.vittorie = 0; p.pareggi = 0; p.sconfitte = 0;
+        p.gol_fatti = 0; p.gol_subiti = 0;
+        p.punti = p.punti_base || 0;   // ← base manuale admin (0 se mai resettato)
+        p.match_giocati = 0;
+      });
+
+      var byId = {};
+      players.forEach(function (p) { byId[p.id] = p; });
+
+      // Determina la data di inizio torneo per distinguere Fase 1 / Fase 2
+      var torneo = (_cache[torneoId] || {}).torneo || null;
+      var inizioDate = torneo && torneo.inizio ? new Date(torneo.inizio) : null;
+
+      // Ordina per data: fondamentale per il calcolo corretto del bonus upset (punti pre-partita)
+      var completedMatches = matches
+        .filter(function (m) { return m.stato === 'completata'; })
+        .sort(function (a, b) { return (a.data || a.date || '').localeCompare(b.data || b.date || ''); });
+
+      completedMatches.forEach(function (m) {
+        var p1 = byId[m.giocatore1_id], p2 = byId[m.giocatore2_id];
+        if (!p1 || !p2) return;
+        var s1 = +m.score1 || 0, s2 = +m.score2 || 0;
+        var matchDate = m.data || m.date;
+
+        // ── Filtro reset manuale ─────────────────────────────────────────
+        // Confronta il timestamp di invio del match (inviato_il) con la data
+        // di reset del giocatore (stats_reset_at). Se il match è stato inviato
+        // PRIMA del reset → ignoralo.
+        // inviato_il è un ISO timestamp pieno: il confronto stringa funziona.
+        // Fallback per match inseriti dall'admin (senza inviato_il): usa la data
+        // di gioco troncata al giorno.
+        var inviatoIl = m.inviato_il || null;
+        if (inviatoIl) {
+          if (p1.stats_reset_at && inviatoIl < p1.stats_reset_at) return;
+          if (p2.stats_reset_at && inviatoIl < p2.stats_reset_at) return;
+        } else if (matchDate) {
+          var matchDay = String(matchDate).substring(0, 10);
+          var r1 = p1.stats_reset_at ? String(p1.stats_reset_at).substring(0, 10) : null;
+          var r2 = p2.stats_reset_at ? String(p2.stats_reset_at).substring(0, 10) : null;
+          if (r1 && matchDay < r1) return;
+          if (r2 && matchDay < r2) return;
+        }
+        // ────────────────────────────────────────────────────────────────
+
+        // Fase 1 = prime 7 giorni dall'inizio torneo: solo game points, nessun bonus
+        var isFase1 = false;
+        if (inizioDate && matchDate) {
+          var mDate = new Date(matchDate);
+          isFase1 = (mDate - inizioDate) / (1000 * 60 * 60 * 24) < 7;
+        }
+
+        // Cattura punti pre-partita per il calcolo del bonus upset
+        var preP1 = p1.punti;
+        var preP2 = p2.punti;
+
+        p1.match_giocati++; p2.match_giocati++;
+        p1.gol_fatti += s1; p1.gol_subiti += s2;
+        p2.gol_fatti += s2; p2.gol_subiti += s1;
+
+        // Punti base: +10 per ogni game vinto (attivi in tutte le fasi)
+        p1.punti += s1 * 10;
+        p2.punti += s2 * 10;
+
+        if (s1 > s2) {
+          // p1 vince
+          p1.vittorie++; p2.sconfitte++;
+          if (!isFase1) {
+            // Bonus vittoria: scala in base alla differenza di punti pre-partita
+            var diff1 = Math.abs(preP1 - preP2);
+            p1.punti += diff1 <= 50 ? 10 : diff1 <= 150 ? 20 : 30;
+            // Bonus dominanza: vittoria con almeno 4 game di scarto
+            if (s1 - s2 >= 4) p1.punti += 10;
+          }
+        } else if (s2 > s1) {
+          // p2 vince
+          p2.vittorie++; p1.sconfitte++;
+          if (!isFase1) {
+            // Bonus vittoria: scala in base alla differenza di punti pre-partita
+            var diff2 = Math.abs(preP1 - preP2);
+            p2.punti += diff2 <= 50 ? 10 : diff2 <= 150 ? 20 : 30;
+            // Bonus dominanza: vittoria con almeno 4 game di scarto
+            if (s2 - s1 >= 4) p2.punti += 10;
+          }
+        } else {
+          // Pareggio: solo game points (nessun bonus)
+          p1.pareggi++; p2.pareggi++;
+        }
+      });
+
+      // Aggiorna stats di ogni giocatore su Supabase
+      for (var i = 0; i < players.length; i++) {
+        var p = players[i];
+        await db.from('players').update({
+          stato:   p.stato || 'pendente',
+          payload: p,
+        }).eq('id', p.id);
+      }
+
+      // Calcola standings e salva
+      var standings = players.slice()
+        .sort(function (a, b) {
+          if (b.punti    !== a.punti)    return b.punti    - a.punti;
+          if (b.vittorie !== a.vittorie) return b.vittorie - a.vittorie;
+          return (b.gol_fatti - b.gol_subiti) - (a.gol_fatti - a.gol_subiti);
+        })
+        .map(function (p, i) { return Object.assign({}, p, { rank: i + 1 }); });
+
+      await db.from('tournaments').update({ standings: standings }).eq('id', torneoId);
+
+      // Aggiorna cache
+      if (_cache[torneoId]) {
+        _cache[torneoId].players   = players;
+        _cache[torneoId].standings = standings;
+        if (_cache[torneoId].torneo) _cache[torneoId].torneo.standings = standings;
+      }
+    },
+
+    // ── SESSIONE (rimane in localStorage) ─────────────────────────
+
+    getSession: function () {
+      return {
+        torneoId: localStorage.getItem('gr_torneo_id'),
+        userId:   localStorage.getItem('gr_user_id'),
+        email:    localStorage.getItem('gr_user_email'),
+        role:     localStorage.getItem('gr_role'),
+      };
+    },
+
+    setSession: function (torneoId, userId, email, role) {
+      localStorage.setItem('gr_torneo_id',    torneoId || '');
+      localStorage.setItem('gr_user_id',      userId   || '');
+      localStorage.setItem('gr_user_email',   email    || '');
+      localStorage.setItem('gr_role',         role     || '');
+    },
+
+    clearSession: function () {
+      ['gr_torneo_id','gr_user_id','gr_user_email','gr_role'].forEach(function (k) {
+        localStorage.removeItem(k);
+      });
+    },
+
+    /** Cerca un giocatore approvato per email tra tutti i tornei. */
+    findPlayerByEmail: async function (email) {
+      var res = await db.from('players')
+        .select('*, tournaments(id,nome,inizio,fine,max_iscritti,stato,standings)')
+        .eq('email', email.toLowerCase())
+        .eq('stato', 'approvato')
+        .limit(1)
+        .single();
+      if (!res.data) return null;
+      var player = playerFromRow(res.data);
+      var torneo = torneoFromRow(res.data.tournaments);
+      return { player, torneo };
+    },
+  };
+
+  window.StorageManager = SM;
+})();

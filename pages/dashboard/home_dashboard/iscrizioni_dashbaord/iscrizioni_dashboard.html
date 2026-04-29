@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html class="dark" lang="it">
+<head>
+<script>if(sessionStorage.getItem("gr_admin_auth")!=="1"){location.replace("../../accesso_dashboard.html");}</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ISCRIZIONI - GOLARSA RACE</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;1,900&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-secondary-fixed": "#001a42",
+            "surface-bright": "#3a3939",
+            "primary": "#ffffff",
+            "secondary": "#aec6ff",
+            "primary-container": "#c6f33f",
+            "on-primary-fixed": "#161f00",
+            "surface-variant": "#353534",
+            "on-primary-fixed-variant": "#3b4d00",
+            "on-error-container": "#ffdad6",
+            "outline": "#8e937b",
+            "on-secondary-container": "#b3c9ff",
+            "on-primary-container": "#546d00",
+            "inverse-surface": "#e5e2e1",
+            "primary-fixed": "#c6f33f",
+            "on-surface-variant": "#c4c9af",
+            "surface-container-highest": "#353534",
+            "surface-dim": "#131313",
+            "surface-container-high": "#2a2a2a",
+            "on-error": "#690005",
+            "background": "#131313",
+            "on-tertiary": "#680009",
+            "surface-container-lowest": "#0e0e0e",
+            "error": "#ffb4ab",
+            "surface-container-low": "#1c1b1b",
+            "on-tertiary-fixed": "#410004",
+            "on-secondary-fixed-variant": "#004395",
+            "secondary-fixed": "#d8e2ff",
+            "secondary-fixed-dim": "#aec6ff",
+            "tertiary": "#ffffff",
+            "inverse-primary": "#4f6600",
+            "on-surface": "#e5e2e1",
+            "on-primary": "#283500",
+            "tertiary-fixed-dim": "#ffb3ad",
+            "secondary-container": "#0351b0",
+            "on-background": "#e5e2e1",
+            "tertiary-fixed": "#ffdad7",
+            "on-secondary": "#002e6a",
+            "primary-fixed-dim": "#aad61e",
+            "outline-variant": "#444935",
+            "inverse-on-surface": "#313030",
+            "tertiary-container": "#ffdad7",
+            "surface-container": "#201f1f",
+            "surface": "#131313",
+            "on-tertiary-container": "#c71623",
+            "surface-tint": "#aad61e",
+            "on-tertiary-fixed-variant": "#930012",
+            "error-container": "#93000a"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          fontFamily: {
+            "headline": ["Epilogue"],
+            "body": ["Inter"],
+            "label": ["Inter"]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+    .rim-light { box-shadow: inset 0 1px 1px 0 rgba(255,255,255,0.1); }
+    .bg-noise {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-repeat: repeat; background-size: 200px 200px; opacity: 0.04;
+    }
+    .cinematic-card {
+      background: linear-gradient(180deg, #2a2a2a 0%, #222222 100%);
+      box-shadow: 0 4px 24px -2px rgba(0,0,0,0.5), inset 0 1px 1px 0 rgba(255,255,255,0.1);
+    }
+    .cinematic-icon {
+      background: linear-gradient(180deg, #2a2a2a 0%, #222222 100%);
+      box-shadow: 0 2px 8px -1px rgba(0,0,0,0.4), inset 0 1px 1px 0 rgba(255,255,255,0.1);
+    }
+
+    body { min-height: max(884px, 100dvh); }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* ─── Nav Tab Bar ─── */
+    .nav-slider { display: flex; gap: 6px; }
+    .nav-tab {
+      display: flex; align-items: center; justify-content: center; flex-direction: column;
+      flex: 1; padding: 9px 4px 8px; border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+      cursor: pointer; background: transparent; color: #6b7280; gap: 3px;
+      text-decoration: none;
+    }
+    .nav-tab.active { background: #d1ff4b; color: #283500; border-color: transparent; }
+    .nav-tab:not(.active):hover { background: rgba(255,255,255,0.05); color: #e5e2e1; }
+    .nav-tab .nav-label {
+      font-size: 0.55rem; font-weight: 700; letter-spacing: 0.04em;
+      text-transform: uppercase; font-family: 'Inter', sans-serif; line-height: 1; opacity: 0.85;
+    }
+    .nav-tab.active .material-symbols-outlined {
+      font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+    }
+
+    /* ─── Status Cards (horizontal tabs) ─── */
+    .status-card {
+      flex: 1;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 12px 8px 10px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: linear-gradient(180deg, #2a2a2a 0%, #222222 100%);
+      box-shadow: 0 4px 24px -2px rgba(0,0,0,0.5), inset 0 1px 1px 0 rgba(255,255,255,0.07);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+      text-align: center;
+    }
+    .status-card:hover { filter: brightness(1.15); }
+
+    .status-card.active-attesa {
+      border-color: rgba(209,255,75,0.3);
+      box-shadow: 0 4px 24px -2px rgba(0,0,0,0.5), inset 0 1px 0 rgba(209,255,75,0.2), 0 0 20px rgba(209,255,75,0.06);
+      background: linear-gradient(180deg, #323420 0%, #282a18 100%);
+    }
+    .status-card.active-approvate {
+      border-color: rgba(74,222,128,0.3);
+      box-shadow: 0 4px 24px -2px rgba(0,0,0,0.5), inset 0 1px 0 rgba(74,222,128,0.2), 0 0 20px rgba(74,222,128,0.06);
+      background: linear-gradient(180deg, #1e2b22 0%, #182018 100%);
+    }
+    .status-card.active-rifiutate {
+      border-color: rgba(255,180,171,0.3);
+      box-shadow: 0 4px 24px -2px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,180,171,0.2), 0 0 20px rgba(255,180,171,0.06);
+      background: linear-gradient(180deg, #2b1e1e 0%, #201818 100%);
+    }
+
+    /* ─── List Panel ─── */
+    .list-panel { display: none; }
+    .list-panel.active { display: flex; flex-direction: column; gap: 10px; }
+
+    /* ─── Entry animation ─── */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .anim-fade-up { opacity: 0; animation: fadeInUp 0.4s ease forwards; }
+
+    .reg-card { opacity: 0; animation: fadeInUp 0.35s ease forwards; }
+    .reg-card:nth-child(1) { animation-delay: 0.04s; }
+    .reg-card:nth-child(2) { animation-delay: 0.09s; }
+    .reg-card:nth-child(3) { animation-delay: 0.14s; }
+    .reg-card:nth-child(4) { animation-delay: 0.19s; }
+    .reg-card:nth-child(5) { animation-delay: 0.24s; }
+    .reg-card:nth-child(6) { animation-delay: 0.29s; }
+
+    /* ─── Drawer ─── */
+    .drawer-backdrop {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px); z-index: 300;
+      opacity: 0; pointer-events: none; transition: opacity 0.25s ease;
+    }
+    .drawer-backdrop.open { opacity: 1; pointer-events: all; }
+    .drawer-panel {
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: 72vw; max-width: 280px; background: #1a1a1a;
+      box-shadow: -8px 0 40px rgba(0,0,0,0.6), inset 1px 0 0 rgba(255,255,255,0.06);
+      transform: translateX(100%);
+      transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+      display: flex; flex-direction: column; padding: 0 0 40px;
+    }
+    .drawer-backdrop.open .drawer-panel { transform: translateX(0); }
+  </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
+
+  <!-- ─── Header ─── -->
+  <header class="fixed top-0 w-full z-50 bg-[#0e0e0e] backdrop-blur-xl bg-opacity-90 flex justify-between items-center px-6 py-4 h-16 border-b border-white/[0.04]">
+    <div class="flex items-center">
+      <img alt="GA Race" class="h-5 w-auto" src="../../assets/GA-RACE.png">
+    </div>
+    <button onclick="openDrawer()" class="flex items-center justify-center w-9 h-9 rounded-full hover:bg-white/5 transition-colors">
+      <span class="material-symbols-outlined text-[#d1ff4b] text-2xl">menu</span>
+    </button>
+  </header>
+
+  <main class="pt-28 px-4 max-w-md mx-auto pb-12">
+
+    <!-- ─── Titolo ─── -->
+    <section class="mb-6 anim-fade-up">
+      <h2 class="text-4xl font-black italic tracking-tighter font-headline uppercase leading-none">ISCRIZIONI</h2>
+      <p class="font-label text-[0.62rem] text-gray-500 uppercase tracking-widest mt-1.5">GOLARSA RACE · STAGIONE 2026</p>
+    </section>
+
+    <!-- ─── Nav Icon Bar ─── -->
+    <section class="mb-8 anim-fade-up" style="animation-delay:0.06s">
+      <div class="nav-slider">
+        <a class="nav-tab" href="../home_dashbaord.html" title="Dashboard">
+          <span class="material-symbols-outlined text-[1.25rem]">dashboard</span>
+          <span class="nav-label">Home</span>
+        </a>
+        <button class="nav-tab active" title="Iscrizioni">
+          <span class="material-symbols-outlined text-[1.25rem]">person_add</span>
+          <span class="nav-label">Iscrizioni</span>
+        </button>
+        <a class="nav-tab" href="../giocatori_dashboard/giocatori_dashboard.html" title="Giocatori">
+          <span class="material-symbols-outlined text-[1.25rem]">group</span>
+          <span class="nav-label">Giocatori</span>
+        </a>
+        <a class="nav-tab" href="../match_dashboard/match_dashboard.html" title="Match">
+          <span class="material-symbols-outlined text-[1.25rem]">sports_tennis</span>
+          <span class="nav-label">Match</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- ─── 3 Status Cards orizzontali ─── -->
+    <section class="flex gap-3 mb-6 anim-fade-up" style="animation-delay:0.12s">
+
+      <button class="status-card active-attesa" id="tab-attesa" onclick="switchStatus('attesa')">
+        <span class="font-label text-[0.58rem] font-black text-[#d1ff4b] uppercase tracking-widest leading-tight mb-1" id="label-attesa">IN ATTESA</span>
+        <span class="font-headline italic font-black text-2xl text-white leading-none" id="count-attesa">0</span>
+      </button>
+
+      <button class="status-card" id="tab-approvate" onclick="switchStatus('approvate')">
+        <span class="font-label text-[0.58rem] font-black text-white/40 uppercase tracking-widest leading-tight mb-1" id="label-approvate">APPROVATE</span>
+        <span class="font-headline italic font-black text-2xl text-white leading-none" id="count-approvate">0</span>
+      </button>
+
+      <button class="status-card" id="tab-rifiutate" onclick="switchStatus('rifiutate')">
+        <span class="font-label text-[0.58rem] font-black text-white/40 uppercase tracking-widest leading-tight mb-1" id="label-rifiutate">RIFIUTATE</span>
+        <span class="font-headline italic font-black text-2xl text-white leading-none" id="count-rifiutate">0</span>
+      </button>
+
+    </section>
+
+    <!-- ─── Liste ─── -->
+
+    <!-- IN ATTESA — popolato da UIBinder.initIscrizioni() -->
+    <div class="list-panel active" id="panel-attesa">
+      <p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-8">Caricamento...</p>
+    </div>
+
+    <!-- APPROVATE — popolato da UIBinder.initIscrizioni() -->
+    <div class="list-panel" id="panel-approvate">
+      <p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-8">Nessun giocatore approvato</p>
+    </div>
+
+    <!-- RIFIUTATE — popolato da UIBinder.initIscrizioni() -->
+    <div class="list-panel" id="panel-rifiutate">
+      <p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-8">Nessun giocatore rifiutato</p>
+    </div>
+
+  </main>
+
+  <!-- Grain -->
+  <div class="fixed inset-0 pointer-events-none bg-noise z-[100]"></div>
+
+  <!-- ─── Drawer ─── -->
+  <div class="drawer-backdrop" id="drawer" onclick="closeDrawerOnBackdrop(event)">
+    <div class="drawer-panel">
+      <div class="flex items-center justify-between px-5 py-4 border-b border-white/[0.06] h-16">
+        <span class="font-headline italic font-black text-sm tracking-tight text-white/80 uppercase">Menu</span>
+        <button onclick="closeDrawer()" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/5 transition-colors">
+          <span class="material-symbols-outlined text-white/50 text-xl">close</span>
+        </button>
+      </div>
+      <nav class="flex flex-col gap-1 px-3 pt-4">
+        <a href="../home_dashbaord.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors text-white/60 hover:text-white">
+          <span class="material-symbols-outlined text-xl">dashboard</span>
+          <span class="font-label text-sm font-bold uppercase tracking-widest">Home</span>
+        </a>
+        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#d1ff4b]/10 border border-[#d1ff4b]/20 text-[#d1ff4b]">
+          <span class="material-symbols-outlined text-xl">person_add</span>
+          <span class="font-label text-sm font-bold uppercase tracking-widest">Iscrizioni</span>
+        </a>
+        <a href="../giocatori_dashboard/giocatori_dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors text-white/60 hover:text-white">
+          <span class="material-symbols-outlined text-xl">group</span>
+          <span class="font-label text-sm font-bold uppercase tracking-widest">Giocatori</span>
+        </a>
+        <a href="../match_dashboard/match_dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors text-white/60 hover:text-white">
+          <span class="material-symbols-outlined text-xl">sports_tennis</span>
+          <span class="font-label text-sm font-bold uppercase tracking-widest">Match</span>
+        </a>
+      </nav>
+    </div>
+  </div>
+
+  <script>
+    /* ─── Tab config ─── */
+    const tabs = {
+      attesa:    { activeClass: 'active-attesa',    labelColor: '#d1ff4b',           labelEl: 'label-attesa'    },
+      approvate: { activeClass: 'active-approvate', labelColor: 'rgb(74,222,128)',   labelEl: 'label-approvate' },
+      rifiutate: { activeClass: 'active-rifiutate', labelColor: 'rgb(255,180,171)',  labelEl: 'label-rifiutate' },
+    };
+    let current = 'attesa';
+
+    function switchStatus(key) {
+      if (key === current) return;
+
+      // reset old tab card
+      const oldCfg = tabs[current];
+      const oldTab = document.getElementById('tab-' + current);
+      oldTab.classList.remove(oldCfg.activeClass);
+      document.getElementById(oldCfg.labelEl).style.color = 'rgba(255,255,255,0.35)';
+
+      // hide old panel
+      document.getElementById('panel-' + current).classList.remove('active');
+
+      // activate new
+      current = key;
+      const cfg = tabs[key];
+      const newTab = document.getElementById('tab-' + key);
+      newTab.classList.add(cfg.activeClass);
+      document.getElementById(cfg.labelEl).style.color = cfg.labelColor;
+
+      // show new panel + re-trigger animations
+      const panel = document.getElementById('panel-' + key);
+      panel.classList.add('active');
+      panel.querySelectorAll('.reg-card').forEach((c, i) => {
+        c.style.animation = 'none';
+        c.offsetHeight;
+        c.style.animation = '';
+        c.style.animationDelay = (i * 0.05 + 0.03) + 's';
+      });
+    }
+
+    /* ─── Approva ─── */
+    function approva(btn) {
+      const card = btn.closest('.reg-card');
+      const nome = card.querySelector('.font-headline').textContent.trim();
+      const dateEl = card.querySelector('.font-label');
+      const dateStr = dateEl ? dateEl.textContent.replace('ISCRITTO IL ', '').trim() : '';
+
+      card.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+      card.style.opacity = '0';
+      card.style.transform = 'translateX(24px)';
+      updateCount('attesa', -1);
+      updateCount('approvate', +1);
+
+      setTimeout(() => {
+        card.remove();
+        appendCard('approvate', nome, dateStr, 'approved');
+      }, 260);
+    }
+
+    /* ─── Rifiuta ─── */
+    function rifiuta(btn) {
+      const card = btn.closest('.reg-card');
+      const nome = card.querySelector('.font-headline').textContent.trim();
+      const dateEl = card.querySelector('.font-label');
+      const dateStr = dateEl ? dateEl.textContent.replace('ISCRITTO IL ', '').trim() : '';
+
+      card.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+      card.style.opacity = '0';
+      card.style.transform = 'translateX(-24px)';
+      updateCount('attesa', -1);
+      updateCount('rifiutate', +1);
+
+      setTimeout(() => {
+        card.remove();
+        appendCard('rifiutate', nome, dateStr, 'rejected');
+      }, 260);
+    }
+
+    function updateCount(key, delta) {
+      const el = document.getElementById('count-' + key);
+      el.textContent = Math.max(0, parseInt(el.textContent) + delta);
+    }
+
+    function appendCard(panel, nome, dateStr, type) {
+      const container = document.getElementById('panel-' + panel);
+      const isApproved = type === 'approved';
+      const iconName = isApproved ? 'check_circle' : 'cancel';
+      const colorClass = isApproved ? 'text-green-400' : 'text-error';
+      const labelText = isApproved ? 'Approvato' : 'Rifiutato';
+
+      const div = document.createElement('div');
+      div.className = 'reg-card cinematic-card rounded-2xl p-4 border border-white/5 hover:brightness-110 transition-all duration-200';
+      div.style.animationDelay = '0s';
+      div.innerHTML = `
+        <div class="flex flex-col">
+          <span class="font-label text-[0.58rem] text-gray-500 uppercase tracking-widest">ISCRITTO IL ${dateStr}</span>
+          <span class="font-headline italic font-black text-2xl text-white uppercase tracking-tighter">${nome}</span>
+        </div>
+        <div class="flex items-center gap-2 mt-3 pt-3 border-t border-white/5">
+          <span class="material-symbols-outlined ${colorClass}" style="font-size:1.1rem;font-variation-settings:'FILL' 1,'wght' 500,'GRAD' 0,'opsz' 24">${iconName}</span>
+          <span class="font-label text-[0.6rem] ${colorClass} font-bold uppercase tracking-widest">${labelText}</span>
+        </div>`;
+      container.prepend(div);
+    }
+
+    /* ─── Drawer ─── */
+    function openDrawer() {
+      document.getElementById('drawer').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDrawer() {
+      document.getElementById('drawer').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function closeDrawerOnBackdrop(e) {
+      if (e.target === document.getElementById('drawer')) closeDrawer();
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+  </script>
+
+  <!-- ── Demo system ── -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="../../../../src/storage-manager.js?v=14"></script>
+  <script src="../../../../src/ui-binder.js?v=14"></script>
+  <script src="../../../../src/main.js?v=14"></script>
+</body>
+</html>
