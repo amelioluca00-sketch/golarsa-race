@@ -211,7 +211,7 @@
 </div>
 </div>
 </section>
-<section class="px-4 -mt-24 relative z-[30] max-w-3xl mx-auto flex gap-3">
+<section class="px-4 -mt-24 relative z-[30] max-w-3xl mx-auto flex gap-3 overflow-hidden">
 
   <!-- ── Box Countdown ── -->
   <div class="flex-1 rounded-[20px] px-5 pt-4 pb-4 flex flex-col gap-[12px]" style="background:linear-gradient(180deg,#272727 0%,#191919 100%);border:1px solid rgba(255,255,255,0.06);box-shadow:0 24px 60px rgba(0,0,0,0.65);">
@@ -236,8 +236,8 @@
 
   <!-- ── Box Regolamento Punti (cliccabile) ── -->
   <button onclick="openRegolamentoPunti()"
-          class="relative overflow-hidden rounded-[20px] px-5 pt-4 pb-4 flex flex-col text-left active:brightness-75 transition-all"
-          style="width:44%;background:linear-gradient(135deg,#242424 0%,#1b1b1b 100%);border:1px solid rgba(255,255,255,0.06);box-shadow:0 24px 60px rgba(0,0,0,0.65);cursor:pointer;">
+          class="relative overflow-hidden rounded-[20px] px-3 pt-4 pb-4 flex flex-col text-left active:brightness-75 transition-all flex-shrink-0"
+          style="width:38%;background:linear-gradient(135deg,#242424 0%,#1b1b1b 100%);border:1px solid rgba(255,255,255,0.06);box-shadow:0 24px 60px rgba(0,0,0,0.65);cursor:pointer;">
     <img src="../assets/COPPA.png" alt="" aria-hidden="true"
          class="absolute pointer-events-none select-none"
          style="height:160%;width:auto;opacity:0.05;object-fit:contain;top:-15%;right:-8%;transform:rotate(12deg);">
@@ -1206,4 +1206,53 @@
 <script src="../../src/storage-manager.js?v=14"></script>
 <script src="../../src/ui-binder.js?v=14"></script>
 <script src="../../src/main.js?v=14"></script>
+
+<script>
+/* ── Drag-to-close per le schede dal basso ── */
+(function() {
+  function setupDrag(sheetId, closeFn) {
+    var sheet = document.getElementById(sheetId);
+    if (!sheet) return;
+    var scrollEl = sheet.querySelector('.overflow-y-auto') || sheet.querySelector('[style*="overflow"]') || sheet;
+    var startY = 0, startScroll = 0, dragging = false, moved = 0;
+
+    sheet.addEventListener('touchstart', function(e) {
+      startY = e.touches[0].clientY;
+      startScroll = scrollEl !== sheet ? scrollEl.scrollTop : 0;
+      dragging = false;
+      moved = 0;
+    }, { passive: true });
+
+    sheet.addEventListener('touchmove', function(e) {
+      var dy = e.touches[0].clientY - startY;
+      /* Attiva il drag solo quando si scorre verso il basso
+         e il contenuto interno è già in cima */
+      if (dy > 8 && startScroll <= 0) {
+        dragging = true;
+        sheet.style.transition = 'none';
+        moved = Math.max(0, dy);
+        sheet.style.transform = 'translateY(' + moved + 'px)';
+      }
+    }, { passive: true });
+
+    sheet.addEventListener('touchend', function() {
+      sheet.style.transition = 'transform 0.4s cubic-bezier(0.32,0.72,0,1)';
+      if (dragging && moved > 120) {
+        closeFn();
+      } else if (dragging) {
+        sheet.style.transform = 'translateY(0)';
+      }
+      dragging = false;
+    }, { passive: true });
+  }
+
+  var sheets = [
+    'sheetPlayer', 'sheetProfile', 'sheetInvia',
+    'sheetSuccesso', 'sheetPolicy', 'sheetRegolamentoPunti'
+  ];
+  sheets.forEach(function(id) {
+    setupDrag(id, function() { closeAll(); });
+  });
+})();
+</script>
 </body></html>
