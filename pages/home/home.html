@@ -2,7 +2,11 @@
 
 
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="theme-color" content="#0a0a0a"/>
+<meta name="format-detection" content="telephone=no"/>
 <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -44,9 +48,51 @@
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         html, body {
             overscroll-behavior: none;
+            -webkit-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+        button, a, [role="button"] {
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
         body {
             min-height: max(884px, 100dvh);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Body lock when bottom-sheets/drawers are open — prevents the page behind from scrolling on iOS */
+        body.sheet-open {
+            position: fixed;
+            top: var(--scroll-y, 0);
+            left: 0;
+            right: 0;
+            width: 100%;
+            overflow: hidden;
+            touch-action: none;
+        }
+        /* Bottom sheet drag wrappers: prevent native overscroll bouncing the page behind */
+        .gr-sheet {
+            overscroll-behavior: contain;
+            will-change: transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            padding-bottom: env(safe-area-inset-bottom, 0px);
+        }
+        .gr-sheet .overflow-y-auto,
+        .gr-sheet[class*="overflow-y-auto"] {
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+        }
+        /* Drag handle hit area — this is the area that should always pull the sheet, never scroll content */
+        .sheet-handle-zone {
+            touch-action: none;
+        }
+        /* iOS form inputs: 16px minimum to prevent the auto-zoom-on-focus behaviour */
+        input, select, textarea {
+            font-size: 16px !important;
         }
         .vignette {
             background:
@@ -315,9 +361,9 @@
 <div id="backdrop" onclick="closeAll()" class="hidden fixed inset-0 bg-black/50 backdrop-blur-[2px] z-40 transition-opacity duration-300 opacity-0"></div>
 
 <!-- ═══ PLAYER SHEET — profilo completo, sale dal basso ═══ -->
-<div id="sheetPlayer" class="fixed bottom-0 left-2 right-2 z-50 bg-[#131313] rounded-[28px] translate-y-[110%] shadow-2xl shadow-black" style="transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); max-height:90vh; display:flex; flex-direction:column;">
+<div id="sheetPlayer" class="gr-sheet fixed bottom-0 left-2 right-2 z-50 bg-[#131313] rounded-[28px] translate-y-[110%] shadow-2xl shadow-black" style="transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); max-height:90vh; display:flex; flex-direction:column;">
   <!-- Handle + close -->
-  <div class="flex-shrink-0 flex justify-between items-center px-5 pt-4 pb-2">
+  <div class="sheet-handle-zone flex-shrink-0 flex justify-between items-center px-5 pt-4 pb-2 relative">
     <div class="w-10 h-1 bg-white/20 rounded-full mx-auto absolute left-1/2 -translate-x-1/2 top-3"></div>
     <div class="w-8"></div>
     <button onclick="closeAll()" class="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 active:bg-white/10 transition-colors">
@@ -398,7 +444,7 @@
 </div>
 
 <!-- ═══ PROFILE SHEET — profilo utente, sale dal basso ═══ -->
-<div id="sheetProfile" class="fixed bottom-0 left-2 right-2 z-50 bg-[#131313] rounded-[28px] translate-y-[110%] shadow-2xl shadow-black" style="transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); max-height:90vh; display:flex; flex-direction:column;">
+<div id="sheetProfile" class="gr-sheet fixed bottom-0 left-2 right-2 z-50 bg-[#131313] rounded-[28px] translate-y-[110%] shadow-2xl shadow-black" style="transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); max-height:90vh; display:flex; flex-direction:column;">
   <!-- Handle + azioni header -->
   <div class="flex-shrink-0 flex justify-between items-center px-5 pt-4 pb-2">
     <div class="w-10 h-1 bg-white/20 rounded-full absolute left-1/2 -translate-x-1/2 top-3"></div>
@@ -493,9 +539,9 @@
 </div>
 
 <!-- ═══ INVIA RISULTATO SHEET — layout identico alla pagina originale ═══ -->
-<div id="sheetInvia" class="fixed bottom-0 left-2 right-2 z-[60] rounded-[28px] translate-y-[110%] shadow-2xl shadow-black overflow-y-auto" style="background:#0e0e0e; transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); max-height:90vh;">
+<div id="sheetInvia" class="gr-sheet fixed bottom-0 left-2 right-2 z-[60] rounded-[28px] translate-y-[110%] shadow-2xl shadow-black" style="background:#0e0e0e; transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); max-height:90vh; display:flex; flex-direction:column;">
   <!-- Handle + close inline (sostituisce il fixed top-6 right-6 originale) -->
-  <div class="flex justify-between items-center px-6 pt-5 pb-2">
+  <div class="sheet-handle-zone flex-shrink-0 flex justify-between items-center px-6 pt-5 pb-2 relative">
     <div class="w-10 h-1 bg-white/20 rounded-full mx-auto absolute left-1/2 -translate-x-1/2 top-3"></div>
     <div class="flex-1"></div>
     <button onclick="closeInvia()" class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-high hover:opacity-80 transition-opacity active:scale-95 shadow-lg">
@@ -503,7 +549,7 @@
     </button>
   </div>
   <!-- Contenuto esatto di invia_risultato.html -->
-  <div class="pt-4 pb-12 px-4">
+  <div class="overflow-y-auto flex-1 pt-4 pb-12 px-4">
     <section class="mb-8 px-2">
       <h2 class="text-4xl font-headline font-black italic tracking-tighter uppercase mb-1">
         INSERISCI <span class="text-[#D1FF4B]">RISULTATO</span>
@@ -579,9 +625,9 @@
 </div>
 
 <!-- ═══ RISULTATO INVIATO SHEET — layout identico alla pagina originale ═══ -->
-<div id="sheetSuccesso" class="fixed bottom-0 left-2 right-2 z-[70] rounded-[28px] translate-y-[110%] shadow-2xl shadow-black overflow-y-auto" style="background:#0e0e0e; transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); max-height:90vh; display:flex; flex-direction:column;">
+<div id="sheetSuccesso" class="gr-sheet fixed bottom-0 left-2 right-2 z-[70] rounded-[28px] translate-y-[110%] shadow-2xl shadow-black" style="background:#0e0e0e; transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); max-height:90vh; display:flex; flex-direction:column;">
   <!-- Handle + close -->
-  <div class="flex-shrink-0 flex justify-end items-center px-5 pt-4 pb-1 relative">
+  <div class="sheet-handle-zone flex-shrink-0 flex justify-end items-center px-5 pt-4 pb-1 relative">
     <div class="w-10 h-1 bg-white/20 rounded-full absolute left-1/2 -translate-x-1/2 top-3"></div>
     <button onclick="closeAll()" class="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 active:bg-white/10 transition-colors">
       <span class="material-symbols-outlined text-white/60 text-lg">close</span>
@@ -611,20 +657,29 @@
         <span id="label-away" class="text-[0.65rem] font-headline italic text-neutral-500 mt-1">AVV</span>
       </div>
     </div>
-    <div class="w-full broadcast-card rounded-[24px] px-5 py-4 flex items-center justify-between gap-4 card-in" style="animation-play-state:paused" id="successo-card">
-      <!-- Sinistra: breakdown -->
-      <div class="flex flex-col gap-1.5 text-left">
-        <span class="text-sm font-headline font-black italic text-white uppercase tracking-wide">HAI GUADAGNATO</span>
-        <div class="flex flex-col gap-0.5 mt-0.5">
-          <span class="font-headline italic text-[#D1FF4B] text-[13px]">Game vinti: <span id="points-games">+0</span></span>
-          <span class="font-headline italic text-[#D1FF4B] text-[13px]">Bonus vittoria: <span id="points-bonus">+0</span></span>
-          <span id="points-dominanza-row" class="font-headline italic text-[#D1FF4B] text-[13px] hidden">Bonus dominanza: <span id="points-dominanza">+0</span></span>
+    <div class="w-full broadcast-card rounded-[24px] px-5 py-4 card-in" style="animation-play-state:paused" id="successo-card">
+      <!-- Header: HAI GUADAGNATO + totale (stack pulito, no sovrapposizioni) -->
+      <div class="flex items-center justify-between gap-3 pb-3 border-b border-white/10">
+        <span class="text-[11px] font-headline font-black italic text-white/80 uppercase tracking-[0.15em] flex-shrink-0">HAI GUADAGNATO</span>
+        <div id="points-total-wrap" class="flex items-baseline gap-1 shrink-0 min-w-0" style="opacity:0;transform:scale(0.5);">
+          <span class="font-headline font-black italic text-[#D1FF4B] tracking-tighter leading-none" id="points-display" style="font-size:1.6rem;">+0</span>
+          <span class="font-headline font-black italic text-[#D1FF4B] tracking-tight leading-none text-[11px] uppercase">PUNTI</span>
         </div>
       </div>
-      <!-- Destra: totale -->
-      <div id="points-total-wrap" class="flex items-baseline gap-1.5 shrink-0" style="opacity:0;transform:scale(0.5);">
-        <span class="font-headline font-black italic text-[#D1FF4B] tracking-tighter leading-none" id="points-display" style="font-size:1.9rem;">+0</span>
-        <span class="font-headline font-black italic text-[#D1FF4B] tracking-tighter leading-none" style="font-size:1.9rem;">PUNTI</span>
+      <!-- Breakdown: ogni voce su una riga con valore allineato a destra -->
+      <div class="flex flex-col gap-1.5 mt-3">
+        <div class="flex items-center justify-between gap-3">
+          <span class="font-label text-white/55 text-[12px] truncate">Game vinti</span>
+          <span class="font-headline font-black italic text-[#D1FF4B] text-[13px] tabular-nums shrink-0" id="points-games">+0</span>
+        </div>
+        <div class="flex items-center justify-between gap-3">
+          <span class="font-label text-white/55 text-[12px] truncate">Bonus vittoria</span>
+          <span class="font-headline font-black italic text-[#D1FF4B] text-[13px] tabular-nums shrink-0" id="points-bonus">+0</span>
+        </div>
+        <div id="points-dominanza-row" class="hidden items-center justify-between gap-3" style="display:none;">
+          <span class="font-label text-white/55 text-[12px] truncate">Bonus dominanza</span>
+          <span class="font-headline font-black italic text-[#D1FF4B] text-[13px] tabular-nums shrink-0" id="points-dominanza">+0</span>
+        </div>
       </div>
     </div>
   </main>
@@ -636,8 +691,8 @@
 </div>
 
 <!-- ═══ POLICY SHEET — regolamento / termini / privacy ═══ -->
-<div id="sheetPolicy" class="fixed bottom-0 left-2 right-2 z-[80] bg-[#131313] rounded-[28px] translate-y-[110%] shadow-2xl shadow-black" style="transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); max-height:90vh; display:flex; flex-direction:column;">
-  <div class="flex-shrink-0 flex justify-between items-center px-5 pt-4 pb-2 relative">
+<div id="sheetPolicy" class="gr-sheet fixed bottom-0 left-2 right-2 z-[80] bg-[#131313] rounded-[28px] translate-y-[110%] shadow-2xl shadow-black" style="transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); max-height:90vh; display:flex; flex-direction:column;">
+  <div class="sheet-handle-zone flex-shrink-0 flex justify-between items-center px-5 pt-4 pb-2 relative">
     <div class="w-10 h-1 bg-white/20 rounded-full absolute left-1/2 -translate-x-1/2 top-3"></div>
     <div class="w-8"></div>
     <button onclick="closeAll()" class="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 active:bg-white/10 transition-colors">
@@ -651,9 +706,9 @@
 </div>
 
 <!-- ═══ REGOLAMENTO PUNTI SHEET ═══ -->
-<div id="sheetRegolamentoPunti" class="fixed bottom-0 left-2 right-2 z-[85] bg-[#131313] rounded-[28px] translate-y-[110%] shadow-2xl shadow-black" style="transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); max-height:90vh; display:flex; flex-direction:column;">
+<div id="sheetRegolamentoPunti" class="gr-sheet fixed bottom-0 left-2 right-2 z-[85] bg-[#131313] rounded-[28px] translate-y-[110%] shadow-2xl shadow-black" style="transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); max-height:90vh; display:flex; flex-direction:column;">
   <!-- Handle + close -->
-  <div class="flex-shrink-0 flex justify-between items-center px-5 pt-4 pb-2 relative">
+  <div class="sheet-handle-zone flex-shrink-0 flex justify-between items-center px-5 pt-4 pb-2 relative">
     <div class="w-10 h-1 bg-white/20 rounded-full absolute left-1/2 -translate-x-1/2 top-3"></div>
     <div class="w-8"></div>
     <button onclick="closeRegolamentoPunti()" class="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 active:bg-white/10 transition-colors">
@@ -791,6 +846,7 @@
   }
 
   function openInvia() {
+    _lockBody();
     scores = { tu: 0, avv: 0 };
     document.getElementById('score-tu').textContent = '0';
     document.getElementById('score-avv').textContent = '0';
@@ -813,6 +869,7 @@
   }
   function closeInvia() {
     document.getElementById('sheetInvia').style.transform = 'translateY(110%)';
+    setTimeout(_maybeUnlockBody, 300);
   }
   function submitRisultato() {
     // ── Validazione: solo il vincitore può inviare ──
@@ -919,8 +976,10 @@
     if (calc.bonusDominanza > 0) {
       document.getElementById('points-dominanza').textContent = '+' + calc.bonusDominanza;
       domRow.classList.remove('hidden');
+      domRow.style.display = 'flex';
     } else {
       domRow.classList.add('hidden');
+      domRow.style.display = 'none';
     }
 
     // ── Animazioni ──
@@ -960,10 +1019,40 @@
   }
 
   // ── Apri/chiudi generici ──
+  // Body scroll lock: previene lo scroll della pagina sotto le schede su iOS.
+  function _lockBody() {
+    if (document.body.classList.contains('sheet-open')) return;
+    var sy = window.scrollY || window.pageYOffset || 0;
+    document.body.dataset.scrollY = String(sy);
+    document.body.style.setProperty('--scroll-y', '-' + sy + 'px');
+    document.body.classList.add('sheet-open');
+  }
+  function _unlockBody() {
+    if (!document.body.classList.contains('sheet-open')) return;
+    var sy = parseInt(document.body.dataset.scrollY || '0', 10);
+    document.body.classList.remove('sheet-open');
+    document.body.style.removeProperty('--scroll-y');
+    window.scrollTo(0, sy);
+  }
   function _showBackdrop() {
+    _lockBody();
     const b = document.getElementById('backdrop');
     b.classList.remove('hidden');
     requestAnimationFrame(() => b.classList.remove('opacity-0'));
+  }
+  // Restituisce true se almeno una scheda o il menu drawer è ancora visibile.
+  function _anySheetOpen() {
+    var ids = ['sheetPlayer','sheetProfile','sheetInvia','sheetSuccesso','sheetPolicy','sheetRegolamentoPunti'];
+    for (var i = 0; i < ids.length; i++) {
+      var el = document.getElementById(ids[i]);
+      if (el && (el.style.transform || '').indexOf('translateY(0') !== -1) return true;
+    }
+    var menu = document.getElementById('menuDrawer');
+    if (menu && !menu.classList.contains('translate-x-full')) return true;
+    return false;
+  }
+  function _maybeUnlockBody() {
+    if (!_anySheetOpen()) _unlockBody();
   }
   function closeAll() {
     document.getElementById('sheetPlayer').style.transform = 'translateY(110%)';
@@ -975,7 +1064,7 @@
     document.getElementById('menuDrawer').classList.add('translate-x-full');
     const b = document.getElementById('backdrop');
     b.classList.add('opacity-0');
-    setTimeout(() => b.classList.add('hidden'), 300);
+    setTimeout(() => { b.classList.add('hidden'); _unlockBody(); }, 300);
   }
 
   function openRegolamentoPunti() {
@@ -988,7 +1077,7 @@
     document.getElementById('sheetRegolamentoPunti').style.transform = 'translateY(110%)';
     const b = document.getElementById('backdrop');
     b.classList.add('opacity-0');
-    setTimeout(() => b.classList.add('hidden'), 300);
+    setTimeout(() => { b.classList.add('hidden'); _maybeUnlockBody(); }, 300);
   }
 
   // ── Policy sheets (regolamento / termini / privacy) ──
@@ -1019,7 +1108,7 @@
     document.getElementById('menuDrawer').classList.add('translate-x-full');
     const b = document.getElementById('backdrop');
     b.classList.add('opacity-0');
-    setTimeout(() => b.classList.add('hidden'), 300);
+    setTimeout(() => { b.classList.add('hidden'); _maybeUnlockBody(); }, 300);
   }
 
   // ── Logout ──
@@ -1208,42 +1297,92 @@
 <script src="../../src/main.js?v=14"></script>
 
 <script>
-/* ── Drag-to-close per le schede dal basso ── */
+/* ── Drag-to-close per le schede dal basso (iOS-grade) ──
+   • La scheda segue il dito senza muovere la pagina dietro.
+   • Inerzia: oltre 120px o velocità > 0.6 px/ms chiude la scheda.
+   • Resistenza in alto (drag-up): la scheda non sale oltre.
+   • Funziona sia col handle che con il contenuto: se il contenuto interno
+     è già scrollato in cima, lo swipe-down chiude la scheda. */
 (function() {
   function setupDrag(sheetId, closeFn) {
     var sheet = document.getElementById(sheetId);
     if (!sheet) return;
-    var scrollEl = sheet.querySelector('.overflow-y-auto') || sheet.querySelector('[style*="overflow"]') || sheet;
-    var startY = 0, startScroll = 0, dragging = false, moved = 0;
+    var scrollEl = sheet.querySelector('.overflow-y-auto') || sheet;
+    var handle   = sheet.querySelector('.sheet-handle-zone');
 
-    sheet.addEventListener('touchstart', function(e) {
-      startY = e.touches[0].clientY;
+    var startY = 0, startX = 0, startTime = 0, startScroll = 0;
+    var dragging = false, decided = false, fromHandle = false, moved = 0;
+    var lastY = 0, lastTime = 0, vy = 0;
+
+    function onStart(e) {
+      var t = e.touches ? e.touches[0] : e;
+      startY = t.clientY;
+      startX = t.clientX;
+      startTime = lastTime = performance.now();
+      lastY = startY;
       startScroll = scrollEl !== sheet ? scrollEl.scrollTop : 0;
+      fromHandle = handle && (e.target === handle || handle.contains(e.target));
       dragging = false;
+      decided  = false;
       moved = 0;
-    }, { passive: true });
+      vy = 0;
+      sheet.style.transition = 'none';
+    }
 
-    sheet.addEventListener('touchmove', function(e) {
-      var dy = e.touches[0].clientY - startY;
-      /* Attiva il drag solo quando si scorre verso il basso
-         e il contenuto interno è già in cima */
-      if (dy > 8 && startScroll <= 0) {
-        dragging = true;
-        sheet.style.transition = 'none';
-        moved = Math.max(0, dy);
-        sheet.style.transform = 'translateY(' + moved + 'px)';
+    function onMove(e) {
+      var t = e.touches ? e.touches[0] : e;
+      var dy = t.clientY - startY;
+      var dx = t.clientX - startX;
+      var now = performance.now();
+
+      // Decide on first significant move whether this is a vertical drag
+      if (!decided) {
+        if (Math.abs(dy) > 6 || Math.abs(dx) > 6) {
+          decided = true;
+          // Vertical wins only if it dominates
+          var isVertical = Math.abs(dy) > Math.abs(dx);
+          // Drag the sheet only if:
+          //  - swipe is vertical AND going downwards
+          //  - either started from the handle, OR the inner scroll is already at top
+          if (isVertical && dy > 0 && (fromHandle || startScroll <= 0)) {
+            dragging = true;
+          } else {
+            dragging = false;
+          }
+        }
       }
-    }, { passive: true });
 
-    sheet.addEventListener('touchend', function() {
+      if (dragging) {
+        if (e.cancelable) e.preventDefault();
+        moved = Math.max(0, dy);
+        // Update sheet transform
+        sheet.style.transform = 'translateY(' + moved + 'px)';
+        // velocity (px/ms)
+        var dt = Math.max(1, now - lastTime);
+        vy = (t.clientY - lastY) / dt;
+        lastY = t.clientY;
+        lastTime = now;
+      }
+    }
+
+    function onEnd() {
       sheet.style.transition = 'transform 0.4s cubic-bezier(0.32,0.72,0,1)';
-      if (dragging && moved > 120) {
-        closeFn();
+      if (dragging && (moved > 120 || vy > 0.6)) {
+        // Animate to off-screen, then run close (which resets translateY(110%))
+        sheet.style.transform = 'translateY(110%)';
+        setTimeout(function() { closeFn(); }, 50);
       } else if (dragging) {
         sheet.style.transform = 'translateY(0)';
       }
       dragging = false;
-    }, { passive: true });
+      decided  = false;
+    }
+
+    // touchmove must be NON-passive so we can preventDefault
+    sheet.addEventListener('touchstart', onStart, { passive: true });
+    sheet.addEventListener('touchmove',  onMove,  { passive: false });
+    sheet.addEventListener('touchend',   onEnd,   { passive: true });
+    sheet.addEventListener('touchcancel',onEnd,   { passive: true });
   }
 
   var sheets = [
@@ -1253,6 +1392,17 @@
   sheets.forEach(function(id) {
     setupDrag(id, function() { closeAll(); });
   });
+})();
+
+/* ── Hardening: in iOS Safari, blocca il pull-to-refresh quando
+   una scheda/drawer è aperto (anche fuori dalle schede). ── */
+(function() {
+  document.addEventListener('touchmove', function(e) {
+    if (document.body.classList.contains('sheet-open')) {
+      var inSheet  = e.target.closest && e.target.closest('.gr-sheet, #menuDrawer');
+      if (!inSheet && e.cancelable) e.preventDefault();
+    }
+  }, { passive: false });
 })();
 </script>
 </body></html>
