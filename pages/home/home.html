@@ -2,7 +2,7 @@
 
 
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="theme-color" content="#0a0a0a"/>
@@ -50,28 +50,50 @@
             overscroll-behavior: none;
             -webkit-text-size-adjust: 100%;
             text-size-adjust: 100%;
+            touch-action: manipulation;
         }
         * {
             -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
         button, a, [role="button"] {
             -webkit-tap-highlight-color: transparent;
             touch-action: manipulation;
+        }
+        /* Disabilita zoom da doppio tap su tutta la pagina (iOS Safari) */
+        @media (hover: none) and (pointer: coarse) {
+            html, body, * { touch-action: manipulation; }
+        }
+        /* Countdown responsive: layout a griglia, niente sovrapposizioni */
+        .cd-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr auto 1fr;
+            align-items: center;
+            justify-items: center;
+            row-gap: 4px;
+            column-gap: 2px;
+            width: 100%;
+        }
+        .cd-num { font-size: clamp(1.5rem, 7vw, 2.4rem); line-height: 1; text-align: center; }
+        .cd-sep { font-size: clamp(0.9rem, 4vw, 1.4rem); line-height: 1; transform: translateY(-2px); }
+        .cd-lab { line-height: 1; }
+        @media (max-width: 420px) {
+            #cd-label { font-size: 0.62rem !important; letter-spacing: 0.08em !important; }
+            .cd-box { padding-left: 0.85rem !important; padding-right: 0.85rem !important; }
         }
         body {
             min-height: max(884px, 100dvh);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-        /* Body lock when bottom-sheets/drawers are open — prevents the page behind from scrolling on iOS */
-        body.sheet-open {
-            position: fixed;
-            top: var(--scroll-y, 0);
-            left: 0;
-            right: 0;
-            width: 100%;
+        /* Body lock when bottom-sheets/drawers are open — niente position:fixed
+           per evitare il "flash" alla chiusura. Lo scroll resta dov'è e
+           l'overflow:hidden + il preventDefault su touchmove (in fondo al file)
+           bloccano lo scroll della pagina sotto su iOS. */
+        html.sheet-open, body.sheet-open {
             overflow: hidden;
             touch-action: none;
+            overscroll-behavior: none;
         }
         /* Bottom sheet drag wrappers: prevent native overscroll bouncing the page behind */
         .gr-sheet {
@@ -260,23 +282,19 @@
 <section class="px-4 -mt-24 relative z-[30] max-w-3xl mx-auto flex gap-3 overflow-hidden">
 
   <!-- ── Box Countdown ── -->
-  <div class="flex-1 rounded-[20px] px-5 pt-4 pb-4 flex flex-col gap-[12px]" style="background:linear-gradient(180deg,#272727 0%,#191919 100%);border:1px solid rgba(255,255,255,0.06);box-shadow:0 24px 60px rgba(0,0,0,0.65);">
+  <div class="cd-box flex-1 min-w-0 rounded-[20px] px-4 pt-4 pb-4 flex flex-col gap-[10px]" style="background:linear-gradient(180deg,#272727 0%,#191919 100%);border:1px solid rgba(255,255,255,0.06);box-shadow:0 24px 60px rgba(0,0,0,0.65);">
     <p id="cd-label" class="font-headline font-black italic text-[#777] uppercase leading-none text-center" style="font-size:0.72rem;letter-spacing:0.13em;">FINE DEI PLAY OFF</p>
-    <div class="flex items-end w-full justify-between">
-      <div class="text-center flex-1">
-        <div id="cd-days" class="font-headline font-black italic text-[#D1FF4B] leading-none text-shadow-glow" style="font-size:2.4rem;">—</div>
-        <div class="text-[8px] font-label font-bold text-[#555] uppercase tracking-widest mt-1">GG</div>
-      </div>
-      <div class="font-headline font-black italic text-[#D1FF4B]/35 pb-2 flex-shrink-0" style="font-size:1.4rem;">:</div>
-      <div class="text-center flex-1">
-        <div id="cd-hrs" class="font-headline font-black italic text-[#D1FF4B] leading-none text-shadow-glow" style="font-size:2.4rem;">—</div>
-        <div class="text-[8px] font-label font-bold text-[#555] uppercase tracking-widest mt-1">ORE</div>
-      </div>
-      <div class="font-headline font-black italic text-[#D1FF4B]/35 pb-2 flex-shrink-0" style="font-size:1.4rem;">:</div>
-      <div class="text-center flex-1">
-        <div id="cd-min" class="font-headline font-black italic text-[#D1FF4B] leading-none text-shadow-glow" style="font-size:2.4rem;">—</div>
-        <div class="text-[8px] font-label font-bold text-[#555] uppercase tracking-widest mt-1">MIN</div>
-      </div>
+    <div class="cd-grid">
+      <div id="cd-days" class="cd-num font-headline font-black italic text-[#D1FF4B] leading-none text-shadow-glow">—</div>
+      <div class="cd-sep font-headline font-black italic text-[#D1FF4B]/35">:</div>
+      <div id="cd-hrs" class="cd-num font-headline font-black italic text-[#D1FF4B] leading-none text-shadow-glow">—</div>
+      <div class="cd-sep font-headline font-black italic text-[#D1FF4B]/35">:</div>
+      <div id="cd-min" class="cd-num font-headline font-black italic text-[#D1FF4B] leading-none text-shadow-glow">—</div>
+      <div class="cd-lab text-[8px] font-label font-bold text-[#555] uppercase tracking-widest">GG</div>
+      <div></div>
+      <div class="cd-lab text-[8px] font-label font-bold text-[#555] uppercase tracking-widest">ORE</div>
+      <div></div>
+      <div class="cd-lab text-[8px] font-label font-bold text-[#555] uppercase tracking-widest">MIN</div>
     </div>
   </div>
 
@@ -1020,19 +1038,17 @@
 
   // ── Apri/chiudi generici ──
   // Body scroll lock: previene lo scroll della pagina sotto le schede su iOS.
+  // Niente position:fixed → niente snap/flash alla chiusura. Lo scroll touch
+  // della pagina sotto è bloccato dal preventDefault touchmove più in basso.
   function _lockBody() {
     if (document.body.classList.contains('sheet-open')) return;
-    var sy = window.scrollY || window.pageYOffset || 0;
-    document.body.dataset.scrollY = String(sy);
-    document.body.style.setProperty('--scroll-y', '-' + sy + 'px');
+    document.documentElement.classList.add('sheet-open');
     document.body.classList.add('sheet-open');
   }
   function _unlockBody() {
     if (!document.body.classList.contains('sheet-open')) return;
-    var sy = parseInt(document.body.dataset.scrollY || '0', 10);
+    document.documentElement.classList.remove('sheet-open');
     document.body.classList.remove('sheet-open');
-    document.body.style.removeProperty('--scroll-y');
-    window.scrollTo(0, sy);
   }
   function _showBackdrop() {
     _lockBody();

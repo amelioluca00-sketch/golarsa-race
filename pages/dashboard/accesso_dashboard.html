@@ -1,6 +1,6 @@
 <!DOCTYPE html><html class="dark" lang="it"><head>
 <meta charset="utf-8">
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" name="viewport">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0a0a0a">
@@ -36,6 +36,9 @@
   }
 </script>
 <style>
+    /* Disabilita zoom da doppio tap su mobile */
+    html, body, * { touch-action: manipulation; }
+
   body {
     background-color: #0e0e0e;
     color: #e5e2e1;

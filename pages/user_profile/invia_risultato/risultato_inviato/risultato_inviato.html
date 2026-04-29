@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="dark" lang="it"><head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
 <title>Risultato Inviato</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,900;1,900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
@@ -60,6 +60,9 @@
     }
 </script>
 <style>
+    /* Disabilita zoom da doppio tap su mobile */
+    html, body, * { touch-action: manipulation; }
+
     .material-symbols-outlined {
         font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     }
