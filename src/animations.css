@@ -37,6 +37,12 @@
   to   { opacity: 1; transform: translateX(0); }
 }
 
+@keyframes gr-flip-slow-in {
+  0%   { opacity: 0; transform: perspective(700px) rotateX(-30deg) translateY(18px); }
+  60%  { opacity: 1; }
+  100% { opacity: 1; transform: perspective(700px) rotateX(0deg)  translateY(0);    }
+}
+
 
 /* ── Page entry ────────────────────────────── */
 
@@ -68,9 +74,22 @@ body {
   animation: gr-flip-in 1.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* ── Flip lento 3D — card countdown e regole punti ── */
+
+.gr-flip-slow {
+  opacity: 0;
+  transform: perspective(700px) rotateX(-30deg) translateY(18px);
+}
+
+.gr-flip-slow.gr-visible {
+  animation: gr-flip-slow-in 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+
 /* ── Scroll-triggered slide laterale (ranking + match cards) ── */
 
-.gr-slide {
+.gr-slide,
+.leaderboard-row.gr-slide {
   opacity: 0;
   transform: translateX(44px);
   /* Blocca opacity e transform dalle transition per evitare conflitti
@@ -83,7 +102,8 @@ body {
     padding-bottom   0.35s ease !important;
 }
 
-.gr-slide.gr-visible {
+.gr-slide.gr-visible,
+.leaderboard-row.gr-slide.gr-visible {
   animation: gr-slide-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
