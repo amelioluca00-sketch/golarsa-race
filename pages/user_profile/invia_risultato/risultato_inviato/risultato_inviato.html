@@ -64,6 +64,9 @@
     /* Solo elementi interattivi bloccano il doppio tap */
     button, a { touch-action: manipulation; }
 
+    /* Nessun overflow su html/body: lo scroll del documento funziona naturalmente */
+    html, body { overflow-x: hidden; }
+
     /* Sfondo */
     .kinetic-bg {
         background-color: #0e0e0e;
@@ -158,14 +161,8 @@
     }
     .row-in { animation: rowIn 0.35s cubic-bezier(0.22,1,0.36,1) both; }
 
-    /* ── Scroll naturale su tutti i dispositivi ── */
-    html {
-        height: 100%;
-        overflow-y: auto;
-    }
+    /* Safe area per iOS (notch / home indicator) */
     body {
-        min-height: 100%;
-        overflow-y: visible;
         padding-bottom: env(safe-area-inset-bottom, 16px);
     }
 </style>
