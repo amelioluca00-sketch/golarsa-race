@@ -60,18 +60,18 @@ body {
 }
 
 .gr-flip.gr-visible {
-  animation: gr-flip-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: gr-flip-in 1.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* Stagger cascade — 80ms tra ogni card */
-.gr-d1 { animation-delay: 0.08s; }
-.gr-d2 { animation-delay: 0.16s; }
-.gr-d3 { animation-delay: 0.24s; }
-.gr-d4 { animation-delay: 0.32s; }
-.gr-d5 { animation-delay: 0.40s; }
-.gr-d6 { animation-delay: 0.48s; }
-.gr-d7 { animation-delay: 0.56s; }
-.gr-d8 { animation-delay: 0.64s; }
+/* Stagger cascade — 150ms tra ogni card */
+.gr-d1 { animation-delay: 0.15s; }
+.gr-d2 { animation-delay: 0.30s; }
+.gr-d3 { animation-delay: 0.45s; }
+.gr-d4 { animation-delay: 0.60s; }
+.gr-d5 { animation-delay: 0.75s; }
+.gr-d6 { animation-delay: 0.90s; }
+.gr-d7 { animation-delay: 1.05s; }
+.gr-d8 { animation-delay: 1.20s; }
 
 
 /* ── Button micro-interaction ──────────────── */
