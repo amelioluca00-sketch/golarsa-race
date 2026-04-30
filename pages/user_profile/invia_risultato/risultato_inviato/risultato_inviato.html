@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="dark" lang="it"><head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
 <title>Risultato Inviato</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link rel="stylesheet" href="../../../../src/animations.css">
@@ -61,15 +61,10 @@
     }
 </script>
 <style>
-    /* Disabilita zoom doppio tap solo su elementi interattivi */
-    button, a, input, select, textarea { touch-action: manipulation; }
-    /* Il documento scorre liberamente */
-    html { overflow-x: hidden; }
-    body { overflow-x: hidden; }
+    /* Solo elementi interattivi bloccano il doppio tap */
+    button, a { touch-action: manipulation; }
 
-    .material-symbols-outlined {
-        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    }
+    /* Sfondo */
     .kinetic-bg {
         background-color: #0e0e0e;
         background-image: radial-gradient(circle at 50% 40%, #1a1a1a 0%, #0e0e0e 100%);
@@ -162,16 +157,27 @@
         to   { opacity: 1; transform: translateX(0); }
     }
     .row-in { animation: rowIn 0.35s cubic-bezier(0.22,1,0.36,1) both; }
+
+    /* ── Scroll naturale su tutti i dispositivi ── */
+    html {
+        height: 100%;
+        overflow-y: auto;
+    }
+    body {
+        min-height: 100%;
+        overflow-y: visible;
+        padding-bottom: env(safe-area-inset-bottom, 16px);
+    }
 </style>
 </head>
 <body class="kinetic-bg text-on-surface font-body">
 
-<main class="w-full max-w-md mx-auto px-6 flex flex-col items-center text-center pt-12 pb-10">
+<main class="w-full max-w-md mx-auto px-6 flex flex-col items-center text-center pt-10 pb-10">
 
     <!-- Spunta animata -->
-    <div class="mb-6 relative check-pop" style="animation-delay:1.1s;">
+    <div class="mb-5 relative check-pop" style="animation-delay:1.1s;">
         <div class="absolute inset-0 bg-[#C5FF1A] blur-[80px] opacity-20 rounded-full glow-pulse"></div>
-        <svg class="w-28 h-28 text-[#C5FF1A] relative z-10" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <svg class="w-24 h-24 text-[#C5FF1A] relative z-10" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <circle class="circle-draw" cx="50" cy="50" r="46"
                 stroke="currentColor" stroke-linecap="round" stroke-width="4"/>
             <path class="check-draw" d="M30 52L44 66L70 34"
@@ -187,10 +193,10 @@
     </div>
 
     <!-- VS label -->
-    <p class="text-[0.65rem] uppercase tracking-[0.25em] text-neutral-500 mb-6 slide-up" style="animation-delay:1.1s;" id="vs-label">VS AVVERSARIO</p>
+    <p class="text-[0.65rem] uppercase tracking-[0.25em] text-neutral-500 mb-5 slide-up" style="animation-delay:1.1s;" id="vs-label">VS AVVERSARIO</p>
 
     <!-- Score -->
-    <div class="flex items-center gap-8 mb-8">
+    <div class="flex items-center gap-8 mb-6">
         <div class="flex flex-col items-center score-pop" style="animation-delay:1.3s;">
             <span class="text-7xl font-headline font-black italic text-primary" id="score-home">–</span>
             <span class="text-[0.6rem] uppercase tracking-widest text-neutral-500 mt-1" id="label-home">TU</span>
@@ -202,8 +208,8 @@
         </div>
     </div>
 
-    <!-- Card punti con breakdown -->
-    <div class="w-full broadcast-card rounded-[24px] overflow-hidden card-in mb-6" style="animation-delay:1.75s;">
+    <!-- Card punti con breakdown — classe no-anim per evitare gr-rise da animations.js -->
+    <div class="no-anim w-full broadcast-card rounded-[24px] overflow-hidden card-in mb-5" style="animation-delay:1.75s;">
 
         <!-- Header totale -->
         <div class="flex items-center justify-between px-5 pt-5 pb-4" style="border-bottom: 1px solid rgba(255,255,255,0.07);">
@@ -216,19 +222,19 @@
         </div>
 
         <!-- Righe breakdown -->
-        <div class="px-5 py-4 space-y-3" id="breakdown-rows">
+        <div class="px-5 py-4 space-y-3">
             <!-- Game vinti (sempre visibile) -->
             <div class="flex items-center justify-between row-in" style="animation-delay:2s;">
                 <span class="text-sm text-neutral-400">Game vinti</span>
                 <span class="text-sm font-label font-semibold text-[#C5FF1A]" id="row-game">+0</span>
             </div>
             <!-- Bonus vittoria (solo se > 0) -->
-            <div class="flex items-center justify-between row-in" id="row-bonusv-wrap" style="display:none !important; animation-delay:2.1s;">
+            <div class="flex items-center justify-between" id="row-bonusv-wrap" style="display:none;">
                 <span class="text-sm text-neutral-400">Bonus vittoria</span>
                 <span class="text-sm font-label font-semibold text-[#C5FF1A]" id="row-bonusv">+0</span>
             </div>
             <!-- Bonus dominanza (solo se > 0) -->
-            <div class="flex items-center justify-between row-in" id="row-bonusd-wrap" style="display:none !important; animation-delay:2.2s;">
+            <div class="flex items-center justify-between" id="row-bonusd-wrap" style="display:none;">
                 <span class="text-sm text-neutral-400">Bonus dominanza</span>
                 <span class="text-sm font-label font-semibold text-[#C5FF1A]" id="row-bonusd">+0</span>
             </div>
@@ -244,7 +250,7 @@
 
 </main>
 
-<!-- Sfondo decorativo -->
+<!-- Sfondo decorativo (fixed, non influenza lo scroll) -->
 <div class="fixed inset-0 pointer-events-none overflow-hidden z-[-1]">
     <div class="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-[#C5FF1A]/10 to-transparent blur-3xl opacity-20"></div>
     <div class="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-tl from-[#C5FF1A]/10 to-transparent blur-3xl opacity-10"></div>
@@ -266,24 +272,24 @@
     if (!isNaN(scoreTu))  document.getElementById('score-home').textContent = scoreTu;
     if (!isNaN(scoreAvv)) document.getElementById('score-away').textContent = scoreAvv;
 
-    // Nomi
-    document.getElementById('vs-label').textContent    = 'VS ' + avvNome.toUpperCase();
-    document.getElementById('label-home').textContent  = mioNome.toUpperCase();
-    document.getElementById('label-away').textContent  = avvNome.toUpperCase();
+    // Nomi giocatori
+    document.getElementById('vs-label').textContent   = 'VS ' + avvNome.toUpperCase();
+    document.getElementById('label-home').textContent = mioNome.toUpperCase();
+    document.getElementById('label-away').textContent = avvNome.toUpperCase();
 
-    // Breakdown righe
+    // Breakdown
     if (!isNaN(gameP)) {
         document.getElementById('row-game').textContent = '+' + gameP;
     }
     if (!isNaN(bonusV) && bonusV > 0) {
         var wv = document.getElementById('row-bonusv-wrap');
-        wv.style.cssText = 'animation-delay:2.1s;';
+        wv.style.display = 'flex';
         wv.classList.add('row-in');
         document.getElementById('row-bonusv').textContent = '+' + bonusV;
     }
     if (!isNaN(bonusD) && bonusD > 0) {
         var wd = document.getElementById('row-bonusd-wrap');
-        wd.style.cssText = 'animation-delay:2.2s;';
+        wd.style.display = 'flex';
         wd.classList.add('row-in');
         document.getElementById('row-bonusd').textContent = '+' + bonusD;
     }
@@ -314,5 +320,7 @@
         requestAnimationFrame(tick);
     }, DELAY);
 </script>
-<script src="../../../../src/animations.js"></script>
+<!-- animations.js NON caricato: questa pagina ha le proprie animazioni CSS
+     e non ha bisogno del motore scroll-triggered, che aggiungerebbe
+     gr-rise (opacity:0) alla broadcast-card bloccandola -->
 </body></html>
