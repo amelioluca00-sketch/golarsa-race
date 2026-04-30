@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="../../src/animations.css">
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -46,6 +47,8 @@
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        ::-webkit-scrollbar { display: none; }
+        * { -ms-overflow-style: none; scrollbar-width: none; }
         html, body {
             overscroll-behavior: none;
             -webkit-text-size-adjust: 100%;
@@ -227,7 +230,7 @@
         @keyframes cardIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
         .card-in.run { animation:cardIn 0.4s cubic-bezier(0.22,1,0.36,1) 0.9s both; }
         .popup-button {
-            background: linear-gradient(180deg, #e3ff8c 0%, #D1FF4B 100%);
+            background: linear-gradient(180deg, #e3ff8c 0%, #C5FF1A 100%);
             box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4), 0 4px 15px rgba(209,255,75,0.3);
             position: relative;
             overflow: hidden;
@@ -256,8 +259,8 @@
 <header class="fixed top-0 w-full z-50 bg-black/95 backdrop-blur-2xl border-b border-white/5 flex justify-between items-center px-6 h-16">
 <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='home.html'"><img alt="GOLARSA RACE" class="h-6 w-auto object-contain" src="../assets/GA-RACE.png"/></div>
 <div class="flex items-center gap-2">
-<button id="btnOpenProfile" class="relative flex items-center justify-center w-9 h-9 rounded-full hover:bg-white/5 transition-colors active:scale-95"><span class="material-symbols-outlined text-[#D1FF4B]" style="font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">person</span><span id="notif-badge" class="hidden absolute top-0.5 right-0.5 w-2.5 h-2.5 bg-red-500 rounded-full border-[1.5px] border-black"></span></button>
-<button id="btnOpenMenu" class="flex items-center justify-center w-9 h-9 rounded-full hover:bg-white/5 transition-colors active:scale-95"><span class="material-symbols-outlined text-[#D1FF4B]" style="font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">menu</span></button>
+<button id="btnOpenProfile" class="relative flex items-center justify-center w-9 h-9 rounded-full hover:bg-white/5 transition-colors active:scale-95"><span class="material-symbols-outlined text-[#C5FF1A]" style="font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">person</span><span id="notif-badge" class="hidden absolute top-0.5 right-0.5 w-2.5 h-2.5 bg-red-500 rounded-full border-[1.5px] border-black"></span></button>
+<button id="btnOpenMenu" class="flex items-center justify-center w-9 h-9 rounded-full hover:bg-white/5 transition-colors active:scale-95"><span class="material-symbols-outlined text-[#C5FF1A]" style="font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;">menu</span></button>
 </div>
 </header>
 <main class="pb-12 relative">
@@ -267,15 +270,15 @@
 <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
 <div class="absolute inset-0 bg-black/30"></div>
 <div class="absolute inset-0 flex flex-col items-center justify-center z-20 text-center px-6 pt-16 pb-24">
-<span class="block text-[#D1FF4B] font-label font-bold tracking-[0.3em] uppercase text-[10px] mb-3 drop-shadow-lg" style="">OFFICIAL RANKING</span>
+<span class="block text-[#C5FF1A] font-label font-bold tracking-[0.3em] uppercase text-[10px] mb-3 drop-shadow-lg" style="">OFFICIAL RANKING</span>
 <div class="logo-hero-wrap drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
   <img src="../assets/GOLARSA-RACE.png" alt="GOLARSA RACE" class="logo-hero-top">
   <img src="../assets/GOLARSA-RACE.png" alt="" class="logo-hero-bottom" aria-hidden="true">
 </div>
 <div class="mt-3 flex items-center gap-3">
-<div class="h-[1px] w-8 bg-[#D1FF4B]/50"></div>
+<div class="h-[1px] w-8 bg-[#C5FF1A]/50"></div>
 <span class="text-white/70 font-label font-bold uppercase text-[9px] tracking-[0.2em]" style="">DIVENTA IL PIÙ FORTE</span>
-<div class="h-[1px] w-8 bg-[#D1FF4B]/50"></div>
+<div class="h-[1px] w-8 bg-[#C5FF1A]/50"></div>
 </div>
 </div>
 </section>
@@ -285,11 +288,11 @@
   <div class="cd-box flex-1 min-w-0 rounded-[20px] px-4 pt-4 pb-4 flex flex-col gap-[10px]" style="background:linear-gradient(180deg,#272727 0%,#191919 100%);border:1px solid rgba(255,255,255,0.06);box-shadow:0 24px 60px rgba(0,0,0,0.65);">
     <p id="cd-label" class="font-headline font-black italic text-[#777] uppercase leading-none text-center" style="font-size:0.72rem;letter-spacing:0.13em;">FINE DEI PLAY OFF</p>
     <div class="cd-grid">
-      <div id="cd-days" class="cd-num font-headline font-black italic text-[#D1FF4B] leading-none text-shadow-glow">—</div>
-      <div class="cd-sep font-headline font-black italic text-[#D1FF4B]/35">:</div>
-      <div id="cd-hrs" class="cd-num font-headline font-black italic text-[#D1FF4B] leading-none text-shadow-glow">—</div>
-      <div class="cd-sep font-headline font-black italic text-[#D1FF4B]/35">:</div>
-      <div id="cd-min" class="cd-num font-headline font-black italic text-[#D1FF4B] leading-none text-shadow-glow">—</div>
+      <div id="cd-days" class="cd-num font-headline font-black italic text-[#C5FF1A] leading-none text-shadow-glow">—</div>
+      <div class="cd-sep font-headline font-black italic text-[#C5FF1A]/35">:</div>
+      <div id="cd-hrs" class="cd-num font-headline font-black italic text-[#C5FF1A] leading-none text-shadow-glow">—</div>
+      <div class="cd-sep font-headline font-black italic text-[#C5FF1A]/35">:</div>
+      <div id="cd-min" class="cd-num font-headline font-black italic text-[#C5FF1A] leading-none text-shadow-glow">—</div>
       <div class="cd-lab text-[8px] font-label font-bold text-[#555] uppercase tracking-widest">GG</div>
       <div></div>
       <div class="cd-lab text-[8px] font-label font-bold text-[#555] uppercase tracking-widest">ORE</div>
@@ -305,8 +308,8 @@
     <img src="../assets/COPPA.png" alt="" aria-hidden="true"
          class="absolute pointer-events-none select-none"
          style="height:160%;width:auto;opacity:0.05;object-fit:contain;top:-15%;right:-8%;transform:rotate(12deg);">
-    <p class="font-headline font-black italic text-white uppercase leading-[1.1] tracking-tight relative z-10" style="font-size:0.95rem;">REGOLAMENTO<br>PUNTI</p>
-    <span class="relative z-10 flex items-center gap-1 text-[#D1FF4B] font-headline font-black italic uppercase mt-2" style="font-size:0.72rem;letter-spacing:0.13em;">
+    <p class="font-headline font-black italic text-white uppercase leading-[1.1] tracking-tight relative z-10" style="font-size:0.95rem;">REGOLE<br>PUNTI</p>
+    <span class="relative z-10 flex items-center gap-1 text-[#C5FF1A] font-headline font-black italic uppercase mt-2" style="font-size:0.72rem;letter-spacing:0.13em;">
       INFO &nbsp;›
     </span>
   </button>
@@ -314,11 +317,11 @@
 </section>
 <section class="px-4 mt-12 max-w-5xl mx-auto">
 <div class="flex flex-col gap-2 mb-8 px-2">
-<span class="block text-[#D1FF4B] font-label font-bold tracking-[0.2em] uppercase text-[10px]" style="">SCALA IL RANKING</span>
+<span class="block text-[#C5FF1A] font-label font-bold tracking-[0.2em] uppercase text-[10px]" style="">SCALA IL RANKING</span>
 <h2 class="text-2xl font-headline font-black italic text-white uppercase leading-none" style="">CLASSIFICA GENERALE<br>&amp; ULTIMI MATCH</h2>
 </div>
 <div id="tab-container" class="p-1 rounded-full flex items-center w-full overflow-hidden mb-4 border border-white/5 relative" style="background: linear-gradient(180deg, #2a2a2a 0%, #141414 100%); box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.15), 0 15px 35px -12px rgba(0, 0, 0, 0.7);">
-<div id="tab-indicator" class="absolute rounded-full bg-[#D1FF4B] pointer-events-none" style="top: 4px; height: calc(100% - 8px); left: 4px; width: 50%; transition: left 0.35s cubic-bezier(0.4,0,0.2,1), width 0.35s cubic-bezier(0.4,0,0.2,1);"></div>
+<div id="tab-indicator" class="absolute rounded-full bg-[#C5FF1A] pointer-events-none" style="top: 4px; height: calc(100% - 8px); left: 4px; width: 50%; transition: left 0.35s cubic-bezier(0.4,0,0.2,1), width 0.35s cubic-bezier(0.4,0,0.2,1);"></div>
 <button onclick="switchTab(0)" class="tab-btn flex-1 py-3 relative z-10 font-headline font-bold italic uppercase text-[10px] tracking-wider transition-colors duration-300 active:scale-95 whitespace-nowrap text-[#1e230f]">GLOBAL RACE</button>
 <button onclick="switchTab(1)" class="tab-btn flex-1 py-3 relative z-10 font-headline font-bold italic uppercase text-[10px] tracking-wider transition-colors duration-300 active:scale-95 whitespace-nowrap text-white">ULTIMI MATCH</button>
 </div>
@@ -401,7 +404,7 @@
       </div>
       <div class="inline-flex items-center gap-3 px-3 py-1.5 bg-[#1c1c1c] rounded-lg border border-white/10 mt-1">
         <span class="text-[9px] text-[#888] font-black uppercase tracking-widest">RANK</span>
-        <span id="playerRank" class="font-headline font-black italic text-[#D1FF4B] text-sm">#—</span>
+        <span id="playerRank" class="font-headline font-black italic text-[#C5FF1A] text-sm">#—</span>
         <div class="w-px h-3 bg-white/10"></div>
         <span id="playerBandiera" class="text-base leading-none">🎾</span>
         <div class="w-px h-3 bg-white/10"></div>
@@ -416,13 +419,13 @@
     <section class="cinematic-card rounded-[24px] p-5 flex justify-between items-center">
       <div>
         <p class="text-[10px] font-black text-[#888]/80 uppercase tracking-[0.2em] italic mb-2">WIN RATE</p>
-        <p id="playerWrLabel" class="font-headline font-black italic text-2xl text-[#D1FF4B] uppercase leading-none">—</p>
+        <p id="playerWrLabel" class="font-headline font-black italic text-2xl text-[#C5FF1A] uppercase leading-none">—</p>
         <p class="text-[10px] text-[#888] italic mt-1">Ultime partite</p>
       </div>
       <div class="relative w-20 h-20">
         <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
           <circle cx="50" cy="50" r="45" fill="transparent" stroke="#2a2a2a" stroke-width="8"/>
-          <circle id="playerGaugePath" cx="50" cy="50" r="45" fill="transparent" stroke="#D1FF4B" stroke-linecap="round" stroke-width="8" style="stroke-dasharray:283;stroke-dashoffset:283;transition:stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1)"/>
+          <circle id="playerGaugePath" cx="50" cy="50" r="45" fill="transparent" stroke="#C5FF1A" stroke-linecap="round" stroke-width="8" style="stroke-dasharray:283;stroke-dashoffset:283;transition:stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1)"/>
         </svg>
         <div class="absolute inset-0 flex items-center justify-center">
           <span id="playerWrPct" class="font-headline font-black italic text-xl text-white">—%</span>
@@ -486,7 +489,7 @@
       </div>
       <div class="inline-flex items-center gap-3 px-3 py-1.5 bg-[#1c1c1c] rounded-lg border border-white/10 mt-1">
         <span class="text-[9px] text-[#888] font-black uppercase tracking-widest">RANK</span>
-        <span id="myRank" class="font-headline font-black italic text-[#D1FF4B] text-sm">#—</span>
+        <span id="myRank" class="font-headline font-black italic text-[#C5FF1A] text-sm">#—</span>
         <div class="w-px h-3 bg-white/10"></div>
         <span id="myBandiera" class="text-base leading-none">🎾</span>
         <div class="w-px h-3 bg-white/10"></div>
@@ -511,13 +514,13 @@
     <section class="cinematic-card rounded-[24px] p-5 flex justify-between items-center">
       <div>
         <p class="text-[10px] font-black text-[#888]/80 uppercase tracking-[0.2em] italic mb-2">WIN RATE</p>
-        <p id="myWrLabel" class="font-headline font-black italic text-2xl text-[#D1FF4B] uppercase leading-none">—</p>
+        <p id="myWrLabel" class="font-headline font-black italic text-2xl text-[#C5FF1A] uppercase leading-none">—</p>
         <p class="text-[10px] text-[#888] italic mt-1">Ultime partite</p>
       </div>
       <div class="relative w-20 h-20">
         <svg class="w-full h-full -rotate-90" viewBox="0 0 100 100">
           <circle cx="50" cy="50" r="45" fill="transparent" stroke="#2a2a2a" stroke-width="8"/>
-          <circle id="myGaugePath" cx="50" cy="50" r="45" fill="transparent" stroke="#D1FF4B" stroke-linecap="round" stroke-width="8" style="stroke-dasharray:283;stroke-dashoffset:283;transition:stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1)"/>
+          <circle id="myGaugePath" cx="50" cy="50" r="45" fill="transparent" stroke="#C5FF1A" stroke-linecap="round" stroke-width="8" style="stroke-dasharray:283;stroke-dashoffset:283;transition:stroke-dashoffset 1.2s cubic-bezier(0.4,0,0.2,1)"/>
         </svg>
         <div class="absolute inset-0 flex items-center justify-center">
           <span id="myWrPct" class="font-headline font-black italic text-xl text-white">—%</span>
@@ -570,22 +573,22 @@
   <div class="overflow-y-auto flex-1 pt-4 pb-12 px-4">
     <section class="mb-8 px-2">
       <h2 class="text-4xl font-headline font-black italic tracking-tighter uppercase mb-1">
-        INSERISCI <span class="text-[#D1FF4B]">RISULTATO</span>
+        INSERISCI <span class="text-[#C5FF1A]">RISULTATO</span>
       </h2>
       <p class="text-on-surface-variant font-label uppercase tracking-widest text-[10px]">Inserisci il punteggio finale</p>
     </section>
     <div class="space-y-6">
       <section class="relative bg-surface-container rounded-3xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/5 overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-[#D1FF4B]/5 blur-3xl -mr-10 -mt-10"></div>
+        <div class="absolute top-0 right-0 w-32 h-32 bg-[#C5FF1A]/5 blur-3xl -mr-10 -mt-10"></div>
         <div class="grid grid-cols-2 gap-6 relative z-10">
           <div class="flex flex-col items-center">
             <span class="font-label uppercase tracking-[0.2em] text-on-surface-variant mb-6 text-xs italic">TU</span>
             <div class="flex items-center gap-3 w-full justify-between">
-              <button class="w-10 h-10 flex items-center justify-center rounded-xl bg-[#D1FF4B] text-[#161f00] hover:opacity-90 active:scale-90 transition-all" type="button" onclick="changeScore('tu', -1)">
+              <button class="w-10 h-10 flex items-center justify-center rounded-xl bg-[#C5FF1A] text-[#161f00] hover:opacity-90 active:scale-90 transition-all" type="button" onclick="changeScore('tu', -1)">
                 <span class="material-symbols-outlined text-2xl">remove</span>
               </button>
-              <div class="text-8xl font-headline font-black italic text-[#D1FF4B] text-shadow-glow leading-none" id="score-tu">0</div>
-              <button class="w-10 h-10 flex items-center justify-center rounded-xl bg-[#D1FF4B] text-[#161f00] hover:opacity-90 active:scale-90 transition-all" type="button" onclick="changeScore('tu', 1)">
+              <div class="text-8xl font-headline font-black italic text-[#C5FF1A] text-shadow-glow leading-none" id="score-tu">0</div>
+              <button class="w-10 h-10 flex items-center justify-center rounded-xl bg-[#C5FF1A] text-[#161f00] hover:opacity-90 active:scale-90 transition-all" type="button" onclick="changeScore('tu', 1)">
                 <span class="material-symbols-outlined text-2xl">add</span>
               </button>
             </div>
@@ -618,14 +621,14 @@
           <div class="space-y-2">
             <label class="text-[10px] font-label uppercase tracking-widest text-on-surface-variant ml-2">Data Incontro</label>
             <div class="relative">
-              <input class="w-full bg-surface-container-high border-none rounded-2xl py-4 px-5 text-on-surface focus:ring-2 focus:ring-[#D1FF4B] transition-all outline-none appearance-none font-body" type="date" id="data-incontro"/>
+              <input class="w-full bg-surface-container-high border-none rounded-2xl py-4 px-5 text-on-surface focus:ring-2 focus:ring-[#C5FF1A] transition-all outline-none appearance-none font-body" type="date" id="data-incontro"/>
               <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">calendar_today</span>
             </div>
           </div>
           <div class="space-y-2">
             <label class="text-[10px] font-label uppercase tracking-widest text-on-surface-variant ml-2">Scegli Avversario</label>
             <div class="relative">
-              <select id="invia-avversario" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 pr-12 text-white focus:ring-2 focus:ring-[#D1FF4B] transition-all outline-none font-body" style="-webkit-appearance:none;-moz-appearance:none;appearance:none;background-image:none;">
+              <select id="invia-avversario" class="w-full bg-white/5 border border-white/10 rounded-2xl py-4 px-5 pr-12 text-white focus:ring-2 focus:ring-[#C5FF1A] transition-all outline-none font-body" style="-webkit-appearance:none;-moz-appearance:none;appearance:none;background-image:none;">
                 <option disabled selected value="">Seleziona Player</option>
               </select>
               <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none">expand_more</span>
@@ -633,7 +636,7 @@
           </div>
         </div>
         <div class="pt-2">
-          <button class="w-full bg-gradient-to-b from-[#E2FF85] to-[#D1FF4B] text-[#161f00] font-headline font-black italic uppercase text-lg py-5 rounded-2xl border-t border-white/40 shadow-lg hover:brightness-110 transition-all active:scale-[0.98] flex items-center justify-center gap-3 relative overflow-hidden" type="button" onclick="submitRisultato()">
+          <button class="w-full bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase text-lg py-5 rounded-2xl border-t border-white/40 shadow-lg hover:brightness-110 transition-all active:scale-[0.98] flex items-center justify-center gap-3 relative overflow-hidden" type="button" onclick="submitRisultato()">
             INVIA RISULTATO
           </button>
         </div>
@@ -654,8 +657,8 @@
   <!-- Contenuto esatto di risultato_inviato.html -->
   <main class="flex-1 w-full px-6 flex flex-col items-center text-center pt-10 pb-4">
     <div class="mb-6 relative check-pop" style="animation-play-state:paused" id="successo-check">
-      <div class="absolute inset-0 bg-[#D1FF4B] blur-[80px] opacity-20 rounded-full glow-pulse"></div>
-      <svg class="w-32 h-32 text-[#D1FF4B] relative z-10" fill="none" viewBox="0 0 100 100">
+      <div class="absolute inset-0 bg-[#C5FF1A] blur-[80px] opacity-20 rounded-full glow-pulse"></div>
+      <svg class="w-32 h-32 text-[#C5FF1A] relative z-10" fill="none" viewBox="0 0 100 100">
         <circle class="circle-draw" cx="50" cy="50" r="46" stroke="currentColor" stroke-linecap="round" stroke-width="4"/>
         <path class="check-draw" d="M30 52L44 66L70 34" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"/>
       </svg>
@@ -669,7 +672,7 @@
         <span class="text-7xl font-headline font-black italic text-primary" id="score-home">0</span>
         <span id="label-home" class="text-[0.65rem] font-headline italic text-neutral-500 mt-1">TU</span>
       </div>
-      <div class="h-16 w-[3px] bg-[#D1FF4B]/30 rounded-full slide-up" style="transform:skewX(-12deg) rotate(-8deg); animation-play-state:paused" id="successo-sep"></div>
+      <div class="h-16 w-[3px] bg-[#C5FF1A]/30 rounded-full slide-up" style="transform:skewX(-12deg) rotate(-8deg); animation-play-state:paused" id="successo-sep"></div>
       <div class="flex flex-col items-center score-pop" style="animation-play-state:paused" id="successo-score-wrap-avv">
         <span class="text-7xl font-headline font-black italic text-neutral-500" id="score-away">0</span>
         <span id="label-away" class="text-[0.65rem] font-headline italic text-neutral-500 mt-1">AVV</span>
@@ -680,29 +683,29 @@
       <div class="flex items-center justify-between gap-3 pb-3 border-b border-white/10">
         <span class="text-[11px] font-headline font-black italic text-white/80 uppercase tracking-[0.15em] flex-shrink-0">HAI GUADAGNATO</span>
         <div id="points-total-wrap" class="flex items-baseline gap-1 shrink-0 min-w-0" style="opacity:0;transform:scale(0.5);">
-          <span class="font-headline font-black italic text-[#D1FF4B] tracking-tighter leading-none" id="points-display" style="font-size:1.6rem;">+0</span>
-          <span class="font-headline font-black italic text-[#D1FF4B] tracking-tight leading-none text-[11px] uppercase">PUNTI</span>
+          <span class="font-headline font-black italic text-[#C5FF1A] tracking-tighter leading-none" id="points-display" style="font-size:1.6rem;">+0</span>
+          <span class="font-headline font-black italic text-[#C5FF1A] tracking-tight leading-none text-[11px] uppercase">PUNTI</span>
         </div>
       </div>
       <!-- Breakdown: ogni voce su una riga con valore allineato a destra -->
       <div class="flex flex-col gap-1.5 mt-3">
         <div class="flex items-center justify-between gap-3">
           <span class="font-label text-white/55 text-[12px] truncate">Game vinti</span>
-          <span class="font-headline font-black italic text-[#D1FF4B] text-[13px] tabular-nums shrink-0" id="points-games">+0</span>
+          <span class="font-headline font-black italic text-[#C5FF1A] text-[13px] tabular-nums shrink-0" id="points-games">+0</span>
         </div>
         <div class="flex items-center justify-between gap-3">
           <span class="font-label text-white/55 text-[12px] truncate">Bonus vittoria</span>
-          <span class="font-headline font-black italic text-[#D1FF4B] text-[13px] tabular-nums shrink-0" id="points-bonus">+0</span>
+          <span class="font-headline font-black italic text-[#C5FF1A] text-[13px] tabular-nums shrink-0" id="points-bonus">+0</span>
         </div>
         <div id="points-dominanza-row" class="hidden items-center justify-between gap-3" style="display:none;">
           <span class="font-label text-white/55 text-[12px] truncate">Bonus dominanza</span>
-          <span class="font-headline font-black italic text-[#D1FF4B] text-[13px] tabular-nums shrink-0" id="points-dominanza">+0</span>
+          <span class="font-headline font-black italic text-[#C5FF1A] text-[13px] tabular-nums shrink-0" id="points-dominanza">+0</span>
         </div>
       </div>
     </div>
   </main>
   <footer class="w-full px-6 pb-8 pt-6 flex-shrink-0">
-    <button onclick="closeAll()" class="w-full bg-gradient-to-b from-[#E2FF85] to-[#D1FF4B] text-[#161f00] font-headline font-black italic uppercase tracking-wider text-lg py-5 rounded-[18px] border-t border-white/40 shadow-lg hover:brightness-105 active:scale-[0.98] transition-all" type="button">
+    <button onclick="closeAll()" class="w-full bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase tracking-wider text-lg py-5 rounded-[18px] border-t border-white/40 shadow-lg hover:brightness-105 active:scale-[0.98] transition-all" type="button">
       TORNA ALLA RACE
     </button>
   </footer>
@@ -738,27 +741,27 @@
     <!-- Header con coppa -->
     <div class="flex items-center gap-3 mb-6 mt-1">
       <img src="../assets/COPPA.png" alt="" class="h-10 w-auto opacity-70" aria-hidden="true">
-      <h2 class="font-headline font-black italic text-2xl text-white uppercase tracking-tight leading-none">REGOLAMENTO<br><span class="text-[#D1FF4B]">PUNTI</span></h2>
+      <h2 class="font-headline font-black italic text-2xl text-white uppercase tracking-tight leading-none">REGOLE<br><span class="text-[#C5FF1A]">PUNTI</span></h2>
     </div>
     <!-- Sezione: come si guadagnano i punti -->
     <div class="space-y-3" style="font-family:'Inter',sans-serif;font-size:13px;line-height:1.6;color:rgba(255,255,255,0.6);">
 
       <!-- Card 1: Punti base per game -->
       <div class="bg-white/[0.04] rounded-2xl p-4 border border-white/5 flex gap-4 items-start">
-        <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-[#D1FF4B]/10 border border-[#D1FF4B]/20 flex items-center justify-center">
-          <span class="material-symbols-outlined text-[#D1FF4B] text-2xl">sports_tennis</span>
+        <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-[#C5FF1A]/10 border border-[#C5FF1A]/20 flex items-center justify-center">
+          <span class="material-symbols-outlined text-[#C5FF1A] text-2xl">sports_tennis</span>
         </div>
         <div class="flex-1 min-w-0">
           <p class="font-headline font-black italic text-white uppercase text-sm tracking-wide mb-1">Punti Base</p>
-          <p><strong class="text-[#D1FF4B]">+10 punti</strong> per ogni game vinto durante la partita.</p>
+          <p><strong class="text-[#C5FF1A]">+10 punti</strong> per ogni game vinto durante la partita.</p>
           <p class="text-[11px] text-white/40 mt-1.5">Es. vittoria 6–3 → 6 × 10 = +60 punti</p>
         </div>
       </div>
 
       <!-- Card 2: Bonus vittoria per differenza pre-partita -->
       <div class="bg-white/[0.04] rounded-2xl p-4 border border-white/5 flex gap-4 items-start">
-        <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-[#D1FF4B]/10 border border-[#D1FF4B]/20 flex items-center justify-center">
-          <span class="material-symbols-outlined text-[#D1FF4B] text-2xl">emoji_events</span>
+        <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-[#C5FF1A]/10 border border-[#C5FF1A]/20 flex items-center justify-center">
+          <span class="material-symbols-outlined text-[#C5FF1A] text-2xl">emoji_events</span>
         </div>
         <div class="flex-1 min-w-0">
           <p class="font-headline font-black italic text-white uppercase text-sm tracking-wide mb-1">Bonus Vittoria</p>
@@ -766,15 +769,15 @@
           <div class="space-y-1.5">
             <div class="flex items-center justify-between bg-black/30 rounded-lg px-3 py-1.5">
               <span class="text-[11px] text-white/70">0 – 50 pt di differenza</span>
-              <span class="font-headline font-black italic text-[#D1FF4B] text-sm">+10</span>
+              <span class="font-headline font-black italic text-[#C5FF1A] text-sm">+10</span>
             </div>
             <div class="flex items-center justify-between bg-black/30 rounded-lg px-3 py-1.5">
               <span class="text-[11px] text-white/70">51 – 150 pt di differenza</span>
-              <span class="font-headline font-black italic text-[#D1FF4B] text-sm">+20</span>
+              <span class="font-headline font-black italic text-[#C5FF1A] text-sm">+20</span>
             </div>
             <div class="flex items-center justify-between bg-black/30 rounded-lg px-3 py-1.5">
               <span class="text-[11px] text-white/70">Oltre 150 pt di differenza</span>
-              <span class="font-headline font-black italic text-[#D1FF4B] text-sm">+30</span>
+              <span class="font-headline font-black italic text-[#C5FF1A] text-sm">+30</span>
             </div>
           </div>
         </div>
@@ -782,12 +785,12 @@
 
       <!-- Card 3: Bonus dominanza -->
       <div class="bg-white/[0.04] rounded-2xl p-4 border border-white/5 flex gap-4 items-start">
-        <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-[#D1FF4B]/10 border border-[#D1FF4B]/20 flex items-center justify-center">
-          <span class="material-symbols-outlined text-[#D1FF4B] text-2xl">local_fire_department</span>
+        <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-[#C5FF1A]/10 border border-[#C5FF1A]/20 flex items-center justify-center">
+          <span class="material-symbols-outlined text-[#C5FF1A] text-2xl">local_fire_department</span>
         </div>
         <div class="flex-1 min-w-0">
           <p class="font-headline font-black italic text-white uppercase text-sm tracking-wide mb-1">Bonus Dominanza</p>
-          <p><strong class="text-[#D1FF4B]">+10 punti</strong> se vinci con almeno <strong class="text-white">4 game di scarto</strong>.</p>
+          <p><strong class="text-[#C5FF1A]">+10 punti</strong> se vinci con almeno <strong class="text-white">4 game di scarto</strong>.</p>
           <p class="text-[11px] text-white/40 mt-1.5">Es. 6–2, 6–1 o 6–0</p>
         </div>
       </div>
@@ -811,13 +814,13 @@
   </div>
   <nav class="flex flex-col gap-1 p-4 flex-1">
     <button onclick="openPolicySheet('regolamento')" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-colors text-white font-bold italic uppercase text-sm tracking-wide font-headline w-full text-left active:scale-[0.98]">
-      <span class="material-symbols-outlined text-[#D1FF4B] text-xl">gavel</span> Regolamento
+      <span class="material-symbols-outlined text-[#C5FF1A] text-xl">gavel</span> Regolamento
     </button>
     <button onclick="openPolicySheet('termini')" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-colors text-white font-bold italic uppercase text-sm tracking-wide font-headline w-full text-left active:scale-[0.98]">
-      <span class="material-symbols-outlined text-[#D1FF4B] text-xl">description</span> Termini e Condizioni
+      <span class="material-symbols-outlined text-[#C5FF1A] text-xl">description</span> Termini e Condizioni
     </button>
     <button onclick="openPolicySheet('privacy')" class="flex items-center gap-3 px-4 py-3.5 rounded-xl hover:bg-white/5 transition-colors text-white font-bold italic uppercase text-sm tracking-wide font-headline w-full text-left active:scale-[0.98]">
-      <span class="material-symbols-outlined text-[#D1FF4B] text-xl">privacy_tip</span> Privacy Policy
+      <span class="material-symbols-outlined text-[#C5FF1A] text-xl">privacy_tip</span> Privacy Policy
     </button>
   </nav>
   <div class="p-4 border-t border-white/5">
@@ -1099,9 +1102,9 @@
   // ── Policy sheets (regolamento / termini / privacy) ──
   const _policyTitles = { regolamento: 'REGOLAMENTO', termini: 'TERMINI E CONDIZIONI', privacy: 'PRIVACY POLICY' };
   const _policyDefaults = {
-    regolamento: '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:12px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);"><span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1,\'wght\' 400,\'GRAD\' 0,\'opsz\' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">calendar_month</span><span style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Durata e Svolgimento</span></div><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:0 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Durata</h3><p>GOLARSA RACE è un torneo individuale di tennis a formula libera. La competizione si svolge per tutta la durata stabilita dall\'organizzatore.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Fase 1 — Campionato</h3><p>Per tutta la durata del torneo ogni giocatore può sfidare qualsiasi altro partecipante, previo accordo reciproco tra i due. Le sfide avvengono liberamente, senza un calendario prestabilito. È vietato disputare più di un match contro lo stesso avversario nella stessa settimana solare (lunedì–domenica). La classifica è aggiornata in tempo reale: al termine della fase regolare i <strong style="color:rgba(255,255,255,0.85);">4 giocatori</strong> con il punteggio più alto accedono ai playoff.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Fase 2 — Semifinali e Finale</h3><p style="margin-bottom:0;">Semifinale 1: 1° vs 4° classificato. Semifinale 2: 2° vs 3° classificato. I vincitori si affrontano in finale. Il formato dei match di playoff è identico a quello della fase regolare.</p></div><div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:12px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);"><span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1,\'wght\' 400,\'GRAD\' 0,\'opsz\' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">sports_tennis</span><span style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Regolamento e Sistema Punti</span></div><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:0 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Partecipazione</h3><p>Possono partecipare tutti i giocatori regolarmente iscritti entro la scadenza indicata. L\'iscrizione è personale e non cedibile. La quota di iscrizione deve essere versata per confermare la propria partecipazione.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Il Match</h3><p>Ogni partita ha una durata massima di <strong style="color:rgba(255,255,255,0.85);">60 minuti</strong>. Vince chi totalizza il maggior numero di game nel tempo a disposizione. Il vincitore deve essere decretato al termine di ogni match: non sono ammessi pareggi.</p><div style="background:rgba(209,255,75,0.07);border:1px solid rgba(209,255,75,0.3);border-radius:12px;padding:12px 14px;margin:10px 0 14px;"><div style="display:flex;align-items:flex-start;gap:8px;"><span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1,\'wght\' 400,\'GRAD\' 0,\'opsz\' 24;color:#D1FF4B;font-size:1.1rem;flex-shrink:0;margin-top:2px;">timer</span><div><span style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.63rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;display:block;margin-bottom:5px;">Regola dei 10 minuti</span><p style="margin:0;font-size:13px;color:rgba(255,255,255,0.6);">Entro <strong style="color:rgba(255,255,255,0.9);">10 minuti dalla scadenza</strong> i due giocatori devono accordarsi su quale sarà l\'ultimo game da disputare; tale game fungerà da <strong style="color:rgba(255,255,255,0.9);">spareggio in caso di parità</strong> nel conteggio totale dei game.</p></div></div></div><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Sistema di Punti</h3><p>I punti vengono assegnati al solo vincitore al termine di ogni match.</p><p><strong style="color:rgba(255,255,255,0.85);">Punti base:</strong> +10 punti per ogni game vinto (es. 6–3 → +60 pt).</p><p><strong style="color:rgba(255,255,255,0.85);">Bonus vittoria</strong> in base alla differenza di punti tra i due giocatori prima del match: 0–50 pt → +10; 51–150 pt → +20; oltre 150 pt → +30.</p><p style="margin-bottom:0;"><strong style="color:rgba(255,255,255,0.85);">Bonus dominanza:</strong> +10 punti aggiuntivi se il margine di vittoria è di almeno 4 game (es. 6–2, 6–1, 6–0). I punti vengono confermati in classifica solo dopo la validazione del risultato.</p></div><div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:4px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);"><span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1,\'wght\' 400,\'GRAD\' 0,\'opsz\' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">emoji_events</span><span style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Risultati, Fair Play e Premi</span></div><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:0 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Risultati e Contestazioni</h3><p>Il vincitore deve inserire il risultato sulla piattaforma entro <strong style="color:rgba(255,255,255,0.85);">24 ore</strong> dalla fine del match. L\'avversario riceverà una notifica e avrà 24 ore per confermare o contestare l\'esito. Trascorse 24 ore senza contestazione, il risultato è confermato automaticamente. In caso di contestazione l\'organizzatore prenderà una decisione definitiva e inappellabile.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Fair Play</h3><p>Ogni partecipante è tenuto a comportarsi con lealtà e rispetto verso tutti gli avversari. Non sono tollerati comportamenti scorretti, risultati alterati o qualsiasi forma di scorrettezza sportiva. L\'organizzatore potrà escludere dal torneo qualsiasi partecipante a suo insindacabile giudizio.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Premi</h3><p style="margin-bottom:0;">I premi saranno comunicati dall\'organizzatore prima dell\'inizio del torneo e potranno variare in base al numero finale di iscritti.</p></div>',
-    termini:     '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:12px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);"><span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1,\'wght\' 400,\'GRAD\' 0,\'opsz\' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">fact_check</span><span style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Utilizzo e Iscrizioni</span></div><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:0 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Accettazione</h3><p>Utilizzando la piattaforma GOLARSA RACE accetti in pieno i presenti termini e condizioni. Se non li accetti, ti preghiamo di non utilizzare il servizio.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Utilizzo della piattaforma</h3><p>La piattaforma è riservata agli utenti registrati e agli amministratori dei tornei. Ogni utente è responsabile delle informazioni inserite e dei risultati dichiarati. Non è consentito l\'uso della piattaforma per fini diversi dalla partecipazione ai tornei.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Iscrizioni e quote</h3><p style="margin-bottom:0;">Le quote di iscrizione sono stabilite dall\'organizzatore e devono essere versate entro il termine indicato. L\'iscrizione si considera confermata solo dopo il pagamento. In caso di ritiro prima dell\'inizio del torneo, il rimborso è a discrezione dell\'organizzatore.</p></div><div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:4px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);"><span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1,\'wght\' 400,\'GRAD\' 0,\'opsz\' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">balance</span><span style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Responsabilità e Norme</span></div><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:0 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Modifiche ai tornei</h3><p>L\'organizzatore si riserva il diritto di modificare date, quote e regolamenti dandone comunicazione agli iscritti con congruo anticipo. In caso di cancellazione del torneo, l\'organizzatore provvederà al rimborso delle quote versate.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Limitazione di responsabilità</h3><p>GOLARSA RACE declina ogni responsabilità per danni diretti o indiretti derivanti dall\'utilizzo della piattaforma o dalla partecipazione ai tornei. L\'organizzatore non è responsabile per infortuni o incidenti occorsi durante lo svolgimento delle partite.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Legge applicabile</h3><p style="margin-bottom:0;">I presenti termini sono regolati dalla legge italiana. Per qualsiasi controversia è competente il foro di residenza dell\'organizzatore.</p></div>',
-    privacy:     '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:12px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);"><span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1,\'wght\' 400,\'GRAD\' 0,\'opsz\' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">lock</span><span style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Dati e Trattamento</span></div><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:0 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Titolare del trattamento</h3><p>Il titolare del trattamento dei dati personali è l\'organizzatore del torneo registrato sulla piattaforma GOLARSA RACE.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Dati raccolti</h3><p>Raccogliamo esclusivamente i dati necessari alla partecipazione ai tornei: nome, cognome, indirizzo e-mail e, se previsto, i dati di pagamento della quota di iscrizione.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Finalità del trattamento</h3><p style="margin-bottom:0;">I tuoi dati vengono utilizzati per gestire l\'iscrizione al torneo, comunicare aggiornamenti e, dove applicabile, elaborare i pagamenti. I dati non vengono ceduti a terzi né utilizzati per finalità di marketing senza consenso esplicito.</p></div><div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:4px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);"><span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1,\'wght\' 400,\'GRAD\' 0,\'opsz\' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">shield</span><span style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Conservazione e Diritti</span></div><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:0 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Conservazione dei dati</h3><p>I dati personali vengono conservati per il tempo strettamente necessario alle finalità indicate e comunque non oltre <strong style="color:rgba(255,255,255,0.85);">12 mesi</strong> dalla chiusura del torneo, salvo obblighi di legge.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Diritti dell\'interessato</h3><p>Ai sensi del GDPR hai il diritto di accedere ai tuoi dati, rettificarli, cancellarli o limitarne il trattamento. Per esercitare questi diritti contatta l\'organizzatore attraverso la piattaforma.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Cookie</h3><p style="margin-bottom:0;">La piattaforma utilizza solo cookie tecnici essenziali al funzionamento. Non vengono utilizzati cookie di profilazione o di terze parti a fini pubblicitari.</p></div>'
+    regolamento: '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:12px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);"><span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1,\'wght\' 400,\'GRAD\' 0,\'opsz\' 24;color:#C5FF1A;font-size:1.35rem;flex-shrink:0;">calendar_month</span><span style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Durata e Svolgimento</span></div><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:0 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Durata</h3><p>GOLARSA RACE è un torneo individuale di tennis a formula libera. La competizione si svolge per tutta la durata stabilita dall\'organizzatore.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Fase 1 — Campionato</h3><p>Per tutta la durata del torneo ogni giocatore può sfidare qualsiasi altro partecipante, previo accordo reciproco tra i due. Le sfide avvengono liberamente, senza un calendario prestabilito. È vietato disputare più di un match contro lo stesso avversario nella stessa settimana solare (lunedì–domenica). La classifica è aggiornata in tempo reale: al termine della fase regolare i <strong style="color:rgba(255,255,255,0.85);">4 giocatori</strong> con il punteggio più alto accedono ai playoff.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Fase 2 — Semifinali e Finale</h3><p style="margin-bottom:0;">Semifinale 1: 1° vs 4° classificato. Semifinale 2: 2° vs 3° classificato. I vincitori si affrontano in finale. Il formato dei match di playoff è identico a quello della fase regolare.</p></div><div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:12px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);"><span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1,\'wght\' 400,\'GRAD\' 0,\'opsz\' 24;color:#C5FF1A;font-size:1.35rem;flex-shrink:0;">sports_tennis</span><span style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Regolamento e Sistema Punti</span></div><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:0 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Partecipazione</h3><p>Possono partecipare tutti i giocatori regolarmente iscritti entro la scadenza indicata. L\'iscrizione è personale e non cedibile. La quota di iscrizione deve essere versata per confermare la propria partecipazione.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Il Match</h3><p>Ogni partita ha una durata massima di <strong style="color:rgba(255,255,255,0.85);">60 minuti</strong>. Vince chi totalizza il maggior numero di game nel tempo a disposizione. Il vincitore deve essere decretato al termine di ogni match: non sono ammessi pareggi.</p><div style="background:rgba(209,255,75,0.07);border:1px solid rgba(209,255,75,0.3);border-radius:12px;padding:12px 14px;margin:10px 0 14px;"><div style="display:flex;align-items:flex-start;gap:8px;"><span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1,\'wght\' 400,\'GRAD\' 0,\'opsz\' 24;color:#C5FF1A;font-size:1.1rem;flex-shrink:0;margin-top:2px;">timer</span><div><span style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.63rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;display:block;margin-bottom:5px;">Regola dei 10 minuti</span><p style="margin:0;font-size:13px;color:rgba(255,255,255,0.6);">Entro <strong style="color:rgba(255,255,255,0.9);">10 minuti dalla scadenza</strong> i due giocatori devono accordarsi su quale sarà l\'ultimo game da disputare; tale game fungerà da <strong style="color:rgba(255,255,255,0.9);">spareggio in caso di parità</strong> nel conteggio totale dei game.</p></div></div></div><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Sistema di Punti</h3><p>I punti vengono assegnati al solo vincitore al termine di ogni match.</p><p><strong style="color:rgba(255,255,255,0.85);">Punti base:</strong> +10 punti per ogni game vinto (es. 6–3 → +60 pt).</p><p><strong style="color:rgba(255,255,255,0.85);">Bonus vittoria</strong> in base alla differenza di punti tra i due giocatori prima del match: 0–50 pt → +10; 51–150 pt → +20; oltre 150 pt → +30.</p><p style="margin-bottom:0;"><strong style="color:rgba(255,255,255,0.85);">Bonus dominanza:</strong> +10 punti aggiuntivi se il margine di vittoria è di almeno 4 game (es. 6–2, 6–1, 6–0). I punti vengono confermati in classifica solo dopo la validazione del risultato.</p></div><div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:4px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);"><span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1,\'wght\' 400,\'GRAD\' 0,\'opsz\' 24;color:#C5FF1A;font-size:1.35rem;flex-shrink:0;">emoji_events</span><span style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Risultati, Fair Play e Premi</span></div><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:0 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Risultati e Contestazioni</h3><p>Il vincitore deve inserire il risultato sulla piattaforma entro <strong style="color:rgba(255,255,255,0.85);">24 ore</strong> dalla fine del match. L\'avversario riceverà una notifica e avrà 24 ore per confermare o contestare l\'esito. Trascorse 24 ore senza contestazione, il risultato è confermato automaticamente. In caso di contestazione l\'organizzatore prenderà una decisione definitiva e inappellabile.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Fair Play</h3><p>Ogni partecipante è tenuto a comportarsi con lealtà e rispetto verso tutti gli avversari. Non sono tollerati comportamenti scorretti, risultati alterati o qualsiasi forma di scorrettezza sportiva. L\'organizzatore potrà escludere dal torneo qualsiasi partecipante a suo insindacabile giudizio.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Premi</h3><p style="margin-bottom:0;">I premi saranno comunicati dall\'organizzatore prima dell\'inizio del torneo e potranno variare in base al numero finale di iscritti.</p></div>',
+    termini:     '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:12px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);"><span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1,\'wght\' 400,\'GRAD\' 0,\'opsz\' 24;color:#C5FF1A;font-size:1.35rem;flex-shrink:0;">fact_check</span><span style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Utilizzo e Iscrizioni</span></div><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:0 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Accettazione</h3><p>Utilizzando la piattaforma GOLARSA RACE accetti in pieno i presenti termini e condizioni. Se non li accetti, ti preghiamo di non utilizzare il servizio.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Utilizzo della piattaforma</h3><p>La piattaforma è riservata agli utenti registrati e agli amministratori dei tornei. Ogni utente è responsabile delle informazioni inserite e dei risultati dichiarati. Non è consentito l\'uso della piattaforma per fini diversi dalla partecipazione ai tornei.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Iscrizioni e quote</h3><p style="margin-bottom:0;">Le quote di iscrizione sono stabilite dall\'organizzatore e devono essere versate entro il termine indicato. L\'iscrizione si considera confermata solo dopo il pagamento. In caso di ritiro prima dell\'inizio del torneo, il rimborso è a discrezione dell\'organizzatore.</p></div><div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:4px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);"><span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1,\'wght\' 400,\'GRAD\' 0,\'opsz\' 24;color:#C5FF1A;font-size:1.35rem;flex-shrink:0;">balance</span><span style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Responsabilità e Norme</span></div><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:0 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Modifiche ai tornei</h3><p>L\'organizzatore si riserva il diritto di modificare date, quote e regolamenti dandone comunicazione agli iscritti con congruo anticipo. In caso di cancellazione del torneo, l\'organizzatore provvederà al rimborso delle quote versate.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Limitazione di responsabilità</h3><p>GOLARSA RACE declina ogni responsabilità per danni diretti o indiretti derivanti dall\'utilizzo della piattaforma o dalla partecipazione ai tornei. L\'organizzatore non è responsabile per infortuni o incidenti occorsi durante lo svolgimento delle partite.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Legge applicabile</h3><p style="margin-bottom:0;">I presenti termini sono regolati dalla legge italiana. Per qualsiasi controversia è competente il foro di residenza dell\'organizzatore.</p></div>',
+    privacy:     '<div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:12px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);"><span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1,\'wght\' 400,\'GRAD\' 0,\'opsz\' 24;color:#C5FF1A;font-size:1.35rem;flex-shrink:0;">lock</span><span style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Dati e Trattamento</span></div><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:0 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Titolare del trattamento</h3><p>Il titolare del trattamento dei dati personali è l\'organizzatore del torneo registrato sulla piattaforma GOLARSA RACE.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Dati raccolti</h3><p>Raccogliamo esclusivamente i dati necessari alla partecipazione ai tornei: nome, cognome, indirizzo e-mail e, se previsto, i dati di pagamento della quota di iscrizione.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Finalità del trattamento</h3><p style="margin-bottom:0;">I tuoi dati vengono utilizzati per gestire l\'iscrizione al torneo, comunicare aggiornamenti e, dove applicabile, elaborare i pagamenti. I dati non vengono ceduti a terzi né utilizzati per finalità di marketing senza consenso esplicito.</p></div><div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:4px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);"><span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1,\'wght\' 400,\'GRAD\' 0,\'opsz\' 24;color:#C5FF1A;font-size:1.35rem;flex-shrink:0;">shield</span><span style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Conservazione e Diritti</span></div><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:0 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Conservazione dei dati</h3><p>I dati personali vengono conservati per il tempo strettamente necessario alle finalità indicate e comunque non oltre <strong style="color:rgba(255,255,255,0.85);">12 mesi</strong> dalla chiusura del torneo, salvo obblighi di legge.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Diritti dell\'interessato</h3><p>Ai sensi del GDPR hai il diritto di accedere ai tuoi dati, rettificarli, cancellarli o limitarne il trattamento. Per esercitare questi diritti contatta l\'organizzatore attraverso la piattaforma.</p><h3 style="font-family:\'Epilogue\',sans-serif;font-weight:900;font-style:italic;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;margin:16px 0 7px;padding-left:10px;border-left:2px solid rgba(209,255,75,0.6);display:block;">Cookie</h3><p style="margin-bottom:0;">La piattaforma utilizza solo cookie tecnici essenziali al funzionamento. Non vengono utilizzati cookie di profilazione o di terze parti a fini pubblicitari.</p></div>'
   };
   function openPolicySheet(type) {
     // chiudi solo il drawer, mantieni (o riattiva) backdrop
@@ -1169,7 +1172,7 @@
       const dot = document.createElement('div');
       const isW = r === 'W';
       dot.className = 'w-8 h-8 rounded-full flex items-center justify-center font-black text-xs italic ' +
-        (isW ? 'bg-[#D1FF4B] text-[#4a6000]' : 'bg-red-500/20 text-red-400 border border-red-500/20');
+        (isW ? 'bg-[#C5FF1A] text-[#4a6000]' : 'bg-red-500/20 text-red-400 border border-red-500/20');
       dot.textContent = r;
       trend.appendChild(dot);
     });
@@ -1203,7 +1206,7 @@
     const cognome = parti.pop().toUpperCase();
     const nome = parti.join(' ');
     const win = scoreTu > scoreAvv;
-    const scoreColor = win ? 'text-[#D1FF4B]' : 'text-red-400';
+    const scoreColor = win ? 'text-[#C5FF1A]' : 'text-red-400';
     return `<div class="cinematic-card rounded-[14px] p-4 shrink-0 w-[155px] flex flex-col gap-2">
       <div class="flex justify-between items-start gap-1">
         <div class="min-w-0">
@@ -1214,7 +1217,7 @@
       </div>
       <div class="flex items-end justify-between">
         <p class="text-xl font-headline font-black italic ${scoreColor} leading-none">${scoreTu}-${scoreAvv}</p>
-        <div class="w-7 h-7 rounded-full flex items-center justify-center font-black text-xs italic ${win ? 'bg-[#D1FF4B] text-[#4a6000]' : 'bg-red-500/20 text-red-400 border border-red-500/20'}">${win ? 'W' : 'L'}</div>
+        <div class="w-7 h-7 rounded-full flex items-center justify-center font-black text-xs italic ${win ? 'bg-[#C5FF1A] text-[#4a6000]' : 'bg-red-500/20 text-red-400 border border-red-500/20'}">${win ? 'W' : 'L'}</div>
       </div>
     </div>`;
   }
@@ -1297,7 +1300,7 @@
       const dot = document.createElement('div');
       const isW = r === 'W';
       dot.className = 'w-8 h-8 rounded-full flex items-center justify-center font-black text-xs italic ' +
-        (isW ? 'bg-[#D1FF4B] text-[#4a6000]' : 'bg-red-500/20 text-red-400 border border-red-500/20');
+        (isW ? 'bg-[#C5FF1A] text-[#4a6000]' : 'bg-red-500/20 text-red-400 border border-red-500/20');
       dot.textContent = r;
       trend.appendChild(dot);
     });
@@ -1421,4 +1424,5 @@
   }, { passive: false });
 })();
 </script>
+<script src="../../src/animations.js"></script>
 </body></html>

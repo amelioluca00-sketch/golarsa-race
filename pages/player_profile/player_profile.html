@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="../../src/animations.css">
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -114,7 +115,7 @@
 
         /* Pop-up Button Effect */
         .popup-button {
-            background: linear-gradient(180deg, #e3ff8c 0%, #D1FF4B 100%);
+            background: linear-gradient(180deg, #e3ff8c 0%, #C5FF1A 100%);
             box-shadow: 
                 inset 0 1px 0 0 rgba(255, 255, 255, 0.4),
                 0 4px 15px rgba(209, 255, 75, 0.3);
@@ -195,7 +196,7 @@
 <div class="flex items-center gap-3 px-3 py-1.5 bg-[#1c1c1c] rounded-lg border border-white/10 shadow-lg">
 <div class="flex items-center gap-1.5">
 <span class="text-[9px] text-[#888888] font-black uppercase tracking-widest" style="">RANK</span>
-<span id="pp-rank" class="font-['Epilogue'] font-black italic text-[#D1FF4B] text-sm uppercase" style="">#—</span>
+<span id="pp-rank" class="font-['Epilogue'] font-black italic text-[#C5FF1A] text-sm uppercase" style="">#—</span>
 </div>
 <div class="w-[1px] h-3 bg-white/10"></div>
 <img id="pp-flag" src="https://flagcdn.com/w40/it.png" class="w-5 h-[13px] rounded-sm border border-white/5 object-cover" alt=""/>
@@ -206,21 +207,21 @@
 </div>
 </section>
 <!-- Primary CTA -->
-<a id="btn-sfida" href="#" class="flex items-center justify-center w-full h-14 rounded-[14px] font-['Epilogue'] font-black italic uppercase tracking-[0.1em] text-sm text-[#4a6000] active:scale-[0.97] transition-all duration-200 bg-[#D1FF4B] popup-button anim-in" style="animation-delay: 0.13s; text-decoration: none;">
+<a id="btn-sfida" href="#" class="flex items-center justify-center w-full h-14 rounded-[14px] font-['Epilogue'] font-black italic uppercase tracking-[0.1em] text-sm text-[#4a6000] active:scale-[0.97] transition-all duration-200 bg-[#C5FF1A] popup-button anim-in" style="animation-delay: 0.13s; text-decoration: none;">
         SFIDA AVVERSARIO</a>
 <!-- Win Rate Gauge Section -->
 <section class="cinematic-card rounded-[24px] p-6 flex justify-between items-center anim-in" style="animation-delay: 0.21s;">
 <div class="">
 <p class="text-[10px] font-[900] text-[#888888]/80 uppercase tracking-[0.2em] italic mb-2" style="">WIN RATE</p>
 <div>
-<p id="pp-wr-label" class="font-['Epilogue'] font-black italic text-2xl text-[#D1FF4B] uppercase leading-none" style="">—</p>
+<p id="pp-wr-label" class="font-['Epilogue'] font-black italic text-2xl text-[#C5FF1A] uppercase leading-none" style="">—</p>
 <p class="text-[10px] font-medium text-[#888888] italic mt-1" style="">Ultime 10 partite</p>
 </div>
 </div>
 <div class="relative w-20 h-20">
 <svg class="w-full h-full -rotate-90" viewbox="0 0 100 100">
 <circle cx="50" cy="50" fill="transparent" r="45" stroke="#2a2a2a" stroke-width="8"></circle>
-<circle class="gauge-path" cx="50" cy="50" fill="transparent" r="45" stroke="#D1FF4B" stroke-linecap="round" stroke-width="8" style="stroke-dasharray: 283; stroke-dashoffset: 70;"></circle>
+<circle class="gauge-path" cx="50" cy="50" fill="transparent" r="45" stroke="#C5FF1A" stroke-linecap="round" stroke-width="8" style="stroke-dasharray: 283; stroke-dashoffset: 70;"></circle>
 </svg>
 <div class="absolute inset-0 flex items-center justify-center">
 <span id="pp-wr-pct" class="font-['Epilogue'] font-black italic text-xl text-white" style="">—%</span>
@@ -263,11 +264,11 @@
 </main>
 <!-- Navigation Drawer -->
 <div class="hidden h-full w-80 fixed left-0 top-0 z-[60] bg-[#131313] shadow-[20px_0_40px_rgba(209,255,75,0.04)] flex flex-col p-8 space-y-6" id="sideNav">
-<div class="text-[#D1FF4B] font-['Epilogue'] font-black italic text-2xl uppercase tracking-tighter mb-8" style="">
+<div class="text-[#C5FF1A] font-['Epilogue'] font-black italic text-2xl uppercase tracking-tighter mb-8" style="">
         RACE CONTROL
     </div>
 <nav class="flex flex-col space-y-2">
-<a class="flex items-center gap-4 p-4 rounded-lg bg-[#222222] text-[#D1FF4B] border-l-4 border-[#D1FF4B] font-['Epilogue'] font-bold italic uppercase" href="#" style="">
+<a class="flex items-center gap-4 p-4 rounded-lg bg-[#222222] text-[#C5FF1A] border-l-4 border-[#C5FF1A] font-['Epilogue'] font-bold italic uppercase" href="#" style="">
 <span class="material-symbols-outlined" style="">gavel</span>
             Regolamento
         </a>
@@ -326,4 +327,5 @@
 <script src="../../src/storage-manager.js?v=14"></script>
 <script src="../../src/ui-binder.js?v=14"></script>
 <script src="../../src/main.js?v=14"></script>
+<script src="../../src/animations.js"></script>
 </body></html>

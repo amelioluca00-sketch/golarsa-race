@@ -4,6 +4,7 @@
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
 <title>Risultato Inviato</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="../../../../src/animations.css">
 <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,900;1,900&family=Inter:wght@400;500;700&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
@@ -162,8 +163,8 @@
 
     <!-- Spunta animata -->
     <div class="mb-6 relative check-pop" style="animation-delay:1.1s;">
-        <div class="absolute inset-0 bg-[#D1FF4B] blur-[80px] opacity-20 rounded-full glow-pulse"></div>
-        <svg class="w-32 h-32 text-[#D1FF4B] relative z-10" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <div class="absolute inset-0 bg-[#C5FF1A] blur-[80px] opacity-20 rounded-full glow-pulse"></div>
+        <svg class="w-32 h-32 text-[#C5FF1A] relative z-10" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <circle class="circle-draw" cx="50" cy="50" r="46"
                 stroke="currentColor" stroke-linecap="round" stroke-width="4"/>
             <path class="check-draw" d="M30 52L44 66L70 34"
@@ -184,7 +185,7 @@
             <span class="text-7xl font-headline font-black italic text-primary" id="score-home">6</span>
             <span class="text-[0.6rem] uppercase tracking-widest text-neutral-500 mt-1">Home</span>
         </div>
-        <div class="h-16 w-[3px] bg-[#D1FF4B]/30 slide-up" style="transform: skewX(-20deg); animation-delay:1.45s;"></div>
+        <div class="h-16 w-[3px] bg-[#C5FF1A]/30 slide-up" style="transform: skewX(-20deg); animation-delay:1.45s;"></div>
         <div class="flex flex-col items-center score-pop" style="animation-delay:1.5s;">
             <span class="text-7xl font-headline font-black italic text-neutral-500" id="score-away">4</span>
             <span class="text-[0.6rem] uppercase tracking-widest text-neutral-500 mt-1">Away</span>
@@ -196,22 +197,22 @@
         <span class="text-sm md:text-base font-headline font-black italic text-primary tracking-tight uppercase opacity-80">
             HAI GUADAGNATO
         </span>
-        <span class="text-3xl md:text-4xl font-headline font-black italic text-[#D1FF4B] tracking-tighter" id="points-display">
+        <span class="text-3xl md:text-4xl font-headline font-black italic text-[#C5FF1A] tracking-tighter" id="points-display">
             +0 PUNTI
         </span>
     </div>
 </main>
 
 <footer class="w-full max-w-md p-6 pb-8 slide-up" style="animation-delay:2s;">
-    <button onclick="window.location.href='../../../home/home.html'" class="w-full bg-gradient-to-b from-[#E2FF85] to-[#D1FF4B] text-[#161f00] font-headline font-black italic uppercase tracking-wider text-lg py-5 rounded-[18px] border-t border-white/40 shadow-lg hover:brightness-105 active:scale-[0.98] transition-all flex items-center justify-center gap-3" type="button">
+    <button onclick="window.location.href='../../../home/home.html'" class="w-full bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase tracking-wider text-lg py-5 rounded-[18px] border-t border-white/40 shadow-lg hover:brightness-105 active:scale-[0.98] transition-all flex items-center justify-center gap-3" type="button">
         TORNA ALLA RACE
     </button>
 </footer>
 
 <!-- Sfondo decorativo -->
 <div class="fixed inset-0 pointer-events-none overflow-hidden z-[-1]">
-    <div class="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-[#D1FF4B]/10 to-transparent blur-3xl opacity-20"></div>
-    <div class="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-tl from-[#D1FF4B]/10 to-transparent blur-3xl opacity-10"></div>
+    <div class="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-gradient-to-br from-[#C5FF1A]/10 to-transparent blur-3xl opacity-20"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-gradient-to-tl from-[#C5FF1A]/10 to-transparent blur-3xl opacity-10"></div>
 </div>
 
 <script>
@@ -258,4 +259,5 @@
     TORNA ALLA HOME →
   </button>
 </div>
+<script src="../../../../src/animations.js"></script>
 </body></html>

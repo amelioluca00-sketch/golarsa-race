@@ -7,6 +7,7 @@
 <meta name="theme-color" content="#0a0a0a"/>
 <meta name="format-detection" content="telephone=no"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="../../src/animations.css">
 <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,900;1,900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
@@ -17,7 +18,7 @@
                     "colors": {
                         "tertiary": "#ffffff",
                         "surface-bright": "#3a3939",
-                        "primary-fixed": "#d1ff4b",
+                        "primary-fixed": "#c5ff1a",
                         "tertiary-container": "#ffdad7",
                         "surface-container-highest": "#353534",
                         "primary": "#ffffff",
@@ -47,7 +48,7 @@
                         "on-tertiary-container": "#c71623",
                         "on-secondary-fixed-variant": "#004395",
                         "on-primary-fixed": "#161f00",
-                        "primary-container": "#d1ff4b",
+                        "primary-container": "#c5ff1a",
                         "surface-container": "#201f1f",
                         "primary-fixed-dim": "#aad61e",
                         "surface-dim": "#131313",
@@ -95,7 +96,7 @@
             background: linear-gradient(to bottom, rgba(10, 10, 10, 0.3) 0%, rgba(10, 10, 10, 0.85) 60%, rgba(10, 10, 10, 1) 100%);
         }
         .stroke-text {
-            -webkit-text-stroke: 1px #d1ff4b;
+            -webkit-text-stroke: 1px #c5ff1a;
         }
         .input-glow:focus {
             box-shadow: none !important;
@@ -129,7 +130,7 @@
 
         /* Pop-up Button Effect from SCREEN_183 */
         .popup-button {
-            background: linear-gradient(180deg, #e3ff8c 0%, #D1FF4B 100%) !important;
+            background: linear-gradient(180deg, #e3ff8c 0%, #C5FF1A 100%) !important;
             box-shadow:
                 inset 0 1px 0 0 rgba(255, 255, 255, 0.4) !important;
             position: relative;
@@ -151,7 +152,7 @@
         font-weight: 800;
         letter-spacing: 0.12em;
         text-transform: uppercase;
-        color: #d1ff4b;
+        color: #c5ff1a;
         margin-top: 1.1rem;
         margin-bottom: 0.3rem;
     }
@@ -203,7 +204,7 @@
 <!-- Auth Switcher Pill -->
 <div id="authSwitcherPill" class="relative flex p-1 bg-black/70 rounded-full w-full border border-white/10" style="margin-bottom: 2.5rem; transition: margin-bottom 0.35s ease;">
     <!-- Sliding indicator -->
-    <div id="switchSlider" style="position:absolute; top:4px; bottom:4px; left:4px; width:calc(50% - 4px); background:linear-gradient(180deg,#e3ff8c 0%,#D1FF4B 100%); border-radius:9999px; transition:transform 0.35s cubic-bezier(0.4,0,0.2,1); box-shadow:inset 0 1px 0 0 rgba(255,255,255,0.4); will-change:transform;"></div>
+    <div id="switchSlider" style="position:absolute; top:4px; bottom:4px; left:4px; width:calc(50% - 4px); background:linear-gradient(180deg,#e3ff8c 0%,#C5FF1A 100%); border-radius:9999px; transition:transform 0.35s cubic-bezier(0.4,0,0.2,1); box-shadow:inset 0 1px 0 0 rgba(255,255,255,0.4); will-change:transform;"></div>
     <button id="btnIscriviti" onclick="switchAuth('iscriviti')" class="relative flex-1 z-10 py-3 px-4 rounded-full font-headline font-black italic text-[11px] tracking-widest uppercase transition-colors duration-300 text-[#0a0a0a]">ISCRIVITI</button>
     <button id="btnAccedi" onclick="switchAuth('accedi')" class="relative flex-1 z-10 py-3 px-4 rounded-full font-headline font-black italic text-[11px] tracking-widest uppercase transition-colors duration-300 text-white/60 hover:text-white">ACCEDI</button>
 </div>
@@ -215,19 +216,19 @@
 <!-- Nome -->
 <div class="space-y-1.5">
 <label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/80 font-bold ml-1" style="">NOME</label>
-<input id="inp-nome" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#d1ff4b]/60 focus:border-[#d1ff4b] outline-none transition-all placeholder:text-white/40 input-glow" placeholder="Es. Marco" type="text" required/>
+<input id="inp-nome" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#c5ff1a]/60 focus:border-[#c5ff1a] outline-none transition-all placeholder:text-white/40 input-glow" placeholder="Es. Marco" type="text" required/>
 </div>
 <!-- Cognome -->
 <div class="space-y-1.5">
 <label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/80 font-bold ml-1" style="">COGNOME</label>
-<input id="inp-cognome" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#d1ff4b]/60 focus:border-[#d1ff4b] outline-none transition-all placeholder:text-white/40 input-glow" placeholder="Es. Rossi" type="text" required/>
+<input id="inp-cognome" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#c5ff1a]/60 focus:border-[#c5ff1a] outline-none transition-all placeholder:text-white/40 input-glow" placeholder="Es. Rossi" type="text" required/>
 </div>
 </div>
 </div>
 <!-- Email (sempre visibile) -->
 <div class="space-y-1.5">
 <label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/80 font-bold ml-1" style="">EMAIL</label>
-<input id="inp-email" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#d1ff4b]/60 focus:border-[#d1ff4b] outline-none transition-all placeholder:text-white/40 input-glow" placeholder="nome@esempio.com" type="email" required/>
+<input id="inp-email" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#c5ff1a]/60 focus:border-[#c5ff1a] outline-none transition-all placeholder:text-white/40 input-glow" placeholder="nome@esempio.com" type="email" required/>
 </div>
 <!-- TELEFONO + NAZIONALITÀ + COACH (collassabili) -->
 <div id="fieldsExtra" class="form-collapsible space-y-5" style="max-height: 400px; opacity: 1;">
@@ -235,13 +236,13 @@
 <!-- Telefono -->
 <div class="space-y-1.5">
 <label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/80 font-bold ml-1" style="">TELEFONO</label>
-<input id="inp-tel" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#d1ff4b]/60 focus:border-[#d1ff4b] outline-none transition-all placeholder:text-white/40 input-glow" value="+39" placeholder="+39 000 0000000" type="tel" required/>
+<input id="inp-tel" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#c5ff1a]/60 focus:border-[#c5ff1a] outline-none transition-all placeholder:text-white/40 input-glow" value="+39" placeholder="+39 000 0000000" type="tel" required/>
 </div>
 <!-- Nazionalità -->
 <div class="space-y-1.5">
 <label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/80 font-bold ml-1" style="">NAZIONALITÀ</label>
 <div class="relative">
-<select id="inp-naz" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#d1ff4b]/60 focus:border-[#d1ff4b] outline-none appearance-none transition-all cursor-pointer" style="-webkit-appearance:none;-moz-appearance:none;appearance:none;">
+<select id="inp-naz" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#c5ff1a]/60 focus:border-[#c5ff1a] outline-none appearance-none transition-all cursor-pointer" style="-webkit-appearance:none;-moz-appearance:none;appearance:none;">
 <option class="bg-[#1c1c1c]">🇮🇹 Italia</option>
 <option class="bg-[#1c1c1c]">🇦🇫 Afghanistan</option>
 <option class="bg-[#1c1c1c]">🇦🇱 Albania</option>
@@ -445,7 +446,7 @@
 <!-- Coach di riferimento -->
 <div class="space-y-1.5">
 <label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/80 font-bold ml-1" style="">COACH DI RIFERIMENTO</label>
-<input id="inp-coach" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#d1ff4b]/60 focus:border-[#d1ff4b] outline-none transition-all placeholder:text-white/40 input-glow" placeholder="Nome del Tecnico" type="text" required/>
+<input id="inp-coach" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#c5ff1a]/60 focus:border-[#c5ff1a] outline-none transition-all placeholder:text-white/40 input-glow" placeholder="Nome del Tecnico" type="text" required/>
 </div>
 </div>
 <!-- Selettore Torneo (solo iscriviti) -->
@@ -468,7 +469,7 @@
                         ISCRIVITI ORA
                     </button>
 <p class="text-center mt-6 text-[9px] text-white/50 uppercase tracking-[0.2em] leading-relaxed px-6 font-medium" style="">
-                        Iscrivendoti accetti i <button type="button" onclick="openLegalModal('termini')" class="text-white/80 underline decoration-[#d1ff4b]/50 underline-offset-2 cursor-pointer hover:text-[#d1ff4b] transition-colors">termini del servizio</button> e la <button type="button" onclick="openLegalModal('privacy')" class="text-white/80 underline decoration-[#d1ff4b]/50 underline-offset-2 cursor-pointer hover:text-[#d1ff4b] transition-colors">privacy policy</button> di GOLARSA RACE.
+                        Iscrivendoti accetti i <button type="button" onclick="openLegalModal('termini')" class="text-white/80 underline decoration-[#c5ff1a]/50 underline-offset-2 cursor-pointer hover:text-[#c5ff1a] transition-colors">termini del servizio</button> e la <button type="button" onclick="openLegalModal('privacy')" class="text-white/80 underline decoration-[#c5ff1a]/50 underline-offset-2 cursor-pointer hover:text-[#c5ff1a] transition-colors">privacy policy</button> di GOLARSA RACE.
                     </p>
 </div>
 </form>
@@ -518,7 +519,7 @@
                     id="adminPasswordInput"
                     type="password"
                     placeholder="••••••••"
-                    class="w-full bg-white/5 border border-white/20 rounded-xl py-3 px-4 text-sm text-white focus:ring-2 focus:ring-[#d1ff4b]/60 focus:border-[#d1ff4b] outline-none transition-all placeholder:text-white/30 input-glow"
+                    class="w-full bg-white/5 border border-white/20 rounded-xl py-3 px-4 text-sm text-white focus:ring-2 focus:ring-[#c5ff1a]/60 focus:border-[#c5ff1a] outline-none transition-all placeholder:text-white/30 input-glow"
                     onkeydown="if(event.key==='Enter') submitAdminPassword()"
                 />
                 <p id="adminError" class="hidden text-[10px] text-red-400/80 ml-1 mt-1">Password errata.</p>
@@ -780,4 +781,5 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="../../src/storage-manager.js?v=14"></script>
 
+<script src="../../src/animations.js"></script>
 </body></html>

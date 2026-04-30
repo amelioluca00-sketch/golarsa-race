@@ -12,6 +12,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="../../../src/animations.css">
 <script id="tailwind-config">
         tailwind.config = {
           darkMode: "class",
@@ -116,48 +117,43 @@
 <span class="material-symbols-outlined text-on-surface" data-icon="close">close</span>
 </button>
 </div>
-<main class="pt-16 pb-12 px-4 max-w-4xl mx-auto min-h-screen">
-<section class="mb-8 px-2">
-<h2 class="text-4xl md:text-6xl font-headline font-black italic tracking-tighter uppercase mb-1">
-            INSERISCI <span class="text-[#D1FF4B]">RISULTATO</span>
+<main class="pt-12 md:pt-16 pb-6 md:pb-12 px-4 max-w-4xl mx-auto min-h-screen">
+<section class="mb-5 md:mb-8 px-2">
+<h2 class="text-3xl md:text-6xl font-headline font-black italic tracking-tighter uppercase mb-1">
+            INSERISCI <span class="text-[#C5FF1A]">RISULTATO</span>
 </h2>
 <p class="text-on-surface-variant font-label uppercase tracking-widest text-[10px]">Inserisci il punteggio finale</p>
 </section>
 <div class="space-y-6">
-<section class="relative bg-surface-container rounded-3xl p-6 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/5 overflow-hidden">
-<div class="absolute top-0 right-0 w-32 h-32 bg-[#D1FF4B]/5 blur-3xl -mr-10 -mt-10"></div>
-<div class="grid grid-cols-1 gap-8 relative z-10">
-<div class="flex flex-col items-center">
-<span class="font-label uppercase tracking-[0.2em] text-on-surface-variant mb-6 text-xs italic">TU</span>
-<div class="flex items-center gap-6 w-full justify-between max-w-[340px]">
-<button class="w-16 h-16 flex items-center justify-center rounded-2xl bg-[#D1FF4B] text-[#161f00] hover:opacity-90 active:scale-90 transition-all" type="button" onclick="changeScore('tu', -1)">
-<span class="material-symbols-outlined text-2xl font-bold" data-icon="remove">remove</span>
+<section class="relative bg-surface-container rounded-3xl p-4 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/5 overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-[#C5FF1A]/5 blur-3xl -mr-10 -mt-10"></div>
+<div class="grid grid-cols-1 gap-5 md:gap-8 relative z-10">
+<div class="flex flex-row items-center justify-center gap-8">
+<!-- TU -->
+<div class="flex flex-col items-center gap-3 flex-1">
+<span class="font-label uppercase tracking-[0.2em] text-on-surface-variant text-xs italic">TU</span>
+<button class="w-full h-16 flex items-center justify-center rounded-2xl bg-[#C5FF1A] text-[#161f00] hover:opacity-90 active:scale-95 transition-all" type="button" onclick="changeScore('tu', 1)">
+<span class="material-symbols-outlined text-3xl font-bold" data-icon="add">add</span>
 </button>
-<div class="flex-1 text-center">
-<div class="text-8xl md:text-9xl font-headline font-black italic text-[#D1FF4B] text-shadow-glow leading-none" id="score-tu">0</div>
-</div>
-<button class="w-16 h-16 flex items-center justify-center rounded-2xl bg-[#D1FF4B] text-[#161f00] hover:opacity-90 active:scale-90 transition-all" type="button" onclick="changeScore('tu', 1)">
-<span class="material-symbols-outlined text-2xl font-bold" data-icon="add">add</span>
+<div class="text-8xl font-headline font-black italic text-[#C5FF1A] text-shadow-glow leading-none text-center" id="score-tu">0</div>
+<button class="w-full h-16 flex items-center justify-center rounded-2xl bg-[#C5FF1A] text-[#161f00] hover:opacity-90 active:scale-95 transition-all" type="button" onclick="changeScore('tu', -1)">
+<span class="material-symbols-outlined text-3xl font-bold" data-icon="remove">remove</span>
 </button>
 </div>
-</div>
-<div class="flex flex-col items-center">
-<span class="font-label uppercase tracking-[0.2em] text-on-surface-variant mb-6 text-xs italic">AVVERSARIO</span>
-<div class="flex items-center gap-6 w-full justify-between max-w-[340px]">
-<button class="w-16 h-16 flex items-center justify-center rounded-2xl bg-surface-container-high border border-outline-variant/20 hover:bg-surface-container-highest active:scale-90 transition-all" type="button" onclick="changeScore('avv', -1)">
-<span class="material-symbols-outlined text-2xl" data-icon="remove">remove</span>
+<!-- VS -->
+<div class="text-2xl font-headline font-black italic text-surface-container-highest opacity-30 pb-4">VS</div>
+<!-- AVVERSARIO -->
+<div class="flex flex-col items-center gap-3 flex-1">
+<span class="font-label uppercase tracking-[0.2em] text-on-surface-variant text-xs italic">AVVERSARIO</span>
+<button class="w-full h-16 flex items-center justify-center rounded-2xl bg-surface-container-high border border-outline-variant/20 hover:bg-surface-container-highest active:scale-95 transition-all" type="button" onclick="changeScore('avv', 1)">
+<span class="material-symbols-outlined text-3xl font-bold" data-icon="add">add</span>
 </button>
-<div class="flex-1 text-center">
-<div class="text-8xl md:text-9xl font-headline font-black italic text-on-surface-variant leading-none" id="score-avv">0</div>
-</div>
-<button class="w-16 h-16 flex items-center justify-center rounded-2xl bg-surface-container-high border border-outline-variant/20 hover:bg-surface-container-highest active:scale-90 transition-all" type="button" onclick="changeScore('avv', 1)">
-<span class="material-symbols-outlined text-2xl font-bold" data-icon="add">add</span>
+<div class="text-8xl font-headline font-black italic text-on-surface-variant leading-none text-center" id="score-avv">0</div>
+<button class="w-full h-16 flex items-center justify-center rounded-2xl bg-surface-container-high border border-outline-variant/20 hover:bg-surface-container-highest active:scale-95 transition-all" type="button" onclick="changeScore('avv', -1)">
+<span class="material-symbols-outlined text-3xl" data-icon="remove">remove</span>
 </button>
 </div>
 </div>
-</div>
-<div class="absolute left-1/2 top-[55%] -translate-x-1/2 -translate-y-1/2 hidden md:block opacity-20">
-<span class="text-4xl font-headline font-black italic text-surface-container-highest tracking-tighter">VS</span>
 </div>
 </section>
 <form class="space-y-6">
@@ -165,22 +161,22 @@
 <div class="space-y-2">
 <label class="text-[10px] font-label uppercase tracking-widest text-on-surface-variant ml-2">Data Incontro</label>
 <div class="relative group">
-<input class="w-full bg-surface-container-high border-none rounded-2xl py-4 px-5 text-on-surface focus:ring-2 focus:ring-[#D1FF4B] transition-all outline-none appearance-none font-body" type="date" id="data-incontro"/>
+<input class="w-full bg-surface-container-high border-none rounded-2xl py-4 px-5 text-on-surface focus:ring-2 focus:ring-[#C5FF1A] transition-all outline-none appearance-none font-body" type="date" id="data-incontro"/>
 <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none" data-icon="calendar_today">calendar_today</span>
 </div>
 </div>
 <div class="space-y-2">
 <label class="text-[10px] font-label uppercase tracking-widest text-on-surface-variant ml-2">Scegli Avversario</label>
 <div class="relative group">
-<select id="select-avv" class="w-full bg-surface-container-high border-none rounded-2xl py-4 px-5 pr-12 text-on-surface focus:ring-2 focus:ring-[#D1FF4B] transition-all outline-none appearance-none font-body relative z-0" style="background-image: none;">
+<select id="select-avv" class="w-full bg-surface-container-high border-none rounded-2xl py-4 px-5 pr-12 text-on-surface focus:ring-2 focus:ring-[#C5FF1A] transition-all outline-none appearance-none font-body relative z-0" style="background-image: none;">
 <option disabled="" selected="" value="">Seleziona Player</option>
 </select>
 <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant pointer-events-none z-10" data-icon="expand_more">expand_more</span>
 </div>
 </div>
 </div>
-<div class="pt-4">
-<button class="w-full bg-gradient-to-b from-[#E2FF85] to-[#D1FF4B] text-[#161f00] font-headline font-black italic uppercase text-lg py-5 rounded-2xl border-t border-white/40 shadow-lg hover:brightness-110 transition-all active:scale-[0.98] flex items-center justify-center gap-3 group relative overflow-hidden" type="button" onclick="inviaRisultato()">
+<div class="pt-3 md:pt-4">
+<button class="w-full bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase text-lg py-4 md:py-5 rounded-2xl border-t border-white/40 shadow-lg hover:brightness-110 transition-all active:scale-[0.98] flex items-center justify-center gap-3 group relative overflow-hidden" type="button" onclick="inviaRisultato()">
                     INVIA RISULTATO
                 </button>
 </div>
@@ -344,7 +340,8 @@
     }
 </script>
 <div class="fixed inset-0 -z-20 overflow-hidden pointer-events-none">
-<div class="absolute -top-[10%] -right-[10%] w-[70%] h-[70%] bg-[#D1FF4B]/5 blur-[150px] rounded-full"></div>
+<div class="absolute -top-[10%] -right-[10%] w-[70%] h-[70%] bg-[#C5FF1A]/5 blur-[150px] rounded-full"></div>
 <div class="absolute bottom-0 left-0 w-full h-[50%] bg-gradient-to-t from-black/60 to-transparent"></div>
 </div>
+<script src="../../../src/animations.js"></script>
 </body></html>

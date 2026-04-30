@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>PODIUM ADMIN - MATCH</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="../../../../src/animations.css">
   <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;1,900&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
   <script id="tailwind-config">
@@ -105,7 +106,7 @@
       box-shadow: 0 30px 60px -12px rgba(0,0,0,0.9), 0 0 50px rgba(209,255,75,0.08);
     }
     .popup-button {
-      background: linear-gradient(180deg, #e3ff8c 0%, #D1FF4B 100%) !important;
+      background: linear-gradient(180deg, #e3ff8c 0%, #C5FF1A 100%) !important;
       box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4) !important;
     }
     .delete-button {
@@ -175,7 +176,7 @@
       gap: 3px;
     }
     .nav-tab.active {
-      background: #d1ff4b;
+      background: #c5ff1a;
       color: #283500;
       border-color: transparent;
     }
@@ -272,7 +273,7 @@
       font-style: italic;
       font-size: 1.4rem;
       letter-spacing: -0.04em;
-      color: #d1ff4b;
+      color: #c5ff1a;
       line-height: 1;
     }
     .vs-dot {
@@ -304,7 +305,7 @@
       <img alt="GA Race" class="h-5 w-auto" src="../../../assets/GA-RACE.png">
     </div>
     <button onclick="openDrawer()" class="flex items-center justify-center w-9 h-9 rounded-full hover:bg-white/5 transition-colors">
-      <span class="material-symbols-outlined text-[#d1ff4b] text-2xl">menu</span>
+      <span class="material-symbols-outlined text-[#c5ff1a] text-2xl">menu</span>
     </button>
   </header>
 
@@ -340,7 +341,7 @@
 
     <!-- ─── Risultati in attesa di conferma ─── -->
     <section class="mb-8">
-      <p class="font-label text-[0.6rem] font-bold text-[#d1ff4b] uppercase tracking-[0.2em] mb-3">In attesa di conferma</p>
+      <p class="font-label text-[0.6rem] font-bold text-[#c5ff1a] uppercase tracking-[0.2em] mb-3">In attesa di conferma</p>
       <div class="space-y-3" id="pending-list"></div>
     </section>
 
@@ -491,5 +492,6 @@
   <script src="../../../../src/storage-manager.js?v=14"></script>
   <script src="../../../../src/ui-binder.js?v=14"></script>
   <script src="../../../../src/main.js?v=14"></script>
+<script src="../../../../src/animations.js"></script>
 </body>
 </html>

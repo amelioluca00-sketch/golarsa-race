@@ -10,6 +10,7 @@
   <meta name="format-detection" content="telephone=no">
   <title>GOLARSA RACE - MENU</title>
   <script src="https://cdn.tailwindcss.com?plugins=container-queries"></script>
+<link rel="stylesheet" href="../../../src/animations.css">
   <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,900;1,900&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
   <script id="tailwind-config">
@@ -110,7 +111,7 @@
     }
     .menu-tab.active {
       background: rgba(209,255,75,0.1);
-      color: #d1ff4b;
+      color: #c5ff1a;
       border-color: rgba(209,255,75,0.2);
     }
     .menu-tab:not(.active):hover {
@@ -146,7 +147,7 @@
       font-size: 0.68rem;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: #D1FF4B;
+      color: #C5FF1A;
       margin-bottom: 7px;
       margin-top: 22px;
       padding-left: 10px;
@@ -179,7 +180,7 @@
       border-radius: 999px;
       border: 1px solid rgba(209,255,75,0.3);
       background: rgba(209,255,75,0.08);
-      color: #d1ff4b;
+      color: #c5ff1a;
       font-family: 'Inter', sans-serif;
       font-size: 11px;
       font-weight: 700;
@@ -199,7 +200,7 @@
       bottom: 32px;
       left: 50%;
       transform: translateX(-50%) translateY(80px);
-      background: #d1ff4b;
+      background: #c5ff1a;
       color: #283500;
       font-family: 'Inter', sans-serif;
       font-weight: 700;
@@ -223,7 +224,7 @@
   <!-- ─── Header fisso ─── -->
   <header class="fixed top-0 w-full z-50 bg-[#0e0e0e] backdrop-blur-xl bg-opacity-90 flex items-center px-6 py-4 h-16 border-b border-white/[0.04]">
     <button onclick="history.back()" class="flex items-center justify-center w-9 h-9 -ml-1 rounded-full hover:bg-white/5 transition-colors mr-3">
-      <span class="material-symbols-outlined text-[#d1ff4b] text-2xl">arrow_back</span>
+      <span class="material-symbols-outlined text-[#c5ff1a] text-2xl">arrow_back</span>
     </button>
     <img alt="GA Race" class="h-5 w-auto" src="../../assets/GA-RACE.png">
   </header>
@@ -266,8 +267,8 @@
 
         <!-- Header card -->
         <div class="flex items-center gap-3 mb-2">
-          <div class="w-8 h-8 rounded-xl bg-[#d1ff4b]/10 flex items-center justify-center">
-            <span class="material-symbols-outlined text-[#d1ff4b] text-base">edit_note</span>
+          <div class="w-8 h-8 rounded-xl bg-[#c5ff1a]/10 flex items-center justify-center">
+            <span class="material-symbols-outlined text-[#c5ff1a] text-base">edit_note</span>
           </div>
           <h3 class="text-base font-headline font-black italic uppercase tracking-tight text-white">INFO TORNEO</h3>
         </div>
@@ -313,7 +314,7 @@
 
         <!-- Bottone conferma -->
         <button onclick="confermaMod()"
-          style="background: linear-gradient(180deg, #e3ff8c 0%, #D1FF4B 100%); box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4);"
+          style="background: linear-gradient(180deg, #e3ff8c 0%, #C5FF1A 100%); box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4);"
           class="w-full text-[#283500] font-headline font-black italic uppercase px-6 py-4 rounded-full flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
           <span class="material-symbols-outlined text-[1.1rem]" style="font-variation-settings:'FILL' 1,'wght' 600,'GRAD' 0,'opsz' 24;">check_circle</span>
           CONFERMA MODIFICA
@@ -341,7 +342,7 @@
           <!-- ══ MACRO 1: DURATA E SVOLGIMENTO ══ -->
           <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:12px;">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);">
-              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">calendar_month</span>
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#C5FF1A;font-size:1.35rem;flex-shrink:0;">calendar_month</span>
               <span style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Durata e Svolgimento</span>
             </div>
 
@@ -358,7 +359,7 @@
           <!-- ══ MACRO 2: REGOLAMENTO E SISTEMA PUNTI ══ -->
           <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:12px;">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);">
-              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">sports_tennis</span>
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#C5FF1A;font-size:1.35rem;flex-shrink:0;">sports_tennis</span>
               <span style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Regolamento e Sistema Punti</span>
             </div>
 
@@ -370,9 +371,9 @@
 
             <div style="background:rgba(209,255,75,0.07);border:1px solid rgba(209,255,75,0.3);border-radius:12px;padding:12px 14px;margin:10px 0 14px;">
               <div style="display:flex;align-items:flex-start;gap:8px;">
-                <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#D1FF4B;font-size:1.1rem;flex-shrink:0;margin-top:2px;">timer</span>
+                <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#C5FF1A;font-size:1.1rem;flex-shrink:0;margin-top:2px;">timer</span>
                 <div>
-                  <span style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:0.63rem;text-transform:uppercase;letter-spacing:0.12em;color:#D1FF4B;display:block;margin-bottom:5px;">Regola dei 10 minuti</span>
+                  <span style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:0.63rem;text-transform:uppercase;letter-spacing:0.12em;color:#C5FF1A;display:block;margin-bottom:5px;">Regola dei 10 minuti</span>
                   <p style="margin:0;font-size:13px;color:rgba(255,255,255,0.6);">Entro <strong style="color:rgba(255,255,255,0.9);">10 minuti dalla scadenza</strong> i due giocatori devono accordarsi su quale sarà l'ultimo game da disputare; tale game fungerà da <strong style="color:rgba(255,255,255,0.9);">spareggio in caso di parità</strong> nel conteggio totale dei game.</p>
                 </div>
               </div>
@@ -388,7 +389,7 @@
           <!-- ══ MACRO 3: RISULTATI, FAIR PLAY E PREMI ══ -->
           <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:4px;">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);">
-              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">emoji_events</span>
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#C5FF1A;font-size:1.35rem;flex-shrink:0;">emoji_events</span>
               <span style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Risultati, Fair Play e Premi</span>
             </div>
 
@@ -408,7 +409,7 @@
         <div id="confirm-regolamento" class="mt-6 hidden">
           <div class="h-px bg-white/[0.07] mb-5"></div>
           <button onclick="confermaEdit('regolamento')"
-            style="background: linear-gradient(180deg, #e3ff8c 0%, #D1FF4B 100%); box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4);"
+            style="background: linear-gradient(180deg, #e3ff8c 0%, #C5FF1A 100%); box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4);"
             class="w-full text-[#283500] font-headline font-black italic uppercase px-6 py-4 rounded-full flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
             <span class="material-symbols-outlined text-[1.1rem]" style="font-variation-settings:'FILL' 1,'wght' 600,'GRAD' 0,'opsz' 24;">check_circle</span>
             CONFERMA MODIFICA
@@ -436,7 +437,7 @@
           <!-- ══ MACRO 1: UTILIZZO E ISCRIZIONI ══ -->
           <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:12px;">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);">
-              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">fact_check</span>
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#C5FF1A;font-size:1.35rem;flex-shrink:0;">fact_check</span>
               <span style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Utilizzo e Iscrizioni</span>
             </div>
 
@@ -453,7 +454,7 @@
           <!-- ══ MACRO 2: RESPONSABILITÀ E NORME ══ -->
           <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:4px;">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);">
-              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">balance</span>
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#C5FF1A;font-size:1.35rem;flex-shrink:0;">balance</span>
               <span style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Responsabilità e Norme</span>
             </div>
 
@@ -473,7 +474,7 @@
         <div id="confirm-termini" class="mt-6 hidden">
           <div class="h-px bg-white/[0.07] mb-5"></div>
           <button onclick="confermaEdit('termini')"
-            style="background: linear-gradient(180deg, #e3ff8c 0%, #D1FF4B 100%); box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4);"
+            style="background: linear-gradient(180deg, #e3ff8c 0%, #C5FF1A 100%); box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4);"
             class="w-full text-[#283500] font-headline font-black italic uppercase px-6 py-4 rounded-full flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
             <span class="material-symbols-outlined text-[1.1rem]" style="font-variation-settings:'FILL' 1,'wght' 600,'GRAD' 0,'opsz' 24;">check_circle</span>
             CONFERMA MODIFICA
@@ -501,7 +502,7 @@
           <!-- ══ MACRO 1: DATI E TRATTAMENTO ══ -->
           <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:12px;">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);">
-              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">lock</span>
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#C5FF1A;font-size:1.35rem;flex-shrink:0;">lock</span>
               <span style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Dati e Trattamento</span>
             </div>
 
@@ -518,7 +519,7 @@
           <!-- ══ MACRO 2: CONSERVAZIONE E DIRITTI ══ -->
           <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-top:2px solid rgba(209,255,75,0.5);border-radius:16px;padding:22px 20px;margin-bottom:4px;">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);">
-              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#D1FF4B;font-size:1.35rem;flex-shrink:0;">shield</span>
+              <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1,'wght' 400,'GRAD' 0,'opsz' 24;color:#C5FF1A;font-size:1.35rem;flex-shrink:0;">shield</span>
               <span style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.08em;color:#fff;">Conservazione e Diritti</span>
             </div>
 
@@ -538,7 +539,7 @@
         <div id="confirm-privacy" class="mt-6 hidden">
           <div class="h-px bg-white/[0.07] mb-5"></div>
           <button onclick="confermaEdit('privacy')"
-            style="background: linear-gradient(180deg, #e3ff8c 0%, #D1FF4B 100%); box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4);"
+            style="background: linear-gradient(180deg, #e3ff8c 0%, #C5FF1A 100%); box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4);"
             class="w-full text-[#283500] font-headline font-black italic uppercase px-6 py-4 rounded-full flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
             <span class="material-symbols-outlined text-[1.1rem]" style="font-variation-settings:'FILL' 1,'wght' 600,'GRAD' 0,'opsz' 24;">check_circle</span>
             CONFERMA MODIFICA
@@ -663,5 +664,6 @@
     }
   </script>
 
+<script src="../../../src/animations.js"></script>
 </body>
 </html>

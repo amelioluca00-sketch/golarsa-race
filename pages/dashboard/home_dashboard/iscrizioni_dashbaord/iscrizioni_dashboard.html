@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>ISCRIZIONI - GOLARSA RACE</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link rel="stylesheet" href="../../../../src/animations.css">
   <link href="https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,400;0,700;1,900&family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
   <script id="tailwind-config">
@@ -112,7 +113,7 @@
       cursor: pointer; background: transparent; color: #6b7280; gap: 3px;
       text-decoration: none;
     }
-    .nav-tab.active { background: #d1ff4b; color: #283500; border-color: transparent; }
+    .nav-tab.active { background: #c5ff1a; color: #283500; border-color: transparent; }
     .nav-tab:not(.active):hover { background: rgba(255,255,255,0.05); color: #e5e2e1; }
     .nav-tab .nav-label {
       font-size: 0.55rem; font-weight: 700; letter-spacing: 0.04em;
@@ -199,7 +200,7 @@
       <img alt="GA Race" class="h-5 w-auto" src="../../assets/GA-RACE.png">
     </div>
     <button onclick="openDrawer()" class="flex items-center justify-center w-9 h-9 rounded-full hover:bg-white/5 transition-colors">
-      <span class="material-symbols-outlined text-[#d1ff4b] text-2xl">menu</span>
+      <span class="material-symbols-outlined text-[#c5ff1a] text-2xl">menu</span>
     </button>
   </header>
 
@@ -237,7 +238,7 @@
     <section class="flex gap-3 mb-6 anim-fade-up" style="animation-delay:0.12s">
 
       <button class="status-card active-attesa" id="tab-attesa" onclick="switchStatus('attesa')">
-        <span class="font-label text-[0.58rem] font-black text-[#d1ff4b] uppercase tracking-widest leading-tight mb-1" id="label-attesa">IN ATTESA</span>
+        <span class="font-label text-[0.58rem] font-black text-[#c5ff1a] uppercase tracking-widest leading-tight mb-1" id="label-attesa">IN ATTESA</span>
         <span class="font-headline italic font-black text-2xl text-white leading-none" id="count-attesa">0</span>
       </button>
 
@@ -289,7 +290,7 @@
           <span class="material-symbols-outlined text-xl">dashboard</span>
           <span class="font-label text-sm font-bold uppercase tracking-widest">Home</span>
         </a>
-        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#d1ff4b]/10 border border-[#d1ff4b]/20 text-[#d1ff4b]">
+        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-[#c5ff1a]/10 border border-[#c5ff1a]/20 text-[#c5ff1a]">
           <span class="material-symbols-outlined text-xl">person_add</span>
           <span class="font-label text-sm font-bold uppercase tracking-widest">Iscrizioni</span>
         </a>
@@ -308,7 +309,7 @@
   <script>
     /* ─── Tab config ─── */
     const tabs = {
-      attesa:    { activeClass: 'active-attesa',    labelColor: '#d1ff4b',           labelEl: 'label-attesa'    },
+      attesa:    { activeClass: 'active-attesa',    labelColor: '#c5ff1a',           labelEl: 'label-attesa'    },
       approvate: { activeClass: 'active-approvate', labelColor: 'rgb(74,222,128)',   labelEl: 'label-approvate' },
       rifiutate: { activeClass: 'active-rifiutate', labelColor: 'rgb(255,180,171)',  labelEl: 'label-rifiutate' },
     };
@@ -429,5 +430,6 @@
 <script src="../../../../src/storage-manager.js?v=14"></script>
   <script src="../../../../src/ui-binder.js?v=14"></script>
   <script src="../../../../src/main.js?v=14"></script>
+<script src="../../../../src/animations.js"></script>
 </body>
 </html>
