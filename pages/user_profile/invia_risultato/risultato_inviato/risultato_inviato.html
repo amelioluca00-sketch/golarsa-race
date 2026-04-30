@@ -61,7 +61,6 @@
     }
 </script>
 <style>
-    /* Disabilita zoom da doppio tap su mobile */
     html, body, * { touch-action: manipulation; }
 
     .material-symbols-outlined {
@@ -100,7 +99,7 @@
         animation: checkDrawIn 0.4s cubic-bezier(0.22,1,0.36,1) 0.75s forwards;
     }
 
-    /* ── WRAPPER pop/bounce dopo il draw ── */
+    /* ── WRAPPER pop/bounce ── */
     @keyframes checkPop {
         0%   { transform: scale(1); }
         40%  { transform: scale(1.18); }
@@ -112,7 +111,7 @@
         animation: checkPop 0.55s cubic-bezier(0.22,1,0.36,1) 1.1s both;
     }
 
-    /* ── GLOW pulse dopo il bounce ── */
+    /* ── GLOW pulse ── */
     @keyframes glowPulse {
         0%, 100% { opacity: 0.18; transform: scale(1); }
         50%       { opacity: 0.38; transform: scale(1.2); }
@@ -128,7 +127,7 @@
     }
     .slide-up { animation: slideUp 0.5s cubic-bezier(0.22,1,0.36,1) both; }
 
-    /* ── SCORE pop per singolo numero ── */
+    /* ── SCORE pop ── */
     @keyframes scorePop {
         0%   { opacity: 0; transform: scale(0.4) translateY(20px); }
         60%  { opacity: 1; transform: scale(1.18) translateY(-4px); }
@@ -137,7 +136,7 @@
     }
     .score-pop { animation: scorePop 0.55s cubic-bezier(0.22,1,0.36,1) both; }
 
-    /* ── PUNTI bloom finale ── */
+    /* ── PUNTI bloom ── */
     @keyframes pointsBloom {
         0%   { transform: scale(1); }
         40%  { transform: scale(1.22); text-shadow: 0 0 30px rgba(209,255,75,0.8); }
@@ -153,18 +152,22 @@
     }
     .card-in { animation: cardIn 0.5s cubic-bezier(0.22,1,0.36,1) both; }
 
-    body { min-height: 100dvh; }
+    /* ── ROW fade-in ── */
+    @keyframes rowIn {
+        from { opacity: 0; transform: translateX(-8px); }
+        to   { opacity: 1; transform: translateX(0); }
+    }
+    .row-in { animation: rowIn 0.35s cubic-bezier(0.22,1,0.36,1) both; }
 </style>
 </head>
-<body class="kinetic-bg text-on-surface font-body flex flex-col items-center overflow-hidden">
+<body class="kinetic-bg text-on-surface font-body overflow-y-auto">
 
-
-<main class="flex-1 w-full max-w-md px-6 flex flex-col items-center justify-center text-center pt-12">
+<main class="w-full max-w-md mx-auto px-6 flex flex-col items-center text-center pt-12 pb-10">
 
     <!-- Spunta animata -->
     <div class="mb-6 relative check-pop" style="animation-delay:1.1s;">
         <div class="absolute inset-0 bg-[#C5FF1A] blur-[80px] opacity-20 rounded-full glow-pulse"></div>
-        <svg class="w-32 h-32 text-[#C5FF1A] relative z-10" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <svg class="w-28 h-28 text-[#C5FF1A] relative z-10" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <circle class="circle-draw" cx="50" cy="50" r="46"
                 stroke="currentColor" stroke-linecap="round" stroke-width="4"/>
             <path class="check-draw" d="M30 52L44 66L70 34"
@@ -173,41 +176,69 @@
     </div>
 
     <!-- Titolo -->
-    <div class="mb-8 slide-up" style="animation-delay:0.9s;">
-        <h1 class="text-primary text-5xl md:text-6xl font-headline font-black italic leading-tight tracking-tighter uppercase">
+    <div class="mb-2 slide-up" style="animation-delay:0.9s;">
+        <h1 class="text-primary text-5xl font-headline font-black italic leading-tight tracking-tighter uppercase">
             RISULTATO<br>INVIATO!
         </h1>
     </div>
 
+    <!-- VS label -->
+    <p class="text-[0.65rem] uppercase tracking-[0.25em] text-neutral-500 mb-6 slide-up" style="animation-delay:1.1s;" id="vs-label">VS AVVERSARIO</p>
+
     <!-- Score -->
-    <div class="flex items-center gap-8 mb-10">
+    <div class="flex items-center gap-8 mb-8">
         <div class="flex flex-col items-center score-pop" style="animation-delay:1.3s;">
-            <span class="text-7xl font-headline font-black italic text-primary" id="score-home">6</span>
-            <span class="text-[0.6rem] uppercase tracking-widest text-neutral-500 mt-1">Home</span>
+            <span class="text-7xl font-headline font-black italic text-primary" id="score-home">–</span>
+            <span class="text-[0.6rem] uppercase tracking-widest text-neutral-500 mt-1" id="label-home">TU</span>
         </div>
         <div class="h-16 w-[3px] bg-[#C5FF1A]/30 slide-up" style="transform: skewX(-20deg); animation-delay:1.45s;"></div>
         <div class="flex flex-col items-center score-pop" style="animation-delay:1.5s;">
-            <span class="text-7xl font-headline font-black italic text-neutral-500" id="score-away">4</span>
-            <span class="text-[0.6rem] uppercase tracking-widest text-neutral-500 mt-1">Away</span>
+            <span class="text-7xl font-headline font-black italic text-neutral-500" id="score-away">–</span>
+            <span class="text-[0.6rem] uppercase tracking-widest text-neutral-500 mt-1" id="label-away">AVV</span>
         </div>
     </div>
 
-    <!-- Card punti -->
-    <div class="w-full broadcast-card rounded-[24px] p-6 flex items-center justify-center gap-4 card-in" style="animation-delay:1.75s;">
-        <span class="text-sm md:text-base font-headline font-black italic text-primary tracking-tight uppercase opacity-80">
-            HAI GUADAGNATO
-        </span>
-        <span class="text-3xl md:text-4xl font-headline font-black italic text-[#C5FF1A] tracking-tighter" id="points-display">
-            +0 PUNTI
-        </span>
-    </div>
-</main>
+    <!-- Card punti con breakdown -->
+    <div class="w-full broadcast-card rounded-[24px] overflow-hidden card-in mb-6" style="animation-delay:1.75s;">
 
-<footer class="w-full max-w-md p-6 pb-8 slide-up" style="animation-delay:2s;">
-    <button onclick="window.location.href='../../../home/home.html'" class="w-full bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase tracking-wider text-lg py-5 rounded-[18px] border-t border-white/40 shadow-lg hover:brightness-105 active:scale-[0.98] transition-all flex items-center justify-center gap-3" type="button">
+        <!-- Header totale -->
+        <div class="flex items-center justify-between px-5 pt-5 pb-4" style="border-bottom: 1px solid rgba(255,255,255,0.07);">
+            <span class="text-sm font-headline font-black italic text-primary/80 tracking-tight uppercase">
+                HAI GUADAGNATO
+            </span>
+            <span class="text-2xl font-headline font-black italic text-[#C5FF1A] tracking-tighter" id="points-display">
+                +0 PUNTI
+            </span>
+        </div>
+
+        <!-- Righe breakdown -->
+        <div class="px-5 py-4 space-y-3" id="breakdown-rows">
+            <!-- Game vinti (sempre visibile) -->
+            <div class="flex items-center justify-between row-in" style="animation-delay:2s;">
+                <span class="text-sm text-neutral-400">Game vinti</span>
+                <span class="text-sm font-label font-semibold text-[#C5FF1A]" id="row-game">+0</span>
+            </div>
+            <!-- Bonus vittoria (solo se > 0) -->
+            <div class="flex items-center justify-between row-in" id="row-bonusv-wrap" style="display:none !important; animation-delay:2.1s;">
+                <span class="text-sm text-neutral-400">Bonus vittoria</span>
+                <span class="text-sm font-label font-semibold text-[#C5FF1A]" id="row-bonusv">+0</span>
+            </div>
+            <!-- Bonus dominanza (solo se > 0) -->
+            <div class="flex items-center justify-between row-in" id="row-bonusd-wrap" style="display:none !important; animation-delay:2.2s;">
+                <span class="text-sm text-neutral-400">Bonus dominanza</span>
+                <span class="text-sm font-label font-semibold text-[#C5FF1A]" id="row-bonusd">+0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottone principale -->
+    <button onclick="window.location.href='../../../home/home.html'"
+        class="w-full bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase tracking-wider text-lg py-5 rounded-[18px] border-t border-white/40 shadow-lg hover:brightness-105 active:scale-[0.98] transition-all slide-up"
+        style="animation-delay:2s;" type="button">
         TORNA ALLA RACE
     </button>
-</footer>
+
+</main>
 
 <!-- Sfondo decorativo -->
 <div class="fixed inset-0 pointer-events-none overflow-hidden z-[-1]">
@@ -216,19 +247,46 @@
 </div>
 
 <script>
-    /* ── Leggi punteggi da URL params ── */
-    var params = new URLSearchParams(window.location.search);
+    var params   = new URLSearchParams(window.location.search);
     var scoreTu  = parseInt(params.get('tu'),  10);
     var scoreAvv = parseInt(params.get('avv'), 10);
+    var gameP    = parseInt(params.get('gameP'),  10);
+    var bonusV   = parseInt(params.get('bonusV'), 10);
+    var bonusD   = parseInt(params.get('bonusD'), 10);
+    var mioNome  = params.get('mioNome')  || 'TU';
+    var avvNome  = params.get('avvNome')  || 'AVV';
+    var TARGET   = parseInt(params.get('punti'), 10);
+    if (isNaN(TARGET)) TARGET = 0;
+
+    // Score
     if (!isNaN(scoreTu))  document.getElementById('score-home').textContent = scoreTu;
     if (!isNaN(scoreAvv)) document.getElementById('score-away').textContent = scoreAvv;
 
-    /* ── Counter punti: da 0 al valore reale, poi bloom ── */
-    var _rawPunti = parseInt(params.get('punti'), 10);
-    var TARGET   = isNaN(_rawPunti) ? 0 : _rawPunti;
-    var DURATION = TARGET === 0 ? 200 : 900;
-    var DELAY    = 1900;  // inizia dopo che la card è apparsa
+    // Nomi
+    document.getElementById('vs-label').textContent    = 'VS ' + avvNome.toUpperCase();
+    document.getElementById('label-home').textContent  = mioNome.toUpperCase();
+    document.getElementById('label-away').textContent  = avvNome.toUpperCase();
 
+    // Breakdown righe
+    if (!isNaN(gameP)) {
+        document.getElementById('row-game').textContent = '+' + gameP;
+    }
+    if (!isNaN(bonusV) && bonusV > 0) {
+        var wv = document.getElementById('row-bonusv-wrap');
+        wv.style.cssText = 'animation-delay:2.1s;';
+        wv.classList.add('row-in');
+        document.getElementById('row-bonusv').textContent = '+' + bonusV;
+    }
+    if (!isNaN(bonusD) && bonusD > 0) {
+        var wd = document.getElementById('row-bonusd-wrap');
+        wd.style.cssText = 'animation-delay:2.2s;';
+        wd.classList.add('row-in');
+        document.getElementById('row-bonusd').textContent = '+' + bonusD;
+    }
+
+    /* ── Counter punti con easing ── */
+    var DURATION = TARGET === 0 ? 200 : 900;
+    var DELAY    = 1900;
     var el = document.getElementById('points-display');
 
     function easeOutExpo(t) {
@@ -237,13 +295,11 @@
 
     setTimeout(function () {
         var start = performance.now();
-
         function tick(now) {
             var elapsed  = now - start;
             var progress = Math.min(elapsed / DURATION, 1);
             var val      = Math.round(easeOutExpo(progress) * TARGET);
             el.textContent = '+' + val + ' PUNTI';
-
             if (progress < 1) {
                 requestAnimationFrame(tick);
             } else {
@@ -254,10 +310,5 @@
         requestAnimationFrame(tick);
     }, DELAY);
 </script>
-<div class="fixed bottom-8 left-0 right-0 flex justify-center px-6">
-  <button onclick="window.location.href='../../../home/home.html'" class="w-full max-w-md py-4 rounded-2xl border border-white/10 text-white/50 font-headline font-black italic uppercase tracking-widest text-sm hover:text-white hover:border-white/20 transition-all">
-    TORNA ALLA HOME →
-  </button>
-</div>
 <script src="../../../../src/animations.js"></script>
 </body></html>

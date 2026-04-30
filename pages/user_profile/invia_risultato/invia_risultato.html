@@ -305,14 +305,17 @@
         }
         var preP1 = utente ? (utente.punti || 0) : 0;
         var preP2 = avv    ? (avv.punti    || 0) : 0;
-        puntiGuadagnati = s1 * 10; // +10 punti per ogni game vinto (sempre)
+        var gameP   = s1 * 10; // +10 punti per ogni game vinto (sempre)
+        var bonusV  = 0;
+        var bonusD  = 0;
         if (s1 > s2 && !isFase1) {
             // Bonus vittoria: scala in base alla differenza di punti pre-partita
             var diffP = Math.abs(preP1 - preP2);
-            puntiGuadagnati += diffP <= 50 ? 10 : diffP <= 150 ? 20 : 30;
+            bonusV = diffP <= 50 ? 10 : diffP <= 150 ? 20 : 30;
             // Bonus dominanza: vittoria con almeno 4 game di scarto
-            if (s1 - s2 >= 4) puntiGuadagnati += 10;
+            if (s1 - s2 >= 4) bonusD = 10;
         }
+        puntiGuadagnati = gameP + bonusV + bonusD;
 
         // Disabilita bottone durante l'invio
         var btn = document.querySelector('button[onclick="inviaRisultato()"]');
@@ -339,7 +342,18 @@
             console.error('Errore invio risultato:', e);
         }
 
-        window.location.href = 'risultato_inviato/risultato_inviato.html?tu=' + s1 + '&avv=' + s2 + '&punti=' + puntiGuadagnati;
+        var capitalizza = function(str) { return str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : ''; };
+        var mioNome  = utente ? capitalizza(utente.nome) : 'Tu';
+        var avvNome2 = avv    ? capitalizza(avv.nome)    : 'Avversario';
+        window.location.href = 'risultato_inviato/risultato_inviato.html'
+            + '?tu='      + s1
+            + '&avv='     + s2
+            + '&punti='   + puntiGuadagnati
+            + '&gameP='   + gameP
+            + '&bonusV='  + bonusV
+            + '&bonusD='  + bonusD
+            + '&mioNome=' + encodeURIComponent(mioNome)
+            + '&avvNome=' + encodeURIComponent(avvNome2);
     }
 </script>
 <div class="fixed inset-0 -z-20 overflow-hidden pointer-events-none">
