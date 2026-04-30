@@ -1097,11 +1097,11 @@
           var prevR = prevRanks[p.id];
           var trendHtml;
           if (!prevR || prevR === rank) {
-            trendHtml = '<span class="text-[#555] text-xs font-bold leading-none">—</span>';
+            trendHtml = '<span style="color:#555;font-size:0.75rem;font-weight:700;line-height:1">—</span>';
           } else if (rank < prevR) {
-            trendHtml = '<span class="text-[#D1FF4B] text-xs leading-none">▲</span>';
+            trendHtml = '<span style="color:#D1FF4B;font-size:0.75rem;line-height:1">▲</span>';
           } else {
-            trendHtml = '<span class="text-red-400 text-xs leading-none">▼</span>';
+            trendHtml = '<span style="color:#f87171;font-size:0.75rem;line-height:1">▼</span>';
           }
 
           var row = document.createElement('div');
@@ -1206,8 +1206,8 @@
         return mine.map(function (m) {
           var iAmP1 = m.giocatore1_id === p.id, myS = iAmP1 ? m.score1 : m.score2, avvS = iAmP1 ? m.score2 : m.score1, avvN = iAmP1 ? m.giocatore2_nome : m.giocatore1_nome;
           if (typeof window._matchCardHTML === 'function') return window._matchCardHTML(avvN, fmtMese(m.data), myS, avvS);
-          var win = myS > avvS, col = win ? 'text-[#D1FF4B]' : 'text-red-400';
-          return '<div class="cinematic-card rounded-[14px] p-4 shrink-0 w-[155px]"><p class="text-[9px] text-[#888]">' + fmtMese(m.data) + '</p><p class="text-sm font-headline font-black italic text-white uppercase">' + esc(avvN) + '</p><p class="text-xl font-headline font-black italic ' + col + '">' + myS + '-' + avvS + '</p></div>';
+          var win = myS > avvS, col = win ? '#D1FF4B' : '#f87171';
+          return '<div class="cinematic-card rounded-[14px] p-4 shrink-0 w-[155px]"><p class="text-[9px] text-[#888]">' + fmtMese(m.data) + '</p><p class="text-sm font-headline font-black italic text-white uppercase">' + esc(avvN) + '</p><p class="text-xl font-headline font-black italic" style="color:' + col + ';-webkit-text-fill-color:' + col + '">' + myS + '-' + avvS + '</p></div>';
         }).join('');
       };
 
@@ -1243,7 +1243,7 @@
           if (!section || !listEl) return;
           section.classList.toggle('hidden', !list.length);
           listEl.innerHTML = list.map(function (m) {
-            return '<div class="bg-[#1a0808] rounded-2xl border border-[#ffb4ab]/25 overflow-hidden">' +
+            return '<div style="background:#1a0808;border-radius:16px;border:1px solid rgba(255,180,171,0.25);overflow:hidden">' +
               '<div class="px-4 pt-3 pb-3">' +
                 '<p class="font-label text-[0.55rem] text-gray-500 uppercase tracking-widest mb-2">' + fmtDataBreve(m.data) + ' · da ' + esc(m.giocatore1_nome) + '</p>' +
                 '<div class="flex items-center justify-between gap-2">' +
@@ -1256,16 +1256,16 @@
                   '<span class="font-headline italic font-black text-white uppercase text-[1rem] truncate">' + esc(m.giocatore2_nome) + '</span>' +
                 '</div>' +
               '</div>' +
-              '<div class="h-px bg-white/[0.05] mx-4"></div>' +
+              '<div style="height:1px;background:rgba(255,255,255,0.05);margin:0 16px"></div>' +
               '<div class="flex">' +
-                '<button onclick="window._contestaMatch(\'' + m.id + '\')" class="flex-1 flex items-center justify-center gap-2 py-3.5 hover:bg-red-500/10 active:bg-red-500/10 transition-colors">' +
-                  '<span class="material-symbols-outlined text-[#ffb4ab] text-base">close</span>' +
-                  '<span class="font-label text-[0.6rem] font-bold text-[#ffb4ab] uppercase tracking-[0.15em]">Contesta</span>' +
+                '<button onclick="window._contestaMatch(\'' + m.id + '\')" class="flex-1 flex items-center justify-center gap-2 py-3.5 transition-colors" style="">' +
+                  '<span class="material-symbols-outlined" style="color:#ffb4ab;font-size:1rem;-webkit-text-fill-color:#ffb4ab">close</span>' +
+                  '<span style="color:#ffb4ab;-webkit-text-fill-color:#ffb4ab;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em">Contesta</span>' +
                 '</button>' +
-                '<div class="w-px bg-white/[0.05]"></div>' +
-                '<button onclick="window._approvaMatch(\'' + m.id + '\')" class="flex-1 flex items-center justify-center gap-2 py-3.5 hover:bg-[#D1FF4B]/10 active:bg-[#D1FF4B]/10 transition-colors">' +
-                  '<span class="material-symbols-outlined text-[#D1FF4B] text-base">check</span>' +
-                  '<span class="font-label text-[0.6rem] font-bold text-[#D1FF4B] uppercase tracking-[0.15em]">Approva</span>' +
+                '<div style="width:1px;background:rgba(255,255,255,0.05)"></div>' +
+                '<button onclick="window._approvaMatch(\'' + m.id + '\')" class="flex-1 flex items-center justify-center gap-2 py-3.5 transition-colors" style="">' +
+                  '<span class="material-symbols-outlined" style="color:#D1FF4B;font-size:1rem;-webkit-text-fill-color:#D1FF4B">check</span>' +
+                  '<span style="color:#D1FF4B;-webkit-text-fill-color:#D1FF4B;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em">Approva</span>' +
                 '</button>' +
               '</div>' +
             '</div>';
@@ -1402,7 +1402,10 @@
       seq.forEach(function (r) {
         var dot = document.createElement('div');
         var isW = r === 'W';
-        dot.className = 'w-8 h-8 rounded-full flex items-center justify-center font-black text-xs italic ' + (isW ? 'bg-[#D1FF4B] text-[#4a6000]' : 'bg-red-500/20 text-red-400 border border-red-500/20');
+        dot.style.cssText = 'width:2rem;height:2rem;border-radius:9999px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:0.75rem;font-style:italic;flex-shrink:0;' +
+          (isW
+            ? 'background:#D1FF4B;color:#4a6000;-webkit-text-fill-color:#4a6000'
+            : 'background:rgba(239,68,68,0.2);color:#f87171;-webkit-text-fill-color:#f87171;border:1px solid rgba(239,68,68,0.3)');
         dot.textContent = r;
         trend.appendChild(dot);
       });
@@ -1414,9 +1417,11 @@
       else {
         matchesEl.innerHTML = mine.map(function (m) {
           var iAmP1 = m.giocatore1_id === p.id, myS = iAmP1 ? m.score1 : m.score2, avvS = iAmP1 ? m.score2 : m.score1, avvN = iAmP1 ? m.giocatore2_nome : m.giocatore1_nome, win = myS > avvS;
-          var col = win ? 'text-[#D1FF4B]' : 'text-red-400', bdg = win ? 'bg-[#D1FF4B]/10 text-[#D1FF4B]' : 'bg-red-500/20 text-red-400 border border-red-500/20';
+          var col = win ? '#D1FF4B' : '#f87171';
+          var bdgBg = win ? 'rgba(209,255,75,0.12)' : 'rgba(239,68,68,0.2)';
+          var bdgBorder = win ? '' : 'border:1px solid rgba(239,68,68,0.3);';
           var parts = (avvN || '').trim().split(' '), avvCog = esc((parts.pop() || '').toUpperCase()), avvNom = esc(parts.join(' '));
-          return '<div class="cinematic-card flex items-center justify-between p-4 transition-transform active:scale-[0.98] rounded-2xl"><div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full ' + bdg + ' flex items-center justify-center"><span class="font-black italic text-[10px]">' + (win ? 'W' : 'L') + '</span></div><div><p class="font-headline font-bold italic text-white uppercase text-sm">' + (avvNom ? avvNom.charAt(0) + '. ' : '') + avvCog + '</p><p class="text-[9px] text-[#888888] uppercase">' + fmtDataBreve(m.data) + '</p></div></div><p class="font-headline font-black italic text-xl ' + col + '">' + myS + ' - ' + avvS + '</p></div>';
+          return '<div class="cinematic-card flex items-center justify-between p-4 transition-transform active:scale-[0.98] rounded-2xl"><div class="flex items-center gap-3"><div style="width:2rem;height:2rem;border-radius:9999px;background:' + bdgBg + ';' + bdgBorder + 'display:flex;align-items:center;justify-content:center"><span style="font-weight:900;font-style:italic;font-size:10px;color:' + col + ';-webkit-text-fill-color:' + col + '">' + (win ? 'W' : 'L') + '</span></div><div><p class="font-headline font-bold italic text-white uppercase text-sm">' + (avvNom ? avvNom.charAt(0) + '. ' : '') + avvCog + '</p><p class="text-[9px] text-[#888888] uppercase">' + fmtDataBreve(m.data) + '</p></div></div><p class="font-headline font-black italic text-xl" style="color:' + col + ';-webkit-text-fill-color:' + col + '">' + myS + ' - ' + avvS + '</p></div>';
         }).join('');
       }
     }

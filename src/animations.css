@@ -4,6 +4,17 @@
    Rispetta prefers-reduced-motion.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 
+/* ── Color scheme: forza dark su tutti i browser/mobile ── */
+:root {
+  color-scheme: dark;
+}
+
+/* ── iOS Safari: impedisce che il sistema sovrascriva i colori
+   su <button> e figli con colori di sistema (es. blu di sistema) ── */
+button, button *, [role="button"], [role="button"] * {
+  -webkit-text-fill-color: currentColor;
+}
+
 /* ── Keyframes ─────────────────────────────── */
 
 @keyframes gr-page-in {
