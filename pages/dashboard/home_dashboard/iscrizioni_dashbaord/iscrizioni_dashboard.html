@@ -159,20 +159,20 @@
     .list-panel { display: none; }
     .list-panel.active { display: flex; flex-direction: column; gap: 10px; }
 
-    /* ─── Entry animation ─── */
+    /* ─── Entry animation — coerente col sistema globale ─── */
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(12px); }
+      from { opacity: 0; transform: translateY(26px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .anim-fade-up { opacity: 0; animation: fadeInUp 0.4s ease forwards; }
+    .anim-fade-up { opacity: 0; animation: fadeInUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-    .reg-card { opacity: 0; animation: fadeInUp 0.35s ease forwards; }
-    .reg-card:nth-child(1) { animation-delay: 0.04s; }
-    .reg-card:nth-child(2) { animation-delay: 0.09s; }
-    .reg-card:nth-child(3) { animation-delay: 0.14s; }
-    .reg-card:nth-child(4) { animation-delay: 0.19s; }
-    .reg-card:nth-child(5) { animation-delay: 0.24s; }
-    .reg-card:nth-child(6) { animation-delay: 0.29s; }
+    .reg-card { opacity: 0; animation: fadeInUp 0.60s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .reg-card:nth-child(1) { animation-delay: 0.08s; }
+    .reg-card:nth-child(2) { animation-delay: 0.16s; }
+    .reg-card:nth-child(3) { animation-delay: 0.24s; }
+    .reg-card:nth-child(4) { animation-delay: 0.32s; }
+    .reg-card:nth-child(5) { animation-delay: 0.40s; }
+    .reg-card:nth-child(6) { animation-delay: 0.48s; }
 
     /* ─── Drawer ─── */
     .drawer-backdrop {

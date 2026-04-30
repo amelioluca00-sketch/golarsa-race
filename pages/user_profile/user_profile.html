@@ -111,25 +111,14 @@
             background: linear-gradient(90deg, transparent, rgba(209, 255, 75, 0.2), transparent);
         }
 
-        /* Entrance flip animation */
-        @keyframes cardFlip {
-            from {
-                opacity: 0;
-                transform: perspective(700px) rotateX(-80deg);
-                transform-origin: top center;
-            }
-            60% {
-                opacity: 1;
-            }
-            to {
-                opacity: 1;
-                transform: perspective(700px) rotateX(0deg);
-                transform-origin: top center;
-            }
+        /* Entrance animation — coerente col sistema globale */
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(26px); }
+            to   { opacity: 1; transform: translateY(0);    }
         }
         .anim-in {
             opacity: 0;
-            animation: cardFlip 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation: cardIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
         /* Pop-up Button Effect */

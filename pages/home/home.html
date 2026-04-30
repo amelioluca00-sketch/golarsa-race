@@ -199,7 +199,7 @@
             max-height: 9rem;
             width: auto;
             clip-path: inset(0 0 50% 0);
-            animation: slideInLeft 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+            animation: slideInRight 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
         }
         .logo-hero-bottom {
             position: absolute;
@@ -208,7 +208,7 @@
             max-height: 9rem;
             width: auto;
             clip-path: inset(50% 0 0 0);
-            animation: slideInRight 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+            animation: slideInLeft 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
         }
         .text-shadow-glow { text-shadow: 0 0 20px rgba(209,255,75,0.4); }
         .kinetic-bg { background-color:#0e0e0e; background-image:radial-gradient(circle at 50% 40%,#1a1a1a 0%,#0e0e0e 100%); }
@@ -285,7 +285,7 @@
 <section class="px-4 -mt-24 relative z-[30] max-w-3xl mx-auto flex gap-3 overflow-hidden">
 
   <!-- ── Box Countdown ── -->
-  <div class="cd-box flex-1 min-w-0 rounded-[20px] px-4 pt-4 pb-4 flex flex-col gap-[10px]" style="background:linear-gradient(180deg,#272727 0%,#191919 100%);border:1px solid rgba(255,255,255,0.06);box-shadow:0 24px 60px rgba(0,0,0,0.65);">
+  <div class="cd-box flex-1 min-w-0 rounded-[20px] px-4 pt-4 pb-4 flex flex-col gap-[10px] gr-rise gr-d1 gr-visible" style="background:linear-gradient(180deg,#272727 0%,#191919 100%);border:1px solid rgba(255,255,255,0.06);box-shadow:0 24px 60px rgba(0,0,0,0.65);">
     <p id="cd-label" class="font-headline font-black italic text-[#777] uppercase leading-none text-center" style="font-size:0.72rem;letter-spacing:0.13em;">FINE DEI PLAY OFF</p>
     <div class="cd-grid">
       <div id="cd-days" class="cd-num font-headline font-black italic text-[#C5FF1A] leading-none text-shadow-glow">—</div>
@@ -303,7 +303,7 @@
 
   <!-- ── Box Regolamento Punti (cliccabile) ── -->
   <button onclick="openRegolamentoPunti()"
-          class="relative overflow-hidden rounded-[20px] px-3 pt-4 pb-4 flex flex-col text-left active:brightness-75 transition-all flex-shrink-0"
+          class="relative overflow-hidden rounded-[20px] px-3 pt-4 pb-4 flex flex-col text-left active:brightness-75 transition-all flex-shrink-0 gr-rise gr-d2 gr-visible"
           style="width:38%;background:linear-gradient(135deg,#242424 0%,#1b1b1b 100%);border:1px solid rgba(255,255,255,0.06);box-shadow:0 24px 60px rgba(0,0,0,0.65);cursor:pointer;">
     <img src="../assets/COPPA.png" alt="" aria-hidden="true"
          class="absolute pointer-events-none select-none"
@@ -316,11 +316,11 @@
 
 </section>
 <section class="px-4 mt-12 max-w-5xl mx-auto">
-<div class="flex flex-col gap-2 mb-8 px-2">
+<div class="flex flex-col gap-2 mb-8 px-2 gr-rise gr-d1 gr-visible">
 <span class="block text-[#C5FF1A] font-label font-bold tracking-[0.2em] uppercase text-[10px]" style="">SCALA IL RANKING</span>
 <h2 class="text-2xl font-headline font-black italic text-white uppercase leading-none" style="">CLASSIFICA GENERALE<br>&amp; ULTIMI MATCH</h2>
 </div>
-<div id="tab-container" class="p-1 rounded-full flex items-center w-full overflow-hidden mb-4 border border-white/5 relative" style="background: linear-gradient(180deg, #2a2a2a 0%, #141414 100%); box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.15), 0 15px 35px -12px rgba(0, 0, 0, 0.7);">
+<div id="tab-container" class="p-1 rounded-full flex items-center w-full overflow-hidden mb-4 border border-white/5 relative gr-rise gr-d2 gr-visible" style="background: linear-gradient(180deg, #2a2a2a 0%, #141414 100%); box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.15), 0 15px 35px -12px rgba(0, 0, 0, 0.7);">
 <div id="tab-indicator" class="absolute rounded-full bg-[#C5FF1A] pointer-events-none" style="top: 4px; height: calc(100% - 8px); left: 4px; width: 50%; transition: left 0.35s cubic-bezier(0.4,0,0.2,1), width 0.35s cubic-bezier(0.4,0,0.2,1);"></div>
 <button onclick="switchTab(0)" class="tab-btn flex-1 py-3 relative z-10 font-headline font-bold italic uppercase text-[10px] tracking-wider transition-colors duration-300 active:scale-95 whitespace-nowrap text-[#1e230f]">GLOBAL RACE</button>
 <button onclick="switchTab(1)" class="tab-btn flex-1 py-3 relative z-10 font-headline font-bold italic uppercase text-[10px] tracking-wider transition-colors duration-300 active:scale-95 whitespace-nowrap text-white">ULTIMI MATCH</button>

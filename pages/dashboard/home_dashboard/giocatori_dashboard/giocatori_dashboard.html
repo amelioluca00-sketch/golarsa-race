@@ -110,26 +110,26 @@
       box-shadow: inset 0 1px 0 0 rgba(255,255,255,0.4) !important;
     }
 
-    /* ─── Entry animations ─── */
+    /* ─── Entry animations — coerenti col sistema globale ─── */
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(18px); }
+      from { opacity: 0; transform: translateY(26px); }
       to   { opacity: 1; transform: translateY(0); }
     }
     @keyframes fadeInDown {
       from { opacity: 0; transform: translateY(-10px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .anim-fade-up   { opacity: 0; animation: fadeInUp   0.5s ease forwards; }
-    .anim-fade-down { opacity: 0; animation: fadeInDown 0.4s ease forwards; }
-    .player-card { opacity: 0; animation: fadeInUp 0.45s ease forwards; }
-    .player-card:nth-child(1) { animation-delay: 0.10s; }
-    .player-card:nth-child(2) { animation-delay: 0.18s; }
-    .player-card:nth-child(3) { animation-delay: 0.26s; }
-    .player-card:nth-child(4) { animation-delay: 0.34s; }
-    .player-card:nth-child(5) { animation-delay: 0.42s; }
-    .player-card:nth-child(6) { animation-delay: 0.50s; }
-    .player-card:nth-child(7) { animation-delay: 0.58s; }
-    .player-card:nth-child(8) { animation-delay: 0.66s; }
+    .anim-fade-up   { opacity: 0; animation: fadeInUp   0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .anim-fade-down { opacity: 0; animation: fadeInDown 0.50s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .player-card { opacity: 0; animation: fadeInUp 0.60s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .player-card:nth-child(1) { animation-delay: 0.08s; }
+    .player-card:nth-child(2) { animation-delay: 0.16s; }
+    .player-card:nth-child(3) { animation-delay: 0.24s; }
+    .player-card:nth-child(4) { animation-delay: 0.32s; }
+    .player-card:nth-child(5) { animation-delay: 0.40s; }
+    .player-card:nth-child(6) { animation-delay: 0.48s; }
+    .player-card:nth-child(7) { animation-delay: 0.56s; }
+    .player-card:nth-child(8) { animation-delay: 0.64s; }
 
     body { min-height: max(884px, 100dvh); }
     .hide-scrollbar::-webkit-scrollbar { display: none; }

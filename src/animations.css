@@ -12,7 +12,7 @@
 }
 
 @keyframes gr-rise {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(26px); }
   to   { opacity: 1; transform: translateY(0);    }
 }
 
@@ -38,22 +38,22 @@ body {
 
 .gr-rise {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(26px);
 }
 
 .gr-rise.gr-visible {
-  animation: gr-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: gr-rise 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* Stagger delays per card/sezione */
-.gr-d1 { animation-delay: 0.04s; }
-.gr-d2 { animation-delay: 0.08s; }
-.gr-d3 { animation-delay: 0.13s; }
-.gr-d4 { animation-delay: 0.18s; }
-.gr-d5 { animation-delay: 0.23s; }
-.gr-d6 { animation-delay: 0.28s; }
-.gr-d7 { animation-delay: 0.34s; }
-.gr-d8 { animation-delay: 0.40s; }
+/* Stagger cascade — 80ms tra ogni card */
+.gr-d1 { animation-delay: 0.08s; }
+.gr-d2 { animation-delay: 0.16s; }
+.gr-d3 { animation-delay: 0.24s; }
+.gr-d4 { animation-delay: 0.32s; }
+.gr-d5 { animation-delay: 0.40s; }
+.gr-d6 { animation-delay: 0.48s; }
+.gr-d7 { animation-delay: 0.56s; }
+.gr-d8 { animation-delay: 0.64s; }
 
 
 /* ── Button micro-interaction ──────────────── */

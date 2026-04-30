@@ -114,26 +114,26 @@
       box-shadow: 0 2px 8px -1px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,100,100,0.1);
     }
 
-    /* ─── Entry animations ─── */
+    /* ─── Entry animations — coerenti col sistema globale ─── */
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(18px); }
+      from { opacity: 0; transform: translateY(26px); }
       to   { opacity: 1; transform: translateY(0); }
     }
     @keyframes fadeInDown {
       from { opacity: 0; transform: translateY(-10px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .anim-fade-up   { opacity: 0; animation: fadeInUp   0.5s ease forwards; }
-    .anim-fade-down { opacity: 0; animation: fadeInDown 0.4s ease forwards; }
-    .match-card { opacity: 0; animation: fadeInUp 0.45s ease forwards; }
-    .match-card:nth-child(1) { animation-delay: 0.10s; }
-    .match-card:nth-child(2) { animation-delay: 0.18s; }
-    .match-card:nth-child(3) { animation-delay: 0.26s; }
-    .match-card:nth-child(4) { animation-delay: 0.34s; }
-    .match-card:nth-child(5) { animation-delay: 0.42s; }
-    .match-card:nth-child(6) { animation-delay: 0.50s; }
-    .match-card:nth-child(7) { animation-delay: 0.58s; }
-    .match-card:nth-child(8) { animation-delay: 0.66s; }
+    .anim-fade-up   { opacity: 0; animation: fadeInUp   0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .anim-fade-down { opacity: 0; animation: fadeInDown 0.50s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .match-card { opacity: 0; animation: fadeInUp 0.60s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .match-card:nth-child(1) { animation-delay: 0.08s; }
+    .match-card:nth-child(2) { animation-delay: 0.16s; }
+    .match-card:nth-child(3) { animation-delay: 0.24s; }
+    .match-card:nth-child(4) { animation-delay: 0.32s; }
+    .match-card:nth-child(5) { animation-delay: 0.40s; }
+    .match-card:nth-child(6) { animation-delay: 0.48s; }
+    .match-card:nth-child(7) { animation-delay: 0.56s; }
+    .match-card:nth-child(8) { animation-delay: 0.64s; }
 
     body { min-height: max(884px, 100dvh); }
     .hide-scrollbar::-webkit-scrollbar { display: none; }

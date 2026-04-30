@@ -125,9 +125,9 @@
       100% { box-shadow: 0 0 0 0 rgba(209,255,75,0); }
     }
 
-    /* ─── Entry animations ─── */
+    /* ─── Entry animations — coerenti col sistema globale ─── */
     @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(18px); }
+      from { opacity: 0; transform: translateY(26px); }
       to   { opacity: 1; transform: translateY(0); }
     }
     @keyframes fadeInDown {
@@ -147,16 +147,16 @@
       100% { background-color: transparent; opacity: 1; }
     }
 
-    .anim-fade-up   { opacity: 0; animation: fadeInUp   0.5s ease forwards; }
-    .anim-fade-down { opacity: 0; animation: fadeInDown 0.4s ease forwards; }
+    .anim-fade-up   { opacity: 0; animation: fadeInUp   0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .anim-fade-down { opacity: 0; animation: fadeInDown 0.5s  cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-    .stat-card { opacity: 0; animation: fadeInUp 0.5s ease forwards; }
-    .stat-card:nth-child(1) { animation-delay: 0.10s; }
-    .stat-card:nth-child(2) { animation-delay: 0.20s; }
-    .stat-card:nth-child(3) { animation-delay: 0.30s; }
-    .stat-card:nth-child(4) { animation-delay: 0.40s; }
+    .stat-card { opacity: 0; animation: fadeInUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .stat-card:nth-child(1) { animation-delay: 0.08s; }
+    .stat-card:nth-child(2) { animation-delay: 0.16s; }
+    .stat-card:nth-child(3) { animation-delay: 0.24s; }
+    .stat-card:nth-child(4) { animation-delay: 0.32s; }
 
-    .player-card { opacity: 0; animation: fadeInUp 0.45s ease forwards; }
+    .player-card { opacity: 0; animation: fadeInUp 0.60s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     .player-card:nth-child(1) { animation-delay: 0.06s; }
     .player-card:nth-child(2) { animation-delay: 0.12s; }
     .player-card:nth-child(3) { animation-delay: 0.18s; }
@@ -166,7 +166,7 @@
     .player-card:nth-child(7) { animation-delay: 0.42s; }
     .player-card:nth-child(8) { animation-delay: 0.48s; }
 
-    .match-card { opacity: 0; animation: fadeInUp 0.45s ease forwards; }
+    .match-card { opacity: 0; animation: fadeInUp 0.60s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     .match-card:nth-child(1) { animation-delay: 0.06s; }
     .match-card:nth-child(2) { animation-delay: 0.12s; }
     .match-card:nth-child(3) { animation-delay: 0.18s; }
