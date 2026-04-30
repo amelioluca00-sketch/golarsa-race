@@ -1243,18 +1243,34 @@
           if (!section || !listEl) return;
           section.classList.toggle('hidden', !list.length);
           listEl.innerHTML = list.map(function (m) {
-            var p1 = esc(m.giocatore1_nome), p2 = esc(m.giocatore2_nome);
+            // Spezza nome completo in nome (piccolo) + COGNOME (bold), come nelle card classifica
+            var split1 = (m.giocatore1_nome || '').trim().split(' ');
+            var cog1 = esc(split1.pop().toUpperCase()), nom1 = esc(split1.join(' '));
+            var split2 = (m.giocatore2_nome || '').trim().split(' ');
+            var cog2 = esc(split2.pop().toUpperCase()), nom2 = esc(split2.join(' '));
+            var nameStyle = 'flex:1;min-width:0;overflow:hidden';
+            var nomStyle  = 'font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.4);overflow:hidden;text-overflow:ellipsis;white-space:nowrap';
+            var cogStyle  = 'font-family:Epilogue;font-weight:900;font-style:italic;font-size:0.95rem;text-transform:uppercase;line-height:1.1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap';
             return '<div style="background:#1a0808;border-radius:16px;border:1px solid rgba(255,180,171,0.25);overflow:hidden">' +
               '<div style="padding:12px 16px 10px">' +
                 '<p style="font-size:0.52rem;color:#6b7280;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin-bottom:8px">' + fmtDataBreve(m.data) + '</p>' +
-                '<div style="display:flex;align-items:center;gap:6px">' +
-                  '<span style="font-family:Epilogue;font-weight:900;font-style:italic;color:#fff;font-size:0.88rem;text-transform:uppercase;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + p1 + '</span>' +
-                  '<div style="display:flex;align-items:center;gap:5px;flex-shrink:0;padding:0 4px">' +
+                '<div style="display:flex;align-items:center;gap:8px">' +
+                  // Giocatore 1 — allineato a sinistra
+                  '<div style="' + nameStyle + '">' +
+                    '<p style="' + nomStyle + '">' + nom1 + '</p>' +
+                    '<p style="' + cogStyle + ';color:#fff">' + cog1 + '</p>' +
+                  '</div>' +
+                  // Punteggio — centro, mai compresso
+                  '<div style="display:flex;align-items:center;gap:5px;flex-shrink:0">' +
                     '<span style="font-family:Epilogue;font-weight:900;font-style:italic;font-size:1.25rem;color:#ffb4ab;-webkit-text-fill-color:#ffb4ab">' + m.score1 + '</span>' +
-                    '<span style="font-size:0.55rem;color:rgba(255,255,255,0.25);font-weight:700">–</span>' +
+                    '<span style="font-size:0.5rem;color:rgba(255,255,255,0.2);font-weight:700">–</span>' +
                     '<span style="font-family:Epilogue;font-weight:900;font-style:italic;font-size:1.25rem;color:#ffb4ab;-webkit-text-fill-color:#ffb4ab">' + m.score2 + '</span>' +
                   '</div>' +
-                  '<span style="font-family:Epilogue;font-weight:900;font-style:italic;color:rgba(255,255,255,0.6);font-size:0.88rem;text-transform:uppercase;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">' + p2 + '</span>' +
+                  // Giocatore 2 — allineato a destra
+                  '<div style="' + nameStyle + ';text-align:right">' +
+                    '<p style="' + nomStyle + '">' + nom2 + '</p>' +
+                    '<p style="' + cogStyle + ';color:rgba(255,255,255,0.75)">' + cog2 + '</p>' +
+                  '</div>' +
                 '</div>' +
               '</div>' +
               '<div style="height:1px;background:rgba(255,255,255,0.05);margin:0 16px"></div>' +
