@@ -14,8 +14,8 @@
     '.rim-light.ambient-glow',   /* card principale signup */
   ].join(',');
 
-  /* ── Elementi con effetto ribaltamento (leaderboard) ── */
-  var FLIP_SELECTORS = '.leaderboard-row';
+  /* ── Elementi con scivolamento laterale (ranking + match cards) ── */
+  var FLIP_SELECTORS = '.leaderboard-row, #ultimi-match-container .premium-card';
 
   /* ── Elementi riga interattivi ── */
   var ROW_SELECTORS = [
@@ -75,7 +75,7 @@
     });
   }
 
-  /* ── Tag leaderboard rows con effetto ribaltamento ── */
+  /* ── Tag ranking + match cards con scivolamento laterale ── */
   function tagFlipCards() {
     var els = document.querySelectorAll(FLIP_SELECTORS);
     var delayIdx = 1;
@@ -89,7 +89,7 @@
 
       if (aboveFold) return;
 
-      el.classList.add('gr-flip');
+      el.classList.add('gr-slide');
 
       if (delayIdx <= 8) {
         el.classList.add('gr-d' + delayIdx);
@@ -112,8 +112,8 @@
 
   /* ── Funzione principale ── */
   function init() {
+    tagFlipCards(); // slide prima, così i match-card non vengono presi da tagCards()
     tagCards();
-    tagFlipCards();
     tagRows();
   }
 

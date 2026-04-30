@@ -32,6 +32,11 @@
   100% { opacity: 1; transform: scaleY(1) translateY(0); }
 }
 
+@keyframes gr-slide-in {
+  from { opacity: 0; transform: translateX(44px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
 
 /* ── Page entry ────────────────────────────── */
 
@@ -51,7 +56,7 @@ body {
   animation: gr-rise 1s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-/* ── Scroll-triggered flip entrance (leaderboard cards) ─── */
+/* ── Scroll-triggered flip entrance (legacy, non usato) ─── */
 
 .gr-flip {
   opacity: 0;
@@ -61,6 +66,17 @@ body {
 
 .gr-flip.gr-visible {
   animation: gr-flip-in 1.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Scroll-triggered slide laterale (ranking + match cards) ── */
+
+.gr-slide {
+  opacity: 0;
+  transform: translateX(44px);
+}
+
+.gr-slide.gr-visible {
+  animation: gr-slide-in 0.52s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* Stagger cascade — 150ms tra ogni card */
