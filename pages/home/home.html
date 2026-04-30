@@ -1171,8 +1171,10 @@
     results.forEach(r => {
       const dot = document.createElement('div');
       const isW = r === 'W';
-      dot.className = 'w-8 h-8 rounded-full flex items-center justify-center font-black text-xs italic ' +
-        (isW ? 'bg-[#C5FF1A] text-[#4a6000]' : 'bg-red-500/20 text-red-400 border border-red-500/20');
+      dot.style.cssText = 'width:2rem;height:2rem;border-radius:9999px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:0.75rem;font-style:italic;flex-shrink:0;' +
+        (isW
+          ? 'background:#C5FF1A;color:#4a6000;-webkit-text-fill-color:#4a6000'
+          : 'background:rgba(239,68,68,0.2);color:#f87171;-webkit-text-fill-color:#f87171;border:1px solid rgba(239,68,68,0.3)');
       dot.textContent = r;
       trend.appendChild(dot);
     });
@@ -1206,18 +1208,21 @@
     const cognome = parti.pop().toUpperCase();
     const nome = parti.join(' ');
     const win = scoreTu > scoreAvv;
-    const scoreColor = win ? 'text-[#C5FF1A]' : 'text-red-400';
+    const scoreCol = win ? '#C5FF1A' : '#f87171';
+    const badgeBg  = win ? '#C5FF1A' : 'rgba(239,68,68,0.2)';
+    const badgeTxt = win ? '#4a6000' : '#f87171';
+    const badgeBrd = win ? '' : 'border:1px solid rgba(239,68,68,0.3);';
     return `<div class="cinematic-card rounded-[14px] p-4 shrink-0 w-[155px] flex flex-col gap-2">
       <div class="flex justify-between items-start gap-1">
         <div class="min-w-0">
-          <p class="text-[9px] text-[#888] font-medium truncate">${nome}</p>
-          <p class="text-sm font-headline font-black italic text-white uppercase leading-tight truncate">${cognome}</p>
+          <p style="font-size:9px;color:#888;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${nome}</p>
+          <p style="font-family:Epilogue;font-weight:900;font-style:italic;color:#fff;font-size:0.875rem;text-transform:uppercase;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${cognome}</p>
         </div>
-        <p class="text-[9px] text-[#888] font-medium whitespace-nowrap shrink-0 mt-0.5">${data}</p>
+        <p style="font-size:9px;color:#888;font-weight:500;white-space:nowrap;flex-shrink:0;margin-top:2px">${data}</p>
       </div>
       <div class="flex items-end justify-between">
-        <p class="text-xl font-headline font-black italic ${scoreColor} leading-none">${scoreTu}-${scoreAvv}</p>
-        <div class="w-7 h-7 rounded-full flex items-center justify-center font-black text-xs italic ${win ? 'bg-[#C5FF1A] text-[#4a6000]' : 'bg-red-500/20 text-red-400 border border-red-500/20'}">${win ? 'W' : 'L'}</div>
+        <p style="font-family:Epilogue;font-weight:900;font-style:italic;font-size:1.25rem;line-height:1;color:${scoreCol};-webkit-text-fill-color:${scoreCol}">${scoreTu}-${scoreAvv}</p>
+        <div style="width:1.75rem;height:1.75rem;border-radius:9999px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:0.7rem;font-style:italic;background:${badgeBg};${badgeBrd}color:${badgeTxt};-webkit-text-fill-color:${badgeTxt}">${win ? 'W' : 'L'}</div>
       </div>
     </div>`;
   }

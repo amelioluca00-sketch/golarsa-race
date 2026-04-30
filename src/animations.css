@@ -217,6 +217,34 @@ input, select, textarea {
 }
 
 
+/* ── Mobile: overflow e leggibilità globali ─────────── */
+
+/* Previene overflow orizzontale su tutto il layout */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* I flex container con testo devono permettere al testo di troncarsi */
+.leaderboard-row {
+  min-width: 0;
+}
+
+/* Dimensione minima leggibile su mobile per etichette tiny */
+@media (max-width: 380px) {
+  /* Leaderboard: riduci lievemente i punti e il nome per schermi molto stretti */
+  .leaderboard-row .pos-display {
+    font-size: 1rem !important;
+    width: 2rem !important;
+  }
+}
+
+/* Input e select: dimensione minima 16px su mobile (evita zoom su iOS) */
+input, select, textarea {
+  font-size: max(16px, 1em) !important;
+}
+
+
 /* ── Rispetta prefers-reduced-motion ───────── */
 
 @media (prefers-reduced-motion: reduce) {

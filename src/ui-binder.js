@@ -1111,7 +1111,7 @@
           row.innerHTML =
             '<div class="absolute right-2 font-headline font-black italic pointer-events-none select-none leading-none" style="font-size:95px;bottom:-30px;color:rgba(255,255,255,0.07);">' + rank + '</div>' +
             '<div class="pos-display w-10 font-headline font-black italic text-xl" style="color:' + posColor + '">' + String(rank).padStart(2,'0') + '</div>' +
-            '<div class="flex-1 ml-4 flex items-center gap-4"><img alt="' + esc(p.nazionalita || '') + '" class="w-7 h-[18px] object-cover rounded shadow shrink-0 border border-white/5" src="https://flagcdn.com/w40/' + flagCode + '.png"/><div class="flex flex-col"><span class="text-[9px] font-medium tracking-widest text-[#888888] uppercase">' + esc(p.nome) + '</span><span class="text-base font-headline font-black italic text-white uppercase leading-none">' + esc(p.cognome) + '</span></div></div>' +
+            '<div class="flex-1 ml-4 flex items-center gap-4 min-w-0"><img alt="' + esc(p.nazionalita || '') + '" class="w-7 h-[18px] object-cover rounded shadow shrink-0 border border-white/5" src="https://flagcdn.com/w40/' + flagCode + '.png"/><div class="flex flex-col min-w-0"><span class="text-[9px] font-medium tracking-widest text-[#888888] uppercase truncate">' + esc(p.nome) + '</span><span class="text-base font-headline font-black italic text-white uppercase leading-none truncate">' + esc(p.cognome) + '</span></div></div>' +
             '<div class="flex items-center gap-1"><div class="trend-col">' + trendHtml + '</div><div class="w-20 text-right"><span class="text-base font-headline font-black italic text-white tracking-tighter ' + ptGlow + '">' + p.punti + '</span></div></div>';
           (function (player, r) {
             row.addEventListener('click', function () {
@@ -1243,29 +1243,30 @@
           if (!section || !listEl) return;
           section.classList.toggle('hidden', !list.length);
           listEl.innerHTML = list.map(function (m) {
+            var p1 = esc(m.giocatore1_nome), p2 = esc(m.giocatore2_nome);
             return '<div style="background:#1a0808;border-radius:16px;border:1px solid rgba(255,180,171,0.25);overflow:hidden">' +
-              '<div class="px-4 pt-3 pb-3">' +
-                '<p class="font-label text-[0.55rem] text-gray-500 uppercase tracking-widest mb-2">' + fmtDataBreve(m.data) + ' · da ' + esc(m.giocatore1_nome) + '</p>' +
-                '<div class="flex items-center justify-between gap-2">' +
-                  '<span class="font-headline italic font-black text-white uppercase text-[1rem] truncate">' + esc(m.giocatore1_nome) + '</span>' +
-                  '<div class="flex items-center gap-1.5 flex-shrink-0">' +
-                    '<span style="font-family:Epilogue;font-weight:900;font-style:italic;font-size:1.3rem;color:#ffb4ab">' + m.score1 + '</span>' +
-                    '<span style="font-size:0.55rem;color:rgba(255,255,255,0.3);font-weight:700">vs</span>' +
-                    '<span style="font-family:Epilogue;font-weight:900;font-style:italic;font-size:1.3rem;color:#ffb4ab">' + m.score2 + '</span>' +
+              '<div style="padding:12px 16px 10px">' +
+                '<p style="font-size:0.52rem;color:#6b7280;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin-bottom:8px">' + fmtDataBreve(m.data) + '</p>' +
+                '<div style="display:flex;align-items:center;gap:6px">' +
+                  '<span style="font-family:Epilogue;font-weight:900;font-style:italic;color:#fff;font-size:0.88rem;text-transform:uppercase;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + p1 + '</span>' +
+                  '<div style="display:flex;align-items:center;gap:5px;flex-shrink:0;padding:0 4px">' +
+                    '<span style="font-family:Epilogue;font-weight:900;font-style:italic;font-size:1.25rem;color:#ffb4ab;-webkit-text-fill-color:#ffb4ab">' + m.score1 + '</span>' +
+                    '<span style="font-size:0.55rem;color:rgba(255,255,255,0.25);font-weight:700">–</span>' +
+                    '<span style="font-family:Epilogue;font-weight:900;font-style:italic;font-size:1.25rem;color:#ffb4ab;-webkit-text-fill-color:#ffb4ab">' + m.score2 + '</span>' +
                   '</div>' +
-                  '<span class="font-headline italic font-black text-white uppercase text-[1rem] truncate">' + esc(m.giocatore2_nome) + '</span>' +
+                  '<span style="font-family:Epilogue;font-weight:900;font-style:italic;color:rgba(255,255,255,0.6);font-size:0.88rem;text-transform:uppercase;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right">' + p2 + '</span>' +
                 '</div>' +
               '</div>' +
               '<div style="height:1px;background:rgba(255,255,255,0.05);margin:0 16px"></div>' +
-              '<div class="flex">' +
-                '<button onclick="window._contestaMatch(\'' + m.id + '\')" class="flex-1 flex items-center justify-center gap-2 py-3.5 transition-colors" style="">' +
-                  '<span class="material-symbols-outlined" style="color:#ffb4ab;font-size:1rem;-webkit-text-fill-color:#ffb4ab">close</span>' +
-                  '<span style="color:#ffb4ab;-webkit-text-fill-color:#ffb4ab;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em">Contesta</span>' +
+              '<div style="display:flex">' +
+                '<button onclick="window._contestaMatch(\'' + m.id + '\')" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:13px 0;background:none;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent">' +
+                  '<span class="material-symbols-outlined" style="color:#ffb4ab;font-size:1.1rem;-webkit-text-fill-color:#ffb4ab">close</span>' +
+                  '<span style="color:#ffb4ab;-webkit-text-fill-color:#ffb4ab;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em">Contesta</span>' +
                 '</button>' +
                 '<div style="width:1px;background:rgba(255,255,255,0.05)"></div>' +
-                '<button onclick="window._approvaMatch(\'' + m.id + '\')" class="flex-1 flex items-center justify-center gap-2 py-3.5 transition-colors" style="">' +
-                  '<span class="material-symbols-outlined" style="color:#D1FF4B;font-size:1rem;-webkit-text-fill-color:#D1FF4B">check</span>' +
-                  '<span style="color:#D1FF4B;-webkit-text-fill-color:#D1FF4B;font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em">Approva</span>' +
+                '<button onclick="window._approvaMatch(\'' + m.id + '\')" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:13px 0;background:none;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent">' +
+                  '<span class="material-symbols-outlined" style="color:#D1FF4B;font-size:1.1rem;-webkit-text-fill-color:#D1FF4B">check</span>' +
+                  '<span style="color:#D1FF4B;-webkit-text-fill-color:#D1FF4B;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em">Approva</span>' +
                 '</button>' +
               '</div>' +
             '</div>';
@@ -1421,7 +1422,7 @@
           var bdgBg = win ? 'rgba(209,255,75,0.12)' : 'rgba(239,68,68,0.2)';
           var bdgBorder = win ? '' : 'border:1px solid rgba(239,68,68,0.3);';
           var parts = (avvN || '').trim().split(' '), avvCog = esc((parts.pop() || '').toUpperCase()), avvNom = esc(parts.join(' '));
-          return '<div class="cinematic-card flex items-center justify-between p-4 transition-transform active:scale-[0.98] rounded-2xl"><div class="flex items-center gap-3"><div style="width:2rem;height:2rem;border-radius:9999px;background:' + bdgBg + ';' + bdgBorder + 'display:flex;align-items:center;justify-content:center"><span style="font-weight:900;font-style:italic;font-size:10px;color:' + col + ';-webkit-text-fill-color:' + col + '">' + (win ? 'W' : 'L') + '</span></div><div><p class="font-headline font-bold italic text-white uppercase text-sm">' + (avvNom ? avvNom.charAt(0) + '. ' : '') + avvCog + '</p><p class="text-[9px] text-[#888888] uppercase">' + fmtDataBreve(m.data) + '</p></div></div><p class="font-headline font-black italic text-xl" style="color:' + col + ';-webkit-text-fill-color:' + col + '">' + myS + ' - ' + avvS + '</p></div>';
+          return '<div class="cinematic-card flex items-center justify-between p-4 transition-transform active:scale-[0.98] rounded-2xl" style="gap:8px"><div class="flex items-center gap-3 min-w-0"><div style="width:2rem;height:2rem;border-radius:9999px;background:' + bdgBg + ';' + bdgBorder + 'display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-weight:900;font-style:italic;font-size:10px;color:' + col + ';-webkit-text-fill-color:' + col + '">' + (win ? 'W' : 'L') + '</span></div><div class="min-w-0"><p class="font-headline font-bold italic text-white uppercase text-sm truncate">' + (avvNom ? avvNom.charAt(0) + '. ' : '') + avvCog + '</p><p class="text-[9px] text-[#888888] uppercase">' + fmtDataBreve(m.data) + '</p></div></div><p class="font-headline font-black italic text-xl flex-shrink-0" style="color:' + col + ';-webkit-text-fill-color:' + col + '">' + myS + ' - ' + avvS + '</p></div>';
         }).join('');
       }
     }
