@@ -73,6 +73,14 @@ body {
 .gr-slide {
   opacity: 0;
   transform: translateX(44px);
+  /* Blocca opacity e transform dalle transition per evitare conflitti
+     con il keyframe durante lo scroll */
+  transition:
+    background-color 0.14s ease,
+    max-height       0.35s ease,
+    margin-bottom    0.35s ease,
+    padding-top      0.35s ease,
+    padding-bottom   0.35s ease !important;
 }
 
 .gr-slide.gr-visible {

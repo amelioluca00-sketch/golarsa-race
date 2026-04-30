@@ -97,6 +97,12 @@
       delayIdx = Math.min(delayIdx + 1, 8);
 
       io.observe(el);
+
+      // Rimuove gr-slide a fine animazione → ripristina le transition normali
+      el.addEventListener('animationend', function handler() {
+        el.classList.remove('gr-slide');
+        el.removeEventListener('animationend', handler);
+      });
     });
   }
 
