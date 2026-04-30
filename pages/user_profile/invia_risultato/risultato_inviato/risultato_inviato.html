@@ -61,7 +61,11 @@
     }
 </script>
 <style>
-    html, body, * { touch-action: manipulation; }
+    /* Disabilita zoom doppio tap solo su elementi interattivi */
+    button, a, input, select, textarea { touch-action: manipulation; }
+    /* Il documento scorre liberamente */
+    html { overflow-x: hidden; }
+    body { overflow-x: hidden; }
 
     .material-symbols-outlined {
         font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -160,7 +164,7 @@
     .row-in { animation: rowIn 0.35s cubic-bezier(0.22,1,0.36,1) both; }
 </style>
 </head>
-<body class="kinetic-bg text-on-surface font-body overflow-y-auto">
+<body class="kinetic-bg text-on-surface font-body">
 
 <main class="w-full max-w-md mx-auto px-6 flex flex-col items-center text-center pt-12 pb-10">
 
