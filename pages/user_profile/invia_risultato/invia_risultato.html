@@ -128,30 +128,34 @@
 <section class="relative bg-surface-container rounded-3xl p-4 md:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/5 overflow-hidden">
 <div class="absolute top-0 right-0 w-32 h-32 bg-[#C5FF1A]/5 blur-3xl -mr-10 -mt-10"></div>
 <div class="grid grid-cols-1 gap-5 md:gap-8 relative z-10">
-<div class="flex flex-row items-center justify-center gap-8">
+<div class="flex flex-col gap-5">
 <!-- TU -->
-<div class="flex flex-col items-center gap-3 flex-1">
+<div class="flex flex-col items-center gap-3 w-full">
 <span class="font-label uppercase tracking-[0.2em] text-on-surface-variant text-xs italic">TU</span>
-<button class="w-full h-16 flex items-center justify-center rounded-2xl bg-[#C5FF1A] text-[#161f00] hover:opacity-90 active:scale-95 transition-all" type="button" onclick="changeScore('tu', 1)">
-<span class="material-symbols-outlined text-3xl font-bold" data-icon="add">add</span>
+<div class="flex items-center gap-4 w-full">
+<button class="flex-1 h-20 flex items-center justify-center rounded-2xl bg-[#C5FF1A] text-[#161f00] hover:opacity-90 active:scale-95 transition-all" type="button" onclick="changeScore('tu', 1)">
+<span class="material-symbols-outlined text-4xl font-bold" data-icon="add">add</span>
 </button>
-<div class="text-8xl font-headline font-black italic text-[#C5FF1A] text-shadow-glow leading-none text-center" id="score-tu">0</div>
-<button class="w-full h-16 flex items-center justify-center rounded-2xl bg-[#C5FF1A] text-[#161f00] hover:opacity-90 active:scale-95 transition-all" type="button" onclick="changeScore('tu', -1)">
-<span class="material-symbols-outlined text-3xl font-bold" data-icon="remove">remove</span>
+<div class="text-8xl font-headline font-black italic text-[#C5FF1A] text-shadow-glow leading-none text-center w-24 shrink-0" id="score-tu">0</div>
+<button class="flex-1 h-20 flex items-center justify-center rounded-2xl bg-[#C5FF1A] text-[#161f00] hover:opacity-90 active:scale-95 transition-all" type="button" onclick="changeScore('tu', -1)">
+<span class="material-symbols-outlined text-4xl font-bold" data-icon="remove">remove</span>
 </button>
 </div>
+</div>
 <!-- VS -->
-<div class="text-2xl font-headline font-black italic text-surface-container-highest opacity-30 pb-4">VS</div>
+<div class="text-xl font-headline font-black italic text-surface-container-highest opacity-30 text-center">VS</div>
 <!-- AVVERSARIO -->
-<div class="flex flex-col items-center gap-3 flex-1">
+<div class="flex flex-col items-center gap-3 w-full">
 <span class="font-label uppercase tracking-[0.2em] text-on-surface-variant text-xs italic">AVVERSARIO</span>
-<button class="w-full h-16 flex items-center justify-center rounded-2xl bg-surface-container-high border border-outline-variant/20 hover:bg-surface-container-highest active:scale-95 transition-all" type="button" onclick="changeScore('avv', 1)">
-<span class="material-symbols-outlined text-3xl font-bold" data-icon="add">add</span>
+<div class="flex items-center gap-4 w-full">
+<button class="flex-1 h-20 flex items-center justify-center rounded-2xl bg-surface-container-high border border-outline-variant/20 hover:bg-surface-container-highest active:scale-95 transition-all" type="button" onclick="changeScore('avv', 1)">
+<span class="material-symbols-outlined text-4xl font-bold" data-icon="add">add</span>
 </button>
-<div class="text-8xl font-headline font-black italic text-on-surface-variant leading-none text-center" id="score-avv">0</div>
-<button class="w-full h-16 flex items-center justify-center rounded-2xl bg-surface-container-high border border-outline-variant/20 hover:bg-surface-container-highest active:scale-95 transition-all" type="button" onclick="changeScore('avv', -1)">
-<span class="material-symbols-outlined text-3xl" data-icon="remove">remove</span>
+<div class="text-8xl font-headline font-black italic text-on-surface-variant leading-none text-center w-24 shrink-0" id="score-avv">0</div>
+<button class="flex-1 h-20 flex items-center justify-center rounded-2xl bg-surface-container-high border border-outline-variant/20 hover:bg-surface-container-highest active:scale-95 transition-all" type="button" onclick="changeScore('avv', -1)">
+<span class="material-symbols-outlined text-4xl" data-icon="remove">remove</span>
 </button>
+</div>
 </div>
 </div>
 </div>
