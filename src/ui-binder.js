@@ -1109,7 +1109,7 @@
           row.setAttribute('data-global-rank', rank);
           row.style.cursor = 'pointer';
           row.innerHTML =
-            '<div class="absolute right-2 font-headline font-black italic text-white/[0.05] pointer-events-none select-none leading-none" style="font-size:95px;bottom:-30px;">' + rank + '</div>' +
+            '<div class="absolute right-2 font-headline font-black italic pointer-events-none select-none leading-none" style="font-size:95px;bottom:-30px;color:rgba(255,255,255,0.07);">' + rank + '</div>' +
             '<div class="pos-display w-10 font-headline font-black italic text-xl" style="color:' + posColor + '">' + String(rank).padStart(2,'0') + '</div>' +
             '<div class="flex-1 ml-4 flex items-center gap-4"><img alt="' + esc(p.nazionalita || '') + '" class="w-7 h-[18px] object-cover rounded shadow shrink-0 border border-white/5" src="https://flagcdn.com/w40/' + flagCode + '.png"/><div class="flex flex-col"><span class="text-[9px] font-medium tracking-widest text-[#888888] uppercase">' + esc(p.nome) + '</span><span class="text-base font-headline font-black italic text-white uppercase leading-none">' + esc(p.cognome) + '</span></div></div>' +
             '<div class="flex items-center gap-1"><div class="trend-col">' + trendHtml + '</div><div class="w-20 text-right"><span class="text-base font-headline font-black italic text-white tracking-tighter ' + ptGlow + '">' + p.punti + '</span></div></div>';
