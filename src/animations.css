@@ -26,6 +26,17 @@
   to   { opacity: 1; }
 }
 
+@keyframes gr-flip-in {
+  from {
+    opacity: 0;
+    transform: perspective(800px) rotateX(-38deg) translateY(18px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(800px) rotateX(0deg) translateY(0) scale(1);
+  }
+}
+
 
 /* ── Page entry ────────────────────────────── */
 
@@ -43,6 +54,18 @@ body {
 
 .gr-rise.gr-visible {
   animation: gr-rise 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Scroll-triggered flip entrance (leaderboard cards) ─── */
+
+.gr-flip {
+  opacity: 0;
+  transform: perspective(800px) rotateX(-38deg) translateY(18px) scale(0.97);
+  transform-origin: top center;
+}
+
+.gr-flip.gr-visible {
+  animation: gr-flip-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* Stagger cascade — 80ms tra ogni card */

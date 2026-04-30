@@ -7,12 +7,15 @@
 
   /* ── Elementi da animare all'entrata (scroll) ── */
   var RISE_SELECTORS = [
-    '.premium-card',
+    '.premium-card:not(.leaderboard-row)',
     '.cinematic-card',
     '.broadcast-card',
     '.premium-card-lime',
     '.rim-light.ambient-glow',   /* card principale signup */
   ].join(',');
+
+  /* ── Elementi con effetto ribaltamento (leaderboard) ── */
+  var FLIP_SELECTORS = '.leaderboard-row';
 
   /* ── Elementi riga interattivi ── */
   var ROW_SELECTORS = [
@@ -72,6 +75,31 @@
     });
   }
 
+  /* ── Tag leaderboard rows con effetto ribaltamento ── */
+  function tagFlipCards() {
+    var els = document.querySelectorAll(FLIP_SELECTORS);
+    var delayIdx = 1;
+
+    els.forEach(function (el) {
+      if (taggedRise.has(el)) return;
+      taggedRise.add(el);
+
+      var rect      = el.getBoundingClientRect();
+      var aboveFold = rect.top < VH && rect.bottom > 0;
+
+      if (aboveFold) return;
+
+      el.classList.add('gr-flip');
+
+      if (delayIdx <= 8) {
+        el.classList.add('gr-d' + delayIdx);
+      }
+      delayIdx = Math.min(delayIdx + 1, 8);
+
+      io.observe(el);
+    });
+  }
+
   /* ── Tag righe interattive ── */
   function tagRows() {
     var els = document.querySelectorAll(ROW_SELECTORS);
@@ -85,6 +113,7 @@
   /* ── Funzione principale ── */
   function init() {
     tagCards();
+    tagFlipCards();
     tagRows();
   }
 
@@ -105,6 +134,7 @@
       /* Ricalcola VH per contenuto aggiunto dopo il resize */
       VH = window.innerHeight;
       tagCards();
+      tagFlipCards();
       tagRows();
     }
   });
