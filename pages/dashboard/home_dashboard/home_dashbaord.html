@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="#0a0a0a">
+  <meta name="theme-color" content="#08080f">
   <meta name="format-detection" content="telephone=no">
   <title>PODIUM ADMIN - GOLARSA RACE</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -38,7 +38,7 @@
             "surface-dim": "#131313",
             "surface-container-high": "#2a2a2a",
             "on-error": "#690005",
-            "background": "#131313",
+            "background": "#11111a",
             "on-tertiary": "#680009",
             "surface-container-lowest": "#0e0e0e",
             "error": "#ffb4ab",
@@ -100,11 +100,11 @@
       opacity: 0.04;
     }
     .cinematic-card {
-      background: linear-gradient(180deg, #2a2a2a 0%, #222222 100%);
+      background: linear-gradient(180deg, #272733 0%, #222222 100%);
       box-shadow: 0 4px 24px -2px rgba(0,0,0,0.5), inset 0 1px 1px 0 rgba(255,255,255,0.1);
     }
     .cinematic-icon {
-      background: linear-gradient(180deg, #2a2a2a 0%, #222222 100%);
+      background: linear-gradient(180deg, #272733 0%, #222222 100%);
       box-shadow: 0 2px 8px -1px rgba(0,0,0,0.4), inset 0 1px 1px 0 rgba(255,255,255,0.1);
     }
     .popup-button {
@@ -242,7 +242,7 @@
     .drawer-panel {
       position: absolute; top: 0; right: 0; bottom: 0;
       width: 72vw; max-width: 280px;
-      background: #1a1a1a;
+      background: #18181f;
       box-shadow: -8px 0 40px rgba(0,0,0,0.6), inset 1px 0 0 rgba(255,255,255,0.06);
       transform: translateX(100%);
       transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
@@ -263,7 +263,7 @@
     }
     .modal-backdrop.open { opacity: 1; pointer-events: all; }
     .modal-box {
-      background: linear-gradient(180deg, #222222 0%, #141414 100%);
+      background: linear-gradient(180deg, #222222 0%, #12121c 100%);
       border-radius: 32px 32px 0 0;
       border: 1px solid rgba(255,255,255,0.12);
       border-bottom: none;
@@ -369,7 +369,7 @@
       padding: 12px 8px 10px;
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,0.06);
-      background: linear-gradient(180deg, #2a2a2a 0%, #222222 100%);
+      background: linear-gradient(180deg, #272733 0%, #222222 100%);
       box-shadow: 0 4px 24px -2px rgba(0,0,0,0.5), inset 0 1px 1px 0 rgba(255,255,255,0.07);
       cursor: pointer;
       transition: all 0.2s ease;
@@ -419,10 +419,10 @@
 </head>
 <body class="bg-surface-container-lowest text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container">
 
-  <div id="page-out" style="position:fixed;inset:0;z-index:9999;background:#0e0e0e;opacity:0;pointer-events:none;transition:opacity 0.18s ease;"></div>
+  <div id="page-out" style="position:fixed;inset:0;z-index:9999;background:#0b0b15;opacity:0;pointer-events:none;transition:opacity 0.18s ease;"></div>
 
   <!-- ─── Header (fisso, sempre visibile) ─── -->
-  <header class="fixed top-0 w-full z-50 bg-[#0e0e0e] backdrop-blur-xl bg-opacity-90 flex justify-between items-center px-6 py-4 h-16 border-b border-white/[0.04]">
+  <header class="fixed top-0 w-full z-50 bg-[#0b0b15] backdrop-blur-xl bg-opacity-90 flex justify-between items-center px-6 py-4 h-16 border-b border-white/[0.04]">
     <div class="flex items-center">
       <img alt="GA Race" class="h-5 w-auto" src="../../assets/GA-RACE.png">
     </div>
@@ -648,7 +648,7 @@
       </div>
       <label class="font-label text-[0.6rem] text-gray-500 uppercase tracking-wider block mb-2">Punti</label>
       <input id="home-modal-points" type="number" min="0" inputmode="numeric"
-        class="w-full bg-[#2a2a2a] border border-white/10 rounded-2xl px-5 py-4 text-white font-headline font-black text-3xl italic focus:outline-none focus:border-[#c5ff1a]/50 transition-colors mb-1">
+        class="w-full bg-[#272733] border border-white/10 rounded-2xl px-5 py-4 text-white font-headline font-black text-3xl italic focus:outline-none focus:border-[#c5ff1a]/50 transition-colors mb-1">
       <p class="font-label text-[0.58rem] text-gray-600 mb-6">La classifica verrà ricalcolata automaticamente.</p>
       <div class="flex gap-3">
         <button onclick="closeHomeModal()" class="flex-1 cinematic-card border border-white/10 rounded-2xl py-3.5 font-label text-[0.7rem] font-bold text-gray-400 uppercase tracking-wider">
