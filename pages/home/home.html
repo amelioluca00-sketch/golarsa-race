@@ -369,7 +369,26 @@
     } else {
       if (leaderboardHeader) leaderboardHeader.style.display = 'none';
       if (leaderboardContainer) leaderboardContainer.style.display = 'none';
-      if (ultimiMatchContainer) ultimiMatchContainer.style.display = '';
+      if (ultimiMatchContainer) {
+        ultimiMatchContainer.style.display = '';
+        // Applica la stessa animazione laterale delle card ranking
+        var matchCards = Array.prototype.slice.call(ultimiMatchContainer.querySelectorAll('.premium-card'));
+        var delayClasses = ['gr-d1','gr-d2','gr-d3','gr-d4','gr-d5','gr-d6','gr-d7','gr-d8'];
+        matchCards.forEach(function(card) {
+          card.classList.remove('gr-visible','gr-rise','gr-slide');
+          delayClasses.forEach(function(d) { card.classList.remove(d); });
+          void card.offsetWidth; // forza reflow per riavviare animazione
+        });
+        matchCards.forEach(function(card, i) {
+          card.classList.add('gr-slide');
+          if (i + 1 <= 8) card.classList.add('gr-d' + (i + 1));
+        });
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            matchCards.forEach(function(card) { card.classList.add('gr-visible'); });
+          });
+        });
+      }
     }
   };
   window.addEventListener('resize', function() { window.switchTab(activeTab); });
