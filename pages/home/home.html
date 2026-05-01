@@ -1109,7 +1109,7 @@
   function openPolicySheet(type) {
     // chiudi solo il drawer, mantieni (o riattiva) backdrop
     document.getElementById('menuDrawer').classList.add('translate-x-full');
-    const saved = localStorage.getItem('gr_content_v2_' + type);
+    const saved = localStorage.getItem('gr_content_v3_' + type);
     document.getElementById('policy-title').textContent = _policyTitles[type];
     document.getElementById('policy-content').innerHTML = saved || _policyDefaults[type];
     _showBackdrop();

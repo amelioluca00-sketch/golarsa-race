@@ -626,7 +626,7 @@
       editStates[section] = false;
 
       // Persisti in localStorage
-      localStorage.setItem('gr_content_v2_' + section, prose.innerHTML);
+      localStorage.setItem('gr_content_v3_' + section, prose.innerHTML);
 
       const toast = document.getElementById('toast');
       toast.classList.add('show');
@@ -635,7 +635,7 @@
 
     // Ripristina contenuti salvati da localStorage
     ['regolamento', 'termini', 'privacy'].forEach(function(s) {
-      const saved = localStorage.getItem('gr_content_v2_' + s);
+      const saved = localStorage.getItem('gr_content_v3_' + s);
       if (saved) document.getElementById('prose-' + s).innerHTML = saved;
     });
 
