@@ -254,6 +254,24 @@
             0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)}
         }
         .banner-shake { animation: bannerShake 0.4s cubic-bezier(0.36,0.07,0.19,0.97) both; }
+        /* Policy sheet — sottosezioni: stile coerente sia per i default inline che per il contenuto salvato dal dashboard */
+        #policy-content h3 {
+            font-family: 'Epilogue', sans-serif;
+            font-weight: 900;
+            font-style: italic;
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #C5FF1A;
+            margin: 16px 0 7px;
+            padding-left: 10px;
+            border-left: 2px solid rgba(209,255,75,0.6);
+            display: block;
+        }
+        #policy-content h3:first-child,
+        #policy-content div > h3:first-of-type {
+            margin-top: 0;
+        }
     </style>
 <header class="fixed top-0 w-full z-50 bg-black/95 backdrop-blur-2xl border-b border-white/5 flex justify-between items-center px-6 h-16">
 <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.href='home.html'"><img alt="GOLARSA RACE" class="h-6 w-auto object-contain" src="../assets/GA-RACE.png"/></div>
