@@ -120,21 +120,20 @@
             font-size: 16px !important;
         }
         @keyframes heroSlideUp {
-            0%   { opacity: 0; transform: translateY(40px) skewY(1deg); }
-            60%  { opacity: 1; }
-            100% { opacity: 1; transform: translateY(0) skewY(0deg); }
+            0%   { opacity: 0; transform: translateY(52px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
         @keyframes heroFadeUp {
-            0%   { opacity: 0; transform: translateY(16px); }
+            0%   { opacity: 0; transform: translateY(22px); }
             100% { opacity: 1; transform: translateY(0); }
         }
         .hero-slide-up {
             opacity: 0;
-            animation: heroSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+            animation: heroSlideUp 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
         .hero-fade-up {
             opacity: 0;
-            animation: heroFadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+            animation: heroFadeUp 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
         .vignette {
             background:
