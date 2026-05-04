@@ -1073,11 +1073,37 @@
       if (!visibleStandings.length) {
         container.innerHTML = '<p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-12">Nessun giocatore disponibile</p>';
       } else {
-        // ── Trend ranking: confronta con posizioni precedenti ──
-        var prevRanksKey = 'gr_prev_ranks_' + torneoId;
-        var prevRanks = {};
-        try { prevRanks = JSON.parse(localStorage.getItem(prevRanksKey) || '{}'); } catch (e) {}
+        // ── Trend ranking: due snapshot per mantenere i triangoli tra un aggiornamento e l'altro ──
+        //   gr_current_ranks_X → posizioni dell'ultimo aggiornamento reale della classifica
+        //   gr_prev_ranks_X    → posizioni prima di quell'aggiornamento
+        //   I triangoli vengono aggiornati solo quando i dati live differiscono da current;
+        //   finché non c'è un nuovo cambio i triangoli restano visibili.
+        var currentRanksKey = 'gr_current_ranks_' + torneoId;
+        var prevRanksKey    = 'gr_prev_ranks_'    + torneoId;
+        var currentRanks = {};
+        var prevRanks    = {};
+        try { currentRanks = JSON.parse(localStorage.getItem(currentRanksKey) || '{}'); } catch (e) {}
+        try { prevRanks   = JSON.parse(localStorage.getItem(prevRanksKey)    || '{}'); } catch (e) {}
+
+        // Costruisci le posizioni live
         var newRanks = {};
+        visibleStandings.forEach(function (p, i) { newRanks[p.id] = i + 1; });
+
+        // Controlla se la classifica è cambiata rispetto all'ultimo snapshot
+        var rankingChanged = Object.keys(newRanks).some(function (id) {
+          return newRanks[id] !== currentRanks[id];
+        }) || Object.keys(currentRanks).some(function (id) {
+          return currentRanks[id] !== newRanks[id];
+        });
+
+        if (rankingChanged) {
+          // La classifica è cambiata: l'attuale diventa "precedente" e salviamo i nuovi dati come "attuali"
+          prevRanks    = currentRanks;
+          currentRanks = newRanks;
+          localStorage.setItem(prevRanksKey,    JSON.stringify(prevRanks));
+          localStorage.setItem(currentRanksKey, JSON.stringify(currentRanks));
+        }
+        // Se non è cambiata nulla, prevRanks e currentRanks restano invariati → i triangoli persistono
 
         var total = visibleStandings.length;
 
@@ -1093,11 +1119,11 @@
           var flagCode = getFlagCode(p.nazionalita, p.bandiera);
 
           // ── Calcola freccia trend ──
-          newRanks[p.id] = rank;
           var prevR = prevRanks[p.id];
           var trendHtml;
           if (!prevR || prevR === rank) {
-            trendHtml = '<span style="color:#555;font-size:0.75rem;font-weight:700;line-height:1">—</span>';
+            // Nessun cambio di posizione → nessun indicatore
+            trendHtml = '';
           } else if (rank < prevR) {
             trendHtml = '<span style="color:#D1FF4B;font-size:0.75rem;line-height:1">▲</span>';
           } else {
@@ -1128,8 +1154,7 @@
           container.appendChild(row);
         });
 
-        // Salva le posizioni attuali per il prossimo confronto
-        localStorage.setItem(prevRanksKey, JSON.stringify(newRanks));
+        // (il salvataggio degli snapshot avviene già sopra, solo se la classifica è cambiata)
       }
 
       // ── Popola "Ultimi Match" ──
