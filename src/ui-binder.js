@@ -1396,6 +1396,23 @@
   // INIT 4/5 — player_profile / user_profile
   // ══════════════════════════════════════════════════════════════════
 
+  // Helper: popola griglia disponibilità
+  function fillDisponibilita(prefix, disp) {
+    var giorni = ['lun','mar','mer','gio','ven','sab','dom'];
+    var fasce  = ['mat','pom','ser'];
+    giorni.forEach(function (g) {
+      fasce.forEach(function (f) {
+        var cell = document.getElementById(prefix + 'disp-' + g + '-' + f);
+        if (!cell) return;
+        var available = disp && disp[g] && disp[g][f];
+        cell.style.background = available ? '#C5FF1A' : 'rgba(255,255,255,0.05)';
+        cell.setAttribute('data-available', available ? '1' : '0');
+        cell.setAttribute('data-g', g);
+        cell.setAttribute('data-f', f);
+      });
+    });
+  }
+
   function fillProfile(p, rank, prefix, data) {
     var setN = function (id, v) { var el = document.getElementById(id); if (el) el.textContent = v; };
     setN(prefix + 'firstname',     (p.nome || '').trim());
@@ -1403,6 +1420,14 @@
     setN(prefix + 'punti',         p.punti + ' PUNTI');
     setN(prefix + 'rank',          '#' + rank);
     setN(prefix + 'gruppo',        (p.nazionalita || '').toUpperCase());
+    // ── Info giocatore (nuovi campi) ─────────────────────────────────
+    setN(prefix + 'info-anni',      p.eta       ? p.eta       + ' anni' : '—');
+    setN(prefix + 'info-peso',      p.peso      ? p.peso      + ' kg'   : '—');
+    setN(prefix + 'info-altezza',   p.altezza   ? p.altezza   + ' cm'   : '—');
+    setN(prefix + 'info-mano',      p.mano      || '—');
+    setN(prefix + 'info-superficie',p.superficie|| '—');
+    // Griglia disponibilità
+    fillDisponibilita(prefix, p.disponibilita || {});
     // Aggiorna la bandiera dinamicamente (se c'è un elemento apposito)
     var flagEl = document.getElementById(prefix + 'flag');
     if (flagEl) {
@@ -1500,6 +1525,124 @@
       if (!p) return;
       var rank = data.standings.findIndex(function (x) { return x.id === p.id; }) + 1 || 1;
       fillProfile(p, rank, 'up-', data);
+
+      // ── Logica MODIFICA / SALVA info giocatore ───────────────────────
+      var editBtn    = document.getElementById('up-info-edit-btn');
+      var editIcon   = document.getElementById('up-info-edit-icon');
+      var editLabel  = document.getElementById('up-info-edit-label');
+      var viewDiv    = document.getElementById('up-info-view');
+      var editDiv    = document.getElementById('up-info-edit');
+      var dispHint   = document.getElementById('up-disp-hint');
+      var isEditing  = false;
+
+      // Precompila gli input con i valori attuali
+      function populateInputs() {
+        var inAnni  = document.getElementById('up-edit-anni');
+        var inPeso  = document.getElementById('up-edit-peso');
+        var inAlt   = document.getElementById('up-edit-altezza');
+        var inMano  = document.getElementById('up-edit-mano');
+        var inSuper = document.getElementById('up-edit-superficie');
+        if (inAnni)  inAnni.value  = p.eta       || '';
+        if (inPeso)  inPeso.value  = p.peso      || '';
+        if (inAlt)   inAlt.value   = p.altezza   || '';
+        if (inMano)  inMano.value  = p.mano      || '';
+        if (inSuper) inSuper.value = p.superficie|| '';
+      }
+
+      // Toggle click sulle celle disponibilità (solo in edit mode)
+      var giorni = ['lun','mar','mer','gio','ven','sab','dom'];
+      var fasce  = ['mat','pom','ser'];
+      giorni.forEach(function (g) {
+        fasce.forEach(function (f) {
+          var cell = document.getElementById('up-disp-' + g + '-' + f);
+          if (!cell) return;
+          cell.style.cursor = 'default';
+          cell.addEventListener('click', function () {
+            if (!isEditing) return;
+            var avail = cell.getAttribute('data-available') === '1';
+            avail = !avail;
+            cell.setAttribute('data-available', avail ? '1' : '0');
+            cell.style.background = avail ? '#C5FF1A' : 'rgba(255,255,255,0.05)';
+            cell.style.transform = 'scale(0.88)';
+            setTimeout(function () { cell.style.transform = ''; }, 120);
+          });
+        });
+      });
+
+      if (editBtn) {
+        editBtn.addEventListener('click', async function () {
+          if (!isEditing) {
+            // Passa in modalità MODIFICA
+            isEditing = true;
+            populateInputs();
+            viewDiv && viewDiv.classList.add('hidden');
+            editDiv && editDiv.classList.remove('hidden');
+            dispHint && dispHint.classList.remove('hidden');
+            giorni.forEach(function (g) { fasce.forEach(function (f) { var c = document.getElementById('up-disp-' + g + '-' + f); if (c) { c.style.cursor = 'pointer'; c.style.outline = '1px dashed rgba(197,255,26,0.2)'; } }); });
+            if (editIcon)  { editIcon.textContent  = 'save'; }
+            if (editLabel) { editLabel.textContent  = 'SALVA'; }
+          } else {
+            // Salva
+            isEditing = false;
+            editBtn.disabled = true;
+            if (editLabel) editLabel.textContent = 'SALVO...';
+
+            // Leggi valori inputs
+            var newAnni  = document.getElementById('up-edit-anni')        ? document.getElementById('up-edit-anni').value.trim()  : '';
+            var newPeso  = document.getElementById('up-edit-peso')        ? document.getElementById('up-edit-peso').value.trim()  : '';
+            var newAlt   = document.getElementById('up-edit-altezza')     ? document.getElementById('up-edit-altezza').value.trim(): '';
+            var newMano  = document.getElementById('up-edit-mano')        ? document.getElementById('up-edit-mano').value          : '';
+            var newSuper = document.getElementById('up-edit-superficie')  ? document.getElementById('up-edit-superficie').value    : '';
+
+            // Leggi disponibilità dalla griglia
+            var newDisp = {};
+            giorni.forEach(function (g) {
+              newDisp[g] = {};
+              fasce.forEach(function (f) {
+                var c = document.getElementById('up-disp-' + g + '-' + f);
+                newDisp[g][f] = c ? (c.getAttribute('data-available') === '1') : false;
+              });
+            });
+
+            // Aggiorna oggetto p locale
+            p.eta          = newAnni  ? parseInt(newAnni,  10) : p.eta;
+            p.peso         = newPeso  ? parseInt(newPeso,  10) : p.peso;
+            p.altezza      = newAlt   ? parseInt(newAlt,   10) : p.altezza;
+            p.mano         = newMano  || p.mano;
+            p.superficie   = newSuper || p.superficie;
+            p.disponibilita = newDisp;
+
+            try {
+              await window.StorageManager.updatePlayerProfile(p.id, {
+                eta:          p.eta,
+                peso:         p.peso,
+                altezza:      p.altezza,
+                mano:         p.mano,
+                superficie:   p.superficie,
+                disponibilita: p.disponibilita,
+              });
+            } catch (e) { console.error('[UP] save profile:', e); }
+
+            // Aggiorna view
+            var setN = function (id, v) { var el = document.getElementById(id); if (el) el.textContent = v; };
+            setN('up-info-anni',       p.eta        ? p.eta       + ' anni' : '—');
+            setN('up-info-peso',       p.peso       ? p.peso      + ' kg'   : '—');
+            setN('up-info-altezza',    p.altezza    ? p.altezza   + ' cm'   : '—');
+            setN('up-info-mano',       p.mano       || '—');
+            setN('up-info-superficie', p.superficie || '—');
+            fillDisponibilita('up-', p.disponibilita);
+
+            // Torna in modalità view
+            editDiv && editDiv.classList.add('hidden');
+            viewDiv && viewDiv.classList.remove('hidden');
+            dispHint && dispHint.classList.add('hidden');
+            giorni.forEach(function (g) { fasce.forEach(function (f) { var c = document.getElementById('up-disp-' + g + '-' + f); if (c) { c.style.cursor = 'default'; c.style.outline = ''; } }); });
+            if (editIcon)  editIcon.textContent  = 'edit';
+            if (editLabel) editLabel.textContent = 'MODIFICA';
+            editBtn.disabled = false;
+          }
+        });
+      }
     });
   }
 

@@ -200,6 +200,92 @@
 <!-- Primary CTA -->
 <a id="btn-sfida" href="#" class="flex items-center justify-center w-full bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase text-lg py-4 rounded-2xl border-t border-white/40 shadow-lg hover:brightness-110 transition-all active:scale-[0.98] relative overflow-hidden anim-in" style="animation-delay: 0.13s; text-decoration: none;">
         SFIDA AVVERSARIO</a>
+<!-- Player Info Card -->
+<section class="cinematic-card rounded-[24px] p-6 space-y-5 anim-in" style="animation-delay: 0.17s;">
+  <!-- Info giocatore -->
+  <div class="space-y-3">
+    <p class="text-[10px] font-[900] text-[#888888]/80 uppercase tracking-[0.2em] italic mb-3">INFO GIOCATORE</p>
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">cake</span>
+      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">ETÀ</span>
+      <span id="pp-info-anni" class="font-['Epilogue'] font-black italic text-white text-sm">—</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">monitor_weight</span>
+      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">PESO</span>
+      <span id="pp-info-peso" class="font-['Epilogue'] font-black italic text-white text-sm">—</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">height</span>
+      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">ALTEZZA</span>
+      <span id="pp-info-altezza" class="font-['Epilogue'] font-black italic text-white text-sm">—</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">back_hand</span>
+      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">MANO</span>
+      <span id="pp-info-mano" class="font-['Epilogue'] font-black italic text-white text-sm">—</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">sports_tennis</span>
+      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">SUPERFICIE</span>
+      <span id="pp-info-superficie" class="font-['Epilogue'] font-black italic text-white text-sm">—</span>
+    </div>
+  </div>
+  <!-- Divider -->
+  <div class="w-full h-[1px] bg-white/5"></div>
+  <!-- Disponibilità -->
+  <div class="space-y-3">
+    <p class="text-[10px] font-[900] text-[#888888]/80 uppercase tracking-[0.2em] italic">DISPONIBILITÀ</p>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse" style="table-layout:fixed;">
+        <thead>
+          <tr>
+            <td class="pb-2" style="width:40px;"></td>
+            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Lun</span></td>
+            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Mar</span></td>
+            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Mer</span></td>
+            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Gio</span></td>
+            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Ven</span></td>
+            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Sab</span></td>
+            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Dom</span></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="py-1 pr-1"><span class="text-[9px] font-[900] text-[#888888] uppercase">Mat</span></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-lun-mat" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-mar-mat" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-mer-mat" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-gio-mat" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-ven-mat" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-sab-mat" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-dom-mat" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+          </tr>
+          <tr>
+            <td class="py-1 pr-1"><span class="text-[9px] font-[900] text-[#888888] uppercase">Pom</span></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-lun-pom" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-mar-pom" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-mer-pom" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-gio-pom" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-ven-pom" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-sab-pom" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-dom-pom" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+          </tr>
+          <tr>
+            <td class="py-1 pr-1"><span class="text-[9px] font-[900] text-[#888888] uppercase">Ser</span></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-lun-ser" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-mar-ser" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-mer-ser" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-gio-ser" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-ven-ser" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-sab-ser" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-dom-ser" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
 <!-- Win Rate Gauge Section -->
 <section class="cinematic-card rounded-[24px] p-6 flex justify-between items-center anim-in" style="animation-delay: 0.21s;">
 <div class="">

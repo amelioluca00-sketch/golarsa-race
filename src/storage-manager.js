@@ -454,6 +454,30 @@
       });
     },
 
+    /**
+     * Aggiorna i campi del profilo personale di un giocatore
+     * (anni, peso, altezza, mano, superficie, disponibilita).
+     * Non tocca punti/stats/stato.
+     */
+    updatePlayerProfile: async function (playerId, profileFields) {
+      var pRes = await db.from('players').select('payload').eq('id', playerId).single();
+      if (!pRes.data) { console.error('[SM] updatePlayerProfile: giocatore non trovato', playerId); return false; }
+      var payload = Object.assign({}, pRes.data.payload, profileFields);
+      var updRes = await db.from('players').update({ payload: payload }).eq('id', playerId);
+      if (updRes.error) { console.error('[SM] updatePlayerProfile:', updRes.error); return false; }
+      // Aggiorna cache locale
+      if (_cache) {
+        Object.keys(_cache).forEach(function (tid) {
+          if (_cache[tid] && _cache[tid].players) {
+            _cache[tid].players = _cache[tid].players.map(function (p) {
+              return p.id === playerId ? Object.assign({}, p, profileFields) : p;
+            });
+          }
+        });
+      }
+      return true;
+    },
+
     /** Cerca un giocatore approvato per email tra tutti i tornei. */
     findPlayerByEmail: async function (email) {
       var res = await db.from('players')

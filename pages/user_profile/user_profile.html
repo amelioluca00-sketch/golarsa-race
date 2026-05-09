@@ -203,6 +203,139 @@
 <!-- Primary CTA -->
 <button class="w-full bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase text-lg py-4 rounded-2xl border-t border-white/40 shadow-lg hover:brightness-110 transition-all active:scale-[0.98] flex items-center justify-center relative overflow-hidden anim-in" style="animation-delay: 0.15s;" onclick="window.location.href='invia_risultato/invia_risultato.html'">
         INVIA RISULTATO</button>
+<!-- Player Info Card (con modifica) -->
+<section id="up-info-card" class="cinematic-card rounded-[24px] p-6 space-y-5 anim-in" style="animation-delay: 0.17s;">
+  <!-- Header card con bottone modifica -->
+  <div class="flex items-center justify-between">
+    <p class="text-[10px] font-[900] text-[#888888]/80 uppercase tracking-[0.2em] italic">INFO GIOCATORE</p>
+    <button id="up-info-edit-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 hover:bg-white/10 transition-all active:scale-95">
+      <span id="up-info-edit-icon" class="material-symbols-outlined text-[#C5FF1A]" style="font-size:15px;font-variation-settings:'FILL' 0,'wght' 400">edit</span>
+      <span id="up-info-edit-label" class="text-[10px] font-[900] text-[#C5FF1A] uppercase tracking-wider italic">MODIFICA</span>
+    </button>
+  </div>
+  <!-- Info rows — view mode -->
+  <div id="up-info-view" class="space-y-3">
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">cake</span>
+      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">ETÀ</span>
+      <span id="up-info-anni" class="font-['Epilogue'] font-black italic text-white text-sm">—</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">monitor_weight</span>
+      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">PESO</span>
+      <span id="up-info-peso" class="font-['Epilogue'] font-black italic text-white text-sm">—</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">height</span>
+      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">ALTEZZA</span>
+      <span id="up-info-altezza" class="font-['Epilogue'] font-black italic text-white text-sm">—</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">back_hand</span>
+      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">MANO</span>
+      <span id="up-info-mano" class="font-['Epilogue'] font-black italic text-white text-sm">—</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">sports_tennis</span>
+      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">SUPERFICIE</span>
+      <span id="up-info-superficie" class="font-['Epilogue'] font-black italic text-white text-sm">—</span>
+    </div>
+  </div>
+  <!-- Info rows — edit mode (nascosto di default) -->
+  <div id="up-info-edit" class="space-y-3 hidden">
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">cake</span>
+      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">ETÀ</span>
+      <input id="up-edit-anni" type="number" min="1" max="99" placeholder="anni" class="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-white font-['Epilogue'] font-black italic text-sm focus:outline-none focus:border-[#C5FF1A]/40" style="font-size:16px!important"/>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">monitor_weight</span>
+      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">PESO (kg)</span>
+      <input id="up-edit-peso" type="number" min="1" max="200" placeholder="kg" class="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-white font-['Epilogue'] font-black italic text-sm focus:outline-none focus:border-[#C5FF1A]/40" style="font-size:16px!important"/>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">height</span>
+      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">ALTEZZA (cm)</span>
+      <input id="up-edit-altezza" type="number" min="100" max="250" placeholder="cm" class="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-white font-['Epilogue'] font-black italic text-sm focus:outline-none focus:border-[#C5FF1A]/40" style="font-size:16px!important"/>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">back_hand</span>
+      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">MANO</span>
+      <select id="up-edit-mano" class="flex-1 bg-[#1c1c1c] border border-white/10 rounded-lg px-3 py-1.5 text-white font-['Epilogue'] font-black italic text-sm focus:outline-none focus:border-[#C5FF1A]/40" style="font-size:16px!important">
+        <option value="">—</option>
+        <option value="Destra">Destra</option>
+        <option value="Sinistra">Sinistra</option>
+      </select>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">sports_tennis</span>
+      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">SUPERFICIE</span>
+      <select id="up-edit-superficie" class="flex-1 bg-[#1c1c1c] border border-white/10 rounded-lg px-3 py-1.5 text-white font-['Epilogue'] font-black italic text-sm focus:outline-none focus:border-[#C5FF1A]/40" style="font-size:16px!important">
+        <option value="">—</option>
+        <option value="Terra">Terra</option>
+        <option value="Erba">Erba</option>
+        <option value="Cemento">Cemento</option>
+        <option value="Veloce">Veloce</option>
+        <option value="Sintetico">Sintetico</option>
+      </select>
+    </div>
+  </div>
+  <!-- Divider -->
+  <div class="w-full h-[1px] bg-white/5"></div>
+  <!-- Disponibilità -->
+  <div class="space-y-3">
+    <p class="text-[10px] font-[900] text-[#888888]/80 uppercase tracking-[0.2em] italic">DISPONIBILITÀ</p>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse" style="table-layout:fixed;">
+        <thead>
+          <tr>
+            <td class="pb-2" style="width:40px;"></td>
+            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Lun</span></td>
+            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Mar</span></td>
+            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Mer</span></td>
+            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Gio</span></td>
+            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Ven</span></td>
+            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Sab</span></td>
+            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Dom</span></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="py-1 pr-1"><span class="text-[9px] font-[900] text-[#888888] uppercase">Mat</span></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-lun-mat" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-mar-mat" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-mer-mat" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-gio-mat" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-ven-mat" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-sab-mat" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-dom-mat" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+          </tr>
+          <tr>
+            <td class="py-1 pr-1"><span class="text-[9px] font-[900] text-[#888888] uppercase">Pom</span></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-lun-pom" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-mar-pom" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-mer-pom" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-gio-pom" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-ven-pom" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-sab-pom" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-dom-pom" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+          </tr>
+          <tr>
+            <td class="py-1 pr-1"><span class="text-[9px] font-[900] text-[#888888] uppercase">Ser</span></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-lun-ser" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-mar-ser" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-mer-ser" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-gio-ser" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-ven-ser" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-sab-ser" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+            <td class="py-0.5 px-0.5 text-center"><div id="up-disp-dom-ser" class="mx-auto rounded-md transition-all duration-150" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p id="up-disp-hint" class="text-[9px] text-[#888888]/50 italic hidden">Tocca le caselle per selezionare la disponibilità</p>
+  </div>
+</section>
 <!-- Win Rate Gauge Section -->
 <section class="cinematic-card rounded-[24px] p-6 flex justify-between items-center anim-in" style="animation-delay: 0.25s;">
 <div class="">
