@@ -200,92 +200,6 @@
 <!-- Primary CTA -->
 <a id="btn-sfida" href="#" class="flex items-center justify-center w-full bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase text-lg py-4 rounded-2xl border-t border-white/40 shadow-lg hover:brightness-110 transition-all active:scale-[0.98] relative overflow-hidden anim-in" style="animation-delay: 0.13s; text-decoration: none;">
         SFIDA AVVERSARIO</a>
-<!-- Player Info Card -->
-<section class="cinematic-card rounded-[24px] p-6 space-y-5 anim-in" style="animation-delay: 0.17s;">
-  <!-- Info giocatore -->
-  <div class="space-y-3">
-    <p class="text-[10px] font-[900] text-[#888888]/80 uppercase tracking-[0.2em] italic mb-3">INFO GIOCATORE</p>
-    <div class="flex items-center gap-3">
-      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">cake</span>
-      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">ETÀ</span>
-      <span id="pp-info-anni" class="font-['Epilogue'] font-black italic text-white text-sm">—</span>
-    </div>
-    <div class="flex items-center gap-3">
-      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">monitor_weight</span>
-      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">PESO</span>
-      <span id="pp-info-peso" class="font-['Epilogue'] font-black italic text-white text-sm">—</span>
-    </div>
-    <div class="flex items-center gap-3">
-      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">height</span>
-      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">ALTEZZA</span>
-      <span id="pp-info-altezza" class="font-['Epilogue'] font-black italic text-white text-sm">—</span>
-    </div>
-    <div class="flex items-center gap-3">
-      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">back_hand</span>
-      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">MANO</span>
-      <span id="pp-info-mano" class="font-['Epilogue'] font-black italic text-white text-sm">—</span>
-    </div>
-    <div class="flex items-center gap-3">
-      <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px;font-variation-settings:'FILL' 0,'wght' 400">sports_tennis</span>
-      <span class="text-[10px] font-[900] text-[#888888] uppercase tracking-[0.15em] italic w-28 flex-shrink-0">SUPERFICIE</span>
-      <span id="pp-info-superficie" class="font-['Epilogue'] font-black italic text-white text-sm">—</span>
-    </div>
-  </div>
-  <!-- Divider -->
-  <div class="w-full h-[1px] bg-white/5"></div>
-  <!-- Disponibilità -->
-  <div class="space-y-3">
-    <p class="text-[10px] font-[900] text-[#888888]/80 uppercase tracking-[0.2em] italic">DISPONIBILITÀ</p>
-    <div class="overflow-x-auto">
-      <table class="w-full border-collapse" style="table-layout:fixed;">
-        <thead>
-          <tr>
-            <td class="pb-2" style="width:40px;"></td>
-            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Lun</span></td>
-            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Mar</span></td>
-            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Mer</span></td>
-            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Gio</span></td>
-            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Ven</span></td>
-            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Sab</span></td>
-            <td class="text-center pb-2"><span class="text-[9px] font-[900] text-[#888888] uppercase">Dom</span></td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="py-1 pr-1"><span class="text-[9px] font-[900] text-[#888888] uppercase">Mat</span></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-lun-mat" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-mar-mat" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-mer-mat" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-gio-mat" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-ven-mat" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-sab-mat" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-dom-mat" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-          </tr>
-          <tr>
-            <td class="py-1 pr-1"><span class="text-[9px] font-[900] text-[#888888] uppercase">Pom</span></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-lun-pom" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-mar-pom" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-mer-pom" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-gio-pom" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-ven-pom" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-sab-pom" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-dom-pom" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-          </tr>
-          <tr>
-            <td class="py-1 pr-1"><span class="text-[9px] font-[900] text-[#888888] uppercase">Ser</span></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-lun-ser" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-mar-ser" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-mer-ser" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-gio-ser" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-ven-ser" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-sab-ser" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-            <td class="py-0.5 px-0.5 text-center"><div id="pp-disp-dom-ser" class="mx-auto rounded-md" style="width:28px;height:26px;background:rgba(255,255,255,0.05);"></div></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
 <!-- Win Rate Gauge Section -->
 <section class="cinematic-card rounded-[24px] p-6 flex justify-between items-center anim-in" style="animation-delay: 0.21s;">
 <div class="">
@@ -329,6 +243,103 @@
 <span class="text-[11px] uppercase tracking-[0.2em] text-[#888888] font-[900] italic" style="">TREND</span>
 <div id="pp-trend" class="flex gap-2"></div>
 </section>
+<!-- Info Giocatore (a comparsa) -->
+<button onclick="document.getElementById('ppInfoCollapse').classList.toggle('hidden'); var ch=document.getElementById('ppInfoChevron'); ch.style.transform=ch.style.transform?'':'rotate(180deg)';" class="w-full flex items-center justify-between px-5 py-4 rounded-2xl active:scale-[0.98] transition-all anim-in" style="background:#1a1a25; border:1px solid rgba(255,255,255,0.08); animation-delay:0.41s;">
+  <span class="font-headline font-black italic text-[#C5FF1A] uppercase text-base tracking-tight">INFO GIOCATORE</span>
+  <span id="ppInfoChevron" class="material-symbols-outlined text-[#C5FF1A]" style="transition:transform 0.3s ease">expand_more</span>
+</button>
+<div id="ppInfoCollapse" class="hidden space-y-4">
+  <!-- Dati anagrafici -->
+  <div class="rounded-[20px] p-4 space-y-3" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">cake</span>
+      <div class="flex-1 flex justify-between items-center">
+        <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">ETÀ</span>
+        <span id="pp-info-anni" class="font-headline font-black italic text-white text-base">—</span>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">monitor_weight</span>
+      <div class="flex-1 flex justify-between items-center">
+        <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">PESO</span>
+        <span id="pp-info-peso" class="font-headline font-black italic text-white text-base">—</span>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">height</span>
+      <div class="flex-1 flex justify-between items-center">
+        <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">ALTEZZA</span>
+        <span id="pp-info-altezza" class="font-headline font-black italic text-white text-base">—</span>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">sports_tennis</span>
+      <div class="flex-1 flex justify-between items-center">
+        <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">MANO</span>
+        <span id="pp-info-mano" class="font-headline font-black italic text-white text-base">—</span>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">texture</span>
+      <div class="flex-1 flex justify-between items-center">
+        <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">SUPERFICIE</span>
+        <span id="pp-info-superficie" class="font-headline font-black italic text-white text-base">—</span>
+      </div>
+    </div>
+  </div>
+  <!-- Disponibilità -->
+  <div class="rounded-[20px] p-4" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
+    <p class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic mb-3">DISPONIBILITÀ</p>
+    <div class="overflow-x-auto">
+      <table class="w-full text-center border-collapse" style="min-width:240px">
+        <thead>
+          <tr>
+            <th class="text-[9px] text-[#555] font-bold pb-1.5 w-8"></th>
+            <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Lun</th>
+            <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Mar</th>
+            <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Mer</th>
+            <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Gio</th>
+            <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Ven</th>
+            <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Sab</th>
+            <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Dom</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-[9px] text-[#888] font-bold pr-1.5 py-1">Mat</td>
+            <td class="py-1 px-0.5"><div id="pp-disp-lun-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+            <td class="py-1 px-0.5"><div id="pp-disp-mar-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+            <td class="py-1 px-0.5"><div id="pp-disp-mer-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+            <td class="py-1 px-0.5"><div id="pp-disp-gio-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+            <td class="py-1 px-0.5"><div id="pp-disp-ven-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+            <td class="py-1 px-0.5"><div id="pp-disp-sab-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+            <td class="py-1 px-0.5"><div id="pp-disp-dom-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+          </tr>
+          <tr>
+            <td class="text-[9px] text-[#888] font-bold pr-1.5 py-1">Pom</td>
+            <td class="py-1 px-0.5"><div id="pp-disp-lun-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+            <td class="py-1 px-0.5"><div id="pp-disp-mar-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+            <td class="py-1 px-0.5"><div id="pp-disp-mer-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+            <td class="py-1 px-0.5"><div id="pp-disp-gio-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+            <td class="py-1 px-0.5"><div id="pp-disp-ven-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+            <td class="py-1 px-0.5"><div id="pp-disp-sab-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+            <td class="py-1 px-0.5"><div id="pp-disp-dom-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+          </tr>
+          <tr>
+            <td class="text-[9px] text-[#888] font-bold pr-1.5 py-1">Ser</td>
+            <td class="py-1 px-0.5"><div id="pp-disp-lun-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+            <td class="py-1 px-0.5"><div id="pp-disp-mar-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+            <td class="py-1 px-0.5"><div id="pp-disp-mer-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+            <td class="py-1 px-0.5"><div id="pp-disp-gio-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+            <td class="py-1 px-0.5"><div id="pp-disp-ven-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+            <td class="py-1 px-0.5"><div id="pp-disp-sab-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+            <td class="py-1 px-0.5"><div id="pp-disp-dom-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 <!-- Match History List -->
 <section class="space-y-4 anim-in" style="animation-delay: 0.45s;">
 <div class="flex justify-between items-baseline px-1">
@@ -401,8 +412,8 @@
   window.setBtnSfida = setBtnSfida;
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="../../src/storage-manager.js?v=14"></script>
-<script src="../../src/ui-binder.js?v=14"></script>
-<script src="../../src/main.js?v=14"></script>
+<script src="../../src/storage-manager.js?v=15"></script>
+<script src="../../src/ui-binder.js?v=15"></script>
+<script src="../../src/main.js?v=15"></script>
 <script src="../../src/animations.js"></script>
 </body></html>

@@ -463,85 +463,6 @@
     <a id="sheetSfida" href="#" target="_blank" rel="noopener" class="flex items-center justify-center w-full bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase text-lg py-4 rounded-2xl border-t border-white/40 shadow-lg hover:brightness-110 transition-all active:scale-[0.98] relative overflow-hidden" style="text-decoration:none;">
       SFIDA AVVERSARIO
     </a>
-    <!-- Info giocatore card (read-only) -->
-    <section class="cinematic-card rounded-[24px] p-5 space-y-4">
-      <p class="text-[10px] font-[900] text-[#888]/80 uppercase tracking-[0.2em] italic">INFO GIOCATORE</p>
-      <div class="space-y-2.5">
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:17px;font-variation-settings:'FILL' 0,'wght' 400">cake</span>
-          <span class="text-[10px] font-[900] text-[#888] uppercase tracking-[0.15em] italic w-24 flex-shrink-0">ETÀ</span>
-          <span id="playerInfoAnni" class="font-headline font-black italic text-white text-sm">—</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:17px;font-variation-settings:'FILL' 0,'wght' 400">monitor_weight</span>
-          <span class="text-[10px] font-[900] text-[#888] uppercase tracking-[0.15em] italic w-24 flex-shrink-0">PESO</span>
-          <span id="playerInfoPeso" class="font-headline font-black italic text-white text-sm">—</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:17px;font-variation-settings:'FILL' 0,'wght' 400">height</span>
-          <span class="text-[10px] font-[900] text-[#888] uppercase tracking-[0.15em] italic w-24 flex-shrink-0">ALTEZZA</span>
-          <span id="playerInfoAltezza" class="font-headline font-black italic text-white text-sm">—</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:17px;font-variation-settings:'FILL' 0,'wght' 400">back_hand</span>
-          <span class="text-[10px] font-[900] text-[#888] uppercase tracking-[0.15em] italic w-24 flex-shrink-0">MANO</span>
-          <span id="playerInfoMano" class="font-headline font-black italic text-white text-sm">—</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:17px;font-variation-settings:'FILL' 0,'wght' 400">sports_tennis</span>
-          <span class="text-[10px] font-[900] text-[#888] uppercase tracking-[0.15em] italic w-24 flex-shrink-0">SUPERFICIE</span>
-          <span id="playerInfoSuperficie" class="font-headline font-black italic text-white text-sm">—</span>
-        </div>
-      </div>
-      <div class="w-full h-[1px] bg-white/5"></div>
-      <p class="text-[10px] font-[900] text-[#888]/80 uppercase tracking-[0.2em] italic">DISPONIBILITÀ</p>
-      <div class="overflow-x-auto">
-        <table class="w-full border-collapse" style="table-layout:fixed;">
-          <thead><tr>
-            <td style="width:38px;"></td>
-            <td class="text-center pb-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Lun</span></td>
-            <td class="text-center pb-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Mar</span></td>
-            <td class="text-center pb-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Mer</span></td>
-            <td class="text-center pb-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Gio</span></td>
-            <td class="text-center pb-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Ven</span></td>
-            <td class="text-center pb-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Sab</span></td>
-            <td class="text-center pb-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Dom</span></td>
-          </tr></thead>
-          <tbody>
-            <tr>
-              <td class="py-0.5 pr-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Mat</span></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-lun-mat" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-mar-mat" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-mer-mat" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-gio-mat" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-ven-mat" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-sab-mat" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-dom-mat" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-            </tr>
-            <tr>
-              <td class="py-0.5 pr-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Pom</span></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-lun-pom" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-mar-pom" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-mer-pom" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-gio-pom" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-ven-pom" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-sab-pom" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-dom-pom" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-            </tr>
-            <tr>
-              <td class="py-0.5 pr-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Ser</span></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-lun-ser" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-mar-ser" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-mer-ser" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-gio-ser" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-ven-ser" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-sab-ser" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="psh-disp-dom-ser" class="mx-auto rounded-md" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
     <!-- Win rate gauge -->
     <section class="cinematic-card rounded-[24px] p-5 flex justify-between items-center">
       <div>
@@ -583,6 +504,103 @@
       <span class="text-[11px] uppercase tracking-[0.2em] text-[#888] font-black italic">TREND</span>
       <div id="playerTrend" class="flex gap-2"></div>
     </section>
+    <!-- Info Giocatore (a comparsa, read-only) -->
+    <button onclick="togglePlayerInfo()" class="w-full flex items-center justify-between px-5 py-4 rounded-2xl active:scale-[0.98] transition-all" style="background:#1a1a25; border:1px solid rgba(255,255,255,0.08);">
+      <span class="font-headline font-black italic text-[#C5FF1A] uppercase text-base tracking-tight">INFO GIOCATORE</span>
+      <span id="playerInfoChevron" class="material-symbols-outlined text-[#C5FF1A]" style="transition:transform 0.3s ease">expand_more</span>
+    </button>
+    <div id="playerInfoCollapse" class="hidden space-y-4">
+      <!-- Dati anagrafici -->
+      <div class="rounded-[20px] p-4 space-y-3" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">cake</span>
+          <div class="flex-1 flex justify-between items-center">
+            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">ETÀ</span>
+            <span id="playerInfoAnni" class="font-headline font-black italic text-white text-base">—</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">monitor_weight</span>
+          <div class="flex-1 flex justify-between items-center">
+            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">PESO</span>
+            <span id="playerInfoPeso" class="font-headline font-black italic text-white text-base">—</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">height</span>
+          <div class="flex-1 flex justify-between items-center">
+            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">ALTEZZA</span>
+            <span id="playerInfoAltezza" class="font-headline font-black italic text-white text-base">—</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">sports_tennis</span>
+          <div class="flex-1 flex justify-between items-center">
+            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">MANO</span>
+            <span id="playerInfoMano" class="font-headline font-black italic text-white text-base">—</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">texture</span>
+          <div class="flex-1 flex justify-between items-center">
+            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">SUPERFICIE</span>
+            <span id="playerInfoSuperficie" class="font-headline font-black italic text-white text-base">—</span>
+          </div>
+        </div>
+      </div>
+      <!-- Disponibilità -->
+      <div class="rounded-[20px] p-4" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
+        <p class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic mb-3">DISPONIBILITÀ</p>
+        <div class="overflow-x-auto">
+          <table class="w-full text-center border-collapse" style="min-width:240px">
+            <thead>
+              <tr>
+                <th class="text-[9px] text-[#555] font-bold pb-1.5 w-8"></th>
+                <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Lun</th>
+                <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Mar</th>
+                <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Mer</th>
+                <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Gio</th>
+                <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Ven</th>
+                <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Sab</th>
+                <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Dom</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-[9px] text-[#888] font-bold pr-1.5 py-1">Mat</td>
+                <td class="py-1 px-0.5"><div id="psh-disp-lun-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="psh-disp-mar-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="psh-disp-mer-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="psh-disp-gio-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="psh-disp-ven-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="psh-disp-sab-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="psh-disp-dom-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+              </tr>
+              <tr>
+                <td class="text-[9px] text-[#888] font-bold pr-1.5 py-1">Pom</td>
+                <td class="py-1 px-0.5"><div id="psh-disp-lun-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="psh-disp-mar-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="psh-disp-mer-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="psh-disp-gio-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="psh-disp-ven-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="psh-disp-sab-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="psh-disp-dom-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+              </tr>
+              <tr>
+                <td class="text-[9px] text-[#888] font-bold pr-1.5 py-1">Ser</td>
+                <td class="py-1 px-0.5"><div id="psh-disp-lun-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="psh-disp-mar-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="psh-disp-mer-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="psh-disp-gio-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="psh-disp-ven-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="psh-disp-sab-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="psh-disp-dom-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
     <!-- Ultimi Match -->
     <section>
       <p class="text-[13px] font-black text-white uppercase tracking-[0.2em] italic mb-3">ULTIMI MATCH</p>
@@ -637,131 +655,6 @@
     <button onclick="openInvia()" class="w-full bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase text-lg py-4 rounded-2xl border-t border-white/40 shadow-lg hover:brightness-110 transition-all active:scale-[0.98] flex items-center justify-center relative overflow-hidden">
       INVIA RISULTATO
     </button>
-    <!-- Info utente card (con modifica) -->
-    <section class="cinematic-card rounded-[24px] p-5 space-y-4">
-      <div class="flex items-center justify-between">
-        <p class="text-[10px] font-[900] text-[#888]/80 uppercase tracking-[0.2em] italic">INFO GIOCATORE</p>
-        <button id="myInfoEditBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 bg-white/5 active:bg-white/10 transition-all active:scale-95">
-          <span id="myInfoEditIcon" class="material-symbols-outlined text-[#C5FF1A]" style="font-size:15px;font-variation-settings:'FILL' 0,'wght' 400">edit</span>
-          <span id="myInfoEditLabel" class="text-[10px] font-[900] text-[#C5FF1A] uppercase tracking-wider italic">MODIFICA</span>
-        </button>
-      </div>
-      <!-- view mode -->
-      <div id="myInfoView" class="space-y-2.5">
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:17px;font-variation-settings:'FILL' 0,'wght' 400">cake</span>
-          <span class="text-[10px] font-[900] text-[#888] uppercase tracking-[0.15em] italic w-24 flex-shrink-0">ETÀ</span>
-          <span id="myInfoAnni" class="font-headline font-black italic text-white text-sm">—</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:17px;font-variation-settings:'FILL' 0,'wght' 400">monitor_weight</span>
-          <span class="text-[10px] font-[900] text-[#888] uppercase tracking-[0.15em] italic w-24 flex-shrink-0">PESO</span>
-          <span id="myInfoPeso" class="font-headline font-black italic text-white text-sm">—</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:17px;font-variation-settings:'FILL' 0,'wght' 400">height</span>
-          <span class="text-[10px] font-[900] text-[#888] uppercase tracking-[0.15em] italic w-24 flex-shrink-0">ALTEZZA</span>
-          <span id="myInfoAltezza" class="font-headline font-black italic text-white text-sm">—</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:17px;font-variation-settings:'FILL' 0,'wght' 400">back_hand</span>
-          <span class="text-[10px] font-[900] text-[#888] uppercase tracking-[0.15em] italic w-24 flex-shrink-0">MANO</span>
-          <span id="myInfoMano" class="font-headline font-black italic text-white text-sm">—</span>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:17px;font-variation-settings:'FILL' 0,'wght' 400">sports_tennis</span>
-          <span class="text-[10px] font-[900] text-[#888] uppercase tracking-[0.15em] italic w-24 flex-shrink-0">SUPERFICIE</span>
-          <span id="myInfoSuperficie" class="font-headline font-black italic text-white text-sm">—</span>
-        </div>
-      </div>
-      <!-- edit mode (nascosto) -->
-      <div id="myInfoEdit" class="space-y-2.5 hidden">
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:17px;font-variation-settings:'FILL' 0,'wght' 400">cake</span>
-          <span class="text-[10px] font-[900] text-[#888] uppercase tracking-[0.15em] italic w-24 flex-shrink-0">ETÀ</span>
-          <input id="myEditAnni" type="number" min="1" max="99" placeholder="anni" class="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-white font-headline font-black italic text-sm focus:outline-none focus:border-[#C5FF1A]/40" style="font-size:16px!important"/>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:17px;font-variation-settings:'FILL' 0,'wght' 400">monitor_weight</span>
-          <span class="text-[10px] font-[900] text-[#888] uppercase tracking-[0.15em] italic w-24 flex-shrink-0">PESO (kg)</span>
-          <input id="myEditPeso" type="number" min="1" max="200" placeholder="kg" class="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-white font-headline font-black italic text-sm focus:outline-none focus:border-[#C5FF1A]/40" style="font-size:16px!important"/>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:17px;font-variation-settings:'FILL' 0,'wght' 400">height</span>
-          <span class="text-[10px] font-[900] text-[#888] uppercase tracking-[0.15em] italic w-24 flex-shrink-0">ALTEZZA (cm)</span>
-          <input id="myEditAltezza" type="number" min="100" max="250" placeholder="cm" class="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-white font-headline font-black italic text-sm focus:outline-none focus:border-[#C5FF1A]/40" style="font-size:16px!important"/>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:17px;font-variation-settings:'FILL' 0,'wght' 400">back_hand</span>
-          <span class="text-[10px] font-[900] text-[#888] uppercase tracking-[0.15em] italic w-24 flex-shrink-0">MANO</span>
-          <select id="myEditMano" class="flex-1 bg-[#1c1c1c] border border-white/10 rounded-lg px-3 py-1.5 text-white font-headline font-black italic text-sm focus:outline-none focus:border-[#C5FF1A]/40" style="font-size:16px!important">
-            <option value="">—</option>
-            <option value="Destra">Destra</option>
-            <option value="Sinistra">Sinistra</option>
-          </select>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:17px;font-variation-settings:'FILL' 0,'wght' 400">sports_tennis</span>
-          <span class="text-[10px] font-[900] text-[#888] uppercase tracking-[0.15em] italic w-24 flex-shrink-0">SUPERFICIE</span>
-          <select id="myEditSuperficie" class="flex-1 bg-[#1c1c1c] border border-white/10 rounded-lg px-3 py-1.5 text-white font-headline font-black italic text-sm focus:outline-none focus:border-[#C5FF1A]/40" style="font-size:16px!important">
-            <option value="">—</option>
-            <option value="Terra">Terra</option>
-            <option value="Erba">Erba</option>
-            <option value="Cemento">Cemento</option>
-            <option value="Veloce">Veloce</option>
-            <option value="Sintetico">Sintetico</option>
-          </select>
-        </div>
-      </div>
-      <div class="w-full h-[1px] bg-white/5"></div>
-      <p class="text-[10px] font-[900] text-[#888]/80 uppercase tracking-[0.2em] italic">DISPONIBILITÀ</p>
-      <div class="overflow-x-auto">
-        <table class="w-full border-collapse" style="table-layout:fixed;">
-          <thead><tr>
-            <td style="width:38px;"></td>
-            <td class="text-center pb-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Lun</span></td>
-            <td class="text-center pb-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Mar</span></td>
-            <td class="text-center pb-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Mer</span></td>
-            <td class="text-center pb-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Gio</span></td>
-            <td class="text-center pb-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Ven</span></td>
-            <td class="text-center pb-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Sab</span></td>
-            <td class="text-center pb-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Dom</span></td>
-          </tr></thead>
-          <tbody>
-            <tr>
-              <td class="py-0.5 pr-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Mat</span></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-lun-mat" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-mar-mat" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-mer-mat" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-gio-mat" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-ven-mat" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-sab-mat" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-dom-mat" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-            </tr>
-            <tr>
-              <td class="py-0.5 pr-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Pom</span></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-lun-pom" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-mar-pom" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-mer-pom" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-gio-pom" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-ven-pom" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-sab-pom" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-dom-pom" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-            </tr>
-            <tr>
-              <td class="py-0.5 pr-1"><span class="text-[9px] font-[900] text-[#888] uppercase">Ser</span></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-lun-ser" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-mar-ser" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-mer-ser" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-gio-ser" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-ven-ser" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-sab-ser" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-              <td class="py-0.5 px-0.5 text-center"><div id="msh-disp-dom-ser" class="mx-auto rounded-md transition-all duration-150" style="width:26px;height:24px;background:rgba(255,255,255,0.05);"></div></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
     <!-- Win rate gauge -->
     <section class="cinematic-card rounded-[24px] p-5 flex justify-between items-center">
       <div>
@@ -803,6 +696,159 @@
       <span class="text-[11px] uppercase tracking-[0.2em] text-[#888] font-black italic">TREND</span>
       <div id="myTrend" class="flex gap-2"></div>
     </section>
+    <!-- Info Giocatore (a comparsa, editable) -->
+    <button onclick="toggleMyInfo()" class="w-full flex items-center justify-between px-5 py-4 rounded-2xl active:scale-[0.98] transition-all" style="background:#1a1a25; border:1px solid rgba(255,255,255,0.08);">
+      <span class="font-headline font-black italic text-[#C5FF1A] uppercase text-base tracking-tight">INFO GIOCATORE</span>
+      <span id="myInfoChevron" class="material-symbols-outlined text-[#C5FF1A]" style="transition:transform 0.3s ease">expand_more</span>
+    </button>
+    <div id="myInfoCollapse" class="hidden space-y-4">
+      <!-- View mode -->
+      <div id="myInfoView" class="rounded-[20px] p-4 space-y-3" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">cake</span>
+          <div class="flex-1 flex justify-between items-center">
+            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">ETÀ</span>
+            <span id="myInfoAnni" class="font-headline font-black italic text-white text-base">—</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">monitor_weight</span>
+          <div class="flex-1 flex justify-between items-center">
+            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">PESO</span>
+            <span id="myInfoPeso" class="font-headline font-black italic text-white text-base">—</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">height</span>
+          <div class="flex-1 flex justify-between items-center">
+            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">ALTEZZA</span>
+            <span id="myInfoAltezza" class="font-headline font-black italic text-white text-base">—</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">sports_tennis</span>
+          <div class="flex-1 flex justify-between items-center">
+            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">MANO</span>
+            <span id="myInfoMano" class="font-headline font-black italic text-white text-base">—</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">texture</span>
+          <div class="flex-1 flex justify-between items-center">
+            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">SUPERFICIE</span>
+            <span id="myInfoSuperficie" class="font-headline font-black italic text-white text-base">—</span>
+          </div>
+        </div>
+        <button id="myInfoEditBtn" class="w-full mt-2 py-2.5 rounded-xl flex items-center justify-center gap-2 active:scale-[0.98] transition-all" style="border:1px solid rgba(197,255,26,0.35); color:#C5FF1A">
+          <span id="myInfoEditIcon" class="material-symbols-outlined text-base" style="font-variation-settings:'wght' 600">edit</span>
+          <span id="myInfoEditLabel" class="font-headline font-black italic uppercase text-sm tracking-wide">MODIFICA</span>
+        </button>
+      </div>
+      <!-- Edit mode -->
+      <div id="myInfoEdit" class="hidden rounded-[20px] p-4 space-y-3" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">cake</span>
+          <div class="flex-1 flex justify-between items-center gap-2">
+            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">ETÀ</span>
+            <input id="myEditAnni" type="number" min="10" max="99" placeholder="—" class="w-20 rounded-lg px-2 py-1 text-right font-headline font-black italic text-white text-base focus:outline-none" style="background:transparent; border:1px solid rgba(255,255,255,0.12)">
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">monitor_weight</span>
+          <div class="flex-1 flex justify-between items-center gap-2">
+            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">PESO (kg)</span>
+            <input id="myEditPeso" type="number" min="30" max="200" placeholder="—" class="w-20 rounded-lg px-2 py-1 text-right font-headline font-black italic text-white text-base focus:outline-none" style="background:transparent; border:1px solid rgba(255,255,255,0.12)">
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">height</span>
+          <div class="flex-1 flex justify-between items-center gap-2">
+            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">ALTEZZA (cm)</span>
+            <input id="myEditAltezza" type="number" min="100" max="250" placeholder="—" class="w-20 rounded-lg px-2 py-1 text-right font-headline font-black italic text-white text-base focus:outline-none" style="background:transparent; border:1px solid rgba(255,255,255,0.12)">
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">sports_tennis</span>
+          <div class="flex-1 flex justify-between items-center gap-2">
+            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">MANO</span>
+            <select id="myEditMano" class="rounded-lg px-2 py-1 font-headline font-black italic text-white text-sm focus:outline-none" style="background:#1a1a25; border:1px solid rgba(255,255,255,0.12)">
+              <option value="">—</option>
+              <option value="Destra">Destra</option>
+              <option value="Sinistra">Sinistra</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">texture</span>
+          <div class="flex-1 flex justify-between items-center gap-2">
+            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">SUPERFICIE</span>
+            <select id="myEditSuperficie" class="rounded-lg px-2 py-1 font-headline font-black italic text-white text-sm focus:outline-none" style="background:#1a1a25; border:1px solid rgba(255,255,255,0.12)">
+              <option value="">—</option>
+              <option value="Terra">Terra</option>
+              <option value="Cemento">Cemento</option>
+              <option value="Erba">Erba</option>
+              <option value="Sintetico">Sintetico</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex gap-2 pt-1">
+          <button id="myInfoCancelBtn" class="flex-1 py-2.5 rounded-xl font-headline font-black italic uppercase text-sm tracking-wide active:scale-[0.98] transition-all" style="border:1px solid rgba(255,255,255,0.10); color:rgba(255,255,255,0.4)">ANNULLA</button>
+          <button id="myInfoSaveBtn" class="flex-1 py-2.5 rounded-xl font-headline font-black italic uppercase text-sm tracking-wide active:scale-[0.98] transition-all" style="background:#C5FF1A; color:#161f00">SALVA</button>
+        </div>
+      </div>
+      <!-- Disponibilità (condivisa tra view e edit mode) -->
+      <div class="rounded-[20px] p-4" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
+        <p class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic mb-3">DISPONIBILITÀ</p>
+        <div class="overflow-x-auto">
+          <table class="w-full text-center border-collapse" style="min-width:240px">
+            <thead>
+              <tr>
+                <th class="text-[9px] text-[#555] font-bold pb-1.5 w-8"></th>
+                <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Lun</th>
+                <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Mar</th>
+                <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Mer</th>
+                <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Gio</th>
+                <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Ven</th>
+                <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Sab</th>
+                <th class="text-[9px] text-[#888] font-bold pb-1.5 uppercase">Dom</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-[9px] text-[#888] font-bold pr-1.5 py-1">Mat</td>
+                <td class="py-1 px-0.5"><div id="msh-disp-lun-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="msh-disp-mar-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="msh-disp-mer-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="msh-disp-gio-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="msh-disp-ven-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="msh-disp-sab-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="msh-disp-dom-mat" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+              </tr>
+              <tr>
+                <td class="text-[9px] text-[#888] font-bold pr-1.5 py-1">Pom</td>
+                <td class="py-1 px-0.5"><div id="msh-disp-lun-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="msh-disp-mar-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="msh-disp-mer-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="msh-disp-gio-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="msh-disp-ven-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="msh-disp-sab-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="msh-disp-dom-pom" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+              </tr>
+              <tr>
+                <td class="text-[9px] text-[#888] font-bold pr-1.5 py-1">Ser</td>
+                <td class="py-1 px-0.5"><div id="msh-disp-lun-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="msh-disp-mar-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="msh-disp-mer-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="msh-disp-gio-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="msh-disp-ven-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="msh-disp-sab-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+                <td class="py-1 px-0.5"><div id="msh-disp-dom-ser" class="w-7 h-7 rounded-lg mx-auto" style="background:rgba(255,255,255,0.05)"></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
     <!-- Ultimi Match -->
     <section>
       <p class="text-[13px] font-black text-white uppercase tracking-[0.2em] italic mb-3">ULTIMI MATCH</p>
@@ -1426,13 +1472,13 @@
     document.getElementById('myInfoMano').textContent      = p.mano       || '—';
     document.getElementById('myInfoSuperficie').textContent = p.superficie || '—';
     _fillDisp('msh-disp-', p.disponibilita || {});
-    // Reset modalità view
+    // Reset collapsible + modalità view
+    const _mic = document.getElementById('myInfoCollapse');
+    const _mch = document.getElementById('myInfoChevron');
+    if (_mic) _mic.classList.add('hidden');
+    if (_mch) _mch.style.transform = '';
     document.getElementById('myInfoView').classList.remove('hidden');
     document.getElementById('myInfoEdit').classList.add('hidden');
-    const editIcon  = document.getElementById('myInfoEditIcon');
-    const editLabel = document.getElementById('myInfoEditLabel');
-    if (editIcon)  editIcon.textContent  = 'edit';
-    if (editLabel) editLabel.textContent = 'MODIFICA';
     const wr = p.match_giocati > 0 ? Math.round(p.vittorie / p.match_giocati * 100) : 0;
     document.getElementById('myWrPct').textContent = wr + '%';
     document.getElementById('myWrLabel').textContent = wr === 100 ? 'IMMORTALE' : wr >= 90 ? 'INVINCIBILE' : wr >= 80 ? 'INARRESTABILE' : wr >= 70 ? 'FUORICLASSE' : wr >= 60 ? 'SPIETATO' : wr >= 50 ? 'DOMINANTE' : wr >= 40 ? 'TENACE' : wr >= 30 ? 'LOTTATORE' : wr >= 20 ? 'DETERMINATO' : wr >= 10 ? 'IN CRESCITA' : wr >= 1 ? 'DEBUTTANTE' : 'IN PARTENZA';
@@ -1489,14 +1535,14 @@
   (function() {
     const GIORNI = ['lun','mar','mer','gio','ven','sab','dom'];
     const FASCE  = ['mat','pom','ser'];
-    let isEditing = false;
 
-    // Rende le celle cliccabili solo in edit mode
+    // Celle cliccabili (sempre; ignora click fuori edit mode via flag)
+    let _editMode = false;
     GIORNI.forEach(g => FASCE.forEach(f => {
       const cell = document.getElementById('msh-disp-' + g + '-' + f);
       if (!cell) return;
       cell.addEventListener('click', function() {
-        if (!isEditing) return;
+        if (!_editMode) return;
         const ok = cell.getAttribute('data-available') === '1';
         cell.setAttribute('data-available', ok ? '0' : '1');
         cell.style.background = ok ? 'rgba(255,255,255,0.05)' : '#C5FF1A';
@@ -1505,94 +1551,131 @@
       });
     }));
 
-    const editBtn   = document.getElementById('myInfoEditBtn');
-    const editIcon  = document.getElementById('myInfoEditIcon');
-    const editLabel = document.getElementById('myInfoEditLabel');
-    const viewDiv   = document.getElementById('myInfoView');
-    const editDiv   = document.getElementById('myInfoEdit');
-    if (!editBtn) return;
-
-    editBtn.addEventListener('click', async function() {
+    function enterEditMode() {
       const p = _fillProfileSheet._currentPlayer;
       if (!p) return;
+      _editMode = true;
+      const inAnni  = document.getElementById('myEditAnni');
+      const inPeso  = document.getElementById('myEditPeso');
+      const inAlt   = document.getElementById('myEditAltezza');
+      const inMano  = document.getElementById('myEditMano');
+      const inSuper = document.getElementById('myEditSuperficie');
+      if (inAnni)  inAnni.value  = p.eta        || '';
+      if (inPeso)  inPeso.value  = p.peso       || '';
+      if (inAlt)   inAlt.value   = p.altezza    || '';
+      if (inMano)  inMano.value  = p.mano       || '';
+      if (inSuper) inSuper.value = p.superficie || '';
+      document.getElementById('myInfoView').classList.add('hidden');
+      document.getElementById('myInfoEdit').classList.remove('hidden');
+      GIORNI.forEach(g => FASCE.forEach(f => {
+        const c = document.getElementById('msh-disp-' + g + '-' + f);
+        if (c) { c.style.cursor = 'pointer'; c.style.outline = '1px dashed rgba(197,255,26,0.25)'; }
+      }));
+    }
 
-      if (!isEditing) {
-        // → modalità MODIFICA
-        isEditing = true;
-        const inAnni  = document.getElementById('myEditAnni');
-        const inPeso  = document.getElementById('myEditPeso');
-        const inAlt   = document.getElementById('myEditAltezza');
-        const inMano  = document.getElementById('myEditMano');
-        const inSuper = document.getElementById('myEditSuperficie');
-        if (inAnni)  inAnni.value  = p.eta        || '';
-        if (inPeso)  inPeso.value  = p.peso       || '';
-        if (inAlt)   inAlt.value   = p.altezza    || '';
-        if (inMano)  inMano.value  = p.mano       || '';
-        if (inSuper) inSuper.value = p.superficie || '';
-        viewDiv.classList.add('hidden');
-        editDiv.classList.remove('hidden');
-        GIORNI.forEach(g => FASCE.forEach(f => {
+    function exitEditMode() {
+      _editMode = false;
+      document.getElementById('myInfoEdit').classList.add('hidden');
+      document.getElementById('myInfoView').classList.remove('hidden');
+      GIORNI.forEach(g => FASCE.forEach(f => {
+        const c = document.getElementById('msh-disp-' + g + '-' + f);
+        if (c) { c.style.cursor = 'default'; c.style.outline = ''; }
+      }));
+    }
+
+    async function saveInfo() {
+      const p = _fillProfileSheet._currentPlayer;
+      if (!p) return;
+      const saveBtn = document.getElementById('myInfoSaveBtn');
+      if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'SALVO...'; }
+
+      const newAnni  = (document.getElementById('myEditAnni')?.value  || '').trim();
+      const newPeso  = (document.getElementById('myEditPeso')?.value  || '').trim();
+      const newAlt   = (document.getElementById('myEditAltezza')?.value || '').trim();
+      const newMano  = document.getElementById('myEditMano')?.value  || '';
+      const newSuper = document.getElementById('myEditSuperficie')?.value || '';
+
+      const newDisp = {};
+      GIORNI.forEach(g => {
+        newDisp[g] = {};
+        FASCE.forEach(f => {
           const c = document.getElementById('msh-disp-' + g + '-' + f);
-          if (c) { c.style.cursor = 'pointer'; c.style.outline = '1px dashed rgba(197,255,26,0.25)'; }
-        }));
-        editIcon.textContent  = 'save';
-        editLabel.textContent = 'SALVA';
-      } else {
-        // → Salva
-        isEditing = false;
-        editBtn.disabled = true;
-        editLabel.textContent = 'SALVO...';
-
-        const newAnni  = (document.getElementById('myEditAnni')?.value  || '').trim();
-        const newPeso  = (document.getElementById('myEditPeso')?.value  || '').trim();
-        const newAlt   = (document.getElementById('myEditAltezza')?.value || '').trim();
-        const newMano  = document.getElementById('myEditMano')?.value  || '';
-        const newSuper = document.getElementById('myEditSuperficie')?.value || '';
-
-        const newDisp = {};
-        GIORNI.forEach(g => {
-          newDisp[g] = {};
-          FASCE.forEach(f => {
-            const c = document.getElementById('msh-disp-' + g + '-' + f);
-            newDisp[g][f] = c ? c.getAttribute('data-available') === '1' : false;
-          });
+          newDisp[g][f] = c ? c.getAttribute('data-available') === '1' : false;
         });
+      });
 
-        if (newAnni)  p.eta          = parseInt(newAnni, 10);
-        if (newPeso)  p.peso         = parseInt(newPeso, 10);
-        if (newAlt)   p.altezza      = parseInt(newAlt,  10);
-        if (newMano)  p.mano         = newMano;
-        if (newSuper) p.superficie   = newSuper;
-        p.disponibilita = newDisp;
+      if (newAnni)  p.eta          = parseInt(newAnni, 10);
+      if (newPeso)  p.peso         = parseInt(newPeso, 10);
+      if (newAlt)   p.altezza      = parseInt(newAlt,  10);
+      if (newMano)  p.mano         = newMano;
+      if (newSuper) p.superficie   = newSuper;
+      p.disponibilita = newDisp;
 
-        try {
-          if (window.StorageManager && window.StorageManager.updatePlayerProfile) {
-            await window.StorageManager.updatePlayerProfile(p.id, {
-              eta: p.eta, peso: p.peso, altezza: p.altezza,
-              mano: p.mano, superficie: p.superficie, disponibilita: p.disponibilita
-            });
-          }
-        } catch(e) { console.error('[home] save profile:', e); }
+      try {
+        if (window.StorageManager && window.StorageManager.updatePlayerProfile) {
+          await window.StorageManager.updatePlayerProfile(p.id, {
+            eta: p.eta, peso: p.peso, altezza: p.altezza,
+            mano: p.mano, superficie: p.superficie, disponibilita: p.disponibilita
+          });
+        }
+      } catch(e) { console.error('[home] save profile:', e); }
 
-        // Aggiorna view
-        document.getElementById('myInfoAnni').textContent       = p.eta        ? p.eta       + ' anni' : '—';
-        document.getElementById('myInfoPeso').textContent       = p.peso       ? p.peso      + ' kg'   : '—';
-        document.getElementById('myInfoAltezza').textContent    = p.altezza    ? p.altezza   + ' cm'   : '—';
-        document.getElementById('myInfoMano').textContent       = p.mano       || '—';
-        document.getElementById('myInfoSuperficie').textContent = p.superficie || '—';
-        _fillDisp('msh-disp-', p.disponibilita);
+      // Aggiorna view spans
+      document.getElementById('myInfoAnni').textContent       = p.eta        ? p.eta       + ' anni' : '—';
+      document.getElementById('myInfoPeso').textContent       = p.peso       ? p.peso      + ' kg'   : '—';
+      document.getElementById('myInfoAltezza').textContent    = p.altezza    ? p.altezza   + ' cm'   : '—';
+      document.getElementById('myInfoMano').textContent       = p.mano       || '—';
+      document.getElementById('myInfoSuperficie').textContent = p.superficie || '—';
+      _fillDisp('msh-disp-', p.disponibilita);
 
-        editDiv.classList.add('hidden');
-        viewDiv.classList.remove('hidden');
-        GIORNI.forEach(g => FASCE.forEach(f => {
-          const c = document.getElementById('msh-disp-' + g + '-' + f);
-          if (c) { c.style.cursor = 'default'; c.style.outline = ''; }
-        }));
-        editIcon.textContent  = 'edit';
-        editLabel.textContent = 'MODIFICA';
-        editBtn.disabled = false;
-      }
+      exitEditMode();
+      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'SALVA'; }
+    }
+
+    // Wire up buttons (using event delegation since DOM might not be ready at parse time)
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('#myInfoEditBtn'))   { enterEditMode(); }
+      if (e.target.closest('#myInfoSaveBtn'))   { saveInfo(); }
+      if (e.target.closest('#myInfoCancelBtn')) { exitEditMode(); }
     });
+  })();
+
+
+  // ── Toggle collapsible info sections ──
+  function togglePlayerInfo() {
+    const collapse = document.getElementById('playerInfoCollapse');
+    const chevron  = document.getElementById('playerInfoChevron');
+    if (!collapse) return;
+    const isOpen = !collapse.classList.contains('hidden');
+    collapse.classList.toggle('hidden', isOpen);
+    if (chevron) chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+  }
+
+  function toggleMyInfo() {
+    const collapse = document.getElementById('myInfoCollapse');
+    const chevron  = document.getElementById('myInfoChevron');
+    if (!collapse) return;
+    const isOpen = !collapse.classList.contains('hidden');
+    collapse.classList.toggle('hidden', isOpen);
+    if (chevron) chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+  }
+
+  // Reset chevron + collapse when sheets close
+  (function() {
+    var orig = window.closeAll;
+    window.closeAll = function() {
+      // Chiudi il collapsible player info
+      var pc = document.getElementById('playerInfoCollapse');
+      var pch = document.getElementById('playerInfoChevron');
+      if (pc) pc.classList.add('hidden');
+      if (pch) pch.style.transform = '';
+      // Chiudi il collapsible my info
+      var mc = document.getElementById('myInfoCollapse');
+      var mch = document.getElementById('myInfoChevron');
+      if (mc) mc.classList.add('hidden');
+      if (mch) mch.style.transform = '';
+      if (orig) orig.apply(this, arguments);
+    };
   })();
 
   // ── Ultimi Match — genera card mock ──
@@ -1682,6 +1765,11 @@
     document.getElementById('playerInfoAltezza').textContent    = p.altezza    ? p.altezza   + ' cm'   : '—';
     document.getElementById('playerInfoMano').textContent       = p.mano       || '—';
     document.getElementById('playerInfoSuperficie').textContent = p.superficie || '—';
+    // Reset player info collapsible
+    const _pic = document.getElementById('playerInfoCollapse');
+    const _pch = document.getElementById('playerInfoChevron');
+    if (_pic) _pic.classList.add('hidden');
+    if (_pch) _pch.style.transform = '';
     _fillDisp('psh-disp-', p.disponibilita || {});
     const wr = p.match_giocati > 0 ? Math.round(p.vittorie / p.match_giocati * 100) : 0;
     document.getElementById('playerWrPct').textContent = wr + '%';
@@ -1716,9 +1804,9 @@
   };
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="../../src/storage-manager.js?v=14"></script>
-<script src="../../src/ui-binder.js?v=14"></script>
-<script src="../../src/main.js?v=14"></script>
+<script src="../../src/storage-manager.js?v=16"></script>
+<script src="../../src/ui-binder.js?v=16"></script>
+<script src="../../src/main.js?v=16"></script>
 
 <script>
 /* ── Drag-to-close per le schede dal basso (iOS-grade) ──
