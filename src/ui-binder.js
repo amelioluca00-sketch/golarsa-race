@@ -1612,8 +1612,9 @@
             p.superficie   = newSuper || p.superficie;
             p.disponibilita = newDisp;
 
+            var saveOk = false;
             try {
-              await window.StorageManager.updatePlayerProfile(p.id, {
+              saveOk = await window.StorageManager.updatePlayerProfile(p.id, {
                 eta:          p.eta,
                 peso:         p.peso,
                 altezza:      p.altezza,
@@ -1621,7 +1622,16 @@
                 superficie:   p.superficie,
                 disponibilita: p.disponibilita,
               });
-            } catch (e) { console.error('[UP] save profile:', e); }
+            } catch (e) { console.error('[UP] save profile:', e); saveOk = false; }
+
+            if (!saveOk) {
+              // Mostra errore visibile — il salvataggio non è riuscito
+              if (editLabel) { editLabel.textContent = 'ERRORE — RIPROVA'; editLabel.style.color = '#f87171'; }
+              if (editIcon)  editIcon.textContent = 'error';
+              editBtn.disabled = false;
+              isEditing = true; // rimane in modalità edit così l'utente può riprovare
+              return;
+            }
 
             // Aggiorna view
             var setN = function (id, v) { var el = document.getElementById(id); if (el) el.textContent = v; };
@@ -1637,8 +1647,8 @@
             viewDiv && viewDiv.classList.remove('hidden');
             dispHint && dispHint.classList.add('hidden');
             giorni.forEach(function (g) { fasce.forEach(function (f) { var c = document.getElementById('up-disp-' + g + '-' + f); if (c) { c.style.cursor = 'default'; c.style.outline = ''; } }); });
-            if (editIcon)  editIcon.textContent  = 'edit';
-            if (editLabel) editLabel.textContent = 'MODIFICA';
+            if (editIcon)  { editIcon.textContent = 'edit'; editIcon.style.color = ''; }
+            if (editLabel) { editLabel.textContent = 'MODIFICA'; editLabel.style.color = ''; }
             editBtn.disabled = false;
           }
         });

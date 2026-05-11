@@ -505,14 +505,29 @@
     /**
      * Aggiorna i campi del profilo personale di un giocatore
      * (anni, peso, altezza, mano, superficie, disponibilita).
+     * Usa la funzione RPC update_player_profile (SECURITY DEFINER)
+     * per un merge JSONB atomico che bypassa problemi RLS.
      * Non tocca punti/stats/stato.
      */
     updatePlayerProfile: async function (playerId, profileFields) {
-      var pRes = await db.from('players').select('payload').eq('id', playerId).single();
-      if (!pRes.data) { console.error('[SM] updatePlayerProfile: giocatore non trovato', playerId); return false; }
-      var payload = Object.assign({}, pRes.data.payload, profileFields);
-      var updRes = await db.from('players').update({ payload: payload }).eq('id', playerId);
-      if (updRes.error) { console.error('[SM] updatePlayerProfile:', updRes.error); return false; }
+      // Costruisce l'oggetto con solo i campi profilo definiti
+      var profileData = {};
+      PROFILE_FIELDS.forEach(function (field) {
+        if (profileFields[field] !== undefined) profileData[field] = profileFields[field];
+      });
+
+      // Usa RPC server-side (SECURITY DEFINER) — garantisce la scrittura
+      // indipendentemente dalla configurazione RLS del progetto Supabase
+      var res = await db.rpc('update_player_profile', {
+        p_player_id: playerId,
+        p_profile:   profileData,
+      });
+
+      if (res.error) {
+        console.error('[SM] updatePlayerProfile RPC:', res.error);
+        return false;
+      }
+
       // Aggiorna cache locale
       if (_cache) {
         Object.keys(_cache).forEach(function (tid) {
