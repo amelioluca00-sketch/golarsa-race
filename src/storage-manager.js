@@ -34,6 +34,9 @@
     };
   }
 
+  // Campi profilo impostati dall'utente — non devono mai essere sovrascritti da _recompute o savePlayers
+  var PROFILE_FIELDS = ['eta', 'peso', 'altezza', 'mano', 'superficie', 'disponibilita'];
+
   var SM = {
 
     // ── CARICAMENTO (async, popola cache) ─────────────────────────
@@ -117,17 +120,30 @@
     },
 
     /** Sovrascrive la lista giocatori di un torneo + ricalcola standings.
-     *  Usa upsert + delete selettivo per evitare finestre di perdita dati. */
+     *  Usa upsert + delete selettivo per evitare finestre di perdita dati.
+     *  Preserva sempre i campi profilo utente (eta, peso, altezza, ecc.) dal DB. */
     savePlayers: async function (torneoId, players) {
-      // 1. Leggi gli ID attualmente presenti nel DB
-      var existingRes = await db.from('players').select('id').eq('tournament_id', torneoId);
-      var existingIds = (existingRes.data || []).map(function (r) { return r.id; });
+      // 1. Leggi payload e ID attualmente presenti nel DB
+      //    (serve sia per gli ID da cancellare sia per preservare i campi profilo)
+      var existingRes = await db.from('players').select('id, payload').eq('tournament_id', torneoId);
+      var existingIds = [];
+      var existingPayloadMap = {};
+      (existingRes.data || []).forEach(function (r) {
+        existingIds.push(r.id);
+        existingPayloadMap[r.id] = r.payload || {};
+      });
       var newIds = players.map(function (p) { return p.id; });
 
-      // 2. Upsert tutti i giocatori dell'array (insert o update, mai delete totale)
+      // 2. Upsert tutti i giocatori preservando i campi profilo dal DB
       if (players.length) {
         var rows = players.map(function (p) {
-          return { id: p.id, tournament_id: torneoId, email: p.email || '', stato: p.stato || 'pendente', payload: p };
+          var existingPayload = existingPayloadMap[p.id] || {};
+          var mergedPayload = Object.assign({}, p);
+          // I campi profilo dal DB hanno sempre precedenza (l'utente li gestisce autonomamente)
+          PROFILE_FIELDS.forEach(function (field) {
+            if (existingPayload[field] !== undefined) mergedPayload[field] = existingPayload[field];
+          });
+          return { id: p.id, tournament_id: torneoId, email: p.email || '', stato: p.stato || 'pendente', payload: mergedPayload };
         });
         var res = await db.from('players').upsert(rows);
         if (res.error) console.error('[SM] savePlayers upsert:', res.error);
@@ -402,29 +418,61 @@
         }
       });
 
+      // Leggi i payload attuali dal DB per preservare i campi profilo utente.
+      // Questo garantisce che operazioni admin (savePlayers, saveMatches, ecc.)
+      // non sovrascrivano mai età/peso/altezza/mano/superficie/disponibilità
+      // anche quando la cache locale dell'admin è obsoleta.
+      var dbProfileMap = {};
+      if (players.length) {
+        var dbProfRes = await db.from('players')
+          .select('id, payload')
+          .in('id', players.map(function (p) { return p.id; }));
+        (dbProfRes.data || []).forEach(function (r) { dbProfileMap[r.id] = r.payload || {}; });
+      }
+
       // Aggiorna stats di ogni giocatore su Supabase
       for (var i = 0; i < players.length; i++) {
         var p = players[i];
+        // Merge: stats ricalcolate da p + campi profilo freschi dal DB
+        var freshProfile = dbProfileMap[p.id] || {};
+        var mergedPayload = Object.assign({}, p);
+        PROFILE_FIELDS.forEach(function (field) {
+          if (freshProfile[field] !== undefined) mergedPayload[field] = freshProfile[field];
+        });
         await db.from('players').update({
           stato:   p.stato || 'pendente',
-          payload: p,
+          payload: mergedPayload,
         }).eq('id', p.id);
       }
 
-      // Calcola standings e salva
+      // Calcola standings e salva (usa i payload merged con campi profilo)
       var standings = players.slice()
         .sort(function (a, b) {
           if (b.punti    !== a.punti)    return b.punti    - a.punti;
           if (b.vittorie !== a.vittorie) return b.vittorie - a.vittorie;
           return (b.gol_fatti - b.gol_subiti) - (a.gol_fatti - a.gol_subiti);
         })
-        .map(function (p, i) { return Object.assign({}, p, { rank: i + 1 }); });
+        .map(function (p, i) {
+          var freshProfile = dbProfileMap[p.id] || {};
+          var mergedP = Object.assign({}, p);
+          PROFILE_FIELDS.forEach(function (field) {
+            if (freshProfile[field] !== undefined) mergedP[field] = freshProfile[field];
+          });
+          return Object.assign({}, mergedP, { rank: i + 1 });
+        });
 
       await db.from('tournaments').update({ standings: standings }).eq('id', torneoId);
 
-      // Aggiorna cache
+      // Aggiorna cache (con i campi profilo freschi)
       if (_cache[torneoId]) {
-        _cache[torneoId].players   = players;
+        _cache[torneoId].players   = players.map(function (p) {
+          var freshProfile = dbProfileMap[p.id] || {};
+          var merged = Object.assign({}, p);
+          PROFILE_FIELDS.forEach(function (field) {
+            if (freshProfile[field] !== undefined) merged[field] = freshProfile[field];
+          });
+          return merged;
+        });
         _cache[torneoId].standings = standings;
         if (_cache[torneoId].torneo) _cache[torneoId].torneo.standings = standings;
       }

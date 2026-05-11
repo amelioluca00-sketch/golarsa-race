@@ -219,32 +219,8 @@
 </div>
 </div>
 </section>
-<!-- Stats Grid -->
-<section class="grid grid-cols-2 gap-4 anim-in" style="animation-delay: 0.29s;">
-<div class="cinematic-card rounded-[24px] space-y-1 py-3 px-5">
-<span class="uppercase tracking-widest text-[#888888] font-bold text-[11px] italic" style="">MATCH VINTI</span>
-<p id="pp-stat-vittorie" class="font-['Epilogue'] font-black italic text-3xl text-white" style="">—</p>
-</div>
-<div class="cinematic-card rounded-[24px] space-y-1 py-3 px-5">
-<span class="uppercase tracking-widest text-[#888888] font-bold text-[11px] italic" style="">MATCH GIOCATI</span>
-<p id="pp-stat-match" class="font-['Epilogue'] font-black italic text-3xl text-white" style="">—</p>
-</div>
-<div class="cinematic-card rounded-[24px] space-y-1 py-3 px-5">
-<span class="uppercase tracking-widest text-[#888888] font-bold text-[11px] italic" style="">SCONFITTE</span>
-<p id="pp-stat-sconfitte" class="font-['Epilogue'] font-black italic text-3xl text-white" style="">—</p>
-</div>
-<div class="cinematic-card rounded-[24px] space-y-1 py-3 px-5">
-<span class="uppercase tracking-widest text-[#888888] font-bold text-[11px] italic" style="">PUNTI</span>
-<p id="pp-stat-punti" class="font-['Epilogue'] font-black italic text-3xl text-white" style="">—</p>
-</div>
-</section>
-<!-- Trend Dots -->
-<section class="cinematic-card rounded-[24px] p-6 flex justify-between items-center anim-in" style="animation-delay: 0.37s;">
-<span class="text-[11px] uppercase tracking-[0.2em] text-[#888888] font-[900] italic" style="">TREND</span>
-<div id="pp-trend" class="flex gap-2"></div>
-</section>
 <!-- Info Giocatore (a comparsa) -->
-<button onclick="document.getElementById('ppInfoCollapse').classList.toggle('hidden'); var ch=document.getElementById('ppInfoChevron'); ch.style.transform=ch.style.transform?'':'rotate(180deg)';" class="w-full flex items-center justify-between px-5 py-4 rounded-2xl active:scale-[0.98] transition-all anim-in" style="background:#1a1a25; border:1px solid rgba(255,255,255,0.08); animation-delay:0.41s;">
+<button onclick="document.getElementById('ppInfoCollapse').classList.toggle('hidden'); var ch=document.getElementById('ppInfoChevron'); ch.style.transform=ch.style.transform?'':'rotate(180deg)';" class="w-full flex items-center justify-between px-5 py-4 rounded-2xl active:scale-[0.98] transition-all anim-in" style="background:#1a1a25; border:1px solid rgba(255,255,255,0.08); animation-delay:0.29s;">
   <span class="font-headline font-black italic text-[#C5FF1A] uppercase text-base tracking-tight">INFO GIOCATORE</span>
   <span id="ppInfoChevron" class="material-symbols-outlined text-[#C5FF1A]" style="transition:transform 0.3s ease">expand_more</span>
 </button>
@@ -340,8 +316,32 @@
     </div>
   </div>
 </div>
+<!-- Stats Grid -->
+<section class="grid grid-cols-2 gap-4 anim-in" style="animation-delay: 0.37s;">
+<div class="cinematic-card rounded-[24px] space-y-1 py-3 px-5">
+<span class="uppercase tracking-widest text-[#888888] font-bold text-[11px] italic" style="">MATCH VINTI</span>
+<p id="pp-stat-vittorie" class="font-['Epilogue'] font-black italic text-3xl text-white" style="">—</p>
+</div>
+<div class="cinematic-card rounded-[24px] space-y-1 py-3 px-5">
+<span class="uppercase tracking-widest text-[#888888] font-bold text-[11px] italic" style="">MATCH GIOCATI</span>
+<p id="pp-stat-match" class="font-['Epilogue'] font-black italic text-3xl text-white" style="">—</p>
+</div>
+<div class="cinematic-card rounded-[24px] space-y-1 py-3 px-5">
+<span class="uppercase tracking-widest text-[#888888] font-bold text-[11px] italic" style="">SCONFITTE</span>
+<p id="pp-stat-sconfitte" class="font-['Epilogue'] font-black italic text-3xl text-white" style="">—</p>
+</div>
+<div class="cinematic-card rounded-[24px] space-y-1 py-3 px-5">
+<span class="uppercase tracking-widest text-[#888888] font-bold text-[11px] italic" style="">PUNTI</span>
+<p id="pp-stat-punti" class="font-['Epilogue'] font-black italic text-3xl text-white" style="">—</p>
+</div>
+</section>
+<!-- Trend Dots -->
+<section class="cinematic-card rounded-[24px] p-6 flex justify-between items-center anim-in" style="animation-delay: 0.45s;">
+<span class="text-[11px] uppercase tracking-[0.2em] text-[#888888] font-[900] italic" style="">TREND</span>
+<div id="pp-trend" class="flex gap-2"></div>
+</section>
 <!-- Match History List -->
-<section class="space-y-4 anim-in" style="animation-delay: 0.45s;">
+<section class="space-y-4 anim-in" style="animation-delay: 0.53s;">
 <div class="flex justify-between items-baseline px-1">
 <h3 class="font-['Epilogue'] font-black italic text-xl text-white uppercase tracking-tight" style="">ULTIMI MATCH</h3>
 </div>
