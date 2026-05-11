@@ -1488,7 +1488,7 @@
           var bdgBg = win ? 'rgba(209,255,75,0.12)' : 'rgba(239,68,68,0.2)';
           var bdgBorder = win ? '' : 'border:1px solid rgba(239,68,68,0.3);';
           var parts = (avvN || '').trim().split(' '), avvCog = esc((parts.pop() || '').toUpperCase()), avvNom = esc(parts.join(' '));
-          return '<div class="cinematic-card flex items-center justify-between p-4 transition-transform active:scale-[0.98] rounded-2xl" style="gap:8px"><div class="flex items-center gap-3 min-w-0"><div style="width:2rem;height:2rem;border-radius:9999px;background:' + bdgBg + ';' + bdgBorder + 'display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-weight:900;font-style:italic;font-size:10px;color:' + col + ';-webkit-text-fill-color:' + col + '">' + (win ? 'W' : 'L') + '</span></div><div class="min-w-0"><p class="font-headline font-bold italic text-white uppercase text-sm truncate">' + (avvNom ? avvNom.charAt(0) + '. ' : '') + avvCog + '</p><p class="text-[9px] text-[#888888] uppercase">' + fmtDataBreve(m.data) + '</p></div></div><p class="font-headline font-black italic text-xl flex-shrink-0" style="color:' + col + ';-webkit-text-fill-color:' + col + '">' + myS + ' - ' + avvS + '</p></div>';
+          return '<div class="cinematic-card flex flex-col justify-between p-4 rounded-2xl shrink-0 snap-start" style="width:clamp(150px,46vw,190px);gap:10px"><div style="display:flex;align-items:center;gap:8px"><div style="width:2rem;height:2rem;border-radius:9999px;background:' + bdgBg + ';' + bdgBorder + 'display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="font-weight:900;font-style:italic;font-size:10px;color:' + col + ';-webkit-text-fill-color:' + col + '">' + (win ? 'W' : 'L') + '</span></div><div style="min-width:0;overflow:hidden"><p class="font-headline font-bold italic text-white uppercase text-sm truncate">' + (avvNom ? avvNom.charAt(0) + '. ' : '') + avvCog + '</p><p class="text-[9px] text-[#888888] uppercase">' + fmtDataBreve(m.data) + '</p></div></div><p class="font-headline font-black italic text-2xl" style="color:' + col + ';-webkit-text-fill-color:' + col + '">' + myS + ' – ' + avvS + '</p></div>';
         }).join('');
       }
     }
@@ -1532,8 +1532,16 @@
       var editLabel  = document.getElementById('up-info-edit-label');
       var viewDiv    = document.getElementById('up-info-view');
       var editDiv    = document.getElementById('up-info-edit');
-      var dispHint   = document.getElementById('up-disp-hint');
       var isEditing  = false;
+
+      var dispEditBtn   = document.getElementById('up-disp-edit-btn');
+      var dispEditIcon  = document.getElementById('up-disp-edit-icon');
+      var dispEditLabel = document.getElementById('up-disp-edit-label');
+      var dispHint      = document.getElementById('up-disp-hint');
+      var isDispEditing = false;
+
+      var giorni = ['lun','mar','mer','gio','ven','sab','dom'];
+      var fasce  = ['mat','pom','ser'];
 
       // Precompila gli input con i valori attuali
       function populateInputs() {
@@ -1549,16 +1557,14 @@
         if (inSuper) inSuper.value = p.superficie|| '';
       }
 
-      // Toggle click sulle celle disponibilità (solo in edit mode)
-      var giorni = ['lun','mar','mer','gio','ven','sab','dom'];
-      var fasce  = ['mat','pom','ser'];
+      // Toggle click sulle celle disponibilità (solo in disp-edit mode)
       giorni.forEach(function (g) {
         fasce.forEach(function (f) {
           var cell = document.getElementById('up-disp-' + g + '-' + f);
           if (!cell) return;
           cell.style.cursor = 'default';
           cell.addEventListener('click', function () {
-            if (!isEditing) return;
+            if (!isDispEditing) return;
             var avail = cell.getAttribute('data-available') === '1';
             avail = !avail;
             cell.setAttribute('data-available', avail ? '1' : '0');
@@ -1569,32 +1575,82 @@
         });
       });
 
+      // ── Bottone MODIFICA / SALVA info ──
       if (editBtn) {
         editBtn.addEventListener('click', async function () {
           if (!isEditing) {
-            // Passa in modalità MODIFICA
             isEditing = true;
             populateInputs();
             viewDiv && viewDiv.classList.add('hidden');
             editDiv && editDiv.classList.remove('hidden');
-            dispHint && dispHint.classList.remove('hidden');
-            giorni.forEach(function (g) { fasce.forEach(function (f) { var c = document.getElementById('up-disp-' + g + '-' + f); if (c) { c.style.cursor = 'pointer'; c.style.outline = '1px dashed rgba(197,255,26,0.2)'; } }); });
             if (editIcon)  { editIcon.textContent  = 'save'; }
             if (editLabel) { editLabel.textContent  = 'SALVA'; }
           } else {
-            // Salva
             isEditing = false;
             editBtn.disabled = true;
             if (editLabel) editLabel.textContent = 'SALVO...';
 
-            // Leggi valori inputs
             var newAnni  = document.getElementById('up-edit-anni')        ? document.getElementById('up-edit-anni').value.trim()  : '';
             var newPeso  = document.getElementById('up-edit-peso')        ? document.getElementById('up-edit-peso').value.trim()  : '';
             var newAlt   = document.getElementById('up-edit-altezza')     ? document.getElementById('up-edit-altezza').value.trim(): '';
             var newMano  = document.getElementById('up-edit-mano')        ? document.getElementById('up-edit-mano').value          : '';
             var newSuper = document.getElementById('up-edit-superficie')  ? document.getElementById('up-edit-superficie').value    : '';
 
-            // Leggi disponibilità dalla griglia
+            p.eta        = newAnni  ? parseInt(newAnni,  10) : p.eta;
+            p.peso       = newPeso  ? parseInt(newPeso,  10) : p.peso;
+            p.altezza    = newAlt   ? parseInt(newAlt,   10) : p.altezza;
+            p.mano       = newMano  || p.mano;
+            p.superficie = newSuper || p.superficie;
+
+            var saveOk = false;
+            try {
+              saveOk = await window.StorageManager.updatePlayerProfile(p.id, {
+                eta:        p.eta,
+                peso:       p.peso,
+                altezza:    p.altezza,
+                mano:       p.mano,
+                superficie: p.superficie,
+              });
+            } catch (e) { console.error('[UP] save info:', e); saveOk = false; }
+
+            if (!saveOk) {
+              if (editLabel) { editLabel.textContent = 'ERRORE — RIPROVA'; editLabel.style.color = '#f87171'; }
+              if (editIcon)  editIcon.textContent = 'error';
+              editBtn.disabled = false;
+              isEditing = true;
+              return;
+            }
+
+            var setN = function (id, v) { var el = document.getElementById(id); if (el) el.textContent = v; };
+            setN('up-info-anni',       p.eta        ? p.eta       + ' anni' : '—');
+            setN('up-info-peso',       p.peso       ? p.peso      + ' kg'   : '—');
+            setN('up-info-altezza',    p.altezza    ? p.altezza   + ' cm'   : '—');
+            setN('up-info-mano',       p.mano       || '—');
+            setN('up-info-superficie', p.superficie || '—');
+
+            editDiv && editDiv.classList.add('hidden');
+            viewDiv && viewDiv.classList.remove('hidden');
+            if (editIcon)  { editIcon.textContent = 'edit'; editIcon.style.color = ''; }
+            if (editLabel) { editLabel.textContent = 'MODIFICA'; editLabel.style.color = ''; }
+            editBtn.disabled = false;
+          }
+        });
+      }
+
+      // ── Bottone MODIFICA / SALVA disponibilità ──
+      if (dispEditBtn) {
+        dispEditBtn.addEventListener('click', async function () {
+          if (!isDispEditing) {
+            isDispEditing = true;
+            dispHint && dispHint.classList.remove('hidden');
+            giorni.forEach(function (g) { fasce.forEach(function (f) { var c = document.getElementById('up-disp-' + g + '-' + f); if (c) { c.style.cursor = 'pointer'; c.style.outline = '1px dashed rgba(197,255,26,0.25)'; } }); });
+            if (dispEditIcon)  dispEditIcon.textContent  = 'save';
+            if (dispEditLabel) dispEditLabel.textContent = 'SALVA';
+          } else {
+            isDispEditing = false;
+            dispEditBtn.disabled = true;
+            if (dispEditLabel) dispEditLabel.textContent = 'SALVO...';
+
             var newDisp = {};
             giorni.forEach(function (g) {
               newDisp[g] = {};
@@ -1603,53 +1659,27 @@
                 newDisp[g][f] = c ? (c.getAttribute('data-available') === '1') : false;
               });
             });
-
-            // Aggiorna oggetto p locale
-            p.eta          = newAnni  ? parseInt(newAnni,  10) : p.eta;
-            p.peso         = newPeso  ? parseInt(newPeso,  10) : p.peso;
-            p.altezza      = newAlt   ? parseInt(newAlt,   10) : p.altezza;
-            p.mano         = newMano  || p.mano;
-            p.superficie   = newSuper || p.superficie;
             p.disponibilita = newDisp;
 
             var saveOk = false;
             try {
-              saveOk = await window.StorageManager.updatePlayerProfile(p.id, {
-                eta:          p.eta,
-                peso:         p.peso,
-                altezza:      p.altezza,
-                mano:         p.mano,
-                superficie:   p.superficie,
-                disponibilita: p.disponibilita,
-              });
-            } catch (e) { console.error('[UP] save profile:', e); saveOk = false; }
+              saveOk = await window.StorageManager.updatePlayerProfile(p.id, { disponibilita: p.disponibilita });
+            } catch (e) { console.error('[UP] save disp:', e); saveOk = false; }
 
             if (!saveOk) {
-              // Mostra errore visibile — il salvataggio non è riuscito
-              if (editLabel) { editLabel.textContent = 'ERRORE — RIPROVA'; editLabel.style.color = '#f87171'; }
-              if (editIcon)  editIcon.textContent = 'error';
-              editBtn.disabled = false;
-              isEditing = true; // rimane in modalità edit così l'utente può riprovare
+              if (dispEditLabel) { dispEditLabel.textContent = 'ERRORE — RIPROVA'; dispEditLabel.style.color = '#f87171'; }
+              if (dispEditIcon)  dispEditIcon.textContent = 'error';
+              dispEditBtn.disabled = false;
+              isDispEditing = true;
               return;
             }
 
-            // Aggiorna view
-            var setN = function (id, v) { var el = document.getElementById(id); if (el) el.textContent = v; };
-            setN('up-info-anni',       p.eta        ? p.eta       + ' anni' : '—');
-            setN('up-info-peso',       p.peso       ? p.peso      + ' kg'   : '—');
-            setN('up-info-altezza',    p.altezza    ? p.altezza   + ' cm'   : '—');
-            setN('up-info-mano',       p.mano       || '—');
-            setN('up-info-superficie', p.superficie || '—');
-            fillDisponibilita('up-', p.disponibilita);
-
-            // Torna in modalità view
-            editDiv && editDiv.classList.add('hidden');
-            viewDiv && viewDiv.classList.remove('hidden');
             dispHint && dispHint.classList.add('hidden');
             giorni.forEach(function (g) { fasce.forEach(function (f) { var c = document.getElementById('up-disp-' + g + '-' + f); if (c) { c.style.cursor = 'default'; c.style.outline = ''; } }); });
-            if (editIcon)  { editIcon.textContent = 'edit'; editIcon.style.color = ''; }
-            if (editLabel) { editLabel.textContent = 'MODIFICA'; editLabel.style.color = ''; }
-            editBtn.disabled = false;
+            fillDisponibilita('up-', p.disponibilita);
+            if (dispEditIcon)  { dispEditIcon.textContent = 'edit'; dispEditIcon.style.color = ''; }
+            if (dispEditLabel) { dispEditLabel.textContent = 'MODIFICA'; dispEditLabel.style.color = ''; }
+            dispEditBtn.disabled = false;
           }
         });
       }

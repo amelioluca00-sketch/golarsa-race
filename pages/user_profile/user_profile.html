@@ -163,6 +163,8 @@
             touch-action: manipulation;
         }
         input, select, textarea { font-size: 16px !important; }
+        /* Nascondi scrollbar orizzontale su Ultimi Match */
+        #up-matches::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="bg-surface-container-lowest min-h-screen">
@@ -223,12 +225,15 @@
 </div>
 </div>
 </section>
-<!-- Info Giocatore (a comparsa, editable) -->
-<button onclick="document.getElementById('upInfoCollapse').classList.toggle('hidden'); var ch=document.getElementById('upInfoChevron'); ch.style.transform=ch.style.transform?'':'rotate(180deg)';" class="w-full flex items-center justify-between px-5 py-4 rounded-2xl active:scale-[0.98] transition-all anim-in" style="background:#1a1a25; border:1px solid rgba(255,255,255,0.08); animation-delay:0.33s;">
-  <span class="font-headline font-black italic text-[#C5FF1A] uppercase text-base tracking-tight">INFO GIOCATORE</span>
-  <span id="upInfoChevron" class="material-symbols-outlined text-[#C5FF1A]" style="transition:transform 0.3s ease">expand_more</span>
-</button>
-<div id="upInfoCollapse" class="hidden space-y-4">
+<!-- Info Giocatore - sempre visibile -->
+<div class="space-y-2 anim-in" style="animation-delay:0.33s;">
+  <div class="flex items-center justify-between px-1">
+    <h3 class="font-headline font-black italic text-sm text-[#888888] uppercase tracking-widest">INFO GIOCATORE</h3>
+    <button id="up-info-edit-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg active:scale-[0.97] transition-all no-anim" style="border:1px solid rgba(197,255,26,0.3); color:#C5FF1A">
+      <span id="up-info-edit-icon" class="material-symbols-outlined text-base" style="font-variation-settings:'wght' 600">edit</span>
+      <span id="up-info-edit-label" class="font-headline font-black italic uppercase text-xs tracking-wide">MODIFICA</span>
+    </button>
+  </div>
   <!-- View mode -->
   <div id="up-info-view" class="rounded-[20px] p-4 space-y-3" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
     <div class="flex items-center gap-3">
@@ -266,10 +271,6 @@
         <span id="up-info-superficie" class="font-headline font-black italic text-white text-base">—</span>
       </div>
     </div>
-    <button id="up-info-edit-btn" class="w-full mt-2 py-2.5 rounded-xl flex items-center justify-center gap-2 active:scale-[0.98] transition-all" style="border:1px solid rgba(197,255,26,0.35); color:#C5FF1A">
-      <span id="up-info-edit-icon" class="material-symbols-outlined text-base" style="font-variation-settings:'wght' 600">edit</span>
-      <span id="up-info-edit-label" class="font-headline font-black italic uppercase text-sm tracking-wide">MODIFICA</span>
-    </button>
   </div>
   <!-- Edit mode -->
   <div id="up-info-edit" class="hidden rounded-[20px] p-4 space-y-3" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
@@ -318,11 +319,19 @@
         </select>
       </div>
     </div>
-    <p id="up-disp-hint" class="text-[10px] text-[#888] italic hidden">Tocca le celle per modificare la disponibilità</p>
   </div>
-  <!-- Disponibilità (condivisa) -->
+</div>
+<!-- Disponibilità - sempre visibile -->
+<div class="space-y-2 anim-in" style="animation-delay:0.38s;">
+  <div class="flex items-center justify-between px-1">
+    <h3 class="font-headline font-black italic text-sm text-[#888888] uppercase tracking-widest">DISPONIBILITÀ</h3>
+    <button id="up-disp-edit-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg active:scale-[0.97] transition-all no-anim" style="border:1px solid rgba(197,255,26,0.3); color:#C5FF1A">
+      <span id="up-disp-edit-icon" class="material-symbols-outlined text-base" style="font-variation-settings:'wght' 600">edit</span>
+      <span id="up-disp-edit-label" class="font-headline font-black italic uppercase text-xs tracking-wide">MODIFICA</span>
+    </button>
+  </div>
   <div class="rounded-[20px] p-4" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
-    <p class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic mb-3">DISPONIBILITÀ</p>
+    <p id="up-disp-hint" class="text-[10px] text-[#C5FF1A] italic hidden mb-2">Tocca le celle per modificare</p>
     <div class="overflow-x-auto">
       <table class="w-full text-center border-collapse" style="min-width:240px">
         <thead>
@@ -398,14 +407,14 @@
 <div id="up-trend" class="flex gap-2"></div>
 </section>
 <!-- Match History List -->
-<section class="space-y-4">
+<div class="space-y-3">
 <div class="flex justify-between items-baseline px-1 anim-in" style="animation-delay: 0.72s;">
 <h3 class="font-['Epilogue'] font-black italic text-xl text-white uppercase tracking-tight" style="">ULTIMI MATCH</h3>
 </div>
-<div id="up-matches" class="space-y-3">
-<p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-4">Nessun match disponibile</p>
+<div id="up-matches" class="flex overflow-x-auto gap-3 pb-2 snap-x snap-mandatory" style="-webkit-overflow-scrolling:touch; scrollbar-width:none; -ms-overflow-style:none;">
+<p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-4 w-full">Nessun match disponibile</p>
 </div>
-</section>
+</div>
 </main>
 <script>
     document.addEventListener('DOMContentLoaded', function () {

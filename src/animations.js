@@ -15,7 +15,7 @@
   ].join(',');
 
   /* ── Elementi con scivolamento laterale (ranking + match cards) ── */
-  var FLIP_SELECTORS = '.leaderboard-row, #ultimi-match-container .premium-card';
+  var FLIP_SELECTORS = '.leaderboard-row, #ultimi-match-container .premium-card, #pp-matches .cinematic-card, #up-matches .cinematic-card';
 
   /* ── Elementi riga interattivi ── */
   var ROW_SELECTORS = [

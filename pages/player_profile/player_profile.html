@@ -165,6 +165,8 @@
             touch-action: manipulation;
         }
         input, select, textarea { font-size: 16px !important; }
+        /* Nascondi scrollbar orizzontale su Ultimi Match */
+        #pp-matches::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="bg-surface-container-lowest min-h-screen">
@@ -219,13 +221,9 @@
 </div>
 </div>
 </section>
-<!-- Info Giocatore (a comparsa) -->
-<button onclick="document.getElementById('ppInfoCollapse').classList.toggle('hidden'); var ch=document.getElementById('ppInfoChevron'); ch.style.transform=ch.style.transform?'':'rotate(180deg)';" class="w-full flex items-center justify-between px-5 py-4 rounded-2xl active:scale-[0.98] transition-all anim-in" style="background:#1a1a25; border:1px solid rgba(255,255,255,0.08); animation-delay:0.29s;">
-  <span class="font-headline font-black italic text-[#C5FF1A] uppercase text-base tracking-tight">INFO GIOCATORE</span>
-  <span id="ppInfoChevron" class="material-symbols-outlined text-[#C5FF1A]" style="transition:transform 0.3s ease">expand_more</span>
-</button>
-<div id="ppInfoCollapse" class="hidden space-y-4">
-  <!-- Dati anagrafici -->
+<!-- Info Giocatore - sempre visibile -->
+<div class="space-y-2 anim-in" style="animation-delay:0.29s;">
+  <h3 class="font-headline font-black italic text-sm text-[#888888] uppercase tracking-widest px-1">INFO GIOCATORE</h3>
   <div class="rounded-[20px] p-4 space-y-3" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
     <div class="flex items-center gap-3">
       <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">cake</span>
@@ -263,9 +261,11 @@
       </div>
     </div>
   </div>
-  <!-- Disponibilità -->
+</div>
+<!-- Disponibilità - sempre visibile -->
+<div class="space-y-2 anim-in" style="animation-delay:0.34s;">
+  <h3 class="font-headline font-black italic text-sm text-[#888888] uppercase tracking-widest px-1">DISPONIBILITÀ</h3>
   <div class="rounded-[20px] p-4" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
-    <p class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic mb-3">DISPONIBILITÀ</p>
     <div class="overflow-x-auto">
       <table class="w-full text-center border-collapse" style="min-width:240px">
         <thead>
@@ -341,14 +341,14 @@
 <div id="pp-trend" class="flex gap-2"></div>
 </section>
 <!-- Match History List -->
-<section class="space-y-4 anim-in" style="animation-delay: 0.53s;">
-<div class="flex justify-between items-baseline px-1">
+<div class="space-y-3">
+<div class="flex justify-between items-baseline px-1 anim-in" style="animation-delay: 0.53s;">
 <h3 class="font-['Epilogue'] font-black italic text-xl text-white uppercase tracking-tight" style="">ULTIMI MATCH</h3>
 </div>
-<div id="pp-matches" class="space-y-3">
-<p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-4">Nessun match disponibile</p>
+<div id="pp-matches" class="flex overflow-x-auto gap-3 pb-2 snap-x snap-mandatory" style="-webkit-overflow-scrolling:touch; scrollbar-width:none; -ms-overflow-style:none;">
+<p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-4 w-full">Nessun match disponibile</p>
 </div>
-</section>
+</div>
 </main>
 <!-- Navigation Drawer -->
 <div class="hidden h-full w-80 fixed left-0 top-0 z-[60] bg-[#11111a] shadow-[20px_0_40px_rgba(209,255,75,0.04)] flex flex-col p-8 space-y-6" id="sideNav">
