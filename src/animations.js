@@ -15,7 +15,7 @@
   ].join(',');
 
   /* ── Elementi con scivolamento laterale (ranking + match cards) ── */
-  var FLIP_SELECTORS = '.leaderboard-row, #ultimi-match-container .premium-card, #pp-matches .cinematic-card, #up-matches .cinematic-card';
+  var FLIP_SELECTORS = '.leaderboard-row, #ultimi-match-container .premium-card, #pp-matches .match-mini-card, #up-matches .match-mini-card';
 
   /* ── Elementi riga interattivi ── */
   var ROW_SELECTORS = [
@@ -139,8 +139,11 @@
     if (anyAdded) {
       /* Ricalcola VH per contenuto aggiunto dopo il resize */
       VH = window.innerHeight;
-      tagCards();
+      /* flip prima di tagCards: stesso ordine di init().
+         Evita che le match-card dei profili vengano marcate
+         come gr-rise (verticale) invece di gr-slide (laterale). */
       tagFlipCards();
+      tagCards();
       tagRows();
     }
   });
