@@ -505,9 +505,8 @@
     /**
      * Aggiorna i campi del profilo personale di un giocatore
      * (anni, peso, altezza, mano, superficie, disponibilita).
-     * Usa la funzione RPC update_player_profile (SECURITY DEFINER)
-     * per un merge JSONB atomico che bypassa problemi RLS.
-     * Non tocca punti/stats/stato.
+     * Merge JSONB lato client: legge il payload attuale, fonde i campi
+     * profilo e fa UPDATE. Non tocca punti/stats/stato.
      */
     updatePlayerProfile: async function (playerId, profileFields) {
       // Costruisce l'oggetto con solo i campi profilo definiti
@@ -516,25 +515,53 @@
         if (profileFields[field] !== undefined) profileData[field] = profileFields[field];
       });
 
-      // Usa RPC server-side (SECURITY DEFINER) — garantisce la scrittura
-      // indipendentemente dalla configurazione RLS del progetto Supabase
-      var res = await db.rpc('update_player_profile', {
-        p_player_id: playerId,
-        p_profile:   profileData,
-      });
-
-      if (res.error) {
-        console.error('[SM] updatePlayerProfile RPC:', res.error);
+      // 1. Leggi payload attuale dal DB + tournament_id per propagare alle standings
+      var current = await db.from('players')
+        .select('payload, tournament_id')
+        .eq('id', playerId)
+        .single();
+      if (current.error || !current.data) {
+        console.error('[SM] updatePlayerProfile read:', current.error);
         return false;
       }
 
-      // Aggiorna cache locale
+      // 2. Merge dei campi profilo nel payload esistente
+      var mergedPayload = Object.assign({}, current.data.payload || {}, profileData);
+
+      // 3. UPDATE sulla tabella players (le policy RLS permettono write_anon)
+      var res = await db.from('players').update({ payload: mergedPayload }).eq('id', playerId);
+      if (res.error) {
+        console.error('[SM] updatePlayerProfile update players:', res.error);
+        return false;
+      }
+
+      // 4. Propaga i campi profilo alla JSONB tournaments.standings
+      //    (la home / la scheda di un altro player leggono da lì, non da players)
+      var torneoId = current.data.tournament_id;
+      if (torneoId) {
+        var tRes = await db.from('tournaments').select('standings').eq('id', torneoId).single();
+        if (!tRes.error && tRes.data && Array.isArray(tRes.data.standings)) {
+          var newStandings = tRes.data.standings.map(function (s) {
+            return s && s.id === playerId ? Object.assign({}, s, profileData) : s;
+          });
+          var stRes = await db.from('tournaments').update({ standings: newStandings }).eq('id', torneoId);
+          if (stRes.error) console.error('[SM] updatePlayerProfile update standings:', stRes.error);
+        }
+      }
+
+      // 5. Aggiorna cache locale (players + standings)
       if (_cache) {
         Object.keys(_cache).forEach(function (tid) {
           if (_cache[tid] && _cache[tid].players) {
             _cache[tid].players = _cache[tid].players.map(function (p) {
               return p.id === playerId ? Object.assign({}, p, profileFields) : p;
             });
+          }
+          if (_cache[tid] && _cache[tid].standings) {
+            _cache[tid].standings = _cache[tid].standings.map(function (p) {
+              return p && p.id === playerId ? Object.assign({}, p, profileFields) : p;
+            });
+            if (_cache[tid].torneo) _cache[tid].torneo.standings = _cache[tid].standings;
           }
         });
       }
