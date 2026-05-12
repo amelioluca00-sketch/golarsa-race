@@ -225,10 +225,15 @@
                 <span class="text-sm text-neutral-400">Vittoria</span>
                 <span class="text-sm font-label font-semibold text-[#C5FF1A]">+100</span>
             </div>
-            <!-- Riga game vinti dal perdente (visibile solo se ha perso) -->
-            <div class="flex items-center justify-between row-in" id="row-game-wrap" style="display:none;animation-delay:2s;">
-                <span class="text-sm text-neutral-400" id="row-game-label">Game vinti</span>
-                <span class="text-sm font-label font-semibold text-[#C5FF1A]" id="row-game">+0</span>
+            <!-- Bonus dominanza (visibile solo se vittoria senza concedere game) -->
+            <div class="flex items-center justify-between row-in" id="row-dominanza-wrap" style="display:none;animation-delay:2.15s;">
+                <span class="text-sm text-neutral-400" id="row-dominanza-label">Bonus dominanza</span>
+                <span class="text-sm font-label font-semibold text-[#C5FF1A]" id="row-dominanza">+0</span>
+            </div>
+            <!-- Bonus resistenza (visibile solo se ha perso) -->
+            <div class="flex items-center justify-between row-in" id="row-resistenza-wrap" style="display:none;animation-delay:2s;">
+                <span class="text-sm text-neutral-400" id="row-resistenza-label">Bonus resistenza</span>
+                <span class="text-sm font-label font-semibold text-[#C5FF1A]" id="row-resistenza">+0</span>
             </div>
         </div>
     </div>
@@ -249,13 +254,14 @@
 </div>
 
 <script>
-    var params   = new URLSearchParams(window.location.search);
-    var scoreTu  = parseInt(params.get('tu'),  10);
-    var scoreAvv = parseInt(params.get('avv'), 10);
-    var vittoria = params.get('vittoria') === '1';
-    var mioNome  = params.get('mioNome') || 'TU';
-    var avvNome  = params.get('avvNome') || 'AVV';
-    var TARGET   = parseInt(params.get('punti'), 10);
+    var params    = new URLSearchParams(window.location.search);
+    var scoreTu   = parseInt(params.get('tu'),     10);
+    var scoreAvv  = parseInt(params.get('avv'),    10);
+    var vittoria  = params.get('vittoria') === '1';
+    var bonusD    = parseInt(params.get('bonusD'), 10) || 0;
+    var mioNome   = params.get('mioNome') || 'TU';
+    var avvNome   = params.get('avvNome') || 'AVV';
+    var TARGET    = parseInt(params.get('punti'),  10);
     if (isNaN(TARGET)) TARGET = 0;
 
     // Score
@@ -269,17 +275,27 @@
 
     // Breakdown punti
     if (vittoria) {
-        // Vittoria: mostra riga "+100 vittoria"
+        // Vittoria: mostra riga "+100"
         var wv = document.getElementById('row-vittoria-wrap');
         if (wv) { wv.style.display = 'flex'; wv.classList.add('row-in'); }
+        // Bonus dominanza: solo se l'avversario ha 0 game
+        if (bonusD > 0) {
+            var wd = document.getElementById('row-dominanza-wrap');
+            var dl = document.getElementById('row-dominanza-label');
+            var dv = document.getElementById('row-dominanza');
+            if (wd) { wd.style.display = 'flex'; wd.classList.add('row-in'); }
+            if (dl && !isNaN(scoreTu)) dl.textContent = 'Bonus dominanza (' + scoreTu + ' × 2pt)';
+            if (dv) dv.textContent = '+' + bonusD;
+        }
     } else {
-        // Sconfitta: mostra game vinti dal perdente
-        var wg = document.getElementById('row-game-wrap');
-        if (wg) { wg.style.display = 'flex'; wg.classList.add('row-in'); }
+        // Sconfitta: mostra bonus resistenza
+        var wr = document.getElementById('row-resistenza-wrap');
+        if (wr) { wr.style.display = 'flex'; wr.classList.add('row-in'); }
         if (!isNaN(scoreTu)) {
-            var lbl = document.getElementById('row-game-label');
-            if (lbl) lbl.textContent = 'Game vinti (' + scoreTu + ' × 10pt)';
-            document.getElementById('row-game').textContent = '+' + TARGET;
+            var rl = document.getElementById('row-resistenza-label');
+            var rv = document.getElementById('row-resistenza');
+            if (rl) rl.textContent = 'Bonus resistenza (' + scoreTu + ' × 10pt)';
+            if (rv) rv.textContent = '+' + TARGET;
         }
     }
 
