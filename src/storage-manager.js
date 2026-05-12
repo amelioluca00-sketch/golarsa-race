@@ -299,15 +299,49 @@
       if (_cache[torneoId]) _cache[torneoId].matches = freshMatches;
     },
 
-    /** Salva una nuova iscrizione utente (stato = pendente). */
+    /** Salva una nuova iscrizione utente (stato = pendente).
+     *  Se l'email è già associata a un torneo precedente, eredita
+     *  automaticamente i campi profilo (età, peso, altezza, mano,
+     *  superficie, disponibilità) dall'iscrizione più recente. */
     registerPlayer: async function (torneoId, playerData) {
       var id = 'player_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+
+      // ── Eredita campi profilo da iscrizioni precedenti ───────────────
+      // Cerca (per email) i record più recenti di altri tornei.
+      // Usa il primo che ha almeno un campo profilo valorizzato.
+      var inheritedProfile = {};
+      if (playerData.email) {
+        var prevRes = await db.from('players')
+          .select('payload')
+          .eq('email', playerData.email.toLowerCase())
+          .order('created_at', { ascending: false })
+          .limit(5);
+        if (prevRes.data && prevRes.data.length > 0) {
+          for (var pi = 0; pi < prevRes.data.length; pi++) {
+            var prevPayload = prevRes.data[pi].payload || {};
+            var hasProfile = PROFILE_FIELDS.some(function (f) {
+              return prevPayload[f] !== undefined && prevPayload[f] !== null && prevPayload[f] !== '';
+            });
+            if (hasProfile) {
+              PROFILE_FIELDS.forEach(function (field) {
+                if (prevPayload[field] !== undefined && prevPayload[field] !== null && prevPayload[field] !== '') {
+                  inheritedProfile[field] = prevPayload[field];
+                }
+              });
+              break;
+            }
+          }
+        }
+      }
+      // ────────────────────────────────────────────────────────────────
+
       var player = Object.assign({}, playerData, {
         id: id,
         vittorie: 0, pareggi: 0, sconfitte: 0,
         gol_fatti: 0, gol_subiti: 0, punti: 0, match_giocati: 0,
         rank: 0, stato: 'pendente',
-      });
+      }, inheritedProfile);   // ← i campi profilo precedenti sovrascrivono solo i propri slot
+
       var res = await db.from('players').insert({
         id:            id,
         tournament_id: torneoId,
