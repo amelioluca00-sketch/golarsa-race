@@ -499,18 +499,9 @@
         <p id="playerStatPunti" class="font-headline font-black italic text-3xl text-white">—</p>
       </div>
     </section>
-    <!-- Trend -->
-    <section class="cinematic-card rounded-[24px] p-5 flex justify-between items-center">
-      <span class="text-[11px] uppercase tracking-[0.2em] text-[#888] font-black italic">TREND</span>
-      <div id="playerTrend" class="flex gap-2"></div>
-    </section>
-    <!-- Info Giocatore (a comparsa, read-only) -->
-    <button onclick="togglePlayerInfo()" class="w-full flex items-center justify-between px-5 py-4 rounded-2xl active:scale-[0.98] transition-all" style="background:#1a1a25; border:1px solid rgba(255,255,255,0.08);">
-      <span class="font-headline font-black italic text-[#C5FF1A] uppercase text-base tracking-tight">INFO GIOCATORE</span>
-      <span id="playerInfoChevron" class="material-symbols-outlined text-[#C5FF1A]" style="transition:transform 0.3s ease">expand_more</span>
-    </button>
-    <div id="playerInfoCollapse" class="hidden space-y-4">
-      <!-- Dati anagrafici -->
+    <!-- Info Giocatore (sempre visibile, read-only) -->
+    <div class="space-y-2">
+      <h3 class="font-headline font-black italic text-sm text-[#888] uppercase tracking-widest px-1">INFO GIOCATORE</h3>
       <div class="rounded-[20px] p-4 space-y-3" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">cake</span>
@@ -548,9 +539,11 @@
           </div>
         </div>
       </div>
-      <!-- Disponibilità -->
+    </div>
+    <!-- Disponibilità (sempre visibile, read-only) -->
+    <div class="space-y-2">
+      <h3 class="font-headline font-black italic text-sm text-[#888] uppercase tracking-widest px-1">DISPONIBILITÀ</h3>
       <div class="rounded-[20px] p-4" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
-        <p class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic mb-3">DISPONIBILITÀ</p>
         <div class="overflow-x-auto">
           <table class="w-full text-center border-collapse" style="min-width:240px">
             <thead>
@@ -601,6 +594,11 @@
         </div>
       </div>
     </div>
+    <!-- Trend -->
+    <section class="cinematic-card rounded-[24px] p-5 flex justify-between items-center">
+      <span class="text-[11px] uppercase tracking-[0.2em] text-[#888] font-black italic">TREND</span>
+      <div id="playerTrend" class="flex gap-2"></div>
+    </section>
     <!-- Ultimi Match -->
     <section>
       <p class="text-[13px] font-black text-white uppercase tracking-[0.2em] italic mb-3">ULTIMI MATCH</p>
@@ -691,17 +689,15 @@
         <p id="myStatPunti" class="font-headline font-black italic text-3xl text-white">—</p>
       </div>
     </section>
-    <!-- Trend -->
-    <section class="cinematic-card rounded-[24px] p-5 flex justify-between items-center">
-      <span class="text-[11px] uppercase tracking-[0.2em] text-[#888] font-black italic">TREND</span>
-      <div id="myTrend" class="flex gap-2"></div>
-    </section>
-    <!-- Info Giocatore (a comparsa, editable) -->
-    <button onclick="toggleMyInfo()" class="w-full flex items-center justify-between px-5 py-4 rounded-2xl active:scale-[0.98] transition-all" style="background:#1a1a25; border:1px solid rgba(255,255,255,0.08);">
-      <span class="font-headline font-black italic text-[#C5FF1A] uppercase text-base tracking-tight">INFO GIOCATORE</span>
-      <span id="myInfoChevron" class="material-symbols-outlined text-[#C5FF1A]" style="transition:transform 0.3s ease">expand_more</span>
-    </button>
-    <div id="myInfoCollapse" class="hidden space-y-4">
+    <!-- Info Giocatore (sempre visibile, editable) -->
+    <div class="space-y-2">
+      <div class="flex items-center justify-between px-1">
+        <h3 class="font-headline font-black italic text-sm text-[#888] uppercase tracking-widest">INFO GIOCATORE</h3>
+        <button id="myInfoEditBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg active:scale-[0.97] transition-all no-anim" style="border:1px solid rgba(197,255,26,0.3); color:#C5FF1A">
+          <span id="myInfoEditIcon" class="material-symbols-outlined text-base" style="font-variation-settings:'wght' 600">edit</span>
+          <span id="myInfoEditLabel" class="font-headline font-black italic uppercase text-xs tracking-wide">MODIFICA</span>
+        </button>
+      </div>
       <!-- View mode -->
       <div id="myInfoView" class="rounded-[20px] p-4 space-y-3" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
         <div class="flex items-center gap-3">
@@ -739,10 +735,6 @@
             <span id="myInfoSuperficie" class="font-headline font-black italic text-white text-base">—</span>
           </div>
         </div>
-        <button id="myInfoEditBtn" class="w-full mt-2 py-2.5 rounded-xl flex items-center justify-center gap-2 active:scale-[0.98] transition-all" style="border:1px solid rgba(197,255,26,0.35); color:#C5FF1A">
-          <span id="myInfoEditIcon" class="material-symbols-outlined text-base" style="font-variation-settings:'wght' 600">edit</span>
-          <span id="myInfoEditLabel" class="font-headline font-black italic uppercase text-sm tracking-wide">MODIFICA</span>
-        </button>
       </div>
       <!-- Edit mode -->
       <div id="myInfoEdit" class="hidden rounded-[20px] p-4 space-y-3" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
@@ -791,14 +783,19 @@
             </select>
           </div>
         </div>
-        <div class="flex gap-2 pt-1">
-          <button id="myInfoCancelBtn" class="flex-1 py-2.5 rounded-xl font-headline font-black italic uppercase text-sm tracking-wide active:scale-[0.98] transition-all" style="border:1px solid rgba(255,255,255,0.10); color:rgba(255,255,255,0.4)">ANNULLA</button>
-          <button id="myInfoSaveBtn" class="flex-1 py-2.5 rounded-xl font-headline font-black italic uppercase text-sm tracking-wide active:scale-[0.98] transition-all" style="background:#C5FF1A; color:#161f00">SALVA</button>
-        </div>
       </div>
-      <!-- Disponibilità (condivisa tra view e edit mode) -->
+    </div>
+    <!-- Disponibilità (sempre visibile, editable) -->
+    <div class="space-y-2">
+      <div class="flex items-center justify-between px-1">
+        <h3 class="font-headline font-black italic text-sm text-[#888] uppercase tracking-widest">DISPONIBILITÀ</h3>
+        <button id="myDispEditBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg active:scale-[0.97] transition-all no-anim" style="border:1px solid rgba(197,255,26,0.3); color:#C5FF1A">
+          <span id="myDispEditIcon" class="material-symbols-outlined text-base" style="font-variation-settings:'wght' 600">edit</span>
+          <span id="myDispEditLabel" class="font-headline font-black italic uppercase text-xs tracking-wide">MODIFICA</span>
+        </button>
+      </div>
       <div class="rounded-[20px] p-4" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
-        <p class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic mb-3">DISPONIBILITÀ</p>
+        <p id="myDispHint" class="text-[10px] text-[#C5FF1A] italic hidden mb-2">Tocca le celle per modificare</p>
         <div class="overflow-x-auto">
           <table class="w-full text-center border-collapse" style="min-width:240px">
             <thead>
@@ -849,6 +846,11 @@
         </div>
       </div>
     </div>
+    <!-- Trend -->
+    <section class="cinematic-card rounded-[24px] p-5 flex justify-between items-center">
+      <span class="text-[11px] uppercase tracking-[0.2em] text-[#888] font-black italic">TREND</span>
+      <div id="myTrend" class="flex gap-2"></div>
+    </section>
     <!-- Ultimi Match -->
     <section>
       <p class="text-[13px] font-black text-white uppercase tracking-[0.2em] italic mb-3">ULTIMI MATCH</p>
@@ -1472,13 +1474,19 @@
     document.getElementById('myInfoMano').textContent      = p.mano       || '—';
     document.getElementById('myInfoSuperficie').textContent = p.superficie || '—';
     _fillDisp('msh-disp-', p.disponibilita || {});
-    // Reset collapsible + modalità view
-    const _mic = document.getElementById('myInfoCollapse');
-    const _mch = document.getElementById('myInfoChevron');
-    if (_mic) _mic.classList.add('hidden');
-    if (_mch) _mch.style.transform = '';
+    // Reset modalità view (esci da eventuale edit precedente)
     document.getElementById('myInfoView').classList.remove('hidden');
     document.getElementById('myInfoEdit').classList.add('hidden');
+    const _mInfoIcon  = document.getElementById('myInfoEditIcon');
+    const _mInfoLabel = document.getElementById('myInfoEditLabel');
+    if (_mInfoIcon)  _mInfoIcon.textContent  = 'edit';
+    if (_mInfoLabel) _mInfoLabel.textContent = 'MODIFICA';
+    const _mDispIcon  = document.getElementById('myDispEditIcon');
+    const _mDispLabel = document.getElementById('myDispEditLabel');
+    const _mDispHint  = document.getElementById('myDispHint');
+    if (_mDispIcon)  _mDispIcon.textContent  = 'edit';
+    if (_mDispLabel) _mDispLabel.textContent = 'MODIFICA';
+    if (_mDispHint)  _mDispHint.classList.add('hidden');
     const wr = p.match_giocati > 0 ? Math.round(p.vittorie / p.match_giocati * 100) : 0;
     document.getElementById('myWrPct').textContent = wr + '%';
     document.getElementById('myWrLabel').textContent = wr === 100 ? 'IMMORTALE' : wr >= 90 ? 'INVINCIBILE' : wr >= 80 ? 'INARRESTABILE' : wr >= 70 ? 'FUORICLASSE' : wr >= 60 ? 'SPIETATO' : wr >= 50 ? 'DOMINANTE' : wr >= 40 ? 'TENACE' : wr >= 30 ? 'LOTTATORE' : wr >= 20 ? 'DETERMINATO' : wr >= 10 ? 'IN CRESCITA' : wr >= 1 ? 'DEBUTTANTE' : 'IN PARTENZA';
@@ -1531,18 +1539,20 @@
     window.location.href = '../signup/signup.html';
   });
 
-  // ── Edit / Save info giocatore nel profile sheet ──
+  // ── Edit / Save info giocatore + disponibilità (flussi separati) ──
   (function() {
     const GIORNI = ['lun','mar','mer','gio','ven','sab','dom'];
     const FASCE  = ['mat','pom','ser'];
 
-    // Celle cliccabili (sempre; ignora click fuori edit mode via flag)
-    let _editMode = false;
+    let _infoEditing = false;
+    let _dispEditing = false;
+
+    // Celle disp cliccabili (toggle on/off solo in disp-edit mode)
     GIORNI.forEach(g => FASCE.forEach(f => {
       const cell = document.getElementById('msh-disp-' + g + '-' + f);
       if (!cell) return;
       cell.addEventListener('click', function() {
-        if (!_editMode) return;
+        if (!_dispEditing) return;
         const ok = cell.getAttribute('data-available') === '1';
         cell.setAttribute('data-available', ok ? '0' : '1');
         cell.style.background = ok ? 'rgba(255,255,255,0.05)' : '#C5FF1A';
@@ -1551,49 +1561,100 @@
       });
     }));
 
-    function enterEditMode() {
+    // ── INFO GIOCATORE: enter/save ────────────────────────────────
+    function enterInfoEdit() {
       const p = _fillProfileSheet._currentPlayer;
       if (!p) return;
-      _editMode = true;
-      const inAnni  = document.getElementById('myEditAnni');
-      const inPeso  = document.getElementById('myEditPeso');
-      const inAlt   = document.getElementById('myEditAltezza');
-      const inMano  = document.getElementById('myEditMano');
-      const inSuper = document.getElementById('myEditSuperficie');
-      if (inAnni)  inAnni.value  = p.eta        || '';
-      if (inPeso)  inPeso.value  = p.peso       || '';
-      if (inAlt)   inAlt.value   = p.altezza    || '';
-      if (inMano)  inMano.value  = p.mano       || '';
-      if (inSuper) inSuper.value = p.superficie || '';
+      _infoEditing = true;
+      const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+      set('myEditAnni',       p.eta        || '');
+      set('myEditPeso',       p.peso       || '');
+      set('myEditAltezza',    p.altezza    || '');
+      set('myEditMano',       p.mano       || '');
+      set('myEditSuperficie', p.superficie || '');
       document.getElementById('myInfoView').classList.add('hidden');
       document.getElementById('myInfoEdit').classList.remove('hidden');
-      GIORNI.forEach(g => FASCE.forEach(f => {
-        const c = document.getElementById('msh-disp-' + g + '-' + f);
-        if (c) { c.style.cursor = 'pointer'; c.style.outline = '1px dashed rgba(197,255,26,0.25)'; }
-      }));
-    }
-
-    function exitEditMode() {
-      _editMode = false;
-      document.getElementById('myInfoEdit').classList.add('hidden');
-      document.getElementById('myInfoView').classList.remove('hidden');
-      GIORNI.forEach(g => FASCE.forEach(f => {
-        const c = document.getElementById('msh-disp-' + g + '-' + f);
-        if (c) { c.style.cursor = 'default'; c.style.outline = ''; }
-      }));
+      const icon  = document.getElementById('myInfoEditIcon');
+      const label = document.getElementById('myInfoEditLabel');
+      if (icon)  icon.textContent  = 'save';
+      if (label) label.textContent = 'SALVA';
     }
 
     async function saveInfo() {
       const p = _fillProfileSheet._currentPlayer;
       if (!p) return;
-      const saveBtn = document.getElementById('myInfoSaveBtn');
-      if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'SALVO...'; }
+      const btn   = document.getElementById('myInfoEditBtn');
+      const icon  = document.getElementById('myInfoEditIcon');
+      const label = document.getElementById('myInfoEditLabel');
+      if (btn) btn.disabled = true;
+      if (label) label.textContent = 'SALVO...';
 
       const newAnni  = (document.getElementById('myEditAnni')?.value  || '').trim();
       const newPeso  = (document.getElementById('myEditPeso')?.value  || '').trim();
       const newAlt   = (document.getElementById('myEditAltezza')?.value || '').trim();
       const newMano  = document.getElementById('myEditMano')?.value  || '';
       const newSuper = document.getElementById('myEditSuperficie')?.value || '';
+
+      if (newAnni)  p.eta        = parseInt(newAnni, 10);
+      if (newPeso)  p.peso       = parseInt(newPeso, 10);
+      if (newAlt)   p.altezza    = parseInt(newAlt,  10);
+      if (newMano)  p.mano       = newMano;
+      if (newSuper) p.superficie = newSuper;
+
+      let ok = true;
+      try {
+        if (window.StorageManager && window.StorageManager.updatePlayerProfile) {
+          ok = await window.StorageManager.updatePlayerProfile(p.id, {
+            eta: p.eta, peso: p.peso, altezza: p.altezza,
+            mano: p.mano, superficie: p.superficie
+          });
+        }
+      } catch(e) { console.error('[home] save info:', e); ok = false; }
+
+      if (!ok) {
+        if (label) label.textContent = 'ERRORE — RIPROVA';
+        if (btn) btn.disabled = false;
+        return;
+      }
+
+      document.getElementById('myInfoAnni').textContent       = p.eta        ? p.eta       + ' anni' : '—';
+      document.getElementById('myInfoPeso').textContent       = p.peso       ? p.peso      + ' kg'   : '—';
+      document.getElementById('myInfoAltezza').textContent    = p.altezza    ? p.altezza   + ' cm'   : '—';
+      document.getElementById('myInfoMano').textContent       = p.mano       || '—';
+      document.getElementById('myInfoSuperficie').textContent = p.superficie || '—';
+
+      document.getElementById('myInfoEdit').classList.add('hidden');
+      document.getElementById('myInfoView').classList.remove('hidden');
+      if (icon)  icon.textContent  = 'edit';
+      if (label) label.textContent = 'MODIFICA';
+      if (btn)   btn.disabled = false;
+      _infoEditing = false;
+    }
+
+    // ── DISPONIBILITÀ: enter/save ─────────────────────────────────
+    function enterDispEdit() {
+      _dispEditing = true;
+      const hint  = document.getElementById('myDispHint');
+      const icon  = document.getElementById('myDispEditIcon');
+      const label = document.getElementById('myDispEditLabel');
+      if (hint)  hint.classList.remove('hidden');
+      if (icon)  icon.textContent  = 'save';
+      if (label) label.textContent = 'SALVA';
+      GIORNI.forEach(g => FASCE.forEach(f => {
+        const c = document.getElementById('msh-disp-' + g + '-' + f);
+        if (c) { c.style.cursor = 'pointer'; c.style.outline = '1px dashed rgba(197,255,26,0.25)'; }
+      }));
+    }
+
+    async function saveDisp() {
+      const p = _fillProfileSheet._currentPlayer;
+      if (!p) return;
+      const btn   = document.getElementById('myDispEditBtn');
+      const icon  = document.getElementById('myDispEditIcon');
+      const label = document.getElementById('myDispEditLabel');
+      const hint  = document.getElementById('myDispHint');
+      if (btn) btn.disabled = true;
+      if (label) label.textContent = 'SALVO...';
 
       const newDisp = {};
       GIORNI.forEach(g => {
@@ -1603,40 +1664,41 @@
           newDisp[g][f] = c ? c.getAttribute('data-available') === '1' : false;
         });
       });
-
-      if (newAnni)  p.eta          = parseInt(newAnni, 10);
-      if (newPeso)  p.peso         = parseInt(newPeso, 10);
-      if (newAlt)   p.altezza      = parseInt(newAlt,  10);
-      if (newMano)  p.mano         = newMano;
-      if (newSuper) p.superficie   = newSuper;
       p.disponibilita = newDisp;
 
+      let ok = true;
       try {
         if (window.StorageManager && window.StorageManager.updatePlayerProfile) {
-          await window.StorageManager.updatePlayerProfile(p.id, {
-            eta: p.eta, peso: p.peso, altezza: p.altezza,
-            mano: p.mano, superficie: p.superficie, disponibilita: p.disponibilita
-          });
+          ok = await window.StorageManager.updatePlayerProfile(p.id, { disponibilita: p.disponibilita });
         }
-      } catch(e) { console.error('[home] save profile:', e); }
+      } catch(e) { console.error('[home] save disp:', e); ok = false; }
 
-      // Aggiorna view spans
-      document.getElementById('myInfoAnni').textContent       = p.eta        ? p.eta       + ' anni' : '—';
-      document.getElementById('myInfoPeso').textContent       = p.peso       ? p.peso      + ' kg'   : '—';
-      document.getElementById('myInfoAltezza').textContent    = p.altezza    ? p.altezza   + ' cm'   : '—';
-      document.getElementById('myInfoMano').textContent       = p.mano       || '—';
-      document.getElementById('myInfoSuperficie').textContent = p.superficie || '—';
+      if (!ok) {
+        if (label) label.textContent = 'ERRORE — RIPROVA';
+        if (btn) btn.disabled = false;
+        return;
+      }
+
       _fillDisp('msh-disp-', p.disponibilita);
-
-      exitEditMode();
-      if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'SALVA'; }
+      if (hint)  hint.classList.add('hidden');
+      GIORNI.forEach(g => FASCE.forEach(f => {
+        const c = document.getElementById('msh-disp-' + g + '-' + f);
+        if (c) { c.style.cursor = 'default'; c.style.outline = ''; }
+      }));
+      if (icon)  icon.textContent  = 'edit';
+      if (label) label.textContent = 'MODIFICA';
+      if (btn)   btn.disabled = false;
+      _dispEditing = false;
     }
 
-    // Wire up buttons (using event delegation since DOM might not be ready at parse time)
+    // Wire up — event delegation
     document.addEventListener('click', function(e) {
-      if (e.target.closest('#myInfoEditBtn'))   { enterEditMode(); }
-      if (e.target.closest('#myInfoSaveBtn'))   { saveInfo(); }
-      if (e.target.closest('#myInfoCancelBtn')) { exitEditMode(); }
+      if (e.target.closest('#myInfoEditBtn')) {
+        if (_infoEditing) saveInfo(); else enterInfoEdit();
+      }
+      if (e.target.closest('#myDispEditBtn')) {
+        if (_dispEditing) saveDisp(); else enterDispEdit();
+      }
     });
   })();
 
@@ -1688,7 +1750,7 @@
     const badgeBg  = win ? '#C5FF1A' : 'rgba(239,68,68,0.2)';
     const badgeTxt = win ? '#4a6000' : '#f87171';
     const badgeBrd = win ? '' : 'border:1px solid rgba(239,68,68,0.3);';
-    return `<div class="cinematic-card rounded-[14px] p-4 shrink-0 w-[155px] flex flex-col gap-2">
+    return `<div class="match-mini-card rounded-[14px] p-4 shrink-0 w-[155px] flex flex-col gap-2" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07)">
       <div class="flex justify-between items-start gap-1">
         <div class="min-w-0">
           <p style="font-size:9px;color:#888;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${nome}</p>
@@ -1710,7 +1772,7 @@
       .sort((a, b) => (b.data || '').localeCompare(a.data || ''))
       .slice(0, 8);
     if (!mine.length) {
-      return '<div class="cinematic-card rounded-[14px] p-4 shrink-0 w-[220px] flex items-center justify-center"><p class="text-[10px] text-[#666] uppercase tracking-widest text-center">Nessun match giocato</p></div>';
+      return '<div class="match-mini-card rounded-[14px] p-4 shrink-0 w-[220px] flex items-center justify-center" style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07)"><p class="text-[10px] text-[#666] uppercase tracking-widest text-center">Nessun match giocato</p></div>';
     }
     return mine.map(m => {
       const iAmP1 = m.giocatore1_id === p.id;
@@ -1804,9 +1866,9 @@
   };
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="../../src/storage-manager.js?v=17"></script>
-<script src="../../src/ui-binder.js?v=17"></script>
-<script src="../../src/main.js?v=17"></script>
+<script src="../../src/storage-manager.js?v=18"></script>
+<script src="../../src/ui-binder.js?v=18"></script>
+<script src="../../src/main.js?v=18"></script>
 
 <script>
 /* ── Drag-to-close per le schede dal basso (iOS-grade) ──
@@ -1917,5 +1979,5 @@
   }, { passive: false });
 })();
 </script>
-<script src="../../src/animations.js"></script>
+<script src="../../src/animations.js?v=18"></script>
 </body></html>
