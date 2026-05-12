@@ -264,8 +264,7 @@
       function sortStandings() {
         standings.sort(function (a, b) {
           if (b.punti !== a.punti) return b.punti - a.punti;
-          if (b.vittorie !== a.vittorie) return b.vittorie - a.vittorie;
-          return a.sconfitte - b.sconfitte;
+          return b.vittorie - a.vittorie;
         });
       }
 

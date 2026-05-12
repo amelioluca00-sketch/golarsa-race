@@ -238,18 +238,44 @@
         var SM = window.StorageManager;
         var torneoId = localStorage.getItem('gr_torneo_id');
 
-        // Punti di fallback (solo game points) nel caso di uscita anticipata
-        var puntiGuadagnati = s1 * 10;
+        // ── Validazione punteggio ──────────────────────────────────────
+        // Entrambi devono essere interi non negativi
+        if (!Number.isInteger(s1) || !Number.isInteger(s2) || s1 < 0 || s2 < 0) {
+            alert('⚠️ I punteggi devono essere numeri interi positivi.');
+            return;
+        }
+        // Il vincitore deve avere più game del perdente (almeno 1 in più)
+        if (s1 === s2) {
+            alert('⚠️ Il risultato non può essere in pareggio. Il vincitore deve avere più game del perdente.');
+            return;
+        }
+        if (s1 < s2) {
+            // Tu hai meno game dell'avversario
+            if (s2 - s1 < 1) {
+                alert('⚠️ Il vincitore deve avere almeno 1 game in più del perdente.');
+                return;
+            }
+        } else {
+            if (s1 - s2 < 1) {
+                alert('⚠️ Il vincitore deve avere almeno 1 game in più del perdente.');
+                return;
+            }
+        }
+
+        // ── Calcolo punti guadagnati ──────────────────────────────────
+        // Vittoria: +100pt fissi. Sconfitta: +10pt per ogni game vinto dal perdente.
+        var hoVinto = s1 > s2;
+        var puntiGuadagnati = hoVinto ? 100 : s1 * 10;
 
         if (!SM || !torneoId) {
-            window.location.href = 'risultato_inviato/risultato_inviato.html?tu=' + s1 + '&avv=' + s2 + '&punti=' + puntiGuadagnati;
+            window.location.href = 'risultato_inviato/risultato_inviato.html?tu=' + s1 + '&avv=' + s2 + '&punti=' + puntiGuadagnati + '&vittoria=' + (hoVinto ? '1' : '0');
             return;
         }
 
         // Leggi dalla cache (già caricata da DOMContentLoaded)
         var data = SM.getTournamentData(torneoId);
         if (!data) {
-            window.location.href = 'risultato_inviato/risultato_inviato.html?tu=' + s1 + '&avv=' + s2 + '&punti=' + puntiGuadagnati;
+            window.location.href = 'risultato_inviato/risultato_inviato.html?tu=' + s1 + '&avv=' + s2 + '&punti=' + puntiGuadagnati + '&vittoria=' + (hoVinto ? '1' : '0');
             return;
         }
 
@@ -257,7 +283,7 @@
         var utente = userId ? data.players.find(function(p) { return p.id === userId; }) : null;
         if (!utente && data.standings.length) utente = data.standings[0];
         if (!utente) {
-            window.location.href = 'risultato_inviato/risultato_inviato.html?tu=' + s1 + '&avv=' + s2 + '&punti=' + puntiGuadagnati;
+            window.location.href = 'risultato_inviato/risultato_inviato.html?tu=' + s1 + '&avv=' + s2 + '&punti=' + puntiGuadagnati + '&vittoria=' + (hoVinto ? '1' : '0');
             return;
         }
 
@@ -288,37 +314,11 @@
           });
           if (dupl) {
             alert('⚠️ Hai già sfidato questo avversario questa settimana. Puoi sfidarlo di nuovo dalla prossima settimana (lunedì).');
-            var btn2 = document.querySelector('button[onclick="inviaRisultato()"]');
-            if (btn2) { btn2.disabled = false; btn2.textContent = 'INVIA RISULTATO'; }
             return;
           }
         }
 
         var avv = data.players.find(function(p) { return p.id === avvId; });
-
-        // Ricalcola punti con la logica completa (Fase 1 / Fase 2)
-        var isFase1 = false;
-        if (data.torneo && data.torneo.inizio && dataIncontro) {
-            var inizioD = new Date(data.torneo.inizio);
-            var matchD  = new Date(dataIncontro);
-            isFase1 = (matchD - inizioD) / (1000 * 60 * 60 * 24) < 7;
-        }
-        var preP1 = utente ? (utente.punti || 0) : 0;
-        var preP2 = avv    ? (avv.punti    || 0) : 0;
-        var gameP   = s1 * 10; // +10 punti per ogni game vinto (sempre)
-        var bonusV  = 0;
-        var bonusD  = 0;
-        if (s1 > s2 && !isFase1) {
-            // Bonus vittoria: 0-50 pt → +10 a chiunque vinca.
-            // Oltre 50 pt → bonus SOLO al giocatore più debole (meno punti) se vince.
-            // Il più forte che batte il più debole con gap > 50 → 0 bonus.
-            var diffP = Math.abs(preP1 - preP2);
-            var iAmWeaker = preP1 <= preP2;
-            bonusV = diffP <= 50 ? 10 : (iAmWeaker ? (diffP <= 150 ? 20 : 30) : 0);
-            // Bonus dominanza: vittoria con almeno 4 game di scarto
-            if (s1 - s2 >= 4) bonusD = 10;
-        }
-        puntiGuadagnati = gameP + bonusV + bonusD;
 
         // Disabilita bottone durante l'invio
         var btn = document.querySelector('button[onclick="inviaRisultato()"]');
@@ -335,7 +335,7 @@
             score1:          s1,
             score2:          s2,
             punteggio:       s1 + '-' + s2,
-            vincitore_id:    s1 > s2 ? utente.id : s2 > s1 ? avvId : null,
+            vincitore_id:    hoVinto ? utente.id : avvId,
             stato:           'in_attesa'
         };
 
@@ -349,14 +349,12 @@
         var mioNome  = utente ? capitalizza(utente.nome) : 'Tu';
         var avvNome2 = avv    ? capitalizza(avv.nome)    : 'Avversario';
         window.location.href = 'risultato_inviato/risultato_inviato.html'
-            + '?tu='      + s1
-            + '&avv='     + s2
-            + '&punti='   + puntiGuadagnati
-            + '&gameP='   + gameP
-            + '&bonusV='  + bonusV
-            + '&bonusD='  + bonusD
-            + '&mioNome=' + encodeURIComponent(mioNome)
-            + '&avvNome=' + encodeURIComponent(avvNome2);
+            + '?tu='       + s1
+            + '&avv='      + s2
+            + '&punti='    + puntiGuadagnati
+            + '&vittoria=' + (hoVinto ? '1' : '0')
+            + '&mioNome='  + encodeURIComponent(mioNome)
+            + '&avvNome='  + encodeURIComponent(avvNome2);
     }
 </script>
 <div class="fixed inset-0 -z-20 overflow-hidden pointer-events-none">

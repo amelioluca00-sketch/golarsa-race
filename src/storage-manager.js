@@ -258,8 +258,7 @@
       var standings = allPlayers.slice()
         .sort(function (a, b) {
           if (b.punti !== a.punti) return b.punti - a.punti;
-          if (b.vittorie !== a.vittorie) return b.vittorie - a.vittorie;
-          return (b.gol_fatti - b.gol_subiti) - (a.gol_fatti - a.gol_subiti);
+          return b.vittorie - a.vittorie;
         })
         .map(function (p, i) { return Object.assign({}, p, { rank: i + 1 }); });
 
@@ -372,11 +371,7 @@
       var byId = {};
       players.forEach(function (p) { byId[p.id] = p; });
 
-      // Determina la data di inizio torneo per distinguere Fase 1 / Fase 2
-      var torneo = (_cache[torneoId] || {}).torneo || null;
-      var inizioDate = torneo && torneo.inizio ? new Date(torneo.inizio) : null;
-
-      // Ordina per data: fondamentale per il calcolo corretto del bonus upset (punti pre-partita)
+      // Ordina per data
       var completedMatches = matches
         .filter(function (m) { return m.stato === 'completata'; })
         .sort(function (a, b) { return (a.data || a.date || '').localeCompare(b.data || b.date || ''); });
@@ -391,9 +386,6 @@
         // Confronta il timestamp di invio del match (inviato_il) con la data
         // di reset del giocatore (stats_reset_at). Se il match è stato inviato
         // PRIMA del reset → ignoralo.
-        // inviato_il è un ISO timestamp pieno: il confronto stringa funziona.
-        // Fallback per match inseriti dall'admin (senza inviato_il): usa la data
-        // di gioco troncata al giorno.
         var inviatoIl = m.inviato_il || null;
         if (inviatoIl) {
           if (p1.stats_reset_at && inviatoIl < p1.stats_reset_at) return;
@@ -407,55 +399,24 @@
         }
         // ────────────────────────────────────────────────────────────────
 
-        // Fase 1 = prime 7 giorni dall'inizio torneo: solo game points, nessun bonus
-        var isFase1 = false;
-        if (inizioDate && matchDate) {
-          var mDate = new Date(matchDate);
-          isFase1 = (mDate - inizioDate) / (1000 * 60 * 60 * 24) < 7;
-        }
-
-        // Cattura punti pre-partita per il calcolo del bonus upset
-        var preP1 = p1.punti;
-        var preP2 = p2.punti;
-
         p1.match_giocati++; p2.match_giocati++;
         p1.gol_fatti += s1; p1.gol_subiti += s2;
         p2.gol_fatti += s2; p2.gol_subiti += s1;
 
         if (s1 > s2) {
-          // p1 vince — punto fisso vittoria
+          // p1 vince: +100pt fissi
+          // p2 perde: +10pt per ogni game vinto dal perdente (s2)
           p1.vittorie++; p2.sconfitte++;
-          p1.punti += 10;
-          if (!isFase1) {
-            // Bonus gap: SOLO per il giocatore più scarso (meno punti pre-partita) se vince.
-            // Il più forte che batte il più debole non riceve bonus gap.
-            var diff1 = Math.abs(preP1 - preP2);
-            var p1IsWeaker = preP1 < preP2;
-            if (p1IsWeaker) {
-              p1.punti += diff1 <= 50 ? 10 : (diff1 <= 150 ? 20 : 30);
-            }
-            // Bonus dominanza: vittoria con almeno 4 game di scarto
-            if (s1 - s2 >= 4) p1.punti += 10;
-          }
+          p1.punti += 100;
+          p2.punti += s2 * 10;
         } else if (s2 > s1) {
-          // p2 vince — punto fisso vittoria
+          // p2 vince: +100pt fissi
+          // p1 perde: +10pt per ogni game vinto dal perdente (s1)
           p2.vittorie++; p1.sconfitte++;
-          p2.punti += 10;
-          if (!isFase1) {
-            // Bonus gap: SOLO per il giocatore più scarso (meno punti pre-partita) se vince.
-            // Il più forte che batte il più debole non riceve bonus gap.
-            var diff2 = Math.abs(preP1 - preP2);
-            var p2IsWeaker = preP2 < preP1;
-            if (p2IsWeaker) {
-              p2.punti += diff2 <= 50 ? 10 : (diff2 <= 150 ? 20 : 30);
-            }
-            // Bonus dominanza: vittoria con almeno 4 game di scarto
-            if (s2 - s1 >= 4) p2.punti += 10;
-          }
-        } else {
-          // Pareggio: nessun punto
-          p1.pareggi++; p2.pareggi++;
+          p2.punti += 100;
+          p1.punti += s1 * 10;
         }
+        // Pareggio non previsto dal regolamento, nessun punto
       });
 
       // Leggi i payload attuali dal DB per preservare i campi profilo utente.

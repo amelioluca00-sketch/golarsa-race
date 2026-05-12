@@ -220,20 +220,15 @@
 
         <!-- Righe breakdown -->
         <div class="px-5 py-4 space-y-3">
-            <!-- Game vinti (sempre visibile) -->
-            <div class="flex items-center justify-between row-in" style="animation-delay:2s;">
-                <span class="text-sm text-neutral-400">Game vinti</span>
+            <!-- Riga vittoria (visibile solo se ha vinto) -->
+            <div class="flex items-center justify-between row-in" id="row-vittoria-wrap" style="display:none;animation-delay:2s;">
+                <span class="text-sm text-neutral-400">Vittoria</span>
+                <span class="text-sm font-label font-semibold text-[#C5FF1A]">+100</span>
+            </div>
+            <!-- Riga game vinti dal perdente (visibile solo se ha perso) -->
+            <div class="flex items-center justify-between row-in" id="row-game-wrap" style="display:none;animation-delay:2s;">
+                <span class="text-sm text-neutral-400" id="row-game-label">Game vinti</span>
                 <span class="text-sm font-label font-semibold text-[#C5FF1A]" id="row-game">+0</span>
-            </div>
-            <!-- Bonus vittoria (solo se > 0) -->
-            <div class="flex items-center justify-between" id="row-bonusv-wrap" style="display:none;">
-                <span class="text-sm text-neutral-400">Bonus vittoria</span>
-                <span class="text-sm font-label font-semibold text-[#C5FF1A]" id="row-bonusv">+0</span>
-            </div>
-            <!-- Bonus dominanza (solo se > 0) -->
-            <div class="flex items-center justify-between" id="row-bonusd-wrap" style="display:none;">
-                <span class="text-sm text-neutral-400">Bonus dominanza</span>
-                <span class="text-sm font-label font-semibold text-[#C5FF1A]" id="row-bonusd">+0</span>
             </div>
         </div>
     </div>
@@ -257,11 +252,9 @@
     var params   = new URLSearchParams(window.location.search);
     var scoreTu  = parseInt(params.get('tu'),  10);
     var scoreAvv = parseInt(params.get('avv'), 10);
-    var gameP    = parseInt(params.get('gameP'),  10);
-    var bonusV   = parseInt(params.get('bonusV'), 10);
-    var bonusD   = parseInt(params.get('bonusD'), 10);
-    var mioNome  = params.get('mioNome')  || 'TU';
-    var avvNome  = params.get('avvNome')  || 'AVV';
+    var vittoria = params.get('vittoria') === '1';
+    var mioNome  = params.get('mioNome') || 'TU';
+    var avvNome  = params.get('avvNome') || 'AVV';
     var TARGET   = parseInt(params.get('punti'), 10);
     if (isNaN(TARGET)) TARGET = 0;
 
@@ -274,21 +267,20 @@
     document.getElementById('label-home').textContent = mioNome.toUpperCase();
     document.getElementById('label-away').textContent = avvNome.toUpperCase();
 
-    // Breakdown
-    if (!isNaN(gameP)) {
-        document.getElementById('row-game').textContent = '+' + gameP;
-    }
-    if (!isNaN(bonusV) && bonusV > 0) {
-        var wv = document.getElementById('row-bonusv-wrap');
-        wv.style.display = 'flex';
-        wv.classList.add('row-in');
-        document.getElementById('row-bonusv').textContent = '+' + bonusV;
-    }
-    if (!isNaN(bonusD) && bonusD > 0) {
-        var wd = document.getElementById('row-bonusd-wrap');
-        wd.style.display = 'flex';
-        wd.classList.add('row-in');
-        document.getElementById('row-bonusd').textContent = '+' + bonusD;
+    // Breakdown punti
+    if (vittoria) {
+        // Vittoria: mostra riga "+100 vittoria"
+        var wv = document.getElementById('row-vittoria-wrap');
+        if (wv) { wv.style.display = 'flex'; wv.classList.add('row-in'); }
+    } else {
+        // Sconfitta: mostra game vinti dal perdente
+        var wg = document.getElementById('row-game-wrap');
+        if (wg) { wg.style.display = 'flex'; wg.classList.add('row-in'); }
+        if (!isNaN(scoreTu)) {
+            var lbl = document.getElementById('row-game-label');
+            if (lbl) lbl.textContent = 'Game vinti (' + scoreTu + ' × 10pt)';
+            document.getElementById('row-game').textContent = '+' + TARGET;
+        }
     }
 
     /* ── Counter punti con easing ── */
