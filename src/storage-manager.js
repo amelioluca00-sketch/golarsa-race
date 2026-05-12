@@ -430,9 +430,13 @@
           // p1 vince
           p1.vittorie++; p2.sconfitte++;
           if (!isFase1) {
-            // Bonus vittoria: scala in base alla differenza di punti pre-partita
+            // Bonus vittoria: 0-50 pt di gap → +10 a chiunque vinca.
+            // Oltre 50 pt di gap → bonus SOLO per il giocatore più debole (meno punti).
+            // Il giocatore più forte che batte uno più debole con gap > 50 → 0 bonus.
             var diff1 = Math.abs(preP1 - preP2);
-            p1.punti += diff1 <= 50 ? 10 : diff1 <= 150 ? 20 : 30;
+            var p1IsWeaker = preP1 <= preP2;
+            var bv1 = diff1 <= 50 ? 10 : (p1IsWeaker ? (diff1 <= 150 ? 20 : 30) : 0);
+            p1.punti += bv1;
             // Bonus dominanza: vittoria con almeno 4 game di scarto
             if (s1 - s2 >= 4) p1.punti += 10;
           }
@@ -440,9 +444,13 @@
           // p2 vince
           p2.vittorie++; p1.sconfitte++;
           if (!isFase1) {
-            // Bonus vittoria: scala in base alla differenza di punti pre-partita
+            // Bonus vittoria: 0-50 pt di gap → +10 a chiunque vinca.
+            // Oltre 50 pt di gap → bonus SOLO per il giocatore più debole (meno punti).
+            // Il giocatore più forte che batte uno più debole con gap > 50 → 0 bonus.
             var diff2 = Math.abs(preP1 - preP2);
-            p2.punti += diff2 <= 50 ? 10 : diff2 <= 150 ? 20 : 30;
+            var p2IsWeaker = preP2 <= preP1;
+            var bv2 = diff2 <= 50 ? 10 : (p2IsWeaker ? (diff2 <= 150 ? 20 : 30) : 0);
+            p2.punti += bv2;
             // Bonus dominanza: vittoria con almeno 4 game di scarto
             if (s2 - s1 >= 4) p2.punti += 10;
           }

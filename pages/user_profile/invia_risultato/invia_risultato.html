@@ -309,9 +309,12 @@
         var bonusV  = 0;
         var bonusD  = 0;
         if (s1 > s2 && !isFase1) {
-            // Bonus vittoria: scala in base alla differenza di punti pre-partita
+            // Bonus vittoria: 0-50 pt → +10 a chiunque vinca.
+            // Oltre 50 pt → bonus SOLO al giocatore più debole (meno punti) se vince.
+            // Il più forte che batte il più debole con gap > 50 → 0 bonus.
             var diffP = Math.abs(preP1 - preP2);
-            bonusV = diffP <= 50 ? 10 : diffP <= 150 ? 20 : 30;
+            var iAmWeaker = preP1 <= preP2;
+            bonusV = diffP <= 50 ? 10 : (iAmWeaker ? (diffP <= 150 ? 20 : 30) : 0);
             // Bonus dominanza: vittoria con almeno 4 game di scarto
             if (s1 - s2 >= 4) bonusD = 10;
         }
