@@ -990,11 +990,11 @@
       <!-- Breakdown: ogni voce su una riga con valore allineato a destra -->
       <div class="flex flex-col gap-1.5 mt-3">
         <div class="flex items-center justify-between gap-3">
-          <span class="font-label text-white/55 text-[12px] truncate">Game vinti</span>
+          <span class="font-label text-white/55 text-[12px] truncate">Vittoria</span>
           <span class="font-headline font-black italic text-[#C5FF1A] text-[13px] tabular-nums shrink-0" id="points-games">+0</span>
         </div>
         <div class="flex items-center justify-between gap-3">
-          <span class="font-label text-white/55 text-[12px] truncate">Bonus vittoria</span>
+          <span class="font-label text-white/55 text-[12px] truncate">Bonus gap</span>
           <span class="font-headline font-black italic text-[#C5FF1A] text-[13px] tabular-nums shrink-0" id="points-bonus">+0</span>
         </div>
         <div id="points-dominanza-row" class="hidden items-center justify-between gap-3" style="display:none;">
@@ -1047,41 +1047,41 @@
     <!-- Sezione: come si guadagnano i punti -->
     <div class="space-y-3" style="font-family:'Inter',sans-serif;font-size:13px;line-height:1.6;color:rgba(255,255,255,0.6);">
 
-      <!-- Card 1: Punti base per game -->
+      <!-- Card 1: Punti vittoria fissi -->
       <div class="bg-white/[0.04] rounded-2xl p-4 border border-white/5 flex gap-4 items-start">
         <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-[#C5FF1A]/10 border border-[#C5FF1A]/20 flex items-center justify-center">
           <span class="material-symbols-outlined text-[#C5FF1A] text-2xl">sports_tennis</span>
         </div>
         <div class="flex-1 min-w-0">
-          <p class="font-headline font-black italic text-white uppercase text-sm tracking-wide mb-1">Punti Base</p>
-          <p><strong class="text-[#C5FF1A]">+10 punti</strong> per ogni game vinto durante la partita.</p>
-          <p class="text-[11px] text-white/40 mt-1.5">Es. vittoria 6–3 → 6 × 10 = +60 punti</p>
+          <p class="font-headline font-black italic text-white uppercase text-sm tracking-wide mb-1">Punti Vittoria</p>
+          <p><strong class="text-[#C5FF1A]">+10 punti</strong> per ogni vittoria, indipendentemente dal punteggio della partita.</p>
+          <p class="text-[11px] text-white/40 mt-1.5">Fissi a ogni vincitore, chiunque esso sia.</p>
         </div>
       </div>
 
-      <!-- Card 2: Bonus vittoria per differenza pre-partita -->
+      <!-- Card 2: Bonus gap per il giocatore più scarso -->
       <div class="bg-white/[0.04] rounded-2xl p-4 border border-white/5 flex gap-4 items-start">
         <div class="flex-shrink-0 w-12 h-12 rounded-xl bg-[#C5FF1A]/10 border border-[#C5FF1A]/20 flex items-center justify-center">
           <span class="material-symbols-outlined text-[#C5FF1A] text-2xl">emoji_events</span>
         </div>
         <div class="flex-1 min-w-0">
-          <p class="font-headline font-black italic text-white uppercase text-sm tracking-wide mb-1">Bonus Vittoria</p>
-          <p class="mb-2">Con gap fino a 50 pt il bonus va a chiunque vinca. Oltre 50 pt, il bonus <strong class="text-white">spetta solo al giocatore più debole</strong> che batte il più forte — l'impresa vale di più:</p>
+          <p class="font-headline font-black italic text-white uppercase text-sm tracking-wide mb-1">Bonus Gap</p>
+          <p class="mb-2">Il bonus gap spetta <strong class="text-white">solo al giocatore più scarso in classifica</strong> quando batte il più forte — l'impresa vale di più:</p>
           <div class="space-y-1.5">
             <div class="flex items-center justify-between bg-black/30 rounded-lg px-3 py-1.5">
               <span class="text-[11px] text-white/70">0 – 50 pt di differenza</span>
-              <span class="font-headline font-black italic text-[#C5FF1A] text-sm">+10 (chiunque vinca)</span>
+              <span class="font-headline font-black italic text-[#C5FF1A] text-sm">+10</span>
             </div>
             <div class="flex items-center justify-between bg-black/30 rounded-lg px-3 py-1.5">
               <span class="text-[11px] text-white/70">51 – 150 pt di differenza</span>
-              <span class="font-headline font-black italic text-[#C5FF1A] text-sm">+20 (solo il più debole)</span>
+              <span class="font-headline font-black italic text-[#C5FF1A] text-sm">+20</span>
             </div>
             <div class="flex items-center justify-between bg-black/30 rounded-lg px-3 py-1.5">
               <span class="text-[11px] text-white/70">Oltre 150 pt di differenza</span>
-              <span class="font-headline font-black italic text-[#C5FF1A] text-sm">+30 (solo il più debole)</span>
+              <span class="font-headline font-black italic text-[#C5FF1A] text-sm">+30</span>
             </div>
           </div>
-          <p class="text-[10px] text-white/40 mt-2">Il giocatore più forte che batte un avversario con oltre 50 pt di gap non riceve bonus vittoria.</p>
+          <p class="text-[10px] text-white/40 mt-2">Il giocatore più forte che batte il più scarso non riceve alcun bonus gap.</p>
         </div>
       </div>
 
@@ -1140,19 +1140,18 @@
 
   // ── Calcolo punti per il vincitore (allineato a storage-manager.js) ──
   // Regole:
-  //   • +10 punti per ogni game vinto (sempre)
-  //   • Bonus vittoria: diff 0–50 → +10 a chiunque vinca.
-  //     Con gap > 50: bonus SOLO al giocatore più debole (meno punti) se vince.
-  //     Il più forte che batte il più debole con gap > 50 → 0 bonus vittoria.
-  //     Fasce per il più debole: 51–150 pt → +20; oltre 150 pt → +30.
+  //   • +10 punti fissi per la vittoria (indipendentemente da chi vince)
+  //   • Bonus gap: SOLO per il giocatore più scarso (meno punti pre-partita) se vince.
+  //     0–50 pt di gap → +10; 51–150 pt → +20; oltre 150 pt → +30.
+  //     Il più forte che batte il più debole non riceve bonus gap.
   //   • Bonus dominanza: +10 se vinci con almeno 4 game di scarto
   function calcolaPuntiVincitore(s1, s2, preP1, preP2) {
     var p1 = preP1 || 0, p2 = preP2 || 0;
     var diff = Math.abs(p1 - p2);
-    var p1IsWeaker = p1 <= p2;
-    var bonusVittoria = diff <= 50 ? 10 : (p1IsWeaker ? (diff <= 150 ? 20 : 30) : 0);
+    var p1IsWeaker = p1 < p2;
+    var bonusVittoria = p1IsWeaker ? (diff <= 50 ? 10 : (diff <= 150 ? 20 : 30)) : 0;
     var bonusDominanza = (s1 - s2) >= 4 ? 10 : 0;
-    var gamePoints = s1 * 10;
+    var gamePoints = 10;
     return {
       gamePoints: gamePoints,
       bonusVittoria: bonusVittoria,
