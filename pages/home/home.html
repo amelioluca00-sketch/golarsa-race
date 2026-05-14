@@ -135,6 +135,15 @@
             opacity: 0;
             animation: heroFadeUp 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
+        @keyframes heroLineSlide {
+            0%   { opacity: 0; transform: translateX(-32px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        .hero-line {
+            opacity: 0;
+            display: block;
+            animation: heroLineSlide 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
         .vignette {
             background:
                 linear-gradient(to bottom, rgba(0,0,0,0.28) 0%, transparent 15%, transparent 80%, rgba(0,0,0,0.38) 100%);
@@ -305,15 +314,15 @@
 <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to bottom, transparent 0%, transparent 72%, rgba(8,8,15,0.55) 88%, #08080f 100%);"></div>
 <!-- Sottotitoli del torneo + data — replica identica del rendering.png:
      punchline bianca bold condensed in basso a sinistra, data in box lime outlined sotto. -->
-<div class="absolute z-20 flex flex-col items-start gap-3 hero-fade-up" style="left: 6%; bottom: 5rem; animation-delay:0.5s;">
+<div class="absolute z-20 flex flex-col items-start gap-3" style="left: 6%; bottom: 5rem;">
   <h2 class="font-headline font-black italic uppercase" style="font-size: clamp(0.95rem, 4.3vw, 1.4rem); line-height: 1.1; letter-spacing: 0;">
-    <span class="block" style="color: #C5FF1A;">TUTTI</span>
-    <span class="block" style="color: #C5FF1A;">CONTRO</span>
-    <span class="block" style="color: #C5FF1A;">TUTTI</span>
-    <span class="block" style="color: #ffffff;">UNO SOLO</span>
-    <span class="block" style="color: #ffffff;">IN CIMA</span>
+    <span class="hero-line" style="color: #C5FF1A; animation-delay: 0.25s;">TUTTI</span>
+    <span class="hero-line" style="color: #C5FF1A; animation-delay: 0.38s;">CONTRO</span>
+    <span class="hero-line" style="color: #C5FF1A; animation-delay: 0.51s;">TUTTI</span>
+    <span class="hero-line" style="color: #ffffff; animation-delay: 0.64s;">UNO SOLO</span>
+    <span class="hero-line" style="color: #ffffff; animation-delay: 0.77s;">IN CIMA</span>
   </h2>
-  <div id="hero-data-torneo-wrap" style="background: #C5FF1A; border-radius: 3px; padding: 5px 10px; display: inline-flex; align-items: center; justify-content: center;">
+  <div id="hero-data-torneo-wrap" class="hero-line" style="background: #C5FF1A; border-radius: 3px; padding: 5px 10px; display: inline-flex; align-items: center; justify-content: center; animation-delay: 0.92s;">
     <span id="hero-data-torneo" class="font-headline font-black italic uppercase" style="color: #000; font-size: clamp(0.72rem, 2.8vw, 0.9rem); line-height: 1; letter-spacing: 0.05em; padding-left: 0.05em; display: block; text-align: center;">—</span>
   </div>
 </div>
