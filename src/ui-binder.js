@@ -17,6 +17,20 @@
   function fmtDataBreve(s) { if (!s) return '';  var p = s.split('-'); return p[2] + '/' + p[1] + '/' + p[0]; }
   function fmtMese(s)      { if (!s) return '';  var p = s.split('-'); return p[2] + ' ' + MESI_BREVE[parseInt(p[1])-1]; }
 
+  // Formatta un range inizio—fine in modo intelligente per la hero del torneo.
+  // - Stesso mese e anno  → "13-16 MARZO 2026"
+  // - Mesi diversi, stesso anno → "28 MARZO - 2 APRILE 2026"
+  // - Anni diversi → "28 DIC 2026 - 5 GEN 2027"
+  function fmtRangeTorneo(inizio, fine) {
+    if (!inizio || !fine) return '';
+    var pi = inizio.split('-'), pf = fine.split('-');
+    var dI = parseInt(pi[2], 10), mI = parseInt(pi[1], 10), yI = parseInt(pi[0], 10);
+    var dF = parseInt(pf[2], 10), mF = parseInt(pf[1], 10), yF = parseInt(pf[0], 10);
+    if (yI === yF && mI === mF) return dI + '-' + dF + ' ' + MESI[mI-1] + ' ' + yI;
+    if (yI === yF) return dI + ' ' + MESI[mI-1] + ' - ' + dF + ' ' + MESI[mF-1] + ' ' + yI;
+    return dI + ' ' + MESI_BREVE[mI-1].toUpperCase() + ' ' + yI + ' - ' + dF + ' ' + MESI_BREVE[mF-1].toUpperCase() + ' ' + yF;
+  }
+
   function wrLabel(wr) {
     return wr === 100 ? 'IMMORTALE' : wr >= 90 ? 'INVINCIBILE' : wr >= 80 ? 'INARRESTABILE'
       : wr >= 70 ? 'FUORICLASSE' : wr >= 60 ? 'SPIETATO' : wr >= 50 ? 'DOMINANTE'
@@ -1029,6 +1043,21 @@
       var dates = document.getElementById('cd-dates');
       if (dates) dates.textContent = fmtDataBreve(torneo.inizio) + ' — ' + fmtDataBreve(torneo.fine);
 
+      // Data del torneo nella hero (es. "13-16 MARZO 2026").
+      // Letta dinamicamente da torneo.inizio / torneo.fine (impostati dalla dashboard admin).
+      var heroDate    = document.getElementById('hero-data-torneo');
+      var heroDateBox = document.getElementById('hero-data-torneo-wrap');
+      var heroDateStr = fmtRangeTorneo(torneo.inizio, torneo.fine);
+      if (heroDate) {
+        if (heroDateStr) {
+          heroDate.textContent = heroDateStr;
+          if (heroDateBox) heroDateBox.style.display = '';
+        } else {
+          // Nessuna data configurata: nascondi del tutto il box per non mostrare il placeholder
+          if (heroDateBox) heroDateBox.style.display = 'none';
+        }
+      }
+
       function tickCountdown() {
         if (!torneo.fine) return;
         var diff = Math.max(0, new Date(torneo.fine + 'T23:59:59') - new Date());
@@ -1183,8 +1212,15 @@
           html += '<p class="text-center text-white font-label font-bold text-[10px] uppercase tracking-[0.2em]' + (di === 0 ? ' mt-1' : ' mt-5') + ' mb-2">' + dataLabel + '</p>';
 
           byDate[d].forEach(function (m) {
-            var n1 = (m.giocatore1_nome || '').toUpperCase();
-            var n2 = (m.giocatore2_nome || '').toUpperCase();
+            function _fmtNome(full) {
+              var parts = (full || '').trim().split(/\s+/);
+              if (parts.length < 2) return (full || '').toUpperCase();
+              var cognome = parts[parts.length - 1].toUpperCase();
+              var iniziale = parts[0][0].toUpperCase() + '.';
+              return iniziale + ' ' + cognome;
+            }
+            var n1 = _fmtNome(m.giocatore1_nome);
+            var n2 = _fmtNome(m.giocatore2_nome);
             var s1 = m.score1 != null ? m.score1 : '—';
             var s2 = m.score2 != null ? m.score2 : '—';
             var col1 = s1 > s2 ? '#D1FF4B' : 'rgba(255,255,255,0.35)';
