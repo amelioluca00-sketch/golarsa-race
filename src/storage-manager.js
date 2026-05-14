@@ -403,22 +403,25 @@
         p1.gol_fatti += s1; p1.gol_subiti += s2;
         p2.gol_fatti += s2; p2.gol_subiti += s1;
 
+        // Calcola differenza punti PRIMA di assegnare quelli di questo match
+        var diffPunti = Math.abs(p1.punti - p2.punti);
+        var bonusV = diffPunti <= 50 ? 10 : diffPunti <= 150 ? 20 : 30;
+
         if (s1 > s2) {
-          // p1 vince: +100pt fissi
-          // Bonus dominanza: se p2 non ha vinto nessun game (s2 === 0) → +2pt per game conquistato da p1
-          // Bonus resistenza: +10pt per ogni game vinto dal perdente (s2)
+          // p1 vince:
+          // Punti base: +10 per ogni game vinto
+          // Bonus vittoria: in base alla differenza punti pre-match (0-50→+10, 51-150→+20, >150→+30)
+          // Bonus dominanza: +10 se margine ≥ 4 game
           p1.vittorie++; p2.sconfitte++;
-          p1.punti += 100;
-          if (s2 === 0) p1.punti += s1 * 2;
-          p2.punti += s2 * 10;
+          p1.punti += s1 * 10;               // punti base
+          p1.punti += bonusV;                // bonus vittoria
+          if ((s1 - s2) >= 4) p1.punti += 10; // bonus dominanza
         } else if (s2 > s1) {
-          // p2 vince: +100pt fissi
-          // Bonus dominanza: se p1 non ha vinto nessun game (s1 === 0) → +2pt per game conquistato da p2
-          // Bonus resistenza: +10pt per ogni game vinto dal perdente (s1)
+          // p2 vince
           p2.vittorie++; p1.sconfitte++;
-          p2.punti += 100;
-          if (s1 === 0) p2.punti += s2 * 2;
-          p1.punti += s1 * 10;
+          p2.punti += s2 * 10;               // punti base
+          p2.punti += bonusV;                // bonus vittoria
+          if ((s2 - s1) >= 4) p2.punti += 10; // bonus dominanza
         }
         // Pareggio non previsto dal regolamento, nessun punto
       });
