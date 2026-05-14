@@ -1736,7 +1736,7 @@
   function _matchCardHTML(avvNome, data, scoreTu, scoreAvv) {
     const parti = avvNome.trim().split(' ');
     const cognome = parti.pop().toUpperCase();
-    const nome = parti.join(' ');
+    const nome = parti.join(' ').toUpperCase();
     const win = scoreTu > scoreAvv;
     const scoreCol = win ? '#C5FF1A' : '#f87171';
     const badgeBg  = win ? '#C5FF1A' : 'rgba(239,68,68,0.2)';
