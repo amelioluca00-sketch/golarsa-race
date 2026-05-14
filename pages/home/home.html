@@ -303,22 +303,22 @@
 <img alt="GOLARSA RACE" class="absolute inset-0 w-full h-full object-cover" src="../assets/COPERTINA.png" style="object-position: center center;"/>
 <!-- Soft fade verso il background della pagina (per integrare la hero con il resto) -->
 <div class="absolute inset-0 pointer-events-none" style="background: linear-gradient(to bottom, transparent 0%, transparent 72%, rgba(8,8,15,0.55) 88%, #08080f 100%);"></div>
-<!-- Sottotitoli del torneo + data, posizionati in basso a sinistra come nel rendering.
-     bottom: 7.5rem garantisce che restino sempre visibili sopra la countdown box (che ha -mt-24 = 96px di overlap). -->
-<div class="absolute z-20 flex flex-col items-start gap-3 hero-fade-up" style="left: 6%; bottom: 7.5rem; animation-delay:0.5s;">
-  <h2 class="font-headline font-black uppercase text-white leading-[1] tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.55)]" style="font-size: clamp(1.35rem, 5.8vw, 2rem); letter-spacing: -0.01em;">
+<!-- Sottotitoli del torneo + data — replica identica del rendering.png:
+     punchline bianca bold condensed in basso a sinistra, data in box lime outlined sotto. -->
+<div class="absolute z-20 flex flex-col items-start gap-3 hero-fade-up" style="left: 6%; bottom: 1.5rem; animation-delay:0.5s;">
+  <h2 class="font-headline font-black uppercase text-white" style="font-size: clamp(1.55rem, 7vw, 2.4rem); line-height: 0.92; letter-spacing: 0;">
     <span class="block">TUTTI</span>
     <span class="block">CONTRO</span>
     <span class="block">TUTTI</span>
-    <span class="block mt-1">UNO SOLO</span>
+    <span class="block" style="margin-top: 0.35em;">UNO SOLO</span>
     <span class="block">IN CIMA</span>
   </h2>
-  <div id="hero-data-torneo-wrap" class="inline-flex items-center justify-center px-3 py-1.5" style="border: 1.5px solid #C5FF1A; border-radius: 4px; background: transparent; box-shadow: 0 4px 14px rgba(0,0,0,0.45);">
-    <span id="hero-data-torneo" class="font-headline font-black uppercase text-[#C5FF1A] tracking-wider leading-none" style="font-size: clamp(0.78rem, 3.1vw, 0.95rem); letter-spacing: 0.04em;">—</span>
+  <div id="hero-data-torneo-wrap" class="inline-flex items-center justify-center" style="border: 1.5px solid #C5FF1A; border-radius: 3px; background: transparent; padding: 6px 10px;">
+    <span id="hero-data-torneo" class="font-headline font-black uppercase text-[#C5FF1A] leading-none" style="font-size: clamp(0.82rem, 3.4vw, 1rem); letter-spacing: 0.02em;">—</span>
   </div>
 </div>
 </section>
-<section class="px-4 -mt-24 relative z-[30] max-w-3xl mx-auto flex gap-3 overflow-hidden">
+<section class="px-4 mt-6 relative z-[30] max-w-3xl mx-auto flex gap-3 overflow-hidden">
 
   <!-- ── Box Countdown ── -->
   <div class="cd-box flex-1 min-w-0 rounded-[20px] px-4 pt-3 pb-3 flex flex-col gap-[8px] gr-flip-slow gr-d1 gr-visible" style="background:linear-gradient(180deg,#252530 0%,#17171f 100%);border:1px solid rgba(255,255,255,0.06);box-shadow:0 24px 60px rgba(0,0,0,0.65);">
