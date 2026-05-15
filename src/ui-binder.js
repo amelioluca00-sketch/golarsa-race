@@ -1636,7 +1636,8 @@
             populateInputs();
             viewDiv && viewDiv.classList.add('hidden');
             editDiv && editDiv.classList.remove('hidden');
-            if (editLabel) { editLabel.textContent = 'SALVA'; }
+            if (editIcon)  { editIcon.classList.add('hidden'); }
+            if (editLabel) { editLabel.classList.remove('hidden'); }
           } else {
             isEditing = false;
             editBtn.disabled = true;
@@ -1669,7 +1670,8 @@
             } catch (e) { console.error('[UP] save info:', e); saveOk = false; }
 
             if (!saveOk) {
-              if (editLabel) { editLabel.textContent = 'ERRORE'; editLabel.style.color = '#f87171'; }
+              if (editIcon)  { editIcon.classList.add('hidden'); }
+              if (editLabel) { editLabel.classList.remove('hidden'); editLabel.textContent = 'ERRORE'; editLabel.style.color = '#f87171'; editLabel.style.borderColor = '#f87171'; }
               editBtn.disabled = false;
               isEditing = true;
               return;
@@ -1685,7 +1687,8 @@
 
             editDiv && editDiv.classList.add('hidden');
             viewDiv && viewDiv.classList.remove('hidden');
-            if (editLabel) { editLabel.textContent = 'MODIFICA'; editLabel.style.color = ''; }
+            if (editIcon)  { editIcon.classList.remove('hidden'); }
+            if (editLabel) { editLabel.classList.add('hidden'); editLabel.style.color = ''; }
             editBtn.disabled = false;
           }
         });
