@@ -1701,7 +1701,8 @@
             isDispEditing = true;
             dispHint && dispHint.classList.remove('hidden');
             giorni.forEach(function (g) { fasce.forEach(function (f) { var c = document.getElementById('up-disp-' + g + '-' + f); if (c) { c.style.cursor = 'pointer'; c.style.outline = '1px dashed rgba(197,255,26,0.25)'; } }); });
-            if (dispEditLabel) { dispEditLabel.textContent = 'SALVA'; }
+            if (dispEditIcon)  { dispEditIcon.classList.add('hidden'); }
+            if (dispEditLabel) { dispEditLabel.classList.remove('hidden'); }
           } else {
             isDispEditing = false;
             dispEditBtn.disabled = true;
@@ -1723,7 +1724,8 @@
             } catch (e) { console.error('[UP] save disp:', e); saveOk = false; }
 
             if (!saveOk) {
-              if (dispEditLabel) { dispEditLabel.textContent = 'ERRORE'; dispEditLabel.style.color = '#f87171'; }
+              if (dispEditIcon)  { dispEditIcon.classList.add('hidden'); }
+              if (dispEditLabel) { dispEditLabel.classList.remove('hidden'); dispEditLabel.textContent = 'ERRORE'; dispEditLabel.style.color = '#f87171'; dispEditLabel.style.borderColor = '#f87171'; }
               dispEditBtn.disabled = false;
               isDispEditing = true;
               return;
@@ -1732,7 +1734,8 @@
             dispHint && dispHint.classList.add('hidden');
             giorni.forEach(function (g) { fasce.forEach(function (f) { var c = document.getElementById('up-disp-' + g + '-' + f); if (c) { c.style.cursor = 'default'; c.style.outline = ''; } }); });
             fillDisponibilita('up-', p.disponibilita);
-            if (dispEditLabel) { dispEditLabel.textContent = 'MODIFICA'; dispEditLabel.style.color = ''; }
+            if (dispEditIcon)  { dispEditIcon.classList.remove('hidden'); }
+            if (dispEditLabel) { dispEditLabel.classList.add('hidden'); dispEditLabel.style.color = ''; dispEditLabel.style.borderColor = ''; }
             dispEditBtn.disabled = false;
           }
         });

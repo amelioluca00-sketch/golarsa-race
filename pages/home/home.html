@@ -717,92 +717,108 @@
     <div class="space-y-2">
       <div class="flex items-center justify-between px-1">
         <h3 style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:13px;color:#fff;-webkit-text-fill-color:#fff;text-transform:uppercase;letter-spacing:0.2em;margin:0;">INFO GIOCATORE</h3>
-        <button id="myInfoEditBtn" class="flex items-center justify-center w-8 h-8 rounded-lg active:scale-[0.97] transition-all no-anim" style="color:rgba(197,255,26,0.5)">
-          <span id="myInfoEditIcon" class="material-symbols-outlined text-lg" style="font-variation-settings:'wght' 400">edit</span>
+        <button id="myInfoEditBtn" class="flex items-center justify-center rounded-lg active:scale-[0.97] transition-all no-anim" style="color:#C5FF1A;min-width:2rem;min-height:2rem">
+          <span id="myInfoEditIcon" class="material-symbols-outlined text-xl" style="font-variation-settings:'FILL' 0,'wght' 600">edit</span>
+          <span id="myInfoEditLabel" class="hidden font-['Epilogue'] font-black italic text-xs px-3 py-1 rounded-lg" style="border:1.5px solid #C5FF1A;color:#C5FF1A;letter-spacing:0.06em;background:transparent">SALVA</span>
         </button>
       </div>
       <!-- View mode -->
-      <div id="myInfoView" class="rounded-[20px] p-4 space-y-3" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">cake</span>
-          <div class="flex-1 flex justify-between items-center">
-            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">ETÀ</span>
-            <span id="myInfoAnni" class="font-headline font-black italic text-white text-base">—</span>
+      <div id="myInfoView" class="rounded-[20px] p-4" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
+        <div class="grid grid-cols-2 gap-x-3 gap-y-3">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[#C5FF1A] shrink-0" style="font-size:18px;font-variation-settings:'FILL' 1,'wght' 500">cake</span>
+            <div class="flex flex-col min-w-0">
+              <span class="text-[9px] uppercase tracking-widest text-[#888] font-bold italic leading-none mb-0.5">ETÀ</span>
+              <span id="myInfoAnni" class="font-headline font-black italic text-white text-[13px] uppercase leading-tight truncate">—</span>
+            </div>
           </div>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">monitor_weight</span>
-          <div class="flex-1 flex justify-between items-center">
-            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">PESO</span>
-            <span id="myInfoPeso" class="font-headline font-black italic text-white text-base">—</span>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[#C5FF1A] shrink-0" style="font-size:18px;font-variation-settings:'FILL' 1,'wght' 500">sports_tennis</span>
+            <div class="flex flex-col min-w-0">
+              <span class="text-[9px] uppercase tracking-widest text-[#888] font-bold italic leading-none mb-0.5">MANO</span>
+              <span id="myInfoMano" class="font-headline font-black italic text-white text-[13px] uppercase leading-tight truncate">—</span>
+            </div>
           </div>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">height</span>
-          <div class="flex-1 flex justify-between items-center">
-            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">ALTEZZA</span>
-            <span id="myInfoAltezza" class="font-headline font-black italic text-white text-base">—</span>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[#C5FF1A] shrink-0" style="font-size:18px;font-variation-settings:'FILL' 1,'wght' 500">monitor_weight</span>
+            <div class="flex flex-col min-w-0">
+              <span class="text-[9px] uppercase tracking-widest text-[#888] font-bold italic leading-none mb-0.5">PESO</span>
+              <span id="myInfoPeso" class="font-headline font-black italic text-white text-[13px] uppercase leading-tight truncate">—</span>
+            </div>
           </div>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">sports_tennis</span>
-          <div class="flex-1 flex justify-between items-center">
-            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">MANO</span>
-            <span id="myInfoMano" class="font-headline font-black italic text-white text-base">—</span>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[#C5FF1A] shrink-0" style="font-size:18px;font-variation-settings:'FILL' 1,'wght' 500">texture</span>
+            <div class="flex flex-col min-w-0">
+              <span class="text-[9px] uppercase tracking-widest text-[#888] font-bold italic leading-none mb-0.5">SUPERFICIE</span>
+              <span id="myInfoSuperficie" class="font-headline font-black italic text-white text-[13px] uppercase leading-tight truncate">—</span>
+            </div>
           </div>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">texture</span>
-          <div class="flex-1 flex justify-between items-center">
-            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">SUPERFICIE</span>
-            <span id="myInfoSuperficie" class="font-headline font-black italic text-white text-base">—</span>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[#C5FF1A] shrink-0" style="font-size:18px;font-variation-settings:'FILL' 1,'wght' 500">height</span>
+            <div class="flex flex-col min-w-0">
+              <span class="text-[9px] uppercase tracking-widest text-[#888] font-bold italic leading-none mb-0.5">ALTEZZA</span>
+              <span id="myInfoAltezza" class="font-headline font-black italic text-white text-[13px] uppercase leading-tight truncate">—</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-[#C5FF1A] shrink-0" style="font-size:18px;font-variation-settings:'FILL' 1,'wght' 500">back_hand</span>
+            <div class="flex flex-col min-w-0">
+              <span class="text-[9px] uppercase tracking-widest text-[#888] font-bold italic leading-none mb-0.5">ROVESCIO</span>
+              <span id="myInfoRovescio" class="font-headline font-black italic text-white text-[13px] uppercase leading-tight truncate">—</span>
+            </div>
           </div>
         </div>
       </div>
       <!-- Edit mode -->
-      <div id="myInfoEdit" class="hidden rounded-[20px] p-4 space-y-3" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">cake</span>
-          <div class="flex-1 flex justify-between items-center gap-2">
-            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">ETÀ</span>
-            <input id="myEditAnni" type="number" min="10" max="99" placeholder="—" class="w-20 rounded-lg px-2 py-1 text-right font-headline font-black italic text-white text-base focus:outline-none" style="background:transparent; border:1px solid rgba(255,255,255,0.12)">
+      <div id="myInfoEdit" class="hidden rounded-[20px] p-4" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
+        <div class="grid grid-cols-2 gap-x-3 gap-y-3">
+          <div class="flex flex-col gap-1">
+            <span class="text-[9px] uppercase tracking-widest text-[#888] font-bold italic flex items-center gap-1 leading-none">
+              <span class="material-symbols-outlined text-[#C5FF1A] shrink-0" style="font-size:14px;font-variation-settings:'FILL' 1,'wght' 500">cake</span>ETÀ
+            </span>
+            <input id="myEditAnni" type="number" min="10" max="99" placeholder="—" class="w-full rounded-lg px-2 py-1 text-center font-headline font-black italic text-white text-sm focus:outline-none" style="background:transparent; border:1px solid rgba(255,255,255,0.12); font-size:16px!important">
           </div>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">monitor_weight</span>
-          <div class="flex-1 flex justify-between items-center gap-2">
-            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">PESO (kg)</span>
-            <input id="myEditPeso" type="number" min="30" max="200" placeholder="—" class="w-20 rounded-lg px-2 py-1 text-right font-headline font-black italic text-white text-base focus:outline-none" style="background:transparent; border:1px solid rgba(255,255,255,0.12)">
-          </div>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">height</span>
-          <div class="flex-1 flex justify-between items-center gap-2">
-            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">ALTEZZA (cm)</span>
-            <input id="myEditAltezza" type="number" min="100" max="250" placeholder="—" class="w-20 rounded-lg px-2 py-1 text-right font-headline font-black italic text-white text-base focus:outline-none" style="background:transparent; border:1px solid rgba(255,255,255,0.12)">
-          </div>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">sports_tennis</span>
-          <div class="flex-1 flex justify-between items-center gap-2">
-            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">MANO</span>
-            <select id="myEditMano" class="rounded-lg px-2 py-1 font-headline font-black italic text-white text-sm focus:outline-none" style="background:#1a1a25; border:1px solid rgba(255,255,255,0.12)">
+          <div class="flex flex-col gap-1">
+            <span class="text-[9px] uppercase tracking-widest text-[#888] font-bold italic flex items-center gap-1 leading-none">
+              <span class="material-symbols-outlined text-[#C5FF1A] shrink-0" style="font-size:14px;font-variation-settings:'FILL' 1,'wght' 500">sports_tennis</span>MANO
+            </span>
+            <select id="myEditMano" class="w-full rounded-lg px-2 py-1 font-headline font-black italic text-white text-sm focus:outline-none" style="background:#1a1a25; border:1px solid rgba(255,255,255,0.12); font-size:16px!important; text-transform:uppercase">
               <option value="">—</option>
-              <option value="Destra">Destra</option>
-              <option value="Sinistra">Sinistra</option>
+              <option value="DESTRA">DESTRA</option>
+              <option value="SINISTRA">SINISTRA</option>
             </select>
           </div>
-        </div>
-        <div class="flex items-center gap-3">
-          <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">texture</span>
-          <div class="flex-1 flex justify-between items-center gap-2">
-            <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">SUPERFICIE</span>
-            <select id="myEditSuperficie" class="rounded-lg px-2 py-1 font-headline font-black italic text-white text-sm focus:outline-none" style="background:#1a1a25; border:1px solid rgba(255,255,255,0.12)">
+          <div class="flex flex-col gap-1">
+            <span class="text-[9px] uppercase tracking-widest text-[#888] font-bold italic flex items-center gap-1 leading-none">
+              <span class="material-symbols-outlined text-[#C5FF1A] shrink-0" style="font-size:14px;font-variation-settings:'FILL' 1,'wght' 500">monitor_weight</span>PESO (kg)
+            </span>
+            <input id="myEditPeso" type="number" min="30" max="200" placeholder="—" class="w-full rounded-lg px-2 py-1 text-center font-headline font-black italic text-white text-sm focus:outline-none" style="background:transparent; border:1px solid rgba(255,255,255,0.12); font-size:16px!important">
+          </div>
+          <div class="flex flex-col gap-1">
+            <span class="text-[9px] uppercase tracking-widest text-[#888] font-bold italic flex items-center gap-1 leading-none">
+              <span class="material-symbols-outlined text-[#C5FF1A] shrink-0" style="font-size:14px;font-variation-settings:'FILL' 1,'wght' 500">texture</span>SUPERFICIE
+            </span>
+            <select id="myEditSuperficie" class="w-full rounded-lg px-2 py-1 font-headline font-black italic text-white text-sm focus:outline-none" style="background:#1a1a25; border:1px solid rgba(255,255,255,0.12); font-size:16px!important; text-transform:uppercase">
               <option value="">—</option>
-              <option value="Terra">Terra</option>
-              <option value="Cemento">Cemento</option>
-              <option value="Erba">Erba</option>
-              <option value="Sintetico">Sintetico</option>
+              <option value="TERRA">TERRA</option>
+              <option value="CEMENTO">CEMENTO</option>
+              <option value="ERBA">ERBA</option>
+            </select>
+          </div>
+          <div class="flex flex-col gap-1">
+            <span class="text-[9px] uppercase tracking-widest text-[#888] font-bold italic flex items-center gap-1 leading-none">
+              <span class="material-symbols-outlined text-[#C5FF1A] shrink-0" style="font-size:14px;font-variation-settings:'FILL' 1,'wght' 500">height</span>ALT. (cm)
+            </span>
+            <input id="myEditAltezza" type="number" min="100" max="250" placeholder="—" class="w-full rounded-lg px-2 py-1 text-center font-headline font-black italic text-white text-sm focus:outline-none" style="background:transparent; border:1px solid rgba(255,255,255,0.12); font-size:16px!important">
+          </div>
+          <div class="flex flex-col gap-1">
+            <span class="text-[9px] uppercase tracking-widest text-[#888] font-bold italic flex items-center gap-1 leading-none">
+              <span class="material-symbols-outlined text-[#C5FF1A] shrink-0" style="font-size:14px;font-variation-settings:'FILL' 1,'wght' 500">back_hand</span>ROVESCIO
+            </span>
+            <select id="myEditRovescio" class="w-full rounded-lg px-2 py-1 font-headline font-black italic text-white text-sm focus:outline-none" style="background:#1a1a25; border:1px solid rgba(255,255,255,0.12); font-size:16px!important; text-transform:uppercase">
+              <option value="">—</option>
+              <option value="1 MANO">1 MANO</option>
+              <option value="2 MANI">2 MANI</option>
             </select>
           </div>
         </div>
@@ -812,8 +828,9 @@
     <div class="space-y-2">
       <div class="flex items-center justify-between px-1">
         <h3 style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:13px;color:#fff;-webkit-text-fill-color:#fff;text-transform:uppercase;letter-spacing:0.2em;margin:0;">DISPONIBILITÀ</h3>
-        <button id="myDispEditBtn" class="flex items-center justify-center w-8 h-8 rounded-lg active:scale-[0.97] transition-all no-anim" style="color:rgba(197,255,26,0.5)">
-          <span id="myDispEditIcon" class="material-symbols-outlined text-lg" style="font-variation-settings:'wght' 400">edit</span>
+        <button id="myDispEditBtn" class="flex items-center justify-center rounded-lg active:scale-[0.97] transition-all no-anim" style="color:#C5FF1A;min-width:2rem;min-height:2rem">
+          <span id="myDispEditIcon" class="material-symbols-outlined text-xl" style="font-variation-settings:'FILL' 0,'wght' 600">edit</span>
+          <span id="myDispEditLabel" class="hidden font-['Epilogue'] font-black italic text-xs px-3 py-1 rounded-lg" style="border:1.5px solid #C5FF1A;color:#C5FF1A;letter-spacing:0.06em;background:transparent">SALVA</span>
         </button>
       </div>
       <div class="rounded-[20px] p-4" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
@@ -1460,24 +1477,26 @@
     document.getElementById('myStatSconfitte').textContent = p.sconfitte;
     document.getElementById('myStatPunti').textContent = p.punti;
     // Info giocatore
-    document.getElementById('myInfoAnni').textContent      = p.eta        ? p.eta       + ' anni' : '—';
-    document.getElementById('myInfoPeso').textContent      = p.peso       ? p.peso      + ' kg'   : '—';
-    document.getElementById('myInfoAltezza').textContent   = p.altezza    ? p.altezza   + ' cm'   : '—';
-    document.getElementById('myInfoMano').textContent      = p.mano       || '—';
-    document.getElementById('myInfoSuperficie').textContent = p.superficie || '—';
+    document.getElementById('myInfoAnni').textContent       = p.eta        ? p.eta       + ' ANNI' : '—';
+    document.getElementById('myInfoPeso').textContent       = p.peso       ? p.peso      + ' KG'   : '—';
+    document.getElementById('myInfoAltezza').textContent    = p.altezza    ? p.altezza   + ' CM'   : '—';
+    document.getElementById('myInfoMano').textContent       = p.mano       ? (p.mano + '').toUpperCase()       : '—';
+    document.getElementById('myInfoSuperficie').textContent = p.superficie ? (p.superficie + '').toUpperCase() : '—';
+    const _rovEl = document.getElementById('myInfoRovescio');
+    if (_rovEl) _rovEl.textContent = p.rovescio ? (p.rovescio + '').toUpperCase() : '—';
     _fillDisp('msh-disp-', p.disponibilita || {});
     // Reset modalità view (esci da eventuale edit precedente)
     document.getElementById('myInfoView').classList.remove('hidden');
     document.getElementById('myInfoEdit').classList.add('hidden');
     const _mInfoIcon  = document.getElementById('myInfoEditIcon');
     const _mInfoLabel = document.getElementById('myInfoEditLabel');
-    if (_mInfoIcon)  _mInfoIcon.textContent  = 'edit';
-    if (_mInfoLabel) _mInfoLabel.textContent = 'MODIFICA';
+    if (_mInfoIcon)  _mInfoIcon.classList.remove('hidden');
+    if (_mInfoLabel) _mInfoLabel.classList.add('hidden');
     const _mDispIcon  = document.getElementById('myDispEditIcon');
     const _mDispLabel = document.getElementById('myDispEditLabel');
     const _mDispHint  = document.getElementById('myDispHint');
-    if (_mDispIcon)  _mDispIcon.textContent  = 'edit';
-    if (_mDispLabel) _mDispLabel.textContent = 'MODIFICA';
+    if (_mDispIcon)  _mDispIcon.classList.remove('hidden');
+    if (_mDispLabel) _mDispLabel.classList.add('hidden');
     if (_mDispHint)  _mDispHint.classList.add('hidden');
     const wr = p.match_giocati > 0 ? Math.round(p.vittorie / p.match_giocati * 100) : 0;
     document.getElementById('myWrPct').textContent = wr + '%';
@@ -1562,14 +1581,15 @@
       set('myEditAnni',       p.eta        || '');
       set('myEditPeso',       p.peso       || '');
       set('myEditAltezza',    p.altezza    || '');
-      set('myEditMano',       p.mano       || '');
-      set('myEditSuperficie', p.superficie || '');
+      set('myEditMano',       p.mano       ? (p.mano + '').toUpperCase()       : '');
+      set('myEditSuperficie', p.superficie ? (p.superficie + '').toUpperCase() : '');
+      set('myEditRovescio',   p.rovescio   ? (p.rovescio   + '').toUpperCase() : '');
       document.getElementById('myInfoView').classList.add('hidden');
       document.getElementById('myInfoEdit').classList.remove('hidden');
       const icon  = document.getElementById('myInfoEditIcon');
       const label = document.getElementById('myInfoEditLabel');
-      if (icon)  icon.textContent  = 'save';
-      if (label) label.textContent = 'SALVA';
+      if (icon)  icon.classList.add('hidden');
+      if (label) label.classList.remove('hidden');
     }
 
     async function saveInfo() {
@@ -1586,39 +1606,43 @@
       const newAlt   = (document.getElementById('myEditAltezza')?.value || '').trim();
       const newMano  = document.getElementById('myEditMano')?.value  || '';
       const newSuper = document.getElementById('myEditSuperficie')?.value || '';
+      const newRov   = document.getElementById('myEditRovescio')?.value || '';
 
       if (newAnni)  p.eta        = parseInt(newAnni, 10);
       if (newPeso)  p.peso       = parseInt(newPeso, 10);
       if (newAlt)   p.altezza    = parseInt(newAlt,  10);
       if (newMano)  p.mano       = newMano;
       if (newSuper) p.superficie = newSuper;
+      if (newRov)   p.rovescio   = newRov;
 
       let ok = true;
       try {
         if (window.StorageManager && window.StorageManager.updatePlayerProfile) {
           ok = await window.StorageManager.updatePlayerProfile(p.id, {
             eta: p.eta, peso: p.peso, altezza: p.altezza,
-            mano: p.mano, superficie: p.superficie
+            mano: p.mano, superficie: p.superficie, rovescio: p.rovescio
           });
         }
       } catch(e) { console.error('[home] save info:', e); ok = false; }
 
       if (!ok) {
-        if (label) label.textContent = 'ERRORE — RIPROVA';
+        if (label) { label.textContent = 'ERRORE'; label.style.color = '#f87171'; label.style.borderColor = '#f87171'; }
         if (btn) btn.disabled = false;
         return;
       }
 
-      document.getElementById('myInfoAnni').textContent       = p.eta        ? p.eta       + ' anni' : '—';
-      document.getElementById('myInfoPeso').textContent       = p.peso       ? p.peso      + ' kg'   : '—';
-      document.getElementById('myInfoAltezza').textContent    = p.altezza    ? p.altezza   + ' cm'   : '—';
-      document.getElementById('myInfoMano').textContent       = p.mano       || '—';
-      document.getElementById('myInfoSuperficie').textContent = p.superficie || '—';
+      document.getElementById('myInfoAnni').textContent       = p.eta        ? p.eta       + ' ANNI' : '—';
+      document.getElementById('myInfoPeso').textContent       = p.peso       ? p.peso      + ' KG'   : '—';
+      document.getElementById('myInfoAltezza').textContent    = p.altezza    ? p.altezza   + ' CM'   : '—';
+      document.getElementById('myInfoMano').textContent       = p.mano       ? (p.mano + '').toUpperCase()       : '—';
+      document.getElementById('myInfoSuperficie').textContent = p.superficie ? (p.superficie + '').toUpperCase() : '—';
+      const rovEl = document.getElementById('myInfoRovescio');
+      if (rovEl) rovEl.textContent = p.rovescio ? (p.rovescio + '').toUpperCase() : '—';
 
       document.getElementById('myInfoEdit').classList.add('hidden');
       document.getElementById('myInfoView').classList.remove('hidden');
-      if (icon)  icon.textContent  = 'edit';
-      if (label) label.textContent = 'MODIFICA';
+      if (icon)  { icon.classList.remove('hidden'); }
+      if (label) { label.classList.add('hidden'); label.style.color = ''; label.style.borderColor = ''; }
       if (btn)   btn.disabled = false;
       _infoEditing = false;
     }
@@ -1630,8 +1654,8 @@
       const icon  = document.getElementById('myDispEditIcon');
       const label = document.getElementById('myDispEditLabel');
       if (hint)  hint.classList.remove('hidden');
-      if (icon)  icon.textContent  = 'save';
-      if (label) label.textContent = 'SALVA';
+      if (icon)  icon.classList.add('hidden');
+      if (label) label.classList.remove('hidden');
       GIORNI.forEach(g => FASCE.forEach(f => {
         const c = document.getElementById('msh-disp-' + g + '-' + f);
         if (c) { c.style.cursor = 'pointer'; c.style.outline = '1px dashed rgba(197,255,26,0.25)'; }
@@ -1666,7 +1690,7 @@
       } catch(e) { console.error('[home] save disp:', e); ok = false; }
 
       if (!ok) {
-        if (label) label.textContent = 'ERRORE — RIPROVA';
+        if (label) { label.textContent = 'ERRORE'; label.style.color = '#f87171'; label.style.borderColor = '#f87171'; }
         if (btn) btn.disabled = false;
         return;
       }
@@ -1677,8 +1701,8 @@
         const c = document.getElementById('msh-disp-' + g + '-' + f);
         if (c) { c.style.cursor = 'default'; c.style.outline = ''; }
       }));
-      if (icon)  icon.textContent  = 'edit';
-      if (label) label.textContent = 'MODIFICA';
+      if (icon)  { icon.classList.remove('hidden'); }
+      if (label) { label.classList.add('hidden'); label.style.color = ''; label.style.borderColor = ''; }
       if (btn)   btn.disabled = false;
       _dispEditing = false;
     }
