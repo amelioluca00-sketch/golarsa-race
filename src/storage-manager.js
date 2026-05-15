@@ -35,7 +35,7 @@
   }
 
   // Campi profilo impostati dall'utente — non devono mai essere sovrascritti da _recompute o savePlayers
-  var PROFILE_FIELDS = ['eta', 'peso', 'altezza', 'mano', 'superficie', 'disponibilita'];
+  var PROFILE_FIELDS = ['eta', 'peso', 'altezza', 'mano', 'superficie', 'rovescio', 'disponibilita'];
 
   var SM = {
 

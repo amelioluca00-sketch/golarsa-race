@@ -1471,11 +1471,12 @@
     setN(prefix + 'rank',          '#' + rank);
     setN(prefix + 'gruppo',        (p.nazionalita || '').toUpperCase());
     // ── Info giocatore (nuovi campi) ─────────────────────────────────
-    setN(prefix + 'info-anni',      p.eta       ? p.eta       + ' anni' : '—');
-    setN(prefix + 'info-peso',      p.peso      ? p.peso      + ' kg'   : '—');
-    setN(prefix + 'info-altezza',   p.altezza   ? p.altezza   + ' cm'   : '—');
-    setN(prefix + 'info-mano',      p.mano      || '—');
-    setN(prefix + 'info-superficie',p.superficie|| '—');
+    setN(prefix + 'info-anni',      p.eta       ? p.eta       + ' ANNI' : '—');
+    setN(prefix + 'info-peso',      p.peso      ? p.peso      + ' KG'   : '—');
+    setN(prefix + 'info-altezza',   p.altezza   ? p.altezza   + ' CM'   : '—');
+    setN(prefix + 'info-mano',      p.mano      ? (p.mano + '').toUpperCase()      : '—');
+    setN(prefix + 'info-superficie',p.superficie? (p.superficie + '').toUpperCase(): '—');
+    setN(prefix + 'info-rovescio',  p.rovescio  ? (p.rovescio  + '').toUpperCase() : '—');
     // Griglia disponibilità
     fillDisponibilita(prefix, p.disponibilita || {});
     // Aggiorna la bandiera dinamicamente (se c'è un elemento apposito)
@@ -1600,11 +1601,13 @@
         var inAlt   = document.getElementById('up-edit-altezza');
         var inMano  = document.getElementById('up-edit-mano');
         var inSuper = document.getElementById('up-edit-superficie');
-        if (inAnni)  inAnni.value  = p.eta       || '';
-        if (inPeso)  inPeso.value  = p.peso      || '';
-        if (inAlt)   inAlt.value   = p.altezza   || '';
-        if (inMano)  inMano.value  = p.mano      || '';
-        if (inSuper) inSuper.value = p.superficie|| '';
+        var inRov   = document.getElementById('up-edit-rovescio');
+        if (inAnni)  inAnni.value  = p.eta        || '';
+        if (inPeso)  inPeso.value  = p.peso       || '';
+        if (inAlt)   inAlt.value   = p.altezza    || '';
+        if (inMano)  inMano.value  = (p.mano       ? (p.mano + '').toUpperCase()      : '');
+        if (inSuper) inSuper.value = (p.superficie ? (p.superficie + '').toUpperCase(): '');
+        if (inRov)   inRov.value   = (p.rovescio   ? (p.rovescio   + '').toUpperCase(): '');
       }
 
       // Toggle click sulle celle disponibilità (solo in disp-edit mode)
@@ -1633,8 +1636,7 @@
             populateInputs();
             viewDiv && viewDiv.classList.add('hidden');
             editDiv && editDiv.classList.remove('hidden');
-            if (editIcon)  { editIcon.classList.add('hidden'); }
-            if (editLabel) { editLabel.textContent = 'SALVA'; editLabel.classList.remove('hidden'); }
+            if (editLabel) { editLabel.textContent = 'SALVA'; }
           } else {
             isEditing = false;
             editBtn.disabled = true;
@@ -1645,12 +1647,14 @@
             var newAlt   = document.getElementById('up-edit-altezza')     ? document.getElementById('up-edit-altezza').value.trim(): '';
             var newMano  = document.getElementById('up-edit-mano')        ? document.getElementById('up-edit-mano').value          : '';
             var newSuper = document.getElementById('up-edit-superficie')  ? document.getElementById('up-edit-superficie').value    : '';
+            var newRov   = document.getElementById('up-edit-rovescio')    ? document.getElementById('up-edit-rovescio').value      : '';
 
             p.eta        = newAnni  ? parseInt(newAnni,  10) : p.eta;
             p.peso       = newPeso  ? parseInt(newPeso,  10) : p.peso;
             p.altezza    = newAlt   ? parseInt(newAlt,   10) : p.altezza;
             p.mano       = newMano  || p.mano;
             p.superficie = newSuper || p.superficie;
+            p.rovescio   = newRov   || p.rovescio;
 
             var saveOk = false;
             try {
@@ -1660,28 +1664,28 @@
                 altezza:    p.altezza,
                 mano:       p.mano,
                 superficie: p.superficie,
+                rovescio:   p.rovescio,
               });
             } catch (e) { console.error('[UP] save info:', e); saveOk = false; }
 
             if (!saveOk) {
-              if (editLabel) { editLabel.textContent = 'ERRORE'; editLabel.style.color = '#f87171'; editLabel.style.background = 'transparent'; editLabel.style.border = '1px solid #f87171'; }
-              if (editIcon)  { editIcon.classList.add('hidden'); }
+              if (editLabel) { editLabel.textContent = 'ERRORE'; editLabel.style.color = '#f87171'; }
               editBtn.disabled = false;
               isEditing = true;
               return;
             }
 
             var setN = function (id, v) { var el = document.getElementById(id); if (el) el.textContent = v; };
-            setN('up-info-anni',       p.eta        ? p.eta       + ' anni' : '—');
-            setN('up-info-peso',       p.peso       ? p.peso      + ' kg'   : '—');
-            setN('up-info-altezza',    p.altezza    ? p.altezza   + ' cm'   : '—');
-            setN('up-info-mano',       p.mano       || '—');
-            setN('up-info-superficie', p.superficie || '—');
+            setN('up-info-anni',       p.eta        ? p.eta       + ' ANNI' : '—');
+            setN('up-info-peso',       p.peso       ? p.peso      + ' KG'   : '—');
+            setN('up-info-altezza',    p.altezza    ? p.altezza   + ' CM'   : '—');
+            setN('up-info-mano',       p.mano       ? (p.mano + '').toUpperCase()       : '—');
+            setN('up-info-superficie', p.superficie ? (p.superficie + '').toUpperCase() : '—');
+            setN('up-info-rovescio',   p.rovescio   ? (p.rovescio   + '').toUpperCase() : '—');
 
             editDiv && editDiv.classList.add('hidden');
             viewDiv && viewDiv.classList.remove('hidden');
-            if (editIcon)  { editIcon.classList.remove('hidden'); editIcon.style.color = ''; }
-            if (editLabel) { editLabel.classList.add('hidden'); editLabel.style.color = ''; editLabel.style.background = ''; editLabel.style.border = ''; }
+            if (editLabel) { editLabel.textContent = 'MODIFICA'; editLabel.style.color = ''; }
             editBtn.disabled = false;
           }
         });
@@ -1694,8 +1698,7 @@
             isDispEditing = true;
             dispHint && dispHint.classList.remove('hidden');
             giorni.forEach(function (g) { fasce.forEach(function (f) { var c = document.getElementById('up-disp-' + g + '-' + f); if (c) { c.style.cursor = 'pointer'; c.style.outline = '1px dashed rgba(197,255,26,0.25)'; } }); });
-            if (dispEditIcon)  { dispEditIcon.classList.add('hidden'); }
-            if (dispEditLabel) { dispEditLabel.textContent = 'SALVA'; dispEditLabel.classList.remove('hidden'); }
+            if (dispEditLabel) { dispEditLabel.textContent = 'SALVA'; }
           } else {
             isDispEditing = false;
             dispEditBtn.disabled = true;
@@ -1717,8 +1720,7 @@
             } catch (e) { console.error('[UP] save disp:', e); saveOk = false; }
 
             if (!saveOk) {
-              if (dispEditLabel) { dispEditLabel.textContent = 'ERRORE'; dispEditLabel.style.color = '#f87171'; dispEditLabel.style.background = 'transparent'; dispEditLabel.style.border = '1px solid #f87171'; }
-              if (dispEditIcon)  { dispEditIcon.classList.add('hidden'); }
+              if (dispEditLabel) { dispEditLabel.textContent = 'ERRORE'; dispEditLabel.style.color = '#f87171'; }
               dispEditBtn.disabled = false;
               isDispEditing = true;
               return;
@@ -1727,8 +1729,7 @@
             dispHint && dispHint.classList.add('hidden');
             giorni.forEach(function (g) { fasce.forEach(function (f) { var c = document.getElementById('up-disp-' + g + '-' + f); if (c) { c.style.cursor = 'default'; c.style.outline = ''; } }); });
             fillDisponibilita('up-', p.disponibilita);
-            if (dispEditIcon)  { dispEditIcon.classList.remove('hidden'); dispEditIcon.style.color = ''; }
-            if (dispEditLabel) { dispEditLabel.classList.add('hidden'); dispEditLabel.style.color = ''; dispEditLabel.style.background = ''; dispEditLabel.style.border = ''; }
+            if (dispEditLabel) { dispEditLabel.textContent = 'MODIFICA'; dispEditLabel.style.color = ''; }
             dispEditBtn.disabled = false;
           }
         });
