@@ -1641,7 +1641,6 @@
           } else {
             isEditing = false;
             editBtn.disabled = true;
-            if (editLabel) editLabel.textContent = 'SALVO...';
 
             var newAnni  = document.getElementById('up-edit-anni')        ? document.getElementById('up-edit-anni').value.trim()  : '';
             var newPeso  = document.getElementById('up-edit-peso')        ? document.getElementById('up-edit-peso').value.trim()  : '';
@@ -1706,7 +1705,6 @@
           } else {
             isDispEditing = false;
             dispEditBtn.disabled = true;
-            if (dispEditLabel) dispEditLabel.textContent = 'SALVO...';
 
             var newDisp = {};
             giorni.forEach(function (g) {
