@@ -363,7 +363,7 @@
 <script>
 (function(){
   var HASH="a171686d707570c856c3e1fc59df6a4a342715d5b5aae12583dfaaab9e02bfb3";
-  if(sessionStorage.getItem("gr_admin_auth")==="1"){var w=document.getElementById("auth-wall");if(w)w.style.display="none";return;}
+  if(sessionStorage.getItem("gr_admin_auth")==="1" || localStorage.getItem("gr_role")==="admin"){var w=document.getElementById("auth-wall");if(w)w.style.display="none";return;}
   document.body.style.overflow="hidden";
 
   function showAuthError(msg) {

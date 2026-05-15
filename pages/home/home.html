@@ -717,9 +717,9 @@
     <div class="space-y-2">
       <div class="flex items-center justify-between px-1">
         <h3 style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:13px;color:#fff;-webkit-text-fill-color:#fff;text-transform:uppercase;letter-spacing:0.2em;margin:0;">INFO GIOCATORE</h3>
-        <button id="myInfoEditBtn" class="flex items-center justify-center rounded-lg active:scale-[0.97] transition-all no-anim" style="color:#C5FF1A;min-width:2rem;min-height:2rem">
-          <span id="myInfoEditIcon" class="material-symbols-outlined text-xl" style="font-variation-settings:'FILL' 0,'wght' 600">edit</span>
-          <span id="myInfoEditLabel" class="hidden font-['Epilogue'] font-black italic text-xs px-3 py-1 rounded-lg" style="border:1.5px solid #C5FF1A;color:#C5FF1A;letter-spacing:0.06em;background:transparent">SALVA</span>
+        <button id="myInfoEditBtn" class="relative rounded-lg active:scale-[0.97] transition-all no-anim" style="color:#C5FF1A;width:3.4rem;height:1.9rem;">
+          <span id="myInfoEditIcon" class="material-symbols-outlined text-xl absolute inset-0 flex items-center justify-center" style="font-variation-settings:'FILL' 0,'wght' 600">edit</span>
+          <span id="myInfoEditLabel" class="hidden font-['Epilogue'] font-black italic text-xs absolute inset-0 flex items-center justify-center rounded-lg" style="border:1.5px solid #C5FF1A;color:#C5FF1A;letter-spacing:0.06em;background:transparent">SALVA</span>
         </button>
       </div>
       <!-- View mode -->
@@ -728,42 +728,42 @@
           <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">cake</span>
           <div class="flex-1 flex justify-between items-center">
             <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">ETÀ</span>
-            <span id="myInfoAnni" class="font-headline font-black italic text-white text-base uppercase">—</span>
+            <span id="myInfoAnni" class="font-headline font-black italic text-white text-sm uppercase">—</span>
           </div>
         </div>
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">fitness_center</span>
           <div class="flex-1 flex justify-between items-center">
             <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">PESO</span>
-            <span id="myInfoPeso" class="font-headline font-black italic text-white text-base uppercase">—</span>
+            <span id="myInfoPeso" class="font-headline font-black italic text-white text-sm uppercase">—</span>
           </div>
         </div>
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">height</span>
           <div class="flex-1 flex justify-between items-center">
             <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">ALTEZZA</span>
-            <span id="myInfoAltezza" class="font-headline font-black italic text-white text-base uppercase">—</span>
+            <span id="myInfoAltezza" class="font-headline font-black italic text-white text-sm uppercase">—</span>
           </div>
         </div>
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">back_hand</span>
           <div class="flex-1 flex justify-between items-center">
             <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">MANO</span>
-            <span id="myInfoMano" class="font-headline font-black italic text-white text-base uppercase">—</span>
+            <span id="myInfoMano" class="font-headline font-black italic text-white text-sm uppercase">—</span>
           </div>
         </div>
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">texture</span>
           <div class="flex-1 flex justify-between items-center">
             <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">SUPERFICIE</span>
-            <span id="myInfoSuperficie" class="font-headline font-black italic text-white text-base uppercase">—</span>
+            <span id="myInfoSuperficie" class="font-headline font-black italic text-white text-sm uppercase">—</span>
           </div>
         </div>
         <div class="flex items-center gap-3">
           <span class="material-symbols-outlined text-[#C5FF1A] text-xl" style="font-variation-settings:'FILL' 1,'wght' 500">sports_tennis</span>
           <div class="flex-1 flex justify-between items-center">
             <span class="text-[11px] uppercase tracking-widest text-[#888] font-bold italic">ROVESCIO</span>
-            <span id="myInfoRovescio" class="font-headline font-black italic text-white text-base uppercase">—</span>
+            <span id="myInfoRovescio" class="font-headline font-black italic text-white text-sm uppercase">—</span>
           </div>
         </div>
       </div>
@@ -830,9 +830,9 @@
     <div class="space-y-2">
       <div class="flex items-center justify-between px-1">
         <h3 style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:13px;color:#fff;-webkit-text-fill-color:#fff;text-transform:uppercase;letter-spacing:0.2em;margin:0;">DISPONIBILITÀ</h3>
-        <button id="myDispEditBtn" class="flex items-center justify-center rounded-lg active:scale-[0.97] transition-all no-anim" style="color:#C5FF1A;min-width:2rem;min-height:2rem">
-          <span id="myDispEditIcon" class="material-symbols-outlined text-xl" style="font-variation-settings:'FILL' 0,'wght' 600">edit</span>
-          <span id="myDispEditLabel" class="hidden font-['Epilogue'] font-black italic text-xs px-3 py-1 rounded-lg" style="border:1.5px solid #C5FF1A;color:#C5FF1A;letter-spacing:0.06em;background:transparent">SALVA</span>
+        <button id="myDispEditBtn" class="relative rounded-lg active:scale-[0.97] transition-all no-anim" style="color:#C5FF1A;width:3.4rem;height:1.9rem;">
+          <span id="myDispEditIcon" class="material-symbols-outlined text-xl absolute inset-0 flex items-center justify-center" style="font-variation-settings:'FILL' 0,'wght' 600">edit</span>
+          <span id="myDispEditLabel" class="hidden font-['Epilogue'] font-black italic text-xs absolute inset-0 flex items-center justify-center rounded-lg" style="border:1.5px solid #C5FF1A;color:#C5FF1A;letter-spacing:0.06em;background:transparent">SALVA</span>
         </button>
       </div>
       <div class="rounded-[20px] p-4" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
