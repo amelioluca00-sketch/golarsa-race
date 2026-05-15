@@ -517,6 +517,12 @@
 
       // ── renderMatches (home dashboard: PENDING + completati + programmati) ──
       // I match contestati NON vengono mostrati qui: appaiono solo in contestazioni_dashboard.
+      function _fmtN(full) {
+        var parts = (full || '').trim().split(/\s+/);
+        if (parts.length < 2) return (full || '').toUpperCase();
+        return parts[0][0].toUpperCase() + '. ' + parts[parts.length - 1].toUpperCase();
+      }
+
       window.renderMatches = function () {
         var c = document.getElementById('matches-list');
         if (!c) return;
@@ -541,13 +547,13 @@
                 ' <span class="text-gray-400 border border-white/20 rounded-full px-1.5 py-0.5">IN ATTESA AVVERSARIO</span>' +
               '</p>' +
               '<div class="flex items-center justify-between gap-2">' +
-                '<div class="flex-1 min-w-0"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[1.05rem] leading-tight block truncate">' + esc(m.giocatore1_nome) + '</span></div>' +
-                '<div class="flex items-center gap-2 flex-shrink-0 mx-1">' +
-                  '<span class="score-badge">' + m.score1 + '</span>' +
+                '<div class="flex-1 min-w-0"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[0.88rem] leading-tight block truncate">' + fmtNomeBreve(m.giocatore1_nome) + '</span></div>' +
+                '<div class="flex items-center gap-1.5 flex-shrink-0 mx-1">' +
+                  '<span class="score-badge" style="font-size:1.2rem">' + m.score1 + '</span>' +
                   '<span class="vs-dot">vs</span>' +
-                  '<span class="score-badge">' + m.score2 + '</span>' +
+                  '<span class="score-badge" style="font-size:1.2rem">' + m.score2 + '</span>' +
                 '</div>' +
-                '<div class="flex-1 min-w-0 text-right"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[1.05rem] leading-tight block truncate">' + esc(m.giocatore2_nome) + '</span></div>' +
+                '<div class="flex-1 min-w-0 text-right"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[0.88rem] leading-tight block truncate">' + fmtNomeBreve(m.giocatore2_nome) + '</span></div>' +
               '</div>' +
             '</div>';
           c.appendChild(card);
@@ -565,9 +571,9 @@
             '<div class="px-4 pt-4 pb-3">' +
               '<p class="font-label text-[0.55rem] font-semibold text-gray-600 uppercase tracking-[0.15em] mb-3 flex items-center gap-2">' + fmtDataBreve(m.data) + (!done ? ' <span class="text-[#d1ff4b] border border-[#d1ff4b]/20 rounded-full px-1.5 py-0.5">PROGRAMMATA</span>' : '') + '</p>' +
               '<div class="flex items-center justify-between gap-2">' +
-                '<div class="flex-1 min-w-0"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[1.05rem] leading-tight block truncate">' + esc(m.giocatore1_nome) + '</span></div>' +
-                '<div class="flex items-center gap-2 flex-shrink-0 mx-1">' + (done ? '<span class="score-badge">' + m.score1 + '</span><span class="vs-dot">vs</span><span class="score-badge">' + m.score2 + '</span>' : '<span class="vs-dot font-black text-sm">vs</span>') + '</div>' +
-                '<div class="flex-1 min-w-0 text-right"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[1.05rem] leading-tight block truncate">' + esc(m.giocatore2_nome) + '</span></div>' +
+                '<div class="flex-1 min-w-0"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[0.88rem] leading-tight block truncate">' + _fmtN(m.giocatore1_nome) + '</span></div>' +
+                '<div class="flex items-center gap-1.5 flex-shrink-0 mx-1">' + (done ? '<span class="score-badge" style="font-size:1.2rem">' + m.score1 + '</span><span class="vs-dot">vs</span><span class="score-badge" style="font-size:1.2rem">' + m.score2 + '</span>' : '<span class="vs-dot font-black text-sm">vs</span>') + '</div>' +
+                '<div class="flex-1 min-w-0 text-right"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[0.88rem] leading-tight block truncate">' + _fmtN(m.giocatore2_nome) + '</span></div>' +
               '</div>' +
             '</div>' +
             '<div class="h-px bg-white/[0.05] mx-4"></div>' +
@@ -863,6 +869,15 @@
 
       var allMatches = data.matches.slice();
 
+      // Formatta "Mario Rossi" → "M. ROSSI" per le card mobile
+      function fmtNomeBreve(full) {
+        var parts = (full || '').trim().split(/\s+/);
+        if (parts.length < 2) return (full || '').toUpperCase();
+        var cognome = parts[parts.length - 1].toUpperCase();
+        var iniziale = parts[0][0].toUpperCase() + '.';
+        return iniziale + ' ' + cognome;
+      }
+
       // Ricarica da Supabase e ridisegna tutto
       async function refreshMatches() {
         try { await SM.load(torneoId); } catch (e) {}
@@ -890,13 +905,13 @@
                 ' <span class="text-[#d1ff4b] border border-[#d1ff4b]/30 rounded-full px-1.5 py-0.5">IN ATTESA</span>' +
               '</p>' +
               '<div class="flex items-center justify-between gap-2">' +
-                '<div class="flex-1 min-w-0"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[1.05rem] leading-tight block truncate">' + esc(m.giocatore1_nome) + '</span></div>' +
-                '<div class="flex items-center gap-2 flex-shrink-0 mx-1">' +
-                  '<span class="score-badge">' + m.score1 + '</span>' +
+                '<div class="flex-1 min-w-0"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[0.88rem] leading-tight block truncate">' + fmtNomeBreve(m.giocatore1_nome) + '</span></div>' +
+                '<div class="flex items-center gap-1.5 flex-shrink-0 mx-1">' +
+                  '<span class="score-badge" style="font-size:1.2rem">' + m.score1 + '</span>' +
                   '<span class="vs-dot">vs</span>' +
-                  '<span class="score-badge">' + m.score2 + '</span>' +
+                  '<span class="score-badge" style="font-size:1.2rem">' + m.score2 + '</span>' +
                 '</div>' +
-                '<div class="flex-1 min-w-0 text-right"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[1.05rem] leading-tight block truncate">' + esc(m.giocatore2_nome) + '</span></div>' +
+                '<div class="flex-1 min-w-0 text-right"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[0.88rem] leading-tight block truncate">' + fmtNomeBreve(m.giocatore2_nome) + '</span></div>' +
               '</div>' +
             '</div>' +
             '<div class="h-px bg-white/[0.05] mx-4"></div>' +
@@ -934,13 +949,13 @@
                 (!done ? ' <span class="text-[#d1ff4b] border border-[#d1ff4b]/20 rounded-full px-1.5 py-0.5">PROGRAMMATA</span>' : '') +
               '</p>' +
               '<div class="flex items-center justify-between gap-2">' +
-                '<div class="flex-1 min-w-0"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[1.05rem] leading-tight block truncate">' + esc(m.giocatore1_nome) + '</span></div>' +
-                '<div class="flex items-center gap-2 flex-shrink-0 mx-1">' +
+                '<div class="flex-1 min-w-0"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[0.88rem] leading-tight block truncate">' + fmtNomeBreve(m.giocatore1_nome) + '</span></div>' +
+                '<div class="flex items-center gap-1.5 flex-shrink-0 mx-1">' +
                   (done
-                    ? '<span class="score-badge">' + m.score1 + '</span><span class="vs-dot">vs</span><span class="score-badge">' + m.score2 + '</span>'
+                    ? '<span class="score-badge" style="font-size:1.2rem">' + m.score1 + '</span><span class="vs-dot">vs</span><span class="score-badge" style="font-size:1.2rem">' + m.score2 + '</span>'
                     : '<span class="vs-dot font-black text-sm">vs</span>') +
                 '</div>' +
-                '<div class="flex-1 min-w-0 text-right"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[1.05rem] leading-tight block truncate">' + esc(m.giocatore2_nome) + '</span></div>' +
+                '<div class="flex-1 min-w-0 text-right"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[0.88rem] leading-tight block truncate">' + fmtNomeBreve(m.giocatore2_nome) + '</span></div>' +
               '</div>' +
             '</div>' +
             '<div class="h-px bg-white/[0.05] mx-4"></div>' +
@@ -1618,8 +1633,8 @@
             populateInputs();
             viewDiv && viewDiv.classList.add('hidden');
             editDiv && editDiv.classList.remove('hidden');
-            if (editIcon)  { editIcon.textContent  = 'save'; }
-            if (editLabel) { editLabel.textContent  = 'SALVA'; }
+            if (editIcon)  { editIcon.classList.add('hidden'); }
+            if (editLabel) { editLabel.textContent = 'SALVA'; editLabel.classList.remove('hidden'); }
           } else {
             isEditing = false;
             editBtn.disabled = true;
@@ -1649,8 +1664,8 @@
             } catch (e) { console.error('[UP] save info:', e); saveOk = false; }
 
             if (!saveOk) {
-              if (editLabel) { editLabel.textContent = 'ERRORE — RIPROVA'; editLabel.style.color = '#f87171'; }
-              if (editIcon)  editIcon.textContent = 'error';
+              if (editLabel) { editLabel.textContent = 'ERRORE'; editLabel.style.color = '#f87171'; editLabel.style.background = 'transparent'; editLabel.style.border = '1px solid #f87171'; }
+              if (editIcon)  { editIcon.classList.add('hidden'); }
               editBtn.disabled = false;
               isEditing = true;
               return;
@@ -1665,8 +1680,8 @@
 
             editDiv && editDiv.classList.add('hidden');
             viewDiv && viewDiv.classList.remove('hidden');
-            if (editIcon)  { editIcon.textContent = 'edit'; editIcon.style.color = ''; }
-            if (editLabel) { editLabel.textContent = 'MODIFICA'; editLabel.style.color = ''; }
+            if (editIcon)  { editIcon.classList.remove('hidden'); editIcon.style.color = ''; }
+            if (editLabel) { editLabel.classList.add('hidden'); editLabel.style.color = ''; editLabel.style.background = ''; editLabel.style.border = ''; }
             editBtn.disabled = false;
           }
         });
@@ -1679,8 +1694,8 @@
             isDispEditing = true;
             dispHint && dispHint.classList.remove('hidden');
             giorni.forEach(function (g) { fasce.forEach(function (f) { var c = document.getElementById('up-disp-' + g + '-' + f); if (c) { c.style.cursor = 'pointer'; c.style.outline = '1px dashed rgba(197,255,26,0.25)'; } }); });
-            if (dispEditIcon)  dispEditIcon.textContent  = 'save';
-            if (dispEditLabel) dispEditLabel.textContent = 'SALVA';
+            if (dispEditIcon)  { dispEditIcon.classList.add('hidden'); }
+            if (dispEditLabel) { dispEditLabel.textContent = 'SALVA'; dispEditLabel.classList.remove('hidden'); }
           } else {
             isDispEditing = false;
             dispEditBtn.disabled = true;
@@ -1702,8 +1717,8 @@
             } catch (e) { console.error('[UP] save disp:', e); saveOk = false; }
 
             if (!saveOk) {
-              if (dispEditLabel) { dispEditLabel.textContent = 'ERRORE — RIPROVA'; dispEditLabel.style.color = '#f87171'; }
-              if (dispEditIcon)  dispEditIcon.textContent = 'error';
+              if (dispEditLabel) { dispEditLabel.textContent = 'ERRORE'; dispEditLabel.style.color = '#f87171'; dispEditLabel.style.background = 'transparent'; dispEditLabel.style.border = '1px solid #f87171'; }
+              if (dispEditIcon)  { dispEditIcon.classList.add('hidden'); }
               dispEditBtn.disabled = false;
               isDispEditing = true;
               return;
@@ -1712,8 +1727,8 @@
             dispHint && dispHint.classList.add('hidden');
             giorni.forEach(function (g) { fasce.forEach(function (f) { var c = document.getElementById('up-disp-' + g + '-' + f); if (c) { c.style.cursor = 'default'; c.style.outline = ''; } }); });
             fillDisponibilita('up-', p.disponibilita);
-            if (dispEditIcon)  { dispEditIcon.textContent = 'edit'; dispEditIcon.style.color = ''; }
-            if (dispEditLabel) { dispEditLabel.textContent = 'MODIFICA'; dispEditLabel.style.color = ''; }
+            if (dispEditIcon)  { dispEditIcon.classList.remove('hidden'); dispEditIcon.style.color = ''; }
+            if (dispEditLabel) { dispEditLabel.classList.add('hidden'); dispEditLabel.style.color = ''; dispEditLabel.style.background = ''; dispEditLabel.style.border = ''; }
             dispEditBtn.disabled = false;
           }
         });
@@ -1827,6 +1842,12 @@
 
       var allMatches = data.matches.slice();
 
+      function fmtNC(full) {
+        var parts = (full || '').trim().split(/\s+/);
+        if (parts.length < 2) return (full || '').toUpperCase();
+        return parts[0][0].toUpperCase() + '. ' + parts[parts.length - 1].toUpperCase();
+      }
+
       async function refreshContestazioni() {
         try { await SM.load(torneoId); } catch (e) {}
         allMatches = SM.getMatches(torneoId).slice();
@@ -1857,16 +1878,16 @@
               '<div class="flex items-center justify-between gap-2">' +
                 '<div class="flex-1 min-w-0">' +
                   '<span class="font-label text-[0.55rem] text-gray-600 uppercase tracking-widest block mb-0.5">Risultato inviato</span>' +
-                  '<span class="font-headline italic font-black text-white uppercase tracking-tight text-[1.05rem] leading-tight block truncate">' + esc(m.giocatore1_nome) + '</span>' +
+                  '<span class="font-headline italic font-black text-white uppercase tracking-tight text-[0.88rem] leading-tight block truncate">' + fmtNC(m.giocatore1_nome) + '</span>' +
                 '</div>' +
-                '<div class="flex items-center gap-2 flex-shrink-0 mx-1">' +
-                  '<span class="score-badge" style="color:#ffb4ab">' + m.score1 + '</span>' +
+                '<div class="flex items-center gap-1.5 flex-shrink-0 mx-1">' +
+                  '<span class="score-badge" style="color:#ffb4ab;font-size:1.2rem">' + m.score1 + '</span>' +
                   '<span class="vs-dot">vs</span>' +
-                  '<span class="score-badge" style="color:#ffb4ab">' + m.score2 + '</span>' +
+                  '<span class="score-badge" style="color:#ffb4ab;font-size:1.2rem">' + m.score2 + '</span>' +
                 '</div>' +
                 '<div class="flex-1 min-w-0 text-right">' +
                   '<span class="font-label text-[0.55rem] text-gray-600 uppercase tracking-widest block mb-0.5">Avversario</span>' +
-                  '<span class="font-headline italic font-black text-white uppercase tracking-tight text-[1.05rem] leading-tight block truncate">' + esc(m.giocatore2_nome) + '</span>' +
+                  '<span class="font-headline italic font-black text-white uppercase tracking-tight text-[0.88rem] leading-tight block truncate">' + fmtNC(m.giocatore2_nome) + '</span>' +
                 '</div>' +
               '</div>' +
             '</div>' +
