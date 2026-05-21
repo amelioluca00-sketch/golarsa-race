@@ -552,7 +552,14 @@
   <!-- Toast notifica -->
   <div id="toast">Modifiche salvate</div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="../../../src/storage-manager.js?v=14"></script>
+
   <script>
+    // Stato torneo corrente (caricato da Supabase)
+    let _torneoStato = 'in corso';
+    let _torneoStandings = [];
+
     function formatDateIT(iso) {
       if (!iso) return '—';
       const [y, m, d] = iso.split('-');
@@ -564,23 +571,15 @@
       const fine   = document.getElementById('set-fine').value;
       const elInizio = document.getElementById('reg-data-inizio');
       const elFine   = document.getElementById('reg-data-fine');
-      if (elInizio) elInizio.textContent = formatDateIT(inizio) || '[DATA_INIZIO]';
-      if (elFine)   elFine.textContent   = formatDateIT(fine)   || '[DATA_FINE]';
+      if (elInizio) elInizio.textContent = (inizio ? formatDateIT(inizio) : '[DATA_INIZIO]');
+      if (elFine)   elFine.textContent   = (fine   ? formatDateIT(fine)   : '[DATA_FINE]');
     }
 
     function switchTab(name) {
-      // Tabs
       document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
       document.getElementById('tab-' + name).classList.add('active');
-
-      // Panels
-      document.querySelectorAll('.section-panel').forEach(p => {
-        p.classList.remove('active');
-      });
-      const panel = document.getElementById('panel-' + name);
-      panel.classList.add('active');
-
-      // Auto-inietta date nel regolamento se vengono dalle impostazioni
+      document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('panel-' + name).classList.add('active');
       if (name === 'regolamento') injectDatesIntoRegolamento();
     }
 
@@ -598,7 +597,6 @@
         btn.innerHTML = '<span class="material-symbols-outlined text-sm">close</span>Annulla';
         editStates[section] = true;
         prose.focus();
-        // Cursore alla fine
         const range = document.createRange();
         range.selectNodeContents(prose);
         range.collapse(false);
@@ -623,7 +621,6 @@
       btn.innerHTML = '<span class="material-symbols-outlined text-sm">edit</span>Modifica';
       editStates[section] = false;
 
-      // Persisti in localStorage
       localStorage.setItem('gr_content_v3_' + section, prose.innerHTML);
 
       const toast = document.getElementById('toast');
@@ -631,22 +628,66 @@
       setTimeout(() => toast.classList.remove('show'), 2200);
     }
 
-    // Ripristina contenuti salvati da localStorage
-    ['regolamento', 'termini', 'privacy'].forEach(function(s) {
-      const saved = localStorage.getItem('gr_content_v3_' + s);
-      if (saved) document.getElementById('prose-' + s).innerHTML = saved;
-    });
+    // ── Init: carica dati torneo da Supabase e popola i campi ─────────
+    async function initPage() {
+      // Ripristina contenuti regolamento/termini/privacy da localStorage
+      ['regolamento', 'termini', 'privacy'].forEach(function(s) {
+        const saved = localStorage.getItem('gr_content_v3_' + s);
+        if (saved) document.getElementById('prose-' + s).innerHTML = saved;
+      });
 
-    // Ripristina le date del torneo nei campi e aggiorna il regolamento
-    (function() {
-      const savedInizio = localStorage.getItem('gr_torneo_inizio');
-      const savedFine   = localStorage.getItem('gr_torneo_fine');
-      if (savedInizio) document.getElementById('set-inizio').value = savedInizio;
-      if (savedFine)   document.getElementById('set-fine').value   = savedFine;
-      if (savedInizio || savedFine) injectDatesIntoRegolamento();
-    })();
+      const torneoId = localStorage.getItem('gr_torneo_id');
+      if (!torneoId) {
+        // Fallback: usa solo localStorage se non c'è un torneo attivo
+        const savedInizio = localStorage.getItem('gr_torneo_inizio');
+        const savedFine   = localStorage.getItem('gr_torneo_fine');
+        if (savedInizio) document.getElementById('set-inizio').value = savedInizio;
+        if (savedFine)   document.getElementById('set-fine').value   = savedFine;
+        injectDatesIntoRegolamento();
+        return;
+      }
 
-    function confermaMod() {
+      try {
+        // Carica dati aggiornati da Supabase
+        const data = await window.StorageManager.load(torneoId);
+        if (!data || !data.torneo) return;
+
+        const t = data.torneo;
+
+        // Salva stato e standings per il salvataggio successivo
+        _torneoStato     = t.stato     || 'in corso';
+        _torneoStandings = t.standings || [];
+
+        // Popola i campi del form
+        document.getElementById('set-nome').value         = t.nome         || '';
+        document.getElementById('set-inizio').value       = t.inizio        || '';
+        document.getElementById('set-fine').value         = t.fine          || '';
+        document.getElementById('set-partecipanti').value = t.maxIscritti   || '';
+
+        // Quota e termine: non sono in DB, recupera da localStorage
+        const savedQuota   = localStorage.getItem('gr_torneo_quota');
+        const savedTermine = localStorage.getItem('gr_torneo_termine');
+        if (savedQuota)   document.getElementById('set-quota').value   = savedQuota;
+        if (savedTermine) document.getElementById('set-termine').value = savedTermine;
+
+        // Aggiorna localStorage con dati freschi
+        localStorage.setItem('gr_torneo_inizio', t.inizio || '');
+        localStorage.setItem('gr_torneo_fine',   t.fine   || '');
+
+        // Inietta le date aggiornate nel regolamento
+        injectDatesIntoRegolamento();
+
+        // Se il regolamento è quello di default (non custom), aggiorna le date nel testo salvato
+        // così che la prossima apertura mostri sempre le date corrette
+        localStorage.setItem('gr_content_v3_regolamento', document.getElementById('prose-regolamento').innerHTML);
+
+      } catch (err) {
+        console.warn('[menu_dashboard] Errore caricamento torneo:', err);
+      }
+    }
+
+    // ── Salva modifiche su Supabase ───────────────────────────────────
+    async function confermaMod() {
       const nome    = document.getElementById('set-nome').value.trim();
       const inizio  = document.getElementById('set-inizio').value;
       const fine    = document.getElementById('set-fine').value;
@@ -656,17 +697,39 @@
 
       // Validazione base: almeno il nome
       if (!nome) {
-        document.getElementById('set-nome').focus();
-        document.getElementById('set-nome').style.borderColor = 'rgba(255,100,100,0.6)';
-        setTimeout(() => {
-          document.getElementById('set-nome').style.borderColor = '';
-        }, 1500);
+        const inp = document.getElementById('set-nome');
+        inp.focus();
+        inp.style.borderColor = 'rgba(255,100,100,0.6)';
+        setTimeout(() => { inp.style.borderColor = ''; }, 1500);
         return;
       }
 
-      // Salva le date in localStorage e aggiorna subito il regolamento
-      localStorage.setItem('gr_torneo_inizio', inizio);
-      localStorage.setItem('gr_torneo_fine', fine);
+      const torneoId = localStorage.getItem('gr_torneo_id');
+
+      // Salva su Supabase se abbiamo un torneo attivo
+      if (torneoId && window.StorageManager) {
+        try {
+          await window.StorageManager.saveTournament({
+            id:          torneoId,
+            nome:        nome,
+            inizio:      inizio || null,
+            fine:        fine   || null,
+            maxIscritti: parseInt(partec) || 0,
+            stato:       _torneoStato,
+            standings:   _torneoStandings,
+          });
+        } catch (err) {
+          console.warn('[menu_dashboard] Errore salvataggio torneo:', err);
+        }
+      }
+
+      // Salva in localStorage
+      localStorage.setItem('gr_torneo_inizio',  inizio);
+      localStorage.setItem('gr_torneo_fine',    fine);
+      localStorage.setItem('gr_torneo_quota',   quota);
+      localStorage.setItem('gr_torneo_termine', termine);
+
+      // Aggiorna le date nel regolamento e persisti il contenuto aggiornato
       injectDatesIntoRegolamento();
       localStorage.setItem('gr_content_v3_regolamento', document.getElementById('prose-regolamento').innerHTML);
 
@@ -675,6 +738,9 @@
       toast.classList.add('show');
       setTimeout(() => toast.classList.remove('show'), 2200);
     }
+
+    // Avvia l'inizializzazione
+    initPage();
   </script>
 
 <script src="../../../src/animations.js"></script>
