@@ -347,7 +347,7 @@
             </div>
 
             <h3 style="margin-top:0;">Durata</h3>
-            <p>GOLARSA RACE è un torneo individuale di tennis a formula libera. La competizione si svolge dal <strong>[DATA_INIZIO]</strong> al <strong>[DATA_FINE]</strong>.</p>
+            <p>GOLARSA RACE è un torneo individuale di tennis a formula libera. La competizione si svolge dal <strong id="reg-data-inizio">[DATA_INIZIO]</strong> al <strong id="reg-data-fine">[DATA_FINE]</strong>.</p>
 
             <h3>Fase 1 — Campionato</h3>
             <p>Per tutta la durata del torneo ogni giocatore può sfidare qualsiasi altro partecipante, previo accordo reciproco tra i due. Le sfide avvengono liberamente, senza un calendario prestabilito. È vietato disputare più di un match contro lo stesso avversario nella stessa settimana solare (lunedì–domenica). La classifica è aggiornata in tempo reale: al termine della fase regolare i <strong>4 giocatori</strong> con il punteggio più alto accedono ai playoff.</p>
@@ -560,13 +560,12 @@
     }
 
     function injectDatesIntoRegolamento() {
-      const prose = document.getElementById('prose-regolamento');
-      if (!prose.innerHTML.includes('[DATA_INIZIO]') && !prose.innerHTML.includes('[DATA_FINE]')) return;
       const inizio = document.getElementById('set-inizio').value;
       const fine   = document.getElementById('set-fine').value;
-      prose.innerHTML = prose.innerHTML
-        .replace('[DATA_INIZIO]', formatDateIT(inizio))
-        .replace('[DATA_FINE]',   formatDateIT(fine));
+      const elInizio = document.getElementById('reg-data-inizio');
+      const elFine   = document.getElementById('reg-data-fine');
+      if (elInizio) elInizio.textContent = formatDateIT(inizio) || '[DATA_INIZIO]';
+      if (elFine)   elFine.textContent   = formatDateIT(fine)   || '[DATA_FINE]';
     }
 
     function switchTab(name) {
@@ -638,6 +637,15 @@
       if (saved) document.getElementById('prose-' + s).innerHTML = saved;
     });
 
+    // Ripristina le date del torneo nei campi e aggiorna il regolamento
+    (function() {
+      const savedInizio = localStorage.getItem('gr_torneo_inizio');
+      const savedFine   = localStorage.getItem('gr_torneo_fine');
+      if (savedInizio) document.getElementById('set-inizio').value = savedInizio;
+      if (savedFine)   document.getElementById('set-fine').value   = savedFine;
+      if (savedInizio || savedFine) injectDatesIntoRegolamento();
+    })();
+
     function confermaMod() {
       const nome    = document.getElementById('set-nome').value.trim();
       const inizio  = document.getElementById('set-inizio').value;
@@ -655,6 +663,12 @@
         }, 1500);
         return;
       }
+
+      // Salva le date in localStorage e aggiorna subito il regolamento
+      localStorage.setItem('gr_torneo_inizio', inizio);
+      localStorage.setItem('gr_torneo_fine', fine);
+      injectDatesIntoRegolamento();
+      localStorage.setItem('gr_content_v3_regolamento', document.getElementById('prose-regolamento').innerHTML);
 
       // Toast
       const toast = document.getElementById('toast');

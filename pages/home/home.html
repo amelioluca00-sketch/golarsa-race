@@ -719,7 +719,7 @@
         <h3 style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:13px;color:#fff;-webkit-text-fill-color:#fff;text-transform:uppercase;letter-spacing:0.2em;margin:0;">INFO GIOCATORE</h3>
         <button id="myInfoEditBtn" class="relative rounded-lg active:scale-[0.97] transition-all no-anim" style="color:#C5FF1A;width:3.4rem;height:1.9rem;">
           <span id="myInfoEditIcon" class="material-symbols-outlined text-xl absolute inset-0 flex items-center justify-center" style="font-variation-settings:'FILL' 0,'wght' 600">edit</span>
-          <span id="myInfoEditLabel" class="hidden font-['Epilogue'] font-black italic text-xs absolute inset-0 flex items-center justify-center rounded-lg" style="border:1.5px solid #C5FF1A;color:#C5FF1A;letter-spacing:0.06em;background:transparent">SALVA</span>
+          <span id="myInfoEditLabel" class="font-['Epilogue'] font-black italic text-xs absolute inset-0 items-center justify-center rounded-lg" style="display:none;border:1.5px solid #C5FF1A;color:#C5FF1A;letter-spacing:0.06em;background:transparent">SALVA</span>
         </button>
       </div>
       <!-- View mode -->
@@ -832,7 +832,7 @@
         <h3 style="font-family:'Epilogue',sans-serif;font-weight:900;font-style:italic;font-size:13px;color:#fff;-webkit-text-fill-color:#fff;text-transform:uppercase;letter-spacing:0.2em;margin:0;">DISPONIBILITÀ</h3>
         <button id="myDispEditBtn" class="relative rounded-lg active:scale-[0.97] transition-all no-anim" style="color:#C5FF1A;width:3.4rem;height:1.9rem;">
           <span id="myDispEditIcon" class="material-symbols-outlined text-xl absolute inset-0 flex items-center justify-center" style="font-variation-settings:'FILL' 0,'wght' 600">edit</span>
-          <span id="myDispEditLabel" class="hidden font-['Epilogue'] font-black italic text-xs absolute inset-0 flex items-center justify-center rounded-lg" style="border:1.5px solid #C5FF1A;color:#C5FF1A;letter-spacing:0.06em;background:transparent">SALVA</span>
+          <span id="myDispEditLabel" class="font-['Epilogue'] font-black italic text-xs absolute inset-0 items-center justify-center rounded-lg" style="display:none;border:1.5px solid #C5FF1A;color:#C5FF1A;letter-spacing:0.06em;background:transparent">SALVA</span>
         </button>
       </div>
       <div class="rounded-[20px] p-4" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07)">
@@ -1492,13 +1492,13 @@
     document.getElementById('myInfoEdit').classList.add('hidden');
     const _mInfoIcon  = document.getElementById('myInfoEditIcon');
     const _mInfoLabel = document.getElementById('myInfoEditLabel');
-    if (_mInfoIcon)  _mInfoIcon.classList.remove('hidden');
-    if (_mInfoLabel) _mInfoLabel.classList.add('hidden');
+    if (_mInfoIcon)  _mInfoIcon.style.display  = 'flex';
+    if (_mInfoLabel) _mInfoLabel.style.display = 'none';
     const _mDispIcon  = document.getElementById('myDispEditIcon');
     const _mDispLabel = document.getElementById('myDispEditLabel');
     const _mDispHint  = document.getElementById('myDispHint');
-    if (_mDispIcon)  _mDispIcon.classList.remove('hidden');
-    if (_mDispLabel) _mDispLabel.classList.add('hidden');
+    if (_mDispIcon)  _mDispIcon.style.display  = 'flex';
+    if (_mDispLabel) _mDispLabel.style.display = 'none';
     if (_mDispHint)  _mDispHint.classList.add('hidden');
     const wr = p.match_giocati > 0 ? Math.round(p.vittorie / p.match_giocati * 100) : 0;
     document.getElementById('myWrPct').textContent = wr + '%';
@@ -1590,8 +1590,8 @@
       document.getElementById('myInfoEdit').classList.remove('hidden');
       const icon  = document.getElementById('myInfoEditIcon');
       const label = document.getElementById('myInfoEditLabel');
-      if (icon)  icon.classList.add('hidden');
-      if (label) label.classList.remove('hidden');
+      if (icon)  icon.style.display  = 'none';
+      if (label) label.style.display = 'flex';
     }
 
     async function saveInfo() {
@@ -1642,8 +1642,8 @@
 
       document.getElementById('myInfoEdit').classList.add('hidden');
       document.getElementById('myInfoView').classList.remove('hidden');
-      if (icon)  { icon.classList.remove('hidden'); }
-      if (label) { label.classList.add('hidden'); label.style.color = ''; label.style.borderColor = ''; }
+      if (icon)  { icon.style.display  = 'flex'; }
+      if (label) { label.style.display = 'none'; label.style.color = ''; label.style.borderColor = ''; }
       if (btn)   btn.disabled = false;
       _infoEditing = false;
     }
@@ -1655,8 +1655,8 @@
       const icon  = document.getElementById('myDispEditIcon');
       const label = document.getElementById('myDispEditLabel');
       if (hint)  hint.classList.remove('hidden');
-      if (icon)  icon.classList.add('hidden');
-      if (label) label.classList.remove('hidden');
+      if (icon)  icon.style.display  = 'none';
+      if (label) label.style.display = 'flex';
       GIORNI.forEach(g => FASCE.forEach(f => {
         const c = document.getElementById('msh-disp-' + g + '-' + f);
         if (c) { c.style.cursor = 'pointer'; c.style.outline = '1px dashed rgba(197,255,26,0.25)'; }
@@ -1701,8 +1701,8 @@
         const c = document.getElementById('msh-disp-' + g + '-' + f);
         if (c) { c.style.cursor = 'default'; c.style.outline = ''; }
       }));
-      if (icon)  { icon.classList.remove('hidden'); }
-      if (label) { label.classList.add('hidden'); label.style.color = ''; label.style.borderColor = ''; }
+      if (icon)  { icon.style.display  = 'flex'; }
+      if (label) { label.style.display = 'none'; label.style.color = ''; label.style.borderColor = ''; }
       if (btn)   btn.disabled = false;
       _dispEditing = false;
     }
