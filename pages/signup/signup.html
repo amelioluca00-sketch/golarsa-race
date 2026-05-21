@@ -443,11 +443,6 @@
 </div>
 </div>
 </div>
-<!-- Coach di riferimento -->
-<div class="space-y-1.5">
-<label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/80 font-bold ml-1" style="">COACH DI RIFERIMENTO</label>
-<input id="inp-coach" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#c5ff1a]/60 focus:border-[#c5ff1a] outline-none transition-all placeholder:text-white/40 input-glow" placeholder="Nome del Tecnico" type="text" required/>
-</div>
 </div>
 <!-- Selettore Torneo (solo iscriviti) -->
 <div id="fieldsTorneo" class="form-collapsible space-y-5" style="max-height: 200px; opacity: 1;">
@@ -550,7 +545,7 @@
         const pill              = document.getElementById('authSwitcherPill');
 
         // Campi obbligatori solo nella modalità iscriviti
-        var iscrivitiOnlyFields = ['inp-nome', 'inp-cognome', 'inp-tel', 'inp-coach'];
+        var iscrivitiOnlyFields = ['inp-nome', 'inp-cognome', 'inp-tel'];
 
         if (tab === 'accedi') {
             slider.style.transform = 'translateX(100%)';
@@ -724,9 +719,8 @@
                 const cognome = document.getElementById('inp-cognome').value.trim();
                 const email   = document.getElementById('inp-email').value.trim().toLowerCase();
                 const telefono = document.getElementById('inp-tel').value.trim();
-                const coach   = document.getElementById('inp-coach').value.trim();
                 const telValido = telefono && telefono !== '+39' && telefono.length > 4;
-                if (!nome || !cognome || !email || !telValido || !coach) {
+                if (!nome || !cognome || !email || !telValido) {
                     showLoginError('Tutti i campi sono obbligatori.');
                     submitBtn.disabled = false;
                     submitBtn.style.opacity = '';
@@ -746,7 +740,6 @@
                     telefono:     document.getElementById('inp-tel').value.trim(),
                     nazionalita:  nazionalita,
                     bandiera:     bandiera,
-                    coach:        document.getElementById('inp-coach').value.trim(),
                 };
 
                 const player = await SM.registerPlayer(torneoId, playerData);

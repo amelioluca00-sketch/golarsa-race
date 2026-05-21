@@ -1181,7 +1181,7 @@
             '<div class="absolute right-2 font-headline font-black italic pointer-events-none select-none leading-none" style="font-size:95px;bottom:-30px;color:rgba(255,255,255,0.07);">' + rank + '</div>' +
             '<div class="pos-display w-10 font-headline font-black italic text-xl" style="color:' + posColor + '">' + String(rank).padStart(2,'0') + '</div>' +
             '<div class="flex-1 ml-4 flex items-center gap-4 min-w-0"><img alt="' + esc(p.nazionalita || '') + '" class="w-7 h-[18px] object-cover rounded shadow shrink-0 border border-white/5" src="https://flagcdn.com/w40/' + flagCode + '.png"/><div class="flex flex-col min-w-0"><span class="text-[9px] font-medium tracking-widest text-[#888888] uppercase truncate">' + esc(p.nome) + '</span><span class="text-base font-headline font-black italic text-white uppercase leading-none truncate">' + esc(p.cognome) + '</span></div></div>' +
-            '<div class="flex items-center gap-1"><div class="trend-col">' + trendHtml + '</div><div class="w-20 text-right"><span class="text-base font-headline font-black italic text-white tracking-tighter ' + ptGlow + '">' + p.punti + '</span></div></div>';
+            '<div class="flex items-center gap-1"><div class="trend-col ml-2">' + trendHtml + '</div><div class="w-20 text-right"><span class="text-base font-headline font-black italic text-white tracking-tighter ' + ptGlow + '">' + p.punti + '</span></div></div>';
           (function (player, r) {
             row.addEventListener('click', function () {
               var currentUserId = localStorage.getItem('gr_user_id');
@@ -1636,8 +1636,8 @@
             populateInputs();
             viewDiv && viewDiv.classList.add('hidden');
             editDiv && editDiv.classList.remove('hidden');
-            if (editIcon)  { editIcon.classList.add('hidden'); }
-            if (editLabel) { editLabel.classList.remove('hidden'); }
+            if (editIcon)  { editIcon.style.display = 'none'; }
+            if (editLabel) { editLabel.style.display = 'flex'; }
           } else {
             isEditing = false;
             editBtn.disabled = true;
@@ -1669,8 +1669,8 @@
             } catch (e) { console.error('[UP] save info:', e); saveOk = false; }
 
             if (!saveOk) {
-              if (editIcon)  { editIcon.classList.add('hidden'); }
-              if (editLabel) { editLabel.classList.remove('hidden'); editLabel.textContent = 'ERRORE'; editLabel.style.color = '#f87171'; editLabel.style.borderColor = '#f87171'; }
+              if (editIcon)  { editIcon.style.display = 'none'; }
+              if (editLabel) { editLabel.style.display = 'flex'; editLabel.textContent = 'ERRORE'; editLabel.style.color = '#f87171'; editLabel.style.borderColor = '#f87171'; }
               editBtn.disabled = false;
               isEditing = true;
               return;
@@ -1686,8 +1686,8 @@
 
             editDiv && editDiv.classList.add('hidden');
             viewDiv && viewDiv.classList.remove('hidden');
-            if (editIcon)  { editIcon.classList.remove('hidden'); }
-            if (editLabel) { editLabel.classList.add('hidden'); editLabel.style.color = ''; }
+            if (editIcon)  { editIcon.style.display = 'flex'; }
+            if (editLabel) { editLabel.style.display = 'none'; editLabel.style.color = ''; }
             editBtn.disabled = false;
           }
         });
@@ -1700,8 +1700,8 @@
             isDispEditing = true;
             dispHint && dispHint.classList.remove('hidden');
             giorni.forEach(function (g) { fasce.forEach(function (f) { var c = document.getElementById('up-disp-' + g + '-' + f); if (c) { c.style.cursor = 'pointer'; c.style.outline = '1px dashed rgba(197,255,26,0.25)'; } }); });
-            if (dispEditIcon)  { dispEditIcon.classList.add('hidden'); }
-            if (dispEditLabel) { dispEditLabel.classList.remove('hidden'); }
+            if (dispEditIcon)  { dispEditIcon.style.display = 'none'; }
+            if (dispEditLabel) { dispEditLabel.style.display = 'flex'; }
           } else {
             isDispEditing = false;
             dispEditBtn.disabled = true;
@@ -1722,8 +1722,8 @@
             } catch (e) { console.error('[UP] save disp:', e); saveOk = false; }
 
             if (!saveOk) {
-              if (dispEditIcon)  { dispEditIcon.classList.add('hidden'); }
-              if (dispEditLabel) { dispEditLabel.classList.remove('hidden'); dispEditLabel.textContent = 'ERRORE'; dispEditLabel.style.color = '#f87171'; dispEditLabel.style.borderColor = '#f87171'; }
+              if (dispEditIcon)  { dispEditIcon.style.display = 'none'; }
+              if (dispEditLabel) { dispEditLabel.style.display = 'flex'; dispEditLabel.textContent = 'ERRORE'; dispEditLabel.style.color = '#f87171'; dispEditLabel.style.borderColor = '#f87171'; }
               dispEditBtn.disabled = false;
               isDispEditing = true;
               return;
@@ -1732,8 +1732,8 @@
             dispHint && dispHint.classList.add('hidden');
             giorni.forEach(function (g) { fasce.forEach(function (f) { var c = document.getElementById('up-disp-' + g + '-' + f); if (c) { c.style.cursor = 'default'; c.style.outline = ''; } }); });
             fillDisponibilita('up-', p.disponibilita);
-            if (dispEditIcon)  { dispEditIcon.classList.remove('hidden'); }
-            if (dispEditLabel) { dispEditLabel.classList.add('hidden'); dispEditLabel.style.color = ''; dispEditLabel.style.borderColor = ''; }
+            if (dispEditIcon)  { dispEditIcon.style.display = 'flex'; }
+            if (dispEditLabel) { dispEditLabel.style.display = 'none'; dispEditLabel.style.color = ''; dispEditLabel.style.borderColor = ''; }
             dispEditBtn.disabled = false;
           }
         });
