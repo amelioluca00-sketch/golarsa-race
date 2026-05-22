@@ -483,27 +483,57 @@
       }
     },
 
-    // ── SESSIONE (rimane in localStorage) ─────────────────────────
+    // ── SESSIONE (cookie, condivisi tra Safari e PWA su iOS) ──────
+    //
+    // localStorage non è condiviso tra Safari browser e la PWA (home screen)
+    // su iOS: ogni contesto ha il proprio storage isolato. I cookie invece
+    // vengono condivisi sullo stesso dominio, quindi il login fatto in Safari
+    // persiste anche quando si apre l'app dalla home screen.
+
+    _setCookie: function (name, value, days) {
+      var expires = '';
+      if (days) {
+        var d = new Date();
+        d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+        expires = '; expires=' + d.toUTCString();
+      }
+      document.cookie = name + '=' + encodeURIComponent(value || '') + expires + '; path=/; SameSite=Lax';
+    },
+
+    _getCookie: function (name) {
+      var nameEQ = name + '=';
+      var parts = document.cookie.split(';');
+      for (var i = 0; i < parts.length; i++) {
+        var c = parts[i].trim();
+        if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length));
+      }
+      return null;
+    },
+
+    _deleteCookie: function (name) {
+      document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    },
 
     getSession: function () {
       return {
-        torneoId: localStorage.getItem('gr_torneo_id'),
-        userId:   localStorage.getItem('gr_user_id'),
-        email:    localStorage.getItem('gr_user_email'),
-        role:     localStorage.getItem('gr_role'),
+        torneoId: SM._getCookie('gr_torneo_id'),
+        userId:   SM._getCookie('gr_user_id'),
+        email:    SM._getCookie('gr_user_email'),
+        role:     SM._getCookie('gr_role'),
       };
     },
 
     setSession: function (torneoId, userId, email, role) {
-      localStorage.setItem('gr_torneo_id',    torneoId || '');
-      localStorage.setItem('gr_user_id',      userId   || '');
-      localStorage.setItem('gr_user_email',   email    || '');
-      localStorage.setItem('gr_role',         role     || '');
+      // 365 giorni: l'utente rimane loggato per un anno senza dover rifare l'accesso
+      SM._setCookie('gr_torneo_id',  torneoId || '', 365);
+      SM._setCookie('gr_user_id',    userId   || '', 365);
+      SM._setCookie('gr_user_email', email    || '', 365);
+      SM._setCookie('gr_role',       role     || '', 365);
     },
 
     clearSession: function () {
       ['gr_torneo_id','gr_user_id','gr_user_email','gr_role'].forEach(function (k) {
-        localStorage.removeItem(k);
+        SM._deleteCookie(k);
       });
     },
 
