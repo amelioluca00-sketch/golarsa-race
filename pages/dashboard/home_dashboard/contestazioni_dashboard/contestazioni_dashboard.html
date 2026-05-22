@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="dark" lang="it">
 <head>
-<script>if(sessionStorage.getItem("gr_admin_auth")!=="1"&&localStorage.getItem("gr_role")!=="admin"){location.replace("../../accesso_dashboard.html");}else{sessionStorage.setItem("gr_admin_auth","1");}</script>
+<script>function _gc(n){var x=document.cookie.split(';');for(var i=0;i<x.length;i++){var c=x[i].trim();if(c.indexOf(n+'=')===0)return decodeURIComponent(c.substring(n.length+1));}return null;}if(sessionStorage.getItem("gr_admin_auth")!=="1"&&localStorage.getItem("gr_role")!=="admin"&&_gc("gr_role")!=="admin"){location.replace("../../accesso_dashboard.html");}else{sessionStorage.setItem("gr_admin_auth","1");}</script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>PODIUM ADMIN - CONTESTAZIONI</title>
@@ -345,6 +345,7 @@
     }
   </script>
 
+  <script src="../../../../src/session-shim.js?v=1"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="../../../../src/storage-manager.js?v=14"></script>
   <script src="../../../../src/ui-binder.js?v=14"></script>
