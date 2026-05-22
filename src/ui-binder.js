@@ -1311,7 +1311,10 @@
         function _showNotifiche(list) {
           // Badge sull'icona profilo
           var badge = document.getElementById('notif-badge');
-          if (badge) badge.classList.toggle('hidden', !list.length);
+          if (badge) {
+            badge.classList.toggle('hidden', !list.length);
+            badge.textContent = list.length > 9 ? '9+' : (list.length > 0 ? list.length : '');
+          }
           // Sezione nel profile sheet
           var section = document.getElementById('notif-section');
           var listEl  = document.getElementById('notif-list');
