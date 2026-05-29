@@ -1332,6 +1332,18 @@
         }
         render();
 
+        // Ricarica i match dal DB e ri-renderizza (chiamata all'apertura del tab
+        // così si vedono le sfide aperte create da altri giocatori).
+        var _refreshing = false;
+        window._refreshSfide = function () {
+          if (_refreshing) return;
+          _refreshing = true;
+          SM.reloadMatches(torneoId).then(function () {
+            _refreshing = false;
+            render();
+          }).catch(function () { _refreshing = false; });
+        };
+
         function waLink(tel, nome, quando) {
           var t = (tel ? String(tel) : '').replace(/\D/g, '');
           if (t.indexOf('00') === 0) t = t.substring(2);

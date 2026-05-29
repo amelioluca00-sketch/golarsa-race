@@ -438,6 +438,8 @@
       if (leaderboardHeader) leaderboardHeader.style.display = 'none';
       if (leaderboardContainer) leaderboardContainer.style.display = 'none';
       if (ultimiMatchContainer) ultimiMatchContainer.style.display = 'none';
+      // Ricarica le sfide dal DB così si vedono quelle aperte da altri giocatori
+      if (typeof window._refreshSfide === 'function') window._refreshSfide();
     }
   };
   window.addEventListener('resize', function() { window.switchTab(activeTab); });
@@ -2002,8 +2004,8 @@
 </script>
 <script src="../../src/session-shim.js?v=1"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="../../src/storage-manager.js?v=19"></script>
-<script src="../../src/ui-binder.js?v=21"></script>
+<script src="../../src/storage-manager.js?v=20"></script>
+<script src="../../src/ui-binder.js?v=22"></script>
 <script src="../../src/main.js?v=18"></script>
 
 <script>

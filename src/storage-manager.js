@@ -218,6 +218,25 @@
     },
 
     /**
+     * Ricarica SOLO i match dal DB e aggiorna in-place l'array in cache,
+     * così i riferimenti già acquisiti dai render restano validi.
+     * Usato per mostrare sfide aperte create da altri giocatori senza reload.
+     */
+    reloadMatches: async function (torneoId) {
+      if (!torneoId) return [];
+      var mRes = await db.from('matches').select('*').eq('tournament_id', torneoId);
+      if (mRes.error) { console.error('[SM] reloadMatches:', mRes.error); }
+      var fresh = (mRes.data || []).map(matchFromRow);
+      if (_cache[torneoId] && _cache[torneoId].matches) {
+        var arr = _cache[torneoId].matches;
+        arr.length = 0;
+        fresh.forEach(function (m) { arr.push(m); });
+        return arr;
+      }
+      return fresh;
+    },
+
+    /**
      * Crea una SFIDA APERTA: un match con stato 'aperta' e un solo giocatore (il creatore).
      * Gli altri giocatori potranno iscriversi finché resta aperta.
      */
