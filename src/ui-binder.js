@@ -1286,8 +1286,17 @@
         function render() {
           var aperte = matches.filter(function (m) { return m.stato === 'aperta'; })
             .sort(function (a, b) { return (a.data || '').localeCompare(b.data || '') || ((a.ora || '').localeCompare(b.ora || '')); });
-          var programmate = matches.filter(function (m) { return m.stato === 'programmata'; })
-            .sort(function (a, b) { return (a.data || '').localeCompare(b.data || '') || ((a.ora || '').localeCompare(b.ora || '')); });
+          var now = new Date();
+          var programmate = matches.filter(function (m) {
+            if (m.stato !== 'programmata') return false;
+            // Nascondi se data+ora del match sono già passate
+            if (m.data) {
+              var oraStr = m.ora || '00:00';
+              var matchDt = new Date(m.data + 'T' + oraStr);
+              if (matchDt <= now) return false;
+            }
+            return true;
+          }).sort(function (a, b) { return (a.data || '').localeCompare(b.data || '') || ((a.ora || '').localeCompare(b.ora || '')); });
           var me = getMe();
 
           // ── Sfide ancora libere ──
@@ -1297,10 +1306,7 @@
             openList.innerHTML = aperte.map(function (m) {
               var isMine = me && m.giocatore1_id === me.id;
               var azione = isMine
-                ? '<div class="flex-shrink-0 flex items-center gap-2">' +
-                    '<span class="text-[9px] font-headline font-bold italic uppercase tracking-wider text-[#C5FF1A] border border-[#C5FF1A]/30 rounded-full px-3 py-1.5">La tua sfida</span>' +
-                    '<button onclick="window._deleteSfida && window._deleteSfida(\'' + m.id + '\')" title="Elimina sfida" class="w-8 h-8 flex items-center justify-center rounded-full bg-red-500/10 text-red-400 active:scale-90 transition-transform"><span class="material-symbols-outlined" style="font-size:18px">delete</span></button>' +
-                  '</div>'
+                ? '<button onclick="window._deleteSfida && window._deleteSfida(\'' + m.id + '\')" title="Elimina sfida" class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-red-500/10 text-red-400 active:scale-90 transition-transform"><span class="material-symbols-outlined" style="font-size:18px">delete</span></button>'
                 : '<button onclick="window._joinSfida && window._joinSfida(\'' + m.id + '\')" class="flex-shrink-0 bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase text-[11px] tracking-wider px-4 py-2 rounded-full border-t border-white/40 active:scale-95 transition-transform">ENTRA</button>';
               return '' +
                 '<div class="premium-card rounded-2xl px-4 py-3.5 flex items-center gap-3">' +
@@ -1321,13 +1327,22 @@
             progList.innerHTML = '<p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-6">Nessun match in programma</p>';
           } else {
             progList.innerHTML = programmate.map(function (m) {
+              var isPlayer = me && (m.giocatore1_id === me.id || m.giocatore2_id === me.id);
+              var cancelBtn = isPlayer
+                ? '<button onclick="window._cancelProgrammata && window._cancelProgrammata(\'' + m.id + '\')" title="Cancella match" class="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-full bg-red-500/10 text-red-400 active:scale-90 transition-transform mt-1"><span class="material-symbols-outlined" style="font-size:16px">delete</span></button>'
+                : '';
               return '' +
                 '<div class="premium-card rounded-2xl px-4 py-3 opacity-90">' +
-                  '<p class="text-[9px] text-[#888] uppercase tracking-[0.18em] mb-1.5">' + esc(fmtQuando(m)) + '</p>' +
-                  '<div class="flex items-center gap-2">' +
-                    '<p class="flex-1 min-w-0 font-headline font-black italic text-white uppercase text-sm leading-none truncate">' + esc(fmtNomeBreveLocal(m.giocatore1_nome)) + '</p>' +
-                    '<span class="text-[#C5FF1A] font-headline font-black italic text-xs flex-shrink-0">VS</span>' +
-                    '<p class="flex-1 min-w-0 text-right font-headline font-black italic text-white uppercase text-sm leading-none truncate">' + esc(fmtNomeBreveLocal(m.giocatore2_nome)) + '</p>' +
+                  '<div class="flex items-start gap-2">' +
+                    '<div class="flex-1 min-w-0">' +
+                      '<p class="text-[9px] text-[#888] uppercase tracking-[0.18em] mb-1.5">' + esc(fmtQuando(m)) + '</p>' +
+                      '<div class="flex items-center gap-2">' +
+                        '<p class="flex-1 min-w-0 font-headline font-black italic text-white uppercase text-sm leading-none truncate">' + esc(fmtNomeBreveLocal(m.giocatore1_nome)) + '</p>' +
+                        '<span class="text-[#C5FF1A] font-headline font-black italic text-xs flex-shrink-0">VS</span>' +
+                        '<p class="flex-1 min-w-0 text-right font-headline font-black italic text-white uppercase text-sm leading-none truncate">' + esc(fmtNomeBreveLocal(m.giocatore2_nome)) + '</p>' +
+                      '</div>' +
+                    '</div>' +
+                    cancelBtn +
                   '</div>' +
                 '</div>';
             }).join('');
@@ -1417,6 +1432,27 @@
             }
             render();
           });
+        };
+
+        // ── Cancella un match programmato ──
+        window._cancelProgrammata = async function (matchId) {
+          var me = getMe();
+          if (!me) return;
+          var target = matches.find(function (m) { return m.id === matchId; });
+          if (!target) return;
+          if (target.giocatore1_id !== me.id && target.giocatore2_id !== me.id) return;
+          if (!confirm('Vuoi cancellare questo match programmato? Tornerà disponibile come sfida aperta.')) return;
+          try {
+            await SM.updateMatchStatus(torneoId, matchId, 'aperta', {
+              giocatore2_id: null,
+              giocatore2_nome: null,
+              giocatore2_tel: null
+            });
+            if (typeof window._refreshSfide === 'function') window._refreshSfide();
+            else render();
+          } catch (e) {
+            alert('Errore durante la cancellazione del match.');
+          }
         };
 
         // ── Iscriviti a una sfida aperta ──
