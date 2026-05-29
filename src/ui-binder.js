@@ -1319,19 +1319,19 @@
             var html = '';
             dateOrderA.forEach(function (d, di) {
               var dataLabel = d ? fmtData(d) : '—';
-              html += '<p class="text-center text-white font-label font-bold text-[10px] uppercase tracking-[0.2em]' + (di === 0 ? ' mt-1' : ' mt-5') + ' mb-2">' + esc(dataLabel) + '</p>';
               byDateA[d].forEach(function (m) {
                 var isMine = me && m.giocatore1_id === me.id;
-                var oraStr = m.ora ? 'ore ' + m.ora : '';
+                var oraStr = m.ora ? m.ora : '';
                 var azione = isMine
                   ? '<button onclick="window._deleteSfida && window._deleteSfida(\'' + m.id + '\')" title="Elimina sfida" class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-red-500/10 text-red-400 active:scale-90 transition-transform"><span class="material-symbols-outlined" style="font-size:18px">delete</span></button>'
                   : '<button onclick="window._joinSfida && window._joinSfida(\'' + m.id + '\')" class="flex-shrink-0 bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase text-[11px] tracking-wider px-4 py-2 rounded-full border-t border-white/40 active:scale-95 transition-transform">ENTRA</button>';
                 html +=
-                  '<div class="premium-card rounded-xl px-4 py-3.5 flex items-center gap-3 mb-2">' +
-                    '<div class="flex-1 min-w-0">' +
-                      '<p class="font-headline font-black italic text-white uppercase text-sm leading-none truncate">' + esc(fmtNomeBreveLocal(m.giocatore1_nome)) + '</p>' +
-                      (oraStr ? '<p class="text-[10px] text-[#888] uppercase tracking-wide mt-1">' + esc(oraStr) + '</p>' : '') +
-                    '</div>' +
+                  '<div class="flex items-center justify-between mb-0.5 px-1' + (di === 0 ? '' : '') + '">' +
+                    '<p class="text-white font-label font-bold text-[10px] uppercase tracking-[0.18em]">' + esc(dataLabel) + '</p>' +
+                    (oraStr ? '<p class="text-[#888] font-label font-bold text-[10px] uppercase tracking-[0.15em]">' + esc(oraStr) + '</p>' : '<span></span>') +
+                  '</div>' +
+                  '<div class="premium-card rounded-xl px-4 py-3.5 flex items-center gap-3 mb-4">' +
+                    '<p class="flex-1 font-headline font-black italic text-white uppercase text-sm leading-none">' + esc(fmtNomeBreveLocal(m.giocatore1_nome)) + '</p>' +
                     azione +
                   '</div>';
               });
@@ -1350,26 +1350,24 @@
               byDateP[d].push(m);
             });
             var htmlP = '';
-            dateOrderP.forEach(function (d, di) {
+            dateOrderP.forEach(function (d) {
               var dataLabel = d ? fmtData(d) : '—';
-              htmlP += '<p class="text-center text-white font-label font-bold text-[10px] uppercase tracking-[0.2em]' + (di === 0 ? ' mt-1' : ' mt-5') + ' mb-2">' + esc(dataLabel) + '</p>';
               byDateP[d].forEach(function (m) {
                 var isPlayer = me && (m.giocatore1_id === me.id || m.giocatore2_id === me.id);
-                var oraStr = m.ora ? 'ore ' + m.ora : '';
+                var oraStr = m.ora ? m.ora : '';
                 var cancelBtn = isPlayer
                   ? '<button onclick="window._cancelProgrammata && window._cancelProgrammata(\'' + m.id + '\')" title="Cancella match" class="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-full bg-red-500/10 text-red-400 active:scale-90 transition-transform"><span class="material-symbols-outlined" style="font-size:16px">delete</span></button>'
                   : '';
                 htmlP +=
-                  '<div class="premium-card rounded-xl px-4 py-3.5 flex items-center gap-3 mb-2">' +
-                    '<div class="flex-1 min-w-0">' +
-                      '<div class="flex items-center gap-2">' +
-                        '<p class="flex-1 min-w-0 font-headline font-black italic text-white uppercase text-sm leading-none truncate">' + esc(fmtNomeBreveLocal(m.giocatore1_nome)) + '</p>' +
-                        '<span class="text-[#C5FF1A] font-headline font-black italic text-xs flex-shrink-0">VS</span>' +
-                        '<p class="flex-1 min-w-0 text-right font-headline font-black italic text-white uppercase text-sm leading-none truncate">' + esc(fmtNomeBreveLocal(m.giocatore2_nome)) + '</p>' +
-                      '</div>' +
-                      (oraStr ? '<p class="text-[10px] text-[#888] uppercase tracking-wide mt-1">' + esc(oraStr) + '</p>' : '') +
-                    '</div>' +
-                    cancelBtn +
+                  '<div class="flex items-center justify-between mb-0.5 px-1">' +
+                    '<p class="text-white font-label font-bold text-[10px] uppercase tracking-[0.18em]">' + esc(dataLabel) + '</p>' +
+                    (oraStr ? '<p class="text-[#888] font-label font-bold text-[10px] uppercase tracking-[0.15em]">' + esc(oraStr) + '</p>' : '<span></span>') +
+                  '</div>' +
+                  '<div class="premium-card rounded-xl px-4 py-3.5 flex items-center gap-3 mb-4">' +
+                    '<p class="flex-1 min-w-0 font-headline font-black italic text-white uppercase text-sm leading-none truncate">' + esc(fmtNomeBreveLocal(m.giocatore1_nome)) + '</p>' +
+                    '<span class="text-[#C5FF1A] font-headline font-black italic text-xs flex-shrink-0">VS</span>' +
+                    '<p class="flex-1 min-w-0 text-right font-headline font-black italic text-white uppercase text-sm leading-none truncate">' + esc(fmtNomeBreveLocal(m.giocatore2_nome)) + '</p>' +
+                    (cancelBtn ? '<div class="flex-shrink-0 ml-2">' + cancelBtn + '</div>' : '') +
                   '</div>';
               });
             });
@@ -1469,15 +1467,10 @@
           var target = matches.find(function (m) { return m.id === matchId; });
           if (!target) return;
           if (target.giocatore1_id !== me.id && target.giocatore2_id !== me.id) return;
-          if (!confirm('Vuoi cancellare questo match programmato? Tornerà disponibile come sfida aperta.')) return;
+          if (!confirm('Vuoi cancellare questo match programmato?')) return;
           try {
-            await SM.updateMatchStatus(torneoId, matchId, 'aperta', {
-              giocatore2_id: null,
-              giocatore2_nome: null,
-              giocatore2_tel: null
-            });
-            if (typeof window._refreshSfide === 'function') window._refreshSfide();
-            else render();
+            await SM.deleteMatch(torneoId, matchId);
+            render();
           } catch (e) {
             alert('Errore durante la cancellazione del match.');
           }

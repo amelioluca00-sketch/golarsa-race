@@ -278,6 +278,17 @@
       return true;
     },
 
+    deleteMatch: async function (torneoId, matchId) {
+      var delRes = await db.from('matches').delete().eq('id', matchId);
+      if (delRes.error) { console.error('[SM] deleteMatch:', delRes.error); return false; }
+      if (_cache[torneoId] && _cache[torneoId].matches) {
+        var arr = _cache[torneoId].matches;
+        var idx = arr.findIndex(function (m) { return m.id === matchId; });
+        if (idx !== -1) arr.splice(idx, 1);
+      }
+      return true;
+    },
+
     /**
      * Iscrive un giocatore a una sfida aperta: imposta il secondo giocatore
      * e porta lo stato a 'programmata' (il match entra tra i programmati).
