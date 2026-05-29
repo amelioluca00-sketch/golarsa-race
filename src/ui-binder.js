@@ -12,8 +12,14 @@
   var MESI = ['GENNAIO','FEBBRAIO','MARZO','APRILE','MAGGIO','GIUGNO',
               'LUGLIO','AGOSTO','SETTEMBRE','OTTOBRE','NOVEMBRE','DICEMBRE'];
   var MESI_BREVE = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+  var GIORNI = ['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
 
-  function fmtData(s)      { if (!s) return '—'; var p = s.split('-'); return parseInt(p[2]) + ' ' + MESI[parseInt(p[1])-1] + ' ' + p[0]; }
+  function fmtData(s) {
+    if (!s) return '—';
+    var p = s.split('-');
+    var giorno = GIORNI[new Date(parseInt(p[0]), parseInt(p[1])-1, parseInt(p[2])).getDay()];
+    return giorno + ' ' + parseInt(p[2]) + ' ' + MESI[parseInt(p[1])-1] + ' ' + p[0];
+  }
   function fmtDataBreve(s) { if (!s) return '';  var p = s.split('-'); return p[2] + '/' + p[1] + '/' + p[0]; }
   function fmtMese(s)      { if (!s) return '';  var p = s.split('-'); return p[2] + ' ' + MESI_BREVE[parseInt(p[1])-1]; }
 
