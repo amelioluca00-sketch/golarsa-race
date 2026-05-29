@@ -403,20 +403,34 @@
         p1.gol_fatti += s1; p1.gol_subiti += s2;
         p2.gol_fatti += s2; p2.gol_subiti += s1;
 
+        // ── Fattore di equilibrio ────────────────────────────────────────
+        // Calcola il bonus vittoria in base al gap di punti in classifica
+        // tra i due sfidanti PRIMA del match (p.punti accumulati finora).
+        // Se il gap supera i 300 punti: il vincitore più forte ottiene solo
+        // 70 punti (-30%), mentre il vincitore più debole ottiene 130 (+30%).
+        // Scopo: disincentivare i più forti dallo sfidare i più deboli.
+        var GAP_SOGLIA = 300, BONUS_BASE = 100, BONUS_FORTE = 70, BONUS_DEBOLE = 130;
+        function bonusVittoria(vincitore, perdente) {
+          if (Math.abs(vincitore.punti - perdente.punti) > GAP_SOGLIA) {
+            return vincitore.punti > perdente.punti ? BONUS_FORTE : BONUS_DEBOLE;
+          }
+          return BONUS_BASE;
+        }
+
         if (s1 > s2) {
-          // p1 vince: +100pt fissi
+          // p1 vince: bonus vittoria (100, o 70/130 col fattore di equilibrio)
           // Bonus dominanza: se p2 non ha vinto nessun game (s2 === 0) → +2pt per game conquistato da p1
           // Bonus resistenza: +10pt per ogni game vinto dal perdente (s2)
           p1.vittorie++; p2.sconfitte++;
-          p1.punti += 100;
+          p1.punti += bonusVittoria(p1, p2);
           if (s2 === 0) p1.punti += s1 * 2;
           p2.punti += s2 * 10;
         } else if (s2 > s1) {
-          // p2 vince: +100pt fissi
+          // p2 vince: bonus vittoria (100, o 70/130 col fattore di equilibrio)
           // Bonus dominanza: se p1 non ha vinto nessun game (s1 === 0) → +2pt per game conquistato da p2
           // Bonus resistenza: +10pt per ogni game vinto dal perdente (s1)
           p2.vittorie++; p1.sconfitte++;
-          p2.punti += 100;
+          p2.punti += bonusVittoria(p2, p1);
           if (s1 === 0) p2.punti += s2 * 2;
           p1.punti += s1 * 10;
         }
