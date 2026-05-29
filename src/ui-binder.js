@@ -1259,6 +1259,184 @@
         umContainer.innerHTML = html;
       })();
 
+      // ── SFIDE APERTE ──────────────────────────────────────────────
+      (function () {
+        var openList = document.getElementById('sfide-open-list');
+        var progList = document.getElementById('sfide-prog-list');
+        if (!openList || !progList) return;
+
+        var currentUserId = localStorage.getItem('gr_user_id');
+        var role          = localStorage.getItem('gr_role');
+        function getMe() { return players.find(function (p) { return p.id === currentUserId; }); }
+        function canPlay() {
+          var me = getMe();
+          return !!me && me.stato === 'approvato' && role !== 'spectator';
+        }
+
+        function fmtNomeBreveLocal(full) {
+          var parts = (full || '').trim().split(/\s+/);
+          if (parts.length < 2) return (full || '').toUpperCase();
+          return parts[0][0].toUpperCase() + '. ' + parts[parts.length - 1].toUpperCase();
+        }
+        function fmtQuando(m) {
+          var d = fmtData(m.data);
+          return d + (m.ora ? ' · ore ' + m.ora : '');
+        }
+
+        function render() {
+          var aperte = matches.filter(function (m) { return m.stato === 'aperta'; })
+            .sort(function (a, b) { return (a.data || '').localeCompare(b.data || '') || ((a.ora || '').localeCompare(b.ora || '')); });
+          var programmate = matches.filter(function (m) { return m.stato === 'programmata'; })
+            .sort(function (a, b) { return (a.data || '').localeCompare(b.data || '') || ((a.ora || '').localeCompare(b.ora || '')); });
+          var me = getMe();
+
+          // ── Sfide ancora libere ──
+          if (!aperte.length) {
+            openList.innerHTML = '<p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-6">Nessuna sfida aperta</p>';
+          } else {
+            openList.innerHTML = aperte.map(function (m) {
+              var isMine = me && m.giocatore1_id === me.id;
+              var azione = isMine
+                ? '<span class="flex-shrink-0 text-[9px] font-headline font-bold italic uppercase tracking-wider text-[#C5FF1A] border border-[#C5FF1A]/30 rounded-full px-3 py-1.5">La tua sfida</span>'
+                : '<button onclick="window._joinSfida && window._joinSfida(\'' + m.id + '\')" class="flex-shrink-0 bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase text-[11px] tracking-wider px-4 py-2 rounded-full border-t border-white/40 active:scale-95 transition-transform">ENTRA</button>';
+              return '' +
+                '<div class="premium-card rounded-2xl px-4 py-3.5 flex items-center gap-3">' +
+                  '<div class="w-9 h-9 rounded-full bg-[#C5FF1A]/10 flex items-center justify-center flex-shrink-0">' +
+                    '<span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:20px">sports_tennis</span>' +
+                  '</div>' +
+                  '<div class="flex-1 min-w-0">' +
+                    '<p class="font-headline font-black italic text-white uppercase text-sm leading-tight truncate">' + esc(fmtNomeBreveLocal(m.giocatore1_nome)) + '</p>' +
+                    '<p class="text-[10px] text-[#888] uppercase tracking-wider mt-0.5 truncate">' + esc(fmtQuando(m)) + '</p>' +
+                  '</div>' +
+                  azione +
+                '</div>';
+            }).join('');
+          }
+
+          // ── Match in programma (confermati) ──
+          if (!programmate.length) {
+            progList.innerHTML = '<p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-6">Nessun match in programma</p>';
+          } else {
+            progList.innerHTML = programmate.map(function (m) {
+              return '' +
+                '<div class="premium-card rounded-2xl px-4 py-3 opacity-90">' +
+                  '<p class="text-[9px] text-[#888] uppercase tracking-[0.18em] mb-1.5">' + esc(fmtQuando(m)) + '</p>' +
+                  '<div class="flex items-center gap-2">' +
+                    '<p class="flex-1 min-w-0 font-headline font-black italic text-white uppercase text-sm leading-none truncate">' + esc(fmtNomeBreveLocal(m.giocatore1_nome)) + '</p>' +
+                    '<span class="text-[#C5FF1A] font-headline font-black italic text-xs flex-shrink-0">VS</span>' +
+                    '<p class="flex-1 min-w-0 text-right font-headline font-black italic text-white uppercase text-sm leading-none truncate">' + esc(fmtNomeBreveLocal(m.giocatore2_nome)) + '</p>' +
+                  '</div>' +
+                '</div>';
+            }).join('');
+          }
+        }
+        render();
+
+        function waLink(tel, nome, quando) {
+          var t = (tel ? String(tel) : '').replace(/\D/g, '');
+          if (t.indexOf('00') === 0) t = t.substring(2);
+          if (!t || t.length < 7) return null;
+          var msg = encodeURIComponent('Ciao ' + (nome || '') + '! Mi sono iscritto alla tua sfida di Golarsa Race (' + quando + '). Quando prenotiamo il campo?');
+          return 'https://wa.me/' + t + '?text=' + msg;
+        }
+
+        // ── Apri il form "apri una sfida" ──
+        window._openSfidaSheet = function () {
+          if (!canPlay()) {
+            alert('Solo i giocatori approvati possono aprire una sfida.');
+            return;
+          }
+          var dataInput = document.getElementById('sfidaData');
+          var errEl     = document.getElementById('sfidaErrore');
+          if (errEl) { errEl.classList.add('hidden'); errEl.textContent = ''; }
+          if (dataInput) {
+            var today = new Date().toISOString().split('T')[0];
+            dataInput.min = today;
+            if (!dataInput.value) dataInput.value = today;
+          }
+          if (typeof window.openSheetApriSfida === 'function') window.openSheetApriSfida();
+        };
+
+        // ── Pubblica la sfida ──
+        window._submitApriSfida = function () {
+          var me = getMe();
+          if (!me) return;
+          var dataVal = (document.getElementById('sfidaData') || {}).value;
+          var oraVal  = (document.getElementById('sfidaOra')  || {}).value;
+          var errEl   = document.getElementById('sfidaErrore');
+          function showErr(msg) { if (errEl) { errEl.textContent = msg; errEl.classList.remove('hidden'); } }
+          if (!dataVal) { showErr('Seleziona il giorno.'); return; }
+          if (!oraVal)  { showErr('Seleziona l\'ora.'); return; }
+          var today = new Date().toISOString().split('T')[0];
+          if (dataVal < today) { showErr('Scegli una data futura.'); return; }
+
+          var btn = document.getElementById('btnConfermaApriSfida');
+          if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; }
+          SM.createOpenChallenge(torneoId, {
+            giocatore1_id:   me.id,
+            giocatore1_nome: ((me.nome || '') + ' ' + (me.cognome || '')).trim(),
+            giocatore1_tel:  me.telefono || '',
+            data:            dataVal,
+            ora:             oraVal,
+          }).then(function (created) {
+            if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
+            if (!created) { showErr('Errore durante la pubblicazione. Riprova.'); return; }
+            render();
+            if (typeof window.closeAllSheets === 'function') window.closeAllSheets();
+          });
+        };
+
+        // ── Iscriviti a una sfida aperta ──
+        window._joinSfida = function (matchId) {
+          if (!canPlay()) {
+            alert('Solo i giocatori approvati possono iscriversi a una sfida.');
+            return;
+          }
+          var me = getMe();
+          var target = matches.find(function (m) { return m.id === matchId; });
+          if (!target) return;
+          if (target.giocatore1_id === me.id) { alert('Non puoi iscriverti alla tua stessa sfida.'); return; }
+          if (!confirm('Vuoi iscriverti a questa sfida contro ' + (target.giocatore1_nome || 'il giocatore') + '?\n' + fmtQuando(target))) return;
+
+          SM.joinOpenChallenge(torneoId, matchId, {
+            giocatore2_id:   me.id,
+            giocatore2_nome: ((me.nome || '') + ' ' + (me.cognome || '')).trim(),
+            giocatore2_tel:  me.telefono || '',
+          }).then(function (updated) {
+            if (!updated) {
+              alert('Questa sfida è già stata presa da un altro giocatore.');
+              // Riallinea lo stato locale
+              if (target) { target.stato = 'programmata'; }
+              render();
+              return;
+            }
+            render();
+            // Popola e mostra la sheet di conferma con il tasto WhatsApp
+            var avvEl    = document.getElementById('sfidaConfAvv');
+            var quandoEl = document.getElementById('sfidaConfQuando');
+            var waBtn    = document.getElementById('btnWhatsappSfida');
+            var quando   = fmtQuando(updated);
+            if (avvEl)    avvEl.textContent = updated.giocatore1_nome || '—';
+            if (quandoEl) quandoEl.textContent = ' (' + quando + ')';
+            if (waBtn) {
+              var link = waLink(updated.giocatore1_tel, updated.giocatore1_nome, quando);
+              if (link) {
+                waBtn.href = link;
+                waBtn.style.opacity = '1';
+                waBtn.style.pointerEvents = 'auto';
+                waBtn.removeAttribute('title');
+              } else {
+                waBtn.removeAttribute('href');
+                waBtn.style.opacity = '0.5';
+                waBtn.style.pointerEvents = 'none';
+                waBtn.title = 'Numero non disponibile';
+              }
+            }
+            if (typeof window.openSheetSfidaConfermata === 'function') window.openSheetSfidaConfermata();
+          });
+        };
+      })();
+
       if (typeof window.switchTab === 'function') window.switchTab(0);
 
       // Espone i risultati (W/L) degli ultimi 5 match per data, usato dal trend nei profili

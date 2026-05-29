@@ -378,8 +378,9 @@
 </div>
 <div id="tab-container" class="p-1 rounded-full flex items-center w-full overflow-hidden mb-4 border border-white/5 relative gr-rise gr-d2 gr-visible" style="background: linear-gradient(180deg, #272733 0%, #12121c 100%); box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.15), 0 15px 35px -12px rgba(0, 0, 0, 0.7);">
 <div id="tab-indicator" class="absolute rounded-full bg-[#C5FF1A] pointer-events-none" style="top: 4px; height: calc(100% - 8px); left: 4px; width: 50%; transition: left 0.35s cubic-bezier(0.4,0,0.2,1), width 0.35s cubic-bezier(0.4,0,0.2,1);"></div>
-<button onclick="switchTab(0)" class="tab-btn flex-1 py-3 relative z-10 font-headline font-bold italic uppercase text-[10px] tracking-wider transition-colors duration-300 active:scale-95 whitespace-nowrap text-[#1e230f]">GLOBAL RACE</button>
-<button onclick="switchTab(1)" class="tab-btn flex-1 py-3 relative z-10 font-headline font-bold italic uppercase text-[10px] tracking-wider transition-colors duration-300 active:scale-95 whitespace-nowrap text-white">ULTIMI MATCH</button>
+<button onclick="switchTab(0)" class="tab-btn flex-1 py-3 relative z-10 font-headline font-bold italic uppercase text-[9px] tracking-wider transition-colors duration-300 active:scale-95 whitespace-nowrap text-[#1e230f]">GLOBAL RACE</button>
+<button onclick="switchTab(1)" class="tab-btn flex-1 py-3 relative z-10 font-headline font-bold italic uppercase text-[9px] tracking-wider transition-colors duration-300 active:scale-95 whitespace-nowrap text-white">ULTIMI MATCH</button>
+<button onclick="switchTab(2)" class="tab-btn flex-1 py-3 relative z-10 font-headline font-bold italic uppercase text-[9px] tracking-wider transition-colors duration-300 active:scale-95 whitespace-nowrap text-white">SFIDE APERTE</button>
 </div>
 <script>
 (function() {
@@ -390,22 +391,25 @@
     var container = document.getElementById('tab-container');
     var indicator = document.getElementById('tab-indicator');
     var buttons = document.querySelectorAll('.tab-btn');
+    var tabCount = buttons.length || 3;
     var containerWidth = container.offsetWidth - 8;
-    var tabWidth = containerWidth / 2;
+    var tabWidth = containerWidth / tabCount;
     indicator.style.left = (4 + index * tabWidth) + 'px';
     indicator.style.width = tabWidth + 'px';
     buttons.forEach(function(btn, i) {
       btn.style.color = i === index ? '#1e230f' : '#ffffff';
     });
-    // --- Toggle leaderboard / ultimi match ---
+    // --- Toggle leaderboard / ultimi match / sfide aperte ---
     var leaderboardHeader = document.getElementById('leaderboard-header');
     var leaderboardContainer = document.getElementById('leaderboard-container');
     var ultimiMatchContainer = document.getElementById('ultimi-match-container');
+    var sfideContainer = document.getElementById('sfide-aperte-container');
+    if (sfideContainer) sfideContainer.style.display = index === 2 ? '' : 'none';
     if (index === 0) {
       if (leaderboardHeader) leaderboardHeader.style.display = '';
       if (leaderboardContainer) leaderboardContainer.style.display = '';
       if (ultimiMatchContainer) ultimiMatchContainer.style.display = 'none';
-    } else {
+    } else if (index === 1) {
       if (leaderboardHeader) leaderboardHeader.style.display = 'none';
       if (leaderboardContainer) leaderboardContainer.style.display = 'none';
       if (ultimiMatchContainer) {
@@ -429,6 +433,11 @@
           });
         }
       }
+    } else {
+      // index === 2 → Sfide aperte
+      if (leaderboardHeader) leaderboardHeader.style.display = 'none';
+      if (leaderboardContainer) leaderboardContainer.style.display = 'none';
+      if (ultimiMatchContainer) ultimiMatchContainer.style.display = 'none';
     }
   };
   window.addEventListener('resize', function() { window.switchTab(activeTab); });
@@ -450,6 +459,23 @@
 </div>
 <div id="ultimi-match-container" style="display:none;" class="space-y-3 pb-4">
   <p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-8">Nessun match disponibile</p>
+</div>
+<div id="sfide-aperte-container" style="display:none;" class="pb-4">
+  <!-- CTA Apri una sfida -->
+  <button id="btnApriSfida" onclick="if(window._openSfidaSheet)window._openSfidaSheet()" class="flex items-center justify-center gap-2 w-full bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase text-base py-4 rounded-2xl border-t border-white/40 shadow-lg hover:brightness-110 transition-all active:scale-[0.98] mb-5">
+    <span class="material-symbols-outlined text-xl">add_circle</span>
+    APRI UNA SFIDA
+  </button>
+  <!-- Sfide ancora libere -->
+  <p class="text-[#C5FF1A] font-label font-bold tracking-[0.2em] uppercase text-[9px] mb-2 px-1">Sfide aperte</p>
+  <div id="sfide-open-list" class="space-y-2.5">
+    <p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-6">Nessuna sfida aperta</p>
+  </div>
+  <!-- Match già confermati / programmati -->
+  <p class="text-[#888888] font-label font-bold tracking-[0.2em] uppercase text-[9px] mb-2 mt-7 px-1">Match in programma</p>
+  <div id="sfide-prog-list" class="space-y-2.5">
+    <p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-6">Nessun match in programma</p>
+  </div>
 </div>
 </section>
 </main>
@@ -1144,6 +1170,64 @@
   </div>
 </div>
 
+<!-- ═══ SHEET — APRI UNA SFIDA ═══ -->
+<div id="sheetApriSfida" class="gr-sheet fixed bottom-0 left-2 right-2 z-50 bg-[#11111a] rounded-[28px] translate-y-[110%] shadow-2xl shadow-black" style="transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); max-height:90vh; display:flex; flex-direction:column;">
+  <div class="sheet-handle-zone flex-shrink-0 flex justify-between items-center px-5 pt-4 pb-2 relative">
+    <div class="w-10 h-1 bg-white/20 rounded-full mx-auto absolute left-1/2 -translate-x-1/2 top-3"></div>
+    <div class="w-8"></div>
+    <button onclick="closeAll()" class="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 active:bg-white/10 transition-colors">
+      <span class="material-symbols-outlined text-white/60 text-lg">close</span>
+    </button>
+  </div>
+  <div class="overflow-y-auto px-5 pb-8 space-y-5 flex-1">
+    <div class="text-center pt-1 space-y-1">
+      <p class="text-[10px] text-[#888] uppercase tracking-[0.25em] font-bold">Sfida aperta</p>
+      <h2 class="font-headline font-black italic text-3xl text-white uppercase leading-none">QUANDO VUOI GIOCARE?</h2>
+      <p class="text-[11px] text-[#888] italic mt-1">Scegli giorno e ora. Il primo che si iscrive conferma il match.</p>
+    </div>
+    <div class="space-y-4">
+      <div>
+        <label class="block text-[10px] text-[#888] uppercase tracking-[0.2em] font-bold mb-2">Giorno</label>
+        <input id="sfidaData" type="date" class="w-full bg-[#1c1c28] border border-white/10 rounded-2xl px-4 py-3.5 text-white font-headline font-bold text-base focus:outline-none focus:border-[#C5FF1A]/50" />
+      </div>
+      <div>
+        <label class="block text-[10px] text-[#888] uppercase tracking-[0.2em] font-bold mb-2">Ora</label>
+        <input id="sfidaOra" type="time" class="w-full bg-[#1c1c28] border border-white/10 rounded-2xl px-4 py-3.5 text-white font-headline font-bold text-base focus:outline-none focus:border-[#C5FF1A]/50" />
+      </div>
+    </div>
+    <p id="sfidaErrore" class="hidden text-[12px] text-red-400 italic text-center"></p>
+    <button id="btnConfermaApriSfida" onclick="if(window._submitApriSfida)window._submitApriSfida()" class="flex items-center justify-center w-full bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase text-lg py-4 rounded-2xl border-t border-white/40 shadow-lg hover:brightness-110 transition-all active:scale-[0.98]">
+      PUBBLICA SFIDA
+    </button>
+  </div>
+</div>
+
+<!-- ═══ SHEET — ISCRIZIONE CONFERMATA ═══ -->
+<div id="sheetSfidaConfermata" class="gr-sheet fixed bottom-0 left-2 right-2 z-50 bg-[#11111a] rounded-[28px] translate-y-[110%] shadow-2xl shadow-black" style="transition:transform 0.4s cubic-bezier(0.32,0.72,0,1); max-height:90vh; display:flex; flex-direction:column;">
+  <div class="sheet-handle-zone flex-shrink-0 flex justify-between items-center px-5 pt-4 pb-2 relative">
+    <div class="w-10 h-1 bg-white/20 rounded-full mx-auto absolute left-1/2 -translate-x-1/2 top-3"></div>
+    <div class="w-8"></div>
+    <button onclick="closeAll()" class="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 active:bg-white/10 transition-colors">
+      <span class="material-symbols-outlined text-white/60 text-lg">close</span>
+    </button>
+  </div>
+  <div class="overflow-y-auto px-5 pb-8 space-y-5 flex-1">
+    <div class="text-center pt-1 space-y-2">
+      <div class="w-16 h-16 mx-auto rounded-full bg-[#C5FF1A]/15 flex items-center justify-center">
+        <span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:38px">check_circle</span>
+      </div>
+      <h2 class="font-headline font-black italic text-3xl text-white uppercase leading-none">SEI DENTRO!</h2>
+      <p class="text-[12px] text-[#aaa] italic mt-1">Match confermato con <span id="sfidaConfAvv" class="text-white font-bold not-italic">—</span><span id="sfidaConfQuando"></span>.</p>
+      <p class="text-[11px] text-[#888] italic">Contatta il giocatore per accordarvi e prenotare il campo.</p>
+    </div>
+    <a id="btnWhatsappSfida" href="#" target="_blank" rel="noopener" class="flex items-center justify-center gap-2 w-full bg-gradient-to-b from-[#3ed47b] to-[#25b85f] text-[#062b14] font-headline font-black italic uppercase text-lg py-4 rounded-2xl border-t border-white/40 shadow-lg hover:brightness-110 transition-all active:scale-[0.98]" style="text-decoration:none;">
+      <span class="material-symbols-outlined text-xl">chat</span>
+      CONTATTA SU WHATSAPP
+    </a>
+    <button onclick="closeAll()" class="w-full text-[#888] font-headline font-bold italic uppercase text-sm py-2 active:scale-95 transition-transform">Chiudi</button>
+  </div>
+</div>
+
 <!-- ═══ MENU DRAWER — slide da destra ═══ -->
 <div id="menuDrawer" class="fixed top-0 right-0 bottom-0 w-72 z-[90] bg-[#0b0b15] border-l border-white/5 translate-x-full transition-transform duration-300 ease-out flex flex-col">
   <div class="flex justify-between items-center px-6 h-16 border-b border-white/5">
@@ -1390,7 +1474,7 @@
   }
   // Restituisce true se almeno una scheda o il menu drawer è ancora visibile.
   function _anySheetOpen() {
-    var ids = ['sheetPlayer','sheetProfile','sheetInvia','sheetSuccesso','sheetPolicy','sheetRegolamentoPunti'];
+    var ids = ['sheetPlayer','sheetProfile','sheetInvia','sheetSuccesso','sheetPolicy','sheetRegolamentoPunti','sheetApriSfida','sheetSfidaConfermata'];
     for (var i = 0; i < ids.length; i++) {
       var el = document.getElementById(ids[i]);
       if (el && (el.style.transform || '').indexOf('translateY(0') !== -1) return true;
@@ -1409,11 +1493,29 @@
     document.getElementById('sheetSuccesso').style.transform = 'translateY(110%)';
     document.getElementById('sheetPolicy').style.transform = 'translateY(110%)';
     document.getElementById('sheetRegolamentoPunti').style.transform = 'translateY(110%)';
+    var _saS = document.getElementById('sheetApriSfida'); if (_saS) _saS.style.transform = 'translateY(110%)';
+    var _scS = document.getElementById('sheetSfidaConfermata'); if (_scS) _scS.style.transform = 'translateY(110%)';
     document.getElementById('menuDrawer').classList.add('translate-x-full');
     const b = document.getElementById('backdrop');
     b.classList.add('opacity-0');
     setTimeout(() => { b.classList.add('hidden'); _unlockBody(); }, 300);
   }
+
+  // ── Sheet: apri una sfida / iscrizione confermata ──
+  window._showBackdropPublic = _showBackdrop;
+  window.openSheetApriSfida = function () {
+    _showBackdrop();
+    requestAnimationFrame(function () {
+      document.getElementById('sheetApriSfida').style.transform = 'translateY(0)';
+    });
+  };
+  window.openSheetSfidaConfermata = function () {
+    _showBackdrop();
+    requestAnimationFrame(function () {
+      document.getElementById('sheetSfidaConfermata').style.transform = 'translateY(0)';
+    });
+  };
+  window.closeAllSheets = closeAll;
 
   function openRegolamentoPunti() {
     _showBackdrop();
@@ -1900,8 +2002,8 @@
 </script>
 <script src="../../src/session-shim.js?v=1"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="../../src/storage-manager.js?v=18"></script>
-<script src="../../src/ui-binder.js?v=20"></script>
+<script src="../../src/storage-manager.js?v=19"></script>
+<script src="../../src/ui-binder.js?v=21"></script>
 <script src="../../src/main.js?v=18"></script>
 
 <script>
@@ -1995,7 +2097,8 @@
 
   var sheets = [
     'sheetPlayer', 'sheetProfile', 'sheetInvia',
-    'sheetSuccesso', 'sheetPolicy', 'sheetRegolamentoPunti'
+    'sheetSuccesso', 'sheetPolicy', 'sheetRegolamentoPunti',
+    'sheetApriSfida', 'sheetSfidaConfermata'
   ];
   sheets.forEach(function(id) {
     setupDrag(id, function() { closeAll(); });

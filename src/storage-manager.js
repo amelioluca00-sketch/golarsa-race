@@ -218,6 +218,56 @@
     },
 
     /**
+     * Crea una SFIDA APERTA: un match con stato 'aperta' e un solo giocatore (il creatore).
+     * Gli altri giocatori potranno iscriversi finché resta aperta.
+     */
+    createOpenChallenge: async function (torneoId, sfidaData) {
+      var id = 'sfida_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+      var match = Object.assign({}, sfidaData, {
+        id:        id,
+        stato:     'aperta',
+        creato_il: new Date().toISOString(),
+      });
+      var res = await db.from('matches').insert({
+        id:            id,
+        tournament_id: torneoId,
+        stato:         'aperta',
+        payload:       match,
+      });
+      if (res.error) { console.error('[SM] createOpenChallenge:', res.error); return null; }
+      // Aggiorna la cache in memoria così il render successivo è coerente
+      if (_cache[torneoId] && _cache[torneoId].matches) _cache[torneoId].matches.push(match);
+      return match;
+    },
+
+    /**
+     * Iscrive un giocatore a una sfida aperta: imposta il secondo giocatore
+     * e porta lo stato a 'programmata' (il match entra tra i programmati).
+     * Restituisce il match aggiornato, oppure null se non più disponibile.
+     */
+    joinOpenChallenge: async function (torneoId, matchId, joiner) {
+      var mRes = await db.from('matches').select('payload, stato').eq('id', matchId).single();
+      if (!mRes.data) { console.error('[SM] joinOpenChallenge: match non trovato', matchId); return null; }
+      // Già preso da qualcun altro
+      if (mRes.data.stato !== 'aperta') return null;
+      var payload = Object.assign({}, mRes.data.payload, {
+        giocatore2_id:   joiner.giocatore2_id,
+        giocatore2_nome: joiner.giocatore2_nome,
+        giocatore2_tel:  joiner.giocatore2_tel,
+        stato:           'programmata',
+        iscritto_il:     new Date().toISOString(),
+      });
+      var updRes = await db.from('matches').update({ stato: 'programmata', payload: payload }).eq('id', matchId);
+      if (updRes.error) { console.error('[SM] joinOpenChallenge update:', updRes.error); return null; }
+      // Aggiorna la cache in memoria
+      if (_cache[torneoId] && _cache[torneoId].matches) {
+        var cm = _cache[torneoId].matches.find(function (m) { return m.id === matchId; });
+        if (cm) Object.assign(cm, payload, { stato: 'programmata' });
+      }
+      return Object.assign({}, payload, { id: matchId });
+    },
+
+    /**
      * Salva i punti di un singolo giocatore senza rieseguire _recompute.
      * Usato per le modifiche manuali alla classifica dalla dashboard.
      */
