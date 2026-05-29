@@ -1309,28 +1309,34 @@
           if (!aperte.length) {
             openList.innerHTML = '<p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-6">Nessuna sfida aperta</p>';
           } else {
-            openList.innerHTML = aperte.map(function (m) {
-              var isMine = me && m.giocatore1_id === me.id;
-              var azione = isMine
-                ? '<button onclick="window._deleteSfida && window._deleteSfida(\'' + m.id + '\')" title="Elimina sfida" class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-red-500/10 text-red-400 active:scale-90 transition-transform"><span class="material-symbols-outlined" style="font-size:18px">delete</span></button>'
-                : '<button onclick="window._joinSfida && window._joinSfida(\'' + m.id + '\')" class="flex-shrink-0 bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase text-[11px] tracking-wider px-4 py-2 rounded-full border-t border-white/40 active:scale-95 transition-transform">ENTRA</button>';
-              var dataStr = fmtData(m.data);
-              var oraStr  = m.ora ? 'ore ' + m.ora : '';
-              return '' +
-                '<div class="premium-card rounded-2xl px-4 py-3">' +
-                  '<div class="flex items-center gap-3 mb-2">' +
-                    '<div class="w-8 h-8 rounded-full bg-[#C5FF1A]/10 flex items-center justify-center flex-shrink-0">' +
-                      '<span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px">sports_tennis</span>' +
+            // Raggruppa per data come "ultimi match"
+            var byDateA = {}, dateOrderA = [];
+            aperte.forEach(function (m) {
+              var d = m.data || '';
+              if (!byDateA[d]) { byDateA[d] = []; dateOrderA.push(d); }
+              byDateA[d].push(m);
+            });
+            var html = '';
+            dateOrderA.forEach(function (d, di) {
+              var dataLabel = d ? fmtData(d) : '—';
+              html += '<p class="text-center text-white font-label font-bold text-[10px] uppercase tracking-[0.2em]' + (di === 0 ? ' mt-1' : ' mt-5') + ' mb-2">' + esc(dataLabel) + '</p>';
+              byDateA[d].forEach(function (m) {
+                var isMine = me && m.giocatore1_id === me.id;
+                var oraStr = m.ora ? 'ore ' + m.ora : '';
+                var azione = isMine
+                  ? '<button onclick="window._deleteSfida && window._deleteSfida(\'' + m.id + '\')" title="Elimina sfida" class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-red-500/10 text-red-400 active:scale-90 transition-transform"><span class="material-symbols-outlined" style="font-size:18px">delete</span></button>'
+                  : '<button onclick="window._joinSfida && window._joinSfida(\'' + m.id + '\')" class="flex-shrink-0 bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase text-[11px] tracking-wider px-4 py-2 rounded-full border-t border-white/40 active:scale-95 transition-transform">ENTRA</button>';
+                html +=
+                  '<div class="premium-card rounded-xl px-4 py-3.5 flex items-center gap-3 mb-2">' +
+                    '<div class="flex-1 min-w-0">' +
+                      '<p class="font-headline font-black italic text-white uppercase text-sm leading-none truncate">' + esc(fmtNomeBreveLocal(m.giocatore1_nome)) + '</p>' +
+                      (oraStr ? '<p class="text-[10px] text-[#888] uppercase tracking-wide mt-1">' + esc(oraStr) + '</p>' : '') +
                     '</div>' +
-                    '<p class="flex-1 font-headline font-black italic text-white uppercase text-sm leading-tight">' + esc(fmtNomeBreveLocal(m.giocatore1_nome)) + '</p>' +
                     azione +
-                  '</div>' +
-                  '<div class="flex items-center gap-2 pl-11">' +
-                    '<span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:14px">calendar_today</span>' +
-                    '<p class="text-[10px] text-[#C5FF1A] font-bold uppercase tracking-wide leading-tight">' + esc(dataStr) + (oraStr ? ' · ' + oraStr : '') + '</p>' +
-                  '</div>' +
-                '</div>';
-            }).join('');
+                  '</div>';
+              });
+            });
+            openList.innerHTML = html;
           }
 
           // ── Match in programma (confermati) ──
