@@ -1314,16 +1314,21 @@
               var azione = isMine
                 ? '<button onclick="window._deleteSfida && window._deleteSfida(\'' + m.id + '\')" title="Elimina sfida" class="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-red-500/10 text-red-400 active:scale-90 transition-transform"><span class="material-symbols-outlined" style="font-size:18px">delete</span></button>'
                 : '<button onclick="window._joinSfida && window._joinSfida(\'' + m.id + '\')" class="flex-shrink-0 bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase text-[11px] tracking-wider px-4 py-2 rounded-full border-t border-white/40 active:scale-95 transition-transform">ENTRA</button>';
+              var dataStr = fmtData(m.data);
+              var oraStr  = m.ora ? 'ore ' + m.ora : '';
               return '' +
-                '<div class="premium-card rounded-2xl px-4 py-3.5 flex items-center gap-3">' +
-                  '<div class="w-9 h-9 rounded-full bg-[#C5FF1A]/10 flex items-center justify-center flex-shrink-0">' +
-                    '<span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:20px">sports_tennis</span>' +
+                '<div class="premium-card rounded-2xl px-4 py-3">' +
+                  '<div class="flex items-center gap-3 mb-2">' +
+                    '<div class="w-8 h-8 rounded-full bg-[#C5FF1A]/10 flex items-center justify-center flex-shrink-0">' +
+                      '<span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:18px">sports_tennis</span>' +
+                    '</div>' +
+                    '<p class="flex-1 font-headline font-black italic text-white uppercase text-sm leading-tight">' + esc(fmtNomeBreveLocal(m.giocatore1_nome)) + '</p>' +
+                    azione +
                   '</div>' +
-                  '<div class="flex-1 min-w-0">' +
-                    '<p class="font-headline font-black italic text-white uppercase text-sm leading-tight truncate">' + esc(fmtNomeBreveLocal(m.giocatore1_nome)) + '</p>' +
-                    '<p class="text-[10px] text-[#888] uppercase tracking-wider mt-0.5 truncate">' + esc(fmtQuando(m)) + '</p>' +
+                  '<div class="flex items-center gap-2 pl-11">' +
+                    '<span class="material-symbols-outlined text-[#C5FF1A]" style="font-size:14px">calendar_today</span>' +
+                    '<p class="text-[10px] text-[#C5FF1A] font-bold uppercase tracking-wide leading-tight">' + esc(dataStr) + (oraStr ? ' · ' + oraStr : '') + '</p>' +
                   '</div>' +
-                  azione +
                 '</div>';
             }).join('');
           }
