@@ -383,7 +383,16 @@
       var allMRes = await db.from('matches').select('*').eq('tournament_id', torneoId);
       var freshMatches = (allMRes.data || []).map(matchFromRow);
       await SM._recompute(torneoId, freshPlayers, freshMatches);
-      if (_cache[torneoId]) _cache[torneoId].matches = freshMatches;
+      if (_cache[torneoId]) {
+        if (_cache[torneoId].matches) {
+          // Muta l'array in-place così i riferimenti tenuti dalla UI rimangono validi
+          var arr = _cache[torneoId].matches;
+          arr.length = 0;
+          freshMatches.forEach(function (m) { arr.push(m); });
+        } else {
+          _cache[torneoId].matches = freshMatches;
+        }
+      }
     },
 
     /** Salva una nuova iscrizione utente (stato = pendente).
