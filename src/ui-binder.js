@@ -1297,7 +1297,10 @@
             openList.innerHTML = aperte.map(function (m) {
               var isMine = me && m.giocatore1_id === me.id;
               var azione = isMine
-                ? '<span class="flex-shrink-0 text-[9px] font-headline font-bold italic uppercase tracking-wider text-[#C5FF1A] border border-[#C5FF1A]/30 rounded-full px-3 py-1.5">La tua sfida</span>'
+                ? '<div class="flex-shrink-0 flex items-center gap-2">' +
+                    '<span class="text-[9px] font-headline font-bold italic uppercase tracking-wider text-[#C5FF1A] border border-[#C5FF1A]/30 rounded-full px-3 py-1.5">La tua sfida</span>' +
+                    '<button onclick="window._deleteSfida && window._deleteSfida(\'' + m.id + '\')" title="Elimina sfida" class="w-8 h-8 flex items-center justify-center rounded-full bg-red-500/10 text-red-400 active:scale-90 transition-transform"><span class="material-symbols-outlined" style="font-size:18px">delete</span></button>' +
+                  '</div>'
                 : '<button onclick="window._joinSfida && window._joinSfida(\'' + m.id + '\')" class="flex-shrink-0 bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase text-[11px] tracking-wider px-4 py-2 rounded-full border-t border-white/40 active:scale-95 transition-transform">ENTRA</button>';
               return '' +
                 '<div class="premium-card rounded-2xl px-4 py-3.5 flex items-center gap-3">' +
@@ -1395,6 +1398,24 @@
             if (!created) { showErr('Errore durante la pubblicazione. Riprova.'); return; }
             render();
             if (typeof window.closeAllSheets === 'function') window.closeAllSheets();
+          });
+        };
+
+        // ── Elimina una propria sfida aperta ──
+        window._deleteSfida = function (matchId) {
+          var me = getMe();
+          if (!me) return;
+          var target = matches.find(function (m) { return m.id === matchId; });
+          if (!target) return;
+          if (target.giocatore1_id !== me.id) { alert('Puoi eliminare solo le sfide che hai creato.'); return; }
+          if (!confirm('Vuoi eliminare questa sfida aperta?')) return;
+          SM.deleteOpenChallenge(torneoId, matchId).then(function (ok) {
+            if (!ok) {
+              alert('Impossibile eliminare: la sfida potrebbe essere già stata accettata da un altro giocatore.');
+              if (typeof window._refreshSfide === 'function') window._refreshSfide();
+              return;
+            }
+            render();
           });
         };
 
