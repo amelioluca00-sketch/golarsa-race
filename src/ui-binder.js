@@ -1328,7 +1328,7 @@
                 html +=
                   '<div class="flex items-center justify-between mb-0.5 px-1' + (di === 0 ? '' : '') + '">' +
                     '<p class="text-white font-label font-bold text-[10px] uppercase tracking-[0.18em]">' + esc(dataLabel) + '</p>' +
-                    (oraStr ? '<p class="text-[#888] font-label font-bold text-[10px] uppercase tracking-[0.15em]">' + esc(oraStr) + '</p>' : '<span></span>') +
+                    (oraStr ? '<p class="text-white font-label font-bold text-[10px] uppercase tracking-[0.15em]">ore ' + esc(oraStr) + '</p>' : '<span></span>') +
                   '</div>' +
                   '<div class="premium-card rounded-xl px-4 py-3.5 flex items-center gap-3 mb-4">' +
                     '<p class="flex-1 font-headline font-black italic text-white uppercase text-sm leading-none">' + esc(fmtNomeBreveLocal(m.giocatore1_nome)) + '</p>' +
@@ -1361,7 +1361,7 @@
                 htmlP +=
                   '<div class="flex items-center justify-between mb-0.5 px-1">' +
                     '<p class="text-white font-label font-bold text-[10px] uppercase tracking-[0.18em]">' + esc(dataLabel) + '</p>' +
-                    (oraStr ? '<p class="text-[#888] font-label font-bold text-[10px] uppercase tracking-[0.15em]">' + esc(oraStr) + '</p>' : '<span></span>') +
+                    (oraStr ? '<p class="text-white font-label font-bold text-[10px] uppercase tracking-[0.15em]">ore ' + esc(oraStr) + '</p>' : '<span></span>') +
                   '</div>' +
                   '<div class="premium-card rounded-xl px-4 py-3.5 flex items-center gap-3 mb-4">' +
                     '<p class="flex-1 min-w-0 font-headline font-black italic text-white uppercase text-sm leading-none truncate">' + esc(fmtNomeBreveLocal(m.giocatore1_nome)) + '</p>' +
