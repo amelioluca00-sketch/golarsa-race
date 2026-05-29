@@ -1343,26 +1343,37 @@
           if (!programmate.length) {
             progList.innerHTML = '<p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-6">Nessun match in programma</p>';
           } else {
-            progList.innerHTML = programmate.map(function (m) {
-              var isPlayer = me && (m.giocatore1_id === me.id || m.giocatore2_id === me.id);
-              var cancelBtn = isPlayer
-                ? '<button onclick="window._cancelProgrammata && window._cancelProgrammata(\'' + m.id + '\')" title="Cancella match" class="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-full bg-red-500/10 text-red-400 active:scale-90 transition-transform mt-1"><span class="material-symbols-outlined" style="font-size:16px">delete</span></button>'
-                : '';
-              return '' +
-                '<div class="premium-card rounded-2xl px-4 py-3 opacity-90">' +
-                  '<div class="flex items-start gap-2">' +
+            var byDateP = {}, dateOrderP = [];
+            programmate.forEach(function (m) {
+              var d = m.data || '';
+              if (!byDateP[d]) { byDateP[d] = []; dateOrderP.push(d); }
+              byDateP[d].push(m);
+            });
+            var htmlP = '';
+            dateOrderP.forEach(function (d, di) {
+              var dataLabel = d ? fmtData(d) : '—';
+              htmlP += '<p class="text-center text-white font-label font-bold text-[10px] uppercase tracking-[0.2em]' + (di === 0 ? ' mt-1' : ' mt-5') + ' mb-2">' + esc(dataLabel) + '</p>';
+              byDateP[d].forEach(function (m) {
+                var isPlayer = me && (m.giocatore1_id === me.id || m.giocatore2_id === me.id);
+                var oraStr = m.ora ? 'ore ' + m.ora : '';
+                var cancelBtn = isPlayer
+                  ? '<button onclick="window._cancelProgrammata && window._cancelProgrammata(\'' + m.id + '\')" title="Cancella match" class="flex-shrink-0 w-7 h-7 flex items-center justify-center rounded-full bg-red-500/10 text-red-400 active:scale-90 transition-transform"><span class="material-symbols-outlined" style="font-size:16px">delete</span></button>'
+                  : '';
+                htmlP +=
+                  '<div class="premium-card rounded-xl px-4 py-3.5 flex items-center gap-3 mb-2">' +
                     '<div class="flex-1 min-w-0">' +
-                      '<p class="text-[9px] text-[#888] uppercase tracking-[0.18em] mb-1.5">' + esc(fmtQuando(m)) + '</p>' +
                       '<div class="flex items-center gap-2">' +
                         '<p class="flex-1 min-w-0 font-headline font-black italic text-white uppercase text-sm leading-none truncate">' + esc(fmtNomeBreveLocal(m.giocatore1_nome)) + '</p>' +
                         '<span class="text-[#C5FF1A] font-headline font-black italic text-xs flex-shrink-0">VS</span>' +
                         '<p class="flex-1 min-w-0 text-right font-headline font-black italic text-white uppercase text-sm leading-none truncate">' + esc(fmtNomeBreveLocal(m.giocatore2_nome)) + '</p>' +
                       '</div>' +
+                      (oraStr ? '<p class="text-[10px] text-[#888] uppercase tracking-wide mt-1">' + esc(oraStr) + '</p>' : '') +
                     '</div>' +
                     cancelBtn +
-                  '</div>' +
-                '</div>';
-            }).join('');
+                  '</div>';
+              });
+            });
+            progList.innerHTML = htmlP;
           }
         }
         render();
