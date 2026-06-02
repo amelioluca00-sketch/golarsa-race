@@ -552,18 +552,18 @@
           card.className = 'cinematic-card rounded-2xl border border-white/10 overflow-hidden';
           card.innerHTML =
             '<div class="px-4 pt-4 pb-4">' +
-              '<p class="font-label text-[0.55rem] font-semibold text-gray-500 uppercase tracking-[0.15em] mb-3 flex items-center gap-2">' +
+              '<p class="font-label text-[0.55rem] font-semibold text-gray-500 uppercase tracking-[0.15em] mb-3 flex flex-wrap items-center gap-2">' +
                 fmtDataBreve(m.data) +
-                ' <span class="text-gray-400 border border-white/20 rounded-full px-1.5 py-0.5">IN ATTESA AVVERSARIO</span>' +
+                ' <span class="text-gray-400 border border-white/20 rounded-full px-1.5 py-0.5 whitespace-nowrap">IN ATTESA AVVERSARIO</span>' +
               '</p>' +
-              '<div class="flex items-center justify-between gap-2">' +
-                '<div class="flex-1 min-w-0"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[0.88rem] leading-tight block truncate">' + fmtNomeBreve(m.giocatore1_nome) + '</span></div>' +
-                '<div class="flex items-center gap-1.5 flex-shrink-0 mx-1">' +
+              '<div class="grid items-center gap-2" style="grid-template-columns:1fr auto 1fr">' +
+                '<span class="font-headline italic font-black text-white uppercase tracking-tight text-[0.88rem] leading-tight truncate" style="min-width:0">' + esc(fmtNomeBreve(m.giocatore1_nome)) + '</span>' +
+                '<div class="flex items-center gap-1.5 mx-1">' +
                   '<span class="score-badge" style="font-size:1.2rem">' + m.score1 + '</span>' +
                   '<span class="vs-dot">vs</span>' +
                   '<span class="score-badge" style="font-size:1.2rem">' + m.score2 + '</span>' +
                 '</div>' +
-                '<div class="flex-1 min-w-0 text-right"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[0.88rem] leading-tight block truncate">' + fmtNomeBreve(m.giocatore2_nome) + '</span></div>' +
+                '<span class="font-headline italic font-black text-white uppercase tracking-tight text-[0.88rem] leading-tight truncate text-right" style="min-width:0">' + esc(fmtNomeBreve(m.giocatore2_nome)) + '</span>' +
               '</div>' +
             '</div>';
           c.appendChild(card);
@@ -579,11 +579,11 @@
           card.className = 'cinematic-card rounded-2xl border border-white/5 overflow-hidden match-card';
           card.innerHTML =
             '<div class="px-4 pt-4 pb-3">' +
-              '<p class="font-label text-[0.55rem] font-semibold text-gray-600 uppercase tracking-[0.15em] mb-3 flex items-center gap-2">' + fmtDataBreve(m.data) + (!done ? ' <span class="text-[#d1ff4b] border border-[#d1ff4b]/20 rounded-full px-1.5 py-0.5">PROGRAMMATA</span>' : '') + '</p>' +
-              '<div class="flex items-center justify-between gap-2">' +
-                '<div class="flex-1 min-w-0"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[0.88rem] leading-tight block truncate">' + _fmtN(m.giocatore1_nome) + '</span></div>' +
-                '<div class="flex items-center gap-1.5 flex-shrink-0 mx-1">' + (done ? '<span class="score-badge" style="font-size:1.2rem">' + m.score1 + '</span><span class="vs-dot">vs</span><span class="score-badge" style="font-size:1.2rem">' + m.score2 + '</span>' : '<span class="vs-dot font-black text-sm">vs</span>') + '</div>' +
-                '<div class="flex-1 min-w-0 text-right"><span class="font-headline italic font-black text-white uppercase tracking-tight text-[0.88rem] leading-tight block truncate">' + _fmtN(m.giocatore2_nome) + '</span></div>' +
+              '<p class="font-label text-[0.55rem] font-semibold text-gray-600 uppercase tracking-[0.15em] mb-3 flex flex-wrap items-center gap-2">' + fmtDataBreve(m.data) + (!done ? ' <span class="text-[#d1ff4b] border border-[#d1ff4b]/20 rounded-full px-1.5 py-0.5 whitespace-nowrap">PROGRAMMATA</span>' : '') + '</p>' +
+              '<div class="grid items-center gap-2" style="grid-template-columns:1fr auto 1fr">' +
+                '<span class="font-headline italic font-black text-white uppercase tracking-tight text-[0.88rem] leading-tight truncate" style="min-width:0">' + esc(_fmtN(m.giocatore1_nome)) + '</span>' +
+                '<div class="flex items-center gap-1.5 mx-1">' + (done ? '<span class="score-badge" style="font-size:1.2rem">' + m.score1 + '</span><span class="vs-dot">vs</span><span class="score-badge" style="font-size:1.2rem">' + m.score2 + '</span>' : '<span class="vs-dot font-black text-sm">vs</span>') + '</div>' +
+                '<span class="font-headline italic font-black text-white uppercase tracking-tight text-[0.88rem] leading-tight truncate text-right" style="min-width:0">' + esc(_fmtN(m.giocatore2_nome)) + '</span>' +
               '</div>' +
             '</div>' +
             '<div class="h-px bg-white/[0.05] mx-4"></div>' +
@@ -619,6 +619,28 @@
         window.renderPlayers(players);
         window.renderMatches();
         window.renderWeeklyChart(matches);
+      }
+
+      // ── Auto-validazione match scaduti (>24h) ──
+      // Regola: se l'avversario non conferma né contesta entro 24h dall'invio,
+      // il match diventa automaticamente 'completata' e aggiorna la classifica.
+      // (Lato utente esiste già in initHomeUser, ma scatta solo quando l'avversario
+      //  apre l'app. Qui garantiamo la validazione anche dall'apertura della dashboard admin.)
+      var DAY_MS = 24 * 3600 * 1000;
+      async function autoValidaScaduti() {
+        var ora = Date.now();
+        var scaduti = (matches || []).filter(function (m) {
+          if (m.stato !== 'in_attesa') return false;
+          var t = m.inviato_il ? new Date(m.inviato_il).getTime()
+                : (m.data ? new Date(m.data + 'T23:59:59').getTime() : NaN);
+          return !isNaN(t) && (ora - t) > DAY_MS;
+        });
+        if (!scaduti.length) return false;
+        for (var i = 0; i < scaduti.length; i++) {
+          try { await SM.updateMatchStatus(torneoId, scaduti[i].id, 'completata'); }
+          catch (e) { console.error('[home] auto-valida match', scaduti[i].id, e); }
+        }
+        return true;
       }
 
       // ── Handler Approva / Rifiuta match (home dashboard admin) ──
@@ -755,6 +777,11 @@
         if (pid) { try { await SM.updatePlayerStatus(torneoId, pid, 'rifiutato'); } catch (e) { showError('Errore rifiuto.'); return; } }
         await refreshIscrizioni();
       };
+
+      // Auto-valida i match scaduti (>24h) PRIMA del render. Se ne valida almeno
+      // uno, ricarica i dati freschi (classifica aggiornata) da Supabase.
+      try { if (await autoValidaScaduti()) await refreshAll(); }
+      catch (e) { console.error('[home] autoValidaScaduti', e); }
 
       // Render iniziale — ogni blocco isolato: un errore in uno non deve
       // impedire il rendering degli altri (es. grafico settimanale e iscrizioni).
