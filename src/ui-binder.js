@@ -528,6 +528,10 @@
         if (parts.length < 2) return (full || '').toUpperCase();
         return parts[0][0].toUpperCase() + '. ' + parts[parts.length - 1].toUpperCase();
       }
+      // Alias usato dalla sezione "in attesa" qui sotto. Era definito solo in
+      // initMatchDashboard, quindi qui lanciava ReferenceError e bloccava
+      // l'intero render dei match (e a cascata grafico + iscrizioni).
+      var fmtNomeBreve = _fmtN;
 
       window.renderMatches = function () {
         var c = document.getElementById('matches-list');
@@ -752,12 +756,13 @@
         await refreshIscrizioni();
       };
 
-      // Render iniziale
-      window.renderStandings();
-      window.renderPlayers(players);
-      window.renderMatches();
-      window.renderWeeklyChart(matches);
-      await refreshIscrizioni();
+      // Render iniziale — ogni blocco isolato: un errore in uno non deve
+      // impedire il rendering degli altri (es. grafico settimanale e iscrizioni).
+      try { window.renderStandings(); }          catch (e) { console.error('[home] renderStandings', e); }
+      try { window.renderPlayers(players); }      catch (e) { console.error('[home] renderPlayers', e); }
+      try { window.renderMatches(); }             catch (e) { console.error('[home] renderMatches', e); }
+      try { window.renderWeeklyChart(matches); }  catch (e) { console.error('[home] renderWeeklyChart', e); }
+      try { await refreshIscrizioni(); }          catch (e) { console.error('[home] refreshIscrizioni', e); }
     });
   }
 

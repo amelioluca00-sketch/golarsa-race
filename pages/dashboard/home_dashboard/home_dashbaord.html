@@ -834,7 +834,10 @@
         // Re-render + retrigger card animations
         if (tab === 'giocatori') {
           document.getElementById('search-input').value = '';
-          renderPlayers(players);
+          // NB: nessun argomento → renderPlayers usa la lista reale caricata da
+          // Supabase. Passare la variabile locale `players` (vuota) mostrava
+          // sempre "Nessun giocatore trovato".
+          renderPlayers();
         }
         if (tab === 'match') {
           renderMatches();
@@ -852,6 +855,11 @@
           }
         }
         if (tab === 'home') {
+          // Ri-renderizza i contenuti dinamici: tornando alla home la classifica,
+          // i match e il grafico settimanale devono restare popolati.
+          if (typeof renderStandings === 'function')   { try { renderStandings(); }          catch (e) {} }
+          if (typeof renderMatches === 'function')      { try { renderMatches(); }             catch (e) {} }
+          if (typeof renderWeeklyChart === 'function')  { try { renderWeeklyChart(); }         catch (e) {} }
           retriggerCards('panel-home', '.stat-card');
         }
 
