@@ -378,13 +378,18 @@
       var mRes = await db.from('matches').select('payload').eq('id', matchId).single();
       if (mRes.data) {
         // Quando il match diventa "completata" (approvato o 24h scadute),
-        // aggiorna il campo "data" con la data locale odierna così "ultimi match"
-        // mostra la data in cui il risultato è diventato ufficiale.
+        // registriamo SOLO il momento di ufficializzazione (completata_il),
+        // SENZA sovrascrivere la data di gioco: la card deve continuare a
+        // mostrare quando il match è stato giocato, non quando è stato validato.
         var dataExtra = {};
         if (newStato === 'completata') {
           var now = new Date();
           var dataOggi = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
-          dataExtra = { data: dataOggi, date: dataOggi };
+          dataExtra = { completata_il: now.toISOString() };
+          // Se il match non aveva alcuna data di gioco, usa oggi come fallback.
+          if (!mRes.data.payload.data && !mRes.data.payload.date) {
+            dataExtra.data = dataOggi; dataExtra.date = dataOggi;
+          }
         }
         var payload = Object.assign({}, mRes.data.payload, { stato: newStato }, dataExtra, extraPayload || {});
         await db.from('matches').update({ stato: newStato, payload: payload }).eq('id', matchId);
@@ -491,19 +496,19 @@
         var matchDate = m.data || m.date;
 
         // ── Filtro reset manuale ─────────────────────────────────────────
-        // Confronta il timestamp di invio del match (inviato_il) con la data
-        // di reset del giocatore (stats_reset_at). Se il match è stato inviato
-        // PRIMA del reset → ignoralo.
-        var inviatoIl = m.inviato_il || null;
-        if (inviatoIl) {
-          if (p1.stats_reset_at && inviatoIl < p1.stats_reset_at) return;
-          if (p2.stats_reset_at && inviatoIl < p2.stats_reset_at) return;
-        } else if (matchDate) {
-          var matchDay = String(matchDate).substring(0, 10);
+        // Un match va conteggiato solo se è diventato UFFICIALE a partire dal
+        // reset manuale dell'admin (stats_reset_at). Usiamo la data di
+        // ufficializzazione (completata_il), con fallback alla data del match.
+        // NON usiamo inviato_il: un match ancora "in attesa" al momento del reset,
+        // ma completato DOPO, deve comunque essere conteggiato (altrimenti i suoi
+        // punti andrebbero persi per sempre).
+        var ufficialeIl = m.completata_il || matchDate || null;
+        if (ufficialeIl) {
+          var uffDay = String(ufficialeIl).substring(0, 10);
           var r1 = p1.stats_reset_at ? String(p1.stats_reset_at).substring(0, 10) : null;
           var r2 = p2.stats_reset_at ? String(p2.stats_reset_at).substring(0, 10) : null;
-          if (r1 && matchDay < r1) return;
-          if (r2 && matchDay < r2) return;
+          if (r1 && uffDay < r1) return;
+          if (r2 && uffDay < r2) return;
         }
         // ────────────────────────────────────────────────────────────────
 

@@ -778,10 +778,16 @@
         await refreshIscrizioni();
       };
 
-      // Auto-valida i match scaduti (>24h) PRIMA del render. Se ne valida almeno
-      // uno, ricarica i dati freschi (classifica aggiornata) da Supabase.
-      try { if (await autoValidaScaduti()) await refreshAll(); }
+      // 1) Auto-valida i match scaduti (>24h): in_attesa → completata.
+      try { await autoValidaScaduti(); }
       catch (e) { console.error('[home] autoValidaScaduti', e); }
+      // 2) Riallinea la classifica ai match completati (idempotente). Sana gli
+      //    standings rimasti indietro, es. match validati con la vecchia logica.
+      try { await SM._recompute(torneoId, SM.getPlayers(torneoId), SM.getMatches(torneoId)); }
+      catch (e) { console.error('[home] recompute heal', e); }
+      // 3) Ricarica i dati freschi e ri-rendera tutto.
+      try { await refreshAll(); }
+      catch (e) { console.error('[home] refreshAll', e); }
 
       // Render iniziale — ogni blocco isolato: un errore in uno non deve
       // impedire il rendering degli altri (es. grafico settimanale e iscrizioni).
