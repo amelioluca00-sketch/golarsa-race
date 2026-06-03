@@ -1090,6 +1090,21 @@
       var matches   = data.matches;
       var standings = data.standings;
 
+      // Riallinea la classifica ai match completati con la formula punti corrente
+      // (idempotente: riparte da punti_base e riapplica tutti i match). Garantisce
+      // che la classifica rifletta la regola punti aggiornata anche senza che
+      // l'admin apra la dashboard. Se fallisce, si usano gli standings già salvati.
+      try {
+        await SM._recompute(torneoId, players, matches);
+        var fresh = SM.getTournamentData(torneoId);
+        if (fresh) {
+          data      = fresh;
+          players   = fresh.players   || players;
+          matches   = fresh.matches   || matches;
+          standings = fresh.standings || standings;
+        }
+      } catch (e) { console.error('[homeUser] recompute heal', e); }
+
       var approvedIds = new Set(players.filter(function (p) { return p.stato === 'approvato'; }).map(function (p) { return p.id; }));
       var visibleStandings = standings.filter(function (p) { return approvedIds.has(p.id); });
 
