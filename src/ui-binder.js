@@ -1328,9 +1328,17 @@
         }
 
         function render() {
-          var aperte = matches.filter(function (m) { return m.stato === 'aperta'; })
-            .sort(function (a, b) { return (a.data || '').localeCompare(b.data || '') || ((a.ora || '').localeCompare(b.ora || '')); });
           var now = new Date();
+          var aperte = matches.filter(function (m) {
+            if (m.stato !== 'aperta') return false;
+            // Nascondi la proposta se la data (+ ora) è già passata e nessuno è entrato
+            if (m.data) {
+              var oraStrA = m.ora || '00:00';
+              var apDt = new Date(m.data + 'T' + oraStrA);
+              if (apDt <= now) return false;
+            }
+            return true;
+          }).sort(function (a, b) { return (a.data || '').localeCompare(b.data || '') || ((a.ora || '').localeCompare(b.ora || '')); });
           var programmate = matches.filter(function (m) {
             if (m.stato !== 'programmata') return false;
             // Nascondi se data+ora del match sono già passate
