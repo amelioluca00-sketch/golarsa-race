@@ -532,23 +532,19 @@
 
         if (s1 > s2) {
           // p1 vince: bonus vittoria (100, o 70/130 col fattore di equilibrio)
-          // Bonus game: +1pt per ogni game vinto dal vincitore (s1) → riduce i pari merito
-          // Bonus dominanza: se p2 non ha vinto nessun game (s2 === 0) → +2pt per game conquistato da p1
+          // Bonus rendimento: +1pt per ogni game vinto dal vincitore (s1) → riduce i pari merito
           // Bonus resistenza: +10pt per ogni game vinto dal perdente (s2)
           p1.vittorie++; p2.sconfitte++;
           p1.punti += bonusVittoria(p1, p2);
           p1.punti += s1 * 1;
-          if (s2 === 0) p1.punti += s1 * 2;
           p2.punti += s2 * 10;
         } else if (s2 > s1) {
           // p2 vince: bonus vittoria (100, o 70/130 col fattore di equilibrio)
-          // Bonus game: +1pt per ogni game vinto dal vincitore (s2) → riduce i pari merito
-          // Bonus dominanza: se p1 non ha vinto nessun game (s1 === 0) → +2pt per game conquistato da p2
+          // Bonus rendimento: +1pt per ogni game vinto dal vincitore (s2) → riduce i pari merito
           // Bonus resistenza: +10pt per ogni game vinto dal perdente (s1)
           p2.vittorie++; p1.sconfitte++;
           p2.punti += bonusVittoria(p2, p1);
           p2.punti += s2 * 1;
-          if (s1 === 0) p2.punti += s2 * 2;
           p1.punti += s1 * 10;
         }
         // Pareggio non previsto dal regolamento, nessun punto

@@ -267,24 +267,22 @@
 
         // ── Calcolo punti guadagnati ──────────────────────────────────
         // Vittoria: +100pt fissi
-        // Bonus game: se vinci → +1pt per ogni game che hai vinto
-        // Bonus dominanza: se l'avversario non ha vinto nessun game → +2pt per game conquistato
+        // Bonus rendimento: se vinci → +1pt per ogni game che hai vinto
         // Bonus resistenza: se perdi → +10pt per ogni game che hai vinto
         var hoVinto = s1 > s2;
-        var bonusGame = hoVinto ? s1 * 1 : 0;
-        var bonusDominanza = (hoVinto && s2 === 0) ? s1 * 2 : 0;
+        var bonusRendimento = hoVinto ? s1 * 1 : 0;
         var bonusResistenza = (!hoVinto) ? s1 * 10 : 0;
-        var puntiGuadagnati = hoVinto ? (100 + bonusGame + bonusDominanza) : bonusResistenza;
+        var puntiGuadagnati = hoVinto ? (100 + bonusRendimento) : bonusResistenza;
 
         if (!SM || !torneoId) {
-            window.location.href = 'risultato_inviato/risultato_inviato.html?tu=' + s1 + '&avv=' + s2 + '&punti=' + puntiGuadagnati + '&vittoria=' + (hoVinto ? '1' : '0') + '&bonusD=' + bonusDominanza + '&bonusG=' + bonusGame;
+            window.location.href = 'risultato_inviato/risultato_inviato.html?tu=' + s1 + '&avv=' + s2 + '&punti=' + puntiGuadagnati + '&vittoria=' + (hoVinto ? '1' : '0') + '&bonusR=' + bonusRendimento;
             return;
         }
 
         // Leggi dalla cache (già caricata da DOMContentLoaded)
         var data = SM.getTournamentData(torneoId);
         if (!data) {
-            window.location.href = 'risultato_inviato/risultato_inviato.html?tu=' + s1 + '&avv=' + s2 + '&punti=' + puntiGuadagnati + '&vittoria=' + (hoVinto ? '1' : '0') + '&bonusD=' + bonusDominanza + '&bonusG=' + bonusGame;
+            window.location.href = 'risultato_inviato/risultato_inviato.html?tu=' + s1 + '&avv=' + s2 + '&punti=' + puntiGuadagnati + '&vittoria=' + (hoVinto ? '1' : '0') + '&bonusR=' + bonusRendimento;
             return;
         }
 
@@ -292,7 +290,7 @@
         var utente = userId ? data.players.find(function(p) { return p.id === userId; }) : null;
         if (!utente && data.standings.length) utente = data.standings[0];
         if (!utente) {
-            window.location.href = 'risultato_inviato/risultato_inviato.html?tu=' + s1 + '&avv=' + s2 + '&punti=' + puntiGuadagnati + '&vittoria=' + (hoVinto ? '1' : '0') + '&bonusG=' + bonusGame;
+            window.location.href = 'risultato_inviato/risultato_inviato.html?tu=' + s1 + '&avv=' + s2 + '&punti=' + puntiGuadagnati + '&vittoria=' + (hoVinto ? '1' : '0') + '&bonusR=' + bonusRendimento;
             return;
         }
 
@@ -362,8 +360,7 @@
             + '&avv='      + s2
             + '&punti='    + puntiGuadagnati
             + '&vittoria=' + (hoVinto ? '1' : '0')
-            + '&bonusD='   + bonusDominanza
-            + '&bonusG='   + bonusGame
+            + '&bonusR='   + bonusRendimento
             + '&mioNome='  + encodeURIComponent(mioNome)
             + '&avvNome='  + encodeURIComponent(avvNome2);
     }

@@ -227,15 +227,10 @@
                 <span class="text-sm text-neutral-400">Vittoria</span>
                 <span class="text-sm font-label font-semibold text-[#C5FF1A]">+100</span>
             </div>
-            <!-- Bonus game (visibile solo se ha vinto) -->
+            <!-- Bonus rendimento (visibile solo se ha vinto) -->
             <div class="flex items-center justify-between row-in" id="row-game-wrap" style="display:none;animation-delay:2.1s;">
-                <span class="text-sm text-neutral-400" id="row-game-label">Game vinti</span>
+                <span class="text-sm text-neutral-400" id="row-game-label">Bonus rendimento</span>
                 <span class="text-sm font-label font-semibold text-[#C5FF1A]" id="row-game">+0</span>
-            </div>
-            <!-- Bonus dominanza (visibile solo se vittoria senza concedere game) -->
-            <div class="flex items-center justify-between row-in" id="row-dominanza-wrap" style="display:none;animation-delay:2.15s;">
-                <span class="text-sm text-neutral-400" id="row-dominanza-label">Bonus dominanza</span>
-                <span class="text-sm font-label font-semibold text-[#C5FF1A]" id="row-dominanza">+0</span>
             </div>
             <!-- Bonus resistenza (visibile solo se ha perso) -->
             <div class="flex items-center justify-between row-in" id="row-resistenza-wrap" style="display:none;animation-delay:2s;">
@@ -265,8 +260,7 @@
     var scoreTu   = parseInt(params.get('tu'),     10);
     var scoreAvv  = parseInt(params.get('avv'),    10);
     var vittoria  = params.get('vittoria') === '1';
-    var bonusD    = parseInt(params.get('bonusD'), 10) || 0;
-    var bonusG    = parseInt(params.get('bonusG'), 10) || 0;
+    var bonusR    = parseInt(params.get('bonusR'), 10) || 0;
     var mioNome   = params.get('mioNome') || 'TU';
     var avvNome   = params.get('avvNome') || 'AVV';
     var TARGET    = parseInt(params.get('punti'),  10);
@@ -286,23 +280,14 @@
         // Vittoria: mostra riga "+100"
         var wv = document.getElementById('row-vittoria-wrap');
         if (wv) { wv.style.display = 'flex'; wv.classList.add('row-in'); }
-        // Bonus game: +1pt per ogni game vinto dal vincitore
-        if (bonusG > 0) {
+        // Bonus rendimento: +1pt per ogni game vinto dal vincitore
+        if (bonusR > 0) {
             var wg = document.getElementById('row-game-wrap');
             var gl = document.getElementById('row-game-label');
             var gv = document.getElementById('row-game');
             if (wg) { wg.style.display = 'flex'; wg.classList.add('row-in'); }
-            if (gl && !isNaN(scoreTu)) gl.textContent = 'Game vinti (' + scoreTu + ' × 1pt)';
-            if (gv) gv.textContent = '+' + bonusG;
-        }
-        // Bonus dominanza: solo se l'avversario ha 0 game
-        if (bonusD > 0) {
-            var wd = document.getElementById('row-dominanza-wrap');
-            var dl = document.getElementById('row-dominanza-label');
-            var dv = document.getElementById('row-dominanza');
-            if (wd) { wd.style.display = 'flex'; wd.classList.add('row-in'); }
-            if (dl && !isNaN(scoreTu)) dl.textContent = 'Bonus dominanza (' + scoreTu + ' × 2pt)';
-            if (dv) dv.textContent = '+' + bonusD;
+            if (gl && !isNaN(scoreTu)) gl.textContent = 'Bonus rendimento (' + scoreTu + ' × 1pt)';
+            if (gv) gv.textContent = '+' + bonusR;
         }
     } else {
         // Sconfitta: mostra bonus resistenza
