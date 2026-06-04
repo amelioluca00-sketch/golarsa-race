@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<title>Inserisci 20 Giocatori — Torneo PROVA</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+  body { font-family: monospace; background: #0a0a12; color: #e0e0e0; padding: 32px; max-width: 700px; margin: auto; }
+  h1 { color: #c5ff1a; font-size: 1.4rem; }
+  button {
+    background: linear-gradient(180deg, #D4FF52, #C5FF1A);
+    color: #161f00;
+    border: none;
+    padding: 14px 32px;
+    font-weight: 900;
+    font-size: 1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 20px;
+    letter-spacing: .05em;
+  }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+  #log { margin-top: 24px; background: #111; border: 1px solid #333; border-radius: 10px; padding: 16px; min-height: 80px; line-height: 1.8; font-size: 0.85rem; }
+  .ok  { color: #c5ff1a; }
+  .err { color: #ff6b6b; }
+  .info{ color: #aec6ff; }
+</style>
+</head>
+<body>
+
+<h1>⚽ Inserisci 20 Giocatori Fittizi — Torneo <em>prova</em></h1>
+<p style="color:#aaa;font-size:.9rem;">
+  Cerca il torneo <strong style="color:#fff">prova</strong>, poi inserisce 20 giocatori (14 italiani + 6 stranieri) con stato <strong style="color:#c5ff1a">approvato</strong>.
+</p>
+
+<button id="btn" onclick="run()">AVVIA INSERIMENTO</button>
+
+<div id="log"><span class="info">Pronto. Clicca il pulsante per iniziare.</span></div>
+
+<script>
+const SUPABASE_URL = 'https://efkavbdfzhyuixuvgtqd.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_pBMN8gWe5KDrAAPvAAIMkQ_g8GI-KzP';
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const GIOCATORI = [
+  // ── Italiani ──────────────────────────────────────────────────────
+  { nome: 'Marco',      cognome: 'Rossi',          nazionalita: 'Italia',       bandiera: '🇮🇹', telefono: '+39 340 1234001' },
+  { nome: 'Luca',       cognome: 'Ferrari',        nazionalita: 'Italia',       bandiera: '🇮🇹', telefono: '+39 340 1234002' },
+  { nome: 'Davide',     cognome: 'Conti',          nazionalita: 'Italia',       bandiera: '🇮🇹', telefono: '+39 340 1234003' },
+  { nome: 'Andrea',     cognome: 'Russo',          nazionalita: 'Italia',       bandiera: '🇮🇹', telefono: '+39 340 1234004' },
+  { nome: 'Stefano',    cognome: 'Esposito',       nazionalita: 'Italia',       bandiera: '🇮🇹', telefono: '+39 340 1234005' },
+  { nome: 'Matteo',     cognome: 'Romano',         nazionalita: 'Italia',       bandiera: '🇮🇹', telefono: '+39 340 1234006' },
+  { nome: 'Francesco',  cognome: 'Colombo',        nazionalita: 'Italia',       bandiera: '🇮🇹', telefono: '+39 340 1234007' },
+  { nome: 'Giovanni',   cognome: 'Mancini',        nazionalita: 'Italia',       bandiera: '🇮🇹', telefono: '+39 340 1234008' },
+  { nome: 'Roberto',    cognome: 'Ricci',          nazionalita: 'Italia',       bandiera: '🇮🇹', telefono: '+39 340 1234009' },
+  { nome: 'Alessandro', cognome: 'Marino',         nazionalita: 'Italia',       bandiera: '🇮🇹', telefono: '+39 340 1234010' },
+  { nome: 'Simone',     cognome: 'De Luca',        nazionalita: 'Italia',       bandiera: '🇮🇹', telefono: '+39 340 1234011' },
+  { nome: 'Paolo',      cognome: 'Gallo',          nazionalita: 'Italia',       bandiera: '🇮🇹', telefono: '+39 340 1234012' },
+  { nome: 'Nicolò',     cognome: 'Barbieri',       nazionalita: 'Italia',       bandiera: '🇮🇹', telefono: '+39 340 1234013' },
+  { nome: 'Michele',    cognome: 'Fontana',        nazionalita: 'Italia',       bandiera: '🇮🇹', telefono: '+39 340 1234014' },
+  // ── Stranieri ─────────────────────────────────────────────────────
+  { nome: 'Carlos',     cognome: 'García',         nazionalita: 'Spagna',       bandiera: '🇪🇸', telefono: '+34 612 345015' },
+  { nome: 'Thomas',     cognome: 'Müller',         nazionalita: 'Germania',     bandiera: '🇩🇪', telefono: '+49 151 234016' },
+  { nome: 'Antoine',    cognome: 'Dubois',         nazionalita: 'Francia',      bandiera: '🇫🇷', telefono: '+33 612 345017' },
+  { nome: 'James',      cognome: 'Wilson',         nazionalita: 'Regno Unito',  bandiera: '🇬🇧', telefono: '+44 712 345018' },
+  { nome: 'Pedro',      cognome: 'Santos',         nazionalita: 'Brasile',      bandiera: '🇧🇷', telefono: '+55 11 91234019' },
+  { nome: 'Alexandros', cognome: 'Papadopoulos',   nazionalita: 'Grecia',       bandiera: '🇬🇷', telefono: '+30 693 456020' },
+];
+
+function log(msg, cls = '') {
+  const el = document.getElementById('log');
+  el.innerHTML += `<div class="${cls}">${msg}</div>`;
+  el.scrollTop = el.scrollHeight;
+}
+
+async function run() {
+  const btn = document.getElementById('btn');
+  btn.disabled = true;
+  document.getElementById('log').innerHTML = '';
+
+  // 1. Trova torneo "prova"
+  log('🔍 Cerco il torneo "prova"…', 'info');
+  const { data: tornei, error: tErr } = await db
+    .from('tournaments')
+    .select('id, nome, stato')
+    .ilike('nome', 'prova');
+
+  if (tErr || !tornei || tornei.length === 0) {
+    log('❌ Torneo "prova" non trovato! ' + (tErr ? tErr.message : ''), 'err');
+    btn.disabled = false;
+    return;
+  }
+
+  const torneo = tornei[0];
+  log(`✅ Trovato: <strong>${torneo.nome}</strong> (id: ${torneo.id}, stato: ${torneo.stato})`, 'ok');
+
+  // 2. Inserisci giocatori
+  let ok = 0, fail = 0;
+  for (const g of GIOCATORI) {
+    const id = 'player_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5);
+    const email = g.nome.toLowerCase() + '.' + g.cognome.toLowerCase().replace(/\s/g,'').replace(/[àáâã]/g,'a').replace(/[èéê]/g,'e').replace(/[ìí]/g,'i').replace(/[òó]/g,'o').replace(/[ùú]/g,'u').replace(/[ü]/g,'u').replace(/[ñ]/g,'n') + '@fittizio.it';
+
+    const payload = {
+      id,
+      nome:         g.nome,
+      cognome:      g.cognome,
+      nomeCompleto: g.nome + ' ' + g.cognome,
+      email,
+      telefono:     g.telefono,
+      nazionalita:  g.nazionalita,
+      bandiera:     g.bandiera,
+      vittorie:     0,
+      pareggi:      0,
+      sconfitte:    0,
+      gol_fatti:    0,
+      gol_subiti:   0,
+      punti:        0,
+      match_giocati:0,
+      rank:         0,
+      stato:        'approvato',
+    };
+
+    const { error } = await db.from('players').insert({
+      id,
+      tournament_id: torneo.id,
+      email,
+      stato: 'approvato',
+      payload,
+    });
+
+    if (error) {
+      log(`❌ ${g.bandiera} ${g.nome} ${g.cognome} — ERRORE: ${error.message}`, 'err');
+      fail++;
+    } else {
+      log(`${g.bandiera} ${g.nome} ${g.cognome} (${g.nazionalita}) → inserito`, 'ok');
+      ok++;
+    }
+
+    // Piccola pausa per non sovraccaricare
+    await new Promise(r => setTimeout(r, 80));
+  }
+
+  // 3. Ricalcola standings
+  log('', '');
+  log('📊 Ricalcolo standings…', 'info');
+  const { data: allPlayers } = await db.from('players').select('*').eq('tournament_id', torneo.id);
+  if (allPlayers && allPlayers.length) {
+    const standings = allPlayers
+      .filter(r => r.stato === 'approvato')
+      .map(r => Object.assign({}, r.payload, { id: r.id, email: r.email, stato: r.stato }))
+      .sort((a, b) => b.punti - a.punti || b.vittorie - a.vittorie)
+      .map((p, i) => Object.assign({}, p, { rank: i + 1 }));
+
+    await db.from('tournaments').update({ standings }).eq('id', torneo.id);
+    log(`✅ Standings aggiornate con ${standings.length} giocatori approvati.`, 'ok');
+  }
+
+  log('', '');
+  log(`🎉 Fatto! <strong>${ok} inseriti</strong>, ${fail} errori.`, ok > 0 ? 'ok' : 'err');
+  btn.disabled = false;
+}
+</script>
+</body>
+</html>
