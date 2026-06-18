@@ -233,7 +233,7 @@
 <input id="inp-email" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#c5ff1a]/60 focus:border-[#c5ff1a] outline-none transition-all placeholder:text-white/40 input-glow" placeholder="nome@esempio.com" type="email" required/>
 </div>
 <!-- TELEFONO + NAZIONALITÀ + COACH (collassabili) -->
-<div id="fieldsExtra" class="form-collapsible space-y-5" style="max-height: 400px; opacity: 1;">
+<div id="fieldsExtra" class="form-collapsible space-y-5" style="max-height: 720px; opacity: 1;">
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 <!-- Telefono -->
 <div class="space-y-1.5">
@@ -443,6 +443,22 @@
 </select>
 <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-white/60 pointer-events-none text-lg" style="">expand_more</span>
 </div>
+</div>
+</div>
+<!-- Livello / Gruppo -->
+<div class="space-y-1.5">
+<label class="block font-label text-[10px] uppercase tracking-[0.2em] text-white/80 font-bold ml-1">LIVELLO</label>
+<div class="relative">
+<select id="inp-gruppo" class="w-full bg-white/5 border border-white/20 rounded-2xl py-3.5 px-4 text-sm text-white focus:ring-2 focus:ring-[#c5ff1a]/60 focus:border-[#c5ff1a] outline-none appearance-none transition-all cursor-pointer" style="-webkit-appearance:none;-moz-appearance:none;appearance:none;" required>
+<option value="" disabled selected class="bg-[#1c1c1c]">Seleziona il tuo livello</option>
+<option value="A" class="bg-[#1c1c1c]">Gruppo A — Avanzato</option>
+<option value="B" class="bg-[#1c1c1c]">Gruppo B — Principiante</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-white/60 pointer-events-none text-lg">expand_more</span>
+</div>
+<div class="rounded-xl px-3.5 py-3 mt-1 space-y-1.5" style="background:rgba(197,255,26,0.06);border:1px solid rgba(197,255,26,0.22);">
+<p class="text-[11px] leading-relaxed text-white/70"><span class="font-bold text-[#C5FF1A]">GRUPPO A · AVANZATO</span> — per chi già compete, ha dimestichezza con le partite o ha già giocato tornei.</p>
+<p class="text-[11px] leading-relaxed text-white/70"><span class="font-bold text-[#C5FF1A]">GRUPPO B · PRINCIPIANTE</span> — per principianti che si sono appena approcciati al match.</p>
 </div>
 </div>
 </div>
@@ -734,6 +750,15 @@
                 const bandiera = nazTesto.split(' ')[0] || '';
                 const nazionalita = nazTesto.split(' ').slice(1).join(' ') || nazTesto;
 
+                const gruppoSel = document.getElementById('inp-gruppo');
+                const gruppo = gruppoSel ? gruppoSel.value : '';
+                if (gruppo !== 'A' && gruppo !== 'B') {
+                    showLoginError('Seleziona il tuo livello (Gruppo A o Gruppo B).');
+                    submitBtn.disabled = false;
+                    submitBtn.style.opacity = '';
+                    return;
+                }
+
                 const playerData = {
                     nome:         nome,
                     cognome:      cognome,
@@ -742,6 +767,7 @@
                     telefono:     document.getElementById('inp-tel').value.trim(),
                     nazionalita:  nazionalita,
                     bandiera:     bandiera,
+                    gruppo:       gruppo,
                 };
 
                 const player = await SM.registerPlayer(torneoId, playerData);
@@ -774,7 +800,7 @@
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="../../src/storage-manager.js?v=16"></script>
+<script src="../../src/storage-manager.js?v=24"></script>
 
 <script src="../../src/animations.js"></script>
 </body></html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>TEMP · Assegna gruppi (random)</title>
+<style>
+  body { font-family: -apple-system, system-ui, sans-serif; background:#0b0b15; color:#e5e2e1; margin:0; padding:24px; }
+  .card { max-width:680px; margin:0 auto; background:#16161f; border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:24px; }
+  h1 { font-size:18px; margin:0 0 4px; }
+  p.sub { color:#9a9aa5; font-size:13px; margin:0 0 18px; }
+  .warn { background:rgba(255,180,0,0.08); border:1px solid rgba(255,180,0,0.3); border-radius:10px; padding:10px 12px; font-size:12px; color:#ffd98a; margin-bottom:18px; }
+  button { background:linear-gradient(180deg,#D4FF52,#C5FF1A); color:#161f00; font-weight:800; border:0; border-radius:12px; padding:13px 18px; font-size:14px; cursor:pointer; }
+  button:disabled { opacity:0.5; cursor:default; }
+  #log { margin-top:18px; background:#0b0b12; border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:12px; font-family:ui-monospace,Menlo,monospace; font-size:12px; white-space:pre-wrap; line-height:1.5; min-height:60px; }
+  .ok { color:#C5FF1A; } .err { color:#ff8a8a; } .dim { color:#8a8a95; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Assegna gruppi · split random A/B</h1>
+  <p class="sub">Strumento temporaneo di anteprima. Assegna ~50/50 i giocatori di OGNI torneo esistente al Gruppo&nbsp;A o&nbsp;B.</p>
+  <div class="warn">⚠️ Operazione una-tantum, non fa parte della logica dell'app. Puoi rilanciarla per rimescolare. Dopo, apri la home per vedere il risultato.</div>
+  <button id="btnRun">Assegna gruppi random</button>
+  <div id="log"><span class="dim">Pronto.</span></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+  var SUPABASE_URL = 'https://efkavbdfzhyuixuvgtqd.supabase.co';
+  var SUPABASE_KEY = 'sb_publishable_pBMN8gWe5KDrAAPvAAIMkQ_g8GI-KzP';
+  var db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  var logEl = document.getElementById('log');
+  function log(msg, cls) {
+    var span = document.createElement('span');
+    if (cls) span.className = cls;
+    span.textContent = msg + '\n';
+    logEl.appendChild(span);
+  }
+  function clearLog() { logEl.innerHTML = ''; }
+
+  function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+
+  async function run() {
+    clearLog();
+    var btn = document.getElementById('btnRun');
+    btn.disabled = true;
+    try {
+      var tRes = await db.from('tournaments').select('id, nome, standings');
+      if (tRes.error) throw tRes.error;
+      var tornei = tRes.data || [];
+      if (!tornei.length) { log('Nessun torneo trovato.', 'err'); btn.disabled = false; return; }
+      log('Tornei trovati: ' + tornei.length, 'dim');
+
+      for (var t = 0; t < tornei.length; t++) {
+        var torneo = tornei[t];
+        log('\n— ' + (torneo.nome || torneo.id) + ' —');
+
+        var pRes = await db.from('players').select('id, payload').eq('tournament_id', torneo.id);
+        if (pRes.error) { log('  Errore lettura giocatori: ' + pRes.error.message, 'err'); continue; }
+        var players = pRes.data || [];
+        if (!players.length) { log('  Nessun giocatore.', 'dim'); continue; }
+
+        // Shuffle + assegnazione alternata → split esatto ~50/50
+        var ids = players.map(function (p) { return p.id; });
+        shuffle(ids);
+        var groupById = {};
+        ids.forEach(function (id, i) { groupById[id] = (i % 2 === 0) ? 'A' : 'B'; });
+
+        // Aggiorna ogni payload giocatore con il gruppo
+        var nA = 0, nB = 0;
+        for (var i = 0; i < players.length; i++) {
+          var p = players[i];
+          var g = groupById[p.id];
+          if (g === 'A') nA++; else nB++;
+          var newPayload = Object.assign({}, p.payload || {}, { gruppo: g });
+          var uRes = await db.from('players').update({ payload: newPayload }).eq('id', p.id);
+          if (uRes.error) log('  ! update ' + p.id + ': ' + uRes.error.message, 'err');
+        }
+
+        // Aggiorna anche gli standings salvati del torneo (fallback se il recompute non gira)
+        if (Array.isArray(torneo.standings) && torneo.standings.length) {
+          var newStandings = torneo.standings.map(function (s) {
+            if (s && s.id && groupById[s.id]) return Object.assign({}, s, { gruppo: groupById[s.id] });
+            return s;
+          });
+          var sRes = await db.from('tournaments').update({ standings: newStandings }).eq('id', torneo.id);
+          if (sRes.error) log('  ! update standings: ' + sRes.error.message, 'err');
+        }
+
+        log('  Fatto: Gruppo A = ' + nA + ', Gruppo B = ' + nB, 'ok');
+      }
+
+      log('\n✓ Completato. Apri la home per vedere le due classifiche.', 'ok');
+    } catch (e) {
+      log('Errore: ' + (e.message || e), 'err');
+    }
+    btn.disabled = false;
+  }
+
+  document.getElementById('btnRun').addEventListener('click', run);
+</script>
+</body>
+</html>

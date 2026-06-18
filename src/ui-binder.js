@@ -69,6 +69,19 @@
     return FLAG_MAP[nazionalita] || flagEmojiToCode(bandiera) || 'it';
   }
 
+  /** Gruppo (livello) del giocatore: 'A' (avanzato) o 'B' (principiante). Default 'A'. */
+  function playerGroupOf(p) {
+    var g = (p && p.gruppo ? String(p.gruppo).toUpperCase() : 'A');
+    return g === 'B' ? 'B' : 'A';
+  }
+  /** Posizione del giocatore nella classifica del SUO gruppo (indipendente, riparte da 1). */
+  function groupRankOf(standings, p) {
+    var g = playerGroupOf(p);
+    var filtered = (standings || []).filter(function (s) { return playerGroupOf(s) === g; });
+    var idx = filtered.findIndex(function (s) { return s.id === p.id; });
+    return idx >= 0 ? idx + 1 : 1;
+  }
+
   /** Neutralizza caratteri HTML pericolosi per prevenire XSS. */
   function esc(s) {
     if (s == null) return '';
@@ -1171,17 +1184,25 @@
       if (emptyMsg) emptyMsg.remove();
       if (!container) return;
 
+      // Classifiche separate per gruppo (A = avanzato, B = principiante).
+      // Ogni gruppo ha la sua classifica indipendente che riparte da #1.
+      function playerGroup(p) { var g = (p && p.gruppo ? String(p.gruppo).toUpperCase() : 'A'); return g === 'B' ? 'B' : 'A'; }
+
+      window._renderLeaderboardGroup = function (groupLetter) {
+      var grp = groupLetter === 'B' ? 'B' : 'A';
+      var visibleStandings = (window._demoStandings || []).filter(function (p) { return playerGroup(p) === grp; });
       container.innerHTML = '';
       if (!visibleStandings.length) {
-        container.innerHTML = '<p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-12">Nessun giocatore disponibile</p>';
+        container.innerHTML = '<p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-12">Nessun giocatore nel Gruppo ' + grp + '</p>';
+        return;
       } else {
         // ── Trend ranking: due snapshot per mantenere i triangoli tra un aggiornamento e l'altro ──
         //   gr_current_ranks_X → posizioni dell'ultimo aggiornamento reale della classifica
         //   gr_prev_ranks_X    → posizioni prima di quell'aggiornamento
         //   I triangoli vengono aggiornati solo quando i dati live differiscono da current;
         //   finché non c'è un nuovo cambio i triangoli restano visibili.
-        var currentRanksKey = 'gr_current_ranks_' + torneoId;
-        var prevRanksKey    = 'gr_prev_ranks_'    + torneoId;
+        var currentRanksKey = 'gr_current_ranks_' + torneoId + '_' + grp;
+        var prevRanksKey    = 'gr_prev_ranks_'    + torneoId + '_' + grp;
         var currentRanks = {};
         var prevRanks    = {};
         try { currentRanks = JSON.parse(localStorage.getItem(currentRanksKey) || '{}'); } catch (e) {}
@@ -1258,6 +1279,9 @@
 
         // (il salvataggio degli snapshot avviene già sopra, solo se la classifica è cambiata)
       }
+      };
+      // Render iniziale: Gruppo A (switchTab(0) lo richiamerà comunque al boot)
+      window._renderLeaderboardGroup('A');
 
       // ── Popola "Ultimi Match" ──
       (function () {
@@ -1801,7 +1825,7 @@
     setN(prefix + 'lastname',      (p.cognome || '').toUpperCase());
     setN(prefix + 'punti',         p.punti + ' PUNTI');
     setN(prefix + 'rank',          '#' + rank);
-    setN(prefix + 'gruppo',        (p.nazionalita || '').toUpperCase());
+    setN(prefix + 'gruppo',        'GRUPPO ' + playerGroupOf(p));
     // ── Info giocatore (nuovi campi) ─────────────────────────────────
     setN(prefix + 'info-anni',      p.eta       ? p.eta       + ' ANNI' : '—');
     setN(prefix + 'info-peso',      p.peso      ? p.peso      + ' KG'   : '—');
@@ -1887,7 +1911,7 @@
       var urlId = new URLSearchParams(window.location.search).get('id');
       var p = urlId ? data.players.find(function (x) { return x.id === urlId; }) : data.players[0];
       if (!p) return;
-      var rank = data.standings.findIndex(function (x) { return x.id === p.id; }) + 1 || 1;
+      var rank = groupRankOf(data.standings, p);
       fillProfile(p, rank, 'pp-', data);
 
       // Imposta il link WhatsApp sul bottone sfida
@@ -1906,7 +1930,7 @@
       var p = userId ? data.players.find(function (x) { return x.id === userId; }) : null;
       if (!p && data.standings.length) p = data.standings[0];
       if (!p) return;
-      var rank = data.standings.findIndex(function (x) { return x.id === p.id; }) + 1 || 1;
+      var rank = groupRankOf(data.standings, p);
       fillProfile(p, rank, 'up-', data);
 
       // ── Logica MODIFICA / SALVA info giocatore ───────────────────────

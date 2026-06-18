@@ -35,7 +35,10 @@
   }
 
   // Campi profilo impostati dall'utente — non devono mai essere sovrascritti da _recompute o savePlayers
-  var PROFILE_FIELDS = ['eta', 'peso', 'altezza', 'mano', 'superficie', 'rovescio', 'disponibilita'];
+  var PROFILE_FIELDS = ['eta', 'peso', 'altezza', 'mano', 'superficie', 'rovescio', 'disponibilita', 'gruppo'];
+  // Campi ereditati da iscrizioni precedenti (stesso utente per email). NB: 'gruppo' è escluso:
+  // il livello viene scelto esplicitamente ad ogni iscrizione e deve vincere sulla scelta passata.
+  var INHERITED_FIELDS = ['eta', 'peso', 'altezza', 'mano', 'superficie', 'rovescio', 'disponibilita'];
 
   var SM = {
 
@@ -431,11 +434,11 @@
         if (prevRes.data && prevRes.data.length > 0) {
           for (var pi = 0; pi < prevRes.data.length; pi++) {
             var prevPayload = prevRes.data[pi].payload || {};
-            var hasProfile = PROFILE_FIELDS.some(function (f) {
+            var hasProfile = INHERITED_FIELDS.some(function (f) {
               return prevPayload[f] !== undefined && prevPayload[f] !== null && prevPayload[f] !== '';
             });
             if (hasProfile) {
-              PROFILE_FIELDS.forEach(function (field) {
+              INHERITED_FIELDS.forEach(function (field) {
                 if (prevPayload[field] !== undefined && prevPayload[field] !== null && prevPayload[field] !== '') {
                   inheritedProfile[field] = prevPayload[field];
                 }

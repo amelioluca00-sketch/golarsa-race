@@ -374,13 +374,13 @@
 <section class="px-4 mt-7 max-w-5xl mx-auto">
 <div class="flex flex-col gap-2 mb-6 px-2 gr-rise gr-d1 gr-visible">
 <span class="block text-[#C5FF1A] font-label font-bold tracking-[0.2em] uppercase text-[10px]">SCALA IL RANKING</span>
-<h2 class="text-2xl font-headline font-black italic text-white uppercase leading-none">CLASSIFICA GENERALE<br>&amp; SFIDE</h2>
+<h2 class="text-2xl font-headline font-black italic text-white uppercase leading-none">CLASSIFICHE<br>&amp; SFIDE</h2>
 </div>
 <div id="tab-container" class="p-1 rounded-full flex items-center w-full overflow-hidden mb-4 border border-white/5 relative gr-rise gr-d2 gr-visible" style="background: linear-gradient(180deg, #272733 0%, #12121c 100%); box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.15), 0 15px 35px -12px rgba(0, 0, 0, 0.7);">
 <div id="tab-indicator" class="absolute rounded-full bg-[#C5FF1A] pointer-events-none" style="top: 4px; height: calc(100% - 8px); left: 4px; width: 50%; transition: left 0.35s cubic-bezier(0.4,0,0.2,1), width 0.35s cubic-bezier(0.4,0,0.2,1);"></div>
-<button onclick="switchTab(0)" class="tab-btn flex-1 py-3 relative z-10 font-headline font-bold italic uppercase text-[9px] tracking-wider transition-colors duration-300 active:scale-95 whitespace-nowrap text-[#1e230f]">GLOBAL RACE</button>
-<button onclick="switchTab(1)" class="tab-btn flex-1 py-3 relative z-10 font-headline font-bold italic uppercase text-[9px] tracking-wider transition-colors duration-300 active:scale-95 whitespace-nowrap text-white">ULTIMI MATCH</button>
-<button onclick="switchTab(2)" class="tab-btn flex-1 py-3 relative z-10 font-headline font-bold italic uppercase text-[9px] tracking-wider transition-colors duration-300 active:scale-95 whitespace-nowrap text-white">SFIDE APERTE</button>
+<button onclick="switchTab(0)" class="tab-btn flex-1 py-3 relative z-10 font-headline font-bold italic uppercase text-[9px] tracking-wider transition-colors duration-300 active:scale-95 whitespace-nowrap text-[#1e230f]">GRUPPO A</button>
+<button onclick="switchTab(1)" class="tab-btn flex-1 py-3 relative z-10 font-headline font-bold italic uppercase text-[9px] tracking-wider transition-colors duration-300 active:scale-95 whitespace-nowrap text-white">GRUPPO B</button>
+<button onclick="switchTab(2)" class="tab-btn flex-1 py-3 relative z-10 font-headline font-bold italic uppercase text-[9px] tracking-wider transition-colors duration-300 active:scale-95 whitespace-nowrap text-white">SFIDE</button>
 </div>
 <script>
 (function() {
@@ -399,45 +399,21 @@
     buttons.forEach(function(btn, i) {
       btn.style.color = i === index ? '#1e230f' : '#ffffff';
     });
-    // --- Toggle leaderboard / ultimi match / sfide aperte ---
+    // --- Toggle classifica per gruppo (A/B) / sfide ---
     var leaderboardHeader = document.getElementById('leaderboard-header');
     var leaderboardContainer = document.getElementById('leaderboard-container');
-    var ultimiMatchContainer = document.getElementById('ultimi-match-container');
     var sfideContainer = document.getElementById('sfide-aperte-container');
     if (sfideContainer) sfideContainer.style.display = index === 2 ? '' : 'none';
-    if (index === 0) {
+    if (index === 0 || index === 1) {
+      // GRUPPO A (0) / GRUPPO B (1) → classifica del gruppo selezionato
       if (leaderboardHeader) leaderboardHeader.style.display = '';
       if (leaderboardContainer) leaderboardContainer.style.display = '';
-      if (ultimiMatchContainer) ultimiMatchContainer.style.display = 'none';
-    } else if (index === 1) {
-      if (leaderboardHeader) leaderboardHeader.style.display = 'none';
-      if (leaderboardContainer) leaderboardContainer.style.display = 'none';
-      if (ultimiMatchContainer) {
-        ultimiMatchContainer.style.display = '';
-        // Animazione laterale (identica al ranking) — solo la prima volta
-        if (!ultimiMatchContainer.dataset.animDone) {
-          ultimiMatchContainer.dataset.animDone = '1';
-          var matchCards = Array.prototype.slice.call(ultimiMatchContainer.querySelectorAll('.premium-card'));
-          matchCards.forEach(function(card) {
-            card.classList.remove('gr-visible','gr-rise','gr-slide');
-            ['gr-d1','gr-d2','gr-d3','gr-d4','gr-d5','gr-d6','gr-d7','gr-d8'].forEach(function(d) { card.classList.remove(d); });
-            card.classList.add('gr-slide');
-          });
-          matchCards.forEach(function(card, i) {
-            if (i + 1 <= 8) card.classList.add('gr-d' + (i + 1));
-          });
-          requestAnimationFrame(function() {
-            requestAnimationFrame(function() {
-              matchCards.forEach(function(card) { card.classList.add('gr-visible'); });
-            });
-          });
-        }
-      }
+      var gruppo = index === 0 ? 'A' : 'B';
+      if (typeof window._renderLeaderboardGroup === 'function') window._renderLeaderboardGroup(gruppo);
     } else {
-      // index === 2 → Sfide aperte
+      // index === 2 → SFIDE (apri sfida, sfide aperte, match in programma, ultimi match)
       if (leaderboardHeader) leaderboardHeader.style.display = 'none';
       if (leaderboardContainer) leaderboardContainer.style.display = 'none';
-      if (ultimiMatchContainer) ultimiMatchContainer.style.display = 'none';
       // Ricarica le sfide dal DB così si vedono quelle aperte da altri giocatori
       if (typeof window._refreshSfide === 'function') window._refreshSfide();
     }
@@ -459,9 +435,6 @@
 <div id="leaderboard-container">
   <p id="empty-leaderboard" class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-8">Nessun giocatore disponibile</p>
 </div>
-<div id="ultimi-match-container" style="display:none;" class="space-y-3 pb-4">
-  <p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-8">Nessun match disponibile</p>
-</div>
 <div id="sfide-aperte-container" style="display:none;" class="pb-4">
   <!-- CTA Apri una sfida -->
   <button id="btnApriSfida" onclick="if(window._openSfidaSheet)window._openSfidaSheet()" class="flex items-center justify-center gap-2 w-full bg-gradient-to-b from-[#D4FF52] to-[#C5FF1A] text-[#161f00] font-headline font-black italic uppercase text-base py-4 rounded-2xl border-t border-white/40 shadow-lg hover:brightness-110 transition-all active:scale-[0.98] mb-5">
@@ -477,6 +450,11 @@
   <p class="text-white font-headline font-black italic uppercase text-sm text-center mb-3 mt-8">Match in programma</p>
   <div id="sfide-prog-list" class="space-y-2.5">
     <p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-6">Nessun match in programma</p>
+  </div>
+  <!-- Ultimi match giocati -->
+  <p class="text-white font-headline font-black italic uppercase text-sm text-center mb-3 mt-8">Ultimi match giocati</p>
+  <div id="ultimi-match-container" class="space-y-3 pb-2">
+    <p class="font-label text-[0.7rem] text-gray-600 uppercase tracking-widest text-center py-6">Nessun match disponibile</p>
   </div>
 </div>
 </section>
@@ -1604,6 +1582,20 @@
     }));
   }
 
+  // ── Gruppo (livello) del giocatore: 'A' avanzato / 'B' principiante (default A) ──
+  function _playerGroup(p) {
+    var g = (p && p.gruppo ? String(p.gruppo).toUpperCase() : 'A');
+    return g === 'B' ? 'B' : 'A';
+  }
+  // ── Posizione nella classifica del proprio gruppo (indipendente, riparte da 1) ──
+  function _groupRank(p) {
+    var st = window._demoStandings || [];
+    var g = _playerGroup(p);
+    var filtered = st.filter(function (s) { return _playerGroup(s) === g; });
+    var idx = filtered.findIndex(function (s) { return s.id === p.id; });
+    return idx >= 0 ? idx + 1 : 1;
+  }
+
   // ── Profilo utente → sheet ──
   function _fillProfileSheet(p, rank) {
     // Salva riferimento al giocatore corrente per l'edit
@@ -1614,7 +1606,7 @@
     document.getElementById('myNaz').textContent = (p.nome || '').trim();
     document.getElementById('myPuntiHeader').textContent = p.punti + ' PUNTI';
     document.getElementById('myRank').textContent = '#' + rank;
-    document.getElementById('myGruppoLabel').textContent = (p.nazionalita || '').toUpperCase();
+    document.getElementById('myGruppoLabel').textContent = 'GRUPPO ' + _playerGroup(p);
     document.getElementById('myStatVittorie').textContent = p.vittorie;
     document.getElementById('myStatMatch').textContent = p.match_giocati;
     document.getElementById('myStatSconfitte').textContent = p.sconfitte;
@@ -1681,7 +1673,7 @@
     let p = userId ? standings.find(s => s.id === userId) : null;
     if (!p) p = standings[0];
     if (!p) return;
-    const rank = standings.findIndex(s => s.id === p.id) + 1 || 1;
+    const rank = _groupRank(p);
     _fillProfileSheet(p, rank);
   });
 
@@ -1973,7 +1965,7 @@
     document.getElementById('playerNaz').textContent = (p.nome || '').trim();
     document.getElementById('playerPuntiHeader').textContent = p.punti + ' PUNTI';
     document.getElementById('playerRank').textContent = '#' + rank;
-    document.getElementById('playerGruppoLabel').textContent = (p.nazionalita || '').toUpperCase();
+    document.getElementById('playerGruppoLabel').textContent = 'GRUPPO ' + _playerGroup(p);
     document.getElementById('playerStatVittorie').textContent = p.vittorie;
     document.getElementById('playerStatMatch').textContent = p.match_giocati;
     document.getElementById('playerStatSconfitte').textContent = p.sconfitte;
@@ -2024,8 +2016,8 @@
 </script>
 <script src="../../src/session-shim.js?v=1"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script src="../../src/storage-manager.js?v=21"></script>
-<script src="../../src/ui-binder.js?v=23"></script>
+<script src="../../src/storage-manager.js?v=24"></script>
+<script src="../../src/ui-binder.js?v=24"></script>
 <script src="../../src/main.js?v=18"></script>
 
 <script>
