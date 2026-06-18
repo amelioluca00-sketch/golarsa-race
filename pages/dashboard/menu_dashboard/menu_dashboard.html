@@ -349,11 +349,14 @@
             <h3 style="margin-top:0;">Durata</h3>
             <p>GOLARSA RACE è un torneo individuale di tennis a formula libera. La competizione si svolge dal <strong id="reg-data-inizio">[DATA_INIZIO]</strong> al <strong id="reg-data-fine">[DATA_FINE]</strong>.</p>
 
+            <h3>Livelli — Gruppo A e Gruppo B</h3>
+            <p>Il torneo è diviso in due livelli con <strong>classifiche indipendenti</strong>: <strong>Gruppo A</strong> (avanzato), per chi già compete e ha dimestichezza con partite e tornei, e <strong>Gruppo B</strong> (principiante), per chi si è appena approcciato al match. Ogni giocatore sceglie il proprio gruppo in fase di iscrizione e gareggia esclusivamente nella classifica del proprio livello.</p>
+
             <h3>Fase 1 — Campionato</h3>
-            <p>Per tutta la durata del torneo ogni giocatore può sfidare qualsiasi altro partecipante, previo accordo reciproco tra i due. Le sfide avvengono liberamente, senza un calendario prestabilito. È vietato disputare più di un match contro lo stesso avversario nella stessa settimana solare (lunedì–domenica). La classifica è aggiornata in tempo reale: al termine della fase regolare i <strong>4 giocatori</strong> con il punteggio più alto accedono ai playoff.</p>
+            <p>Per tutta la durata del torneo ogni giocatore può sfidare qualsiasi altro partecipante, previo accordo reciproco tra i due. Le sfide avvengono liberamente, senza un calendario prestabilito. È vietato disputare più di un match contro lo stesso avversario nella stessa settimana solare (lunedì–domenica). Ogni gruppo ha la propria classifica, aggiornata in tempo reale: al termine della fase regolare i <strong>migliori 4 di ogni gruppo</strong> (top 4 del Gruppo A e top 4 del Gruppo B) accedono ai playoff.</p>
 
             <h3>Fase 2 — Semifinali e Finale</h3>
-            <p style="margin-bottom:0;">Semifinale 1: 1° vs 4° classificato. Semifinale 2: 2° vs 3° classificato. I vincitori si affrontano in finale. Il formato dei match di playoff è identico a quello della fase regolare.</p>
+            <p style="margin-bottom:0;">I playoff si disputano <strong>separatamente per ciascun gruppo</strong>. In ogni gruppo — Semifinale 1: 1° vs 4° classificato; Semifinale 2: 2° vs 3° classificato; i due vincitori si affrontano nella finale di gruppo. Al termine vengono incoronati <strong>due campioni</strong>: il vincitore del Gruppo A e il vincitore del Gruppo B. Il formato dei match di playoff è identico a quello della fase regolare.</p>
           </div>
 
           <!-- ══ MACRO 2: REGOLAMENTO E SISTEMA PUNTI ══ -->
@@ -622,7 +625,7 @@
       btn.innerHTML = '<span class="material-symbols-outlined text-sm">edit</span>Modifica';
       editStates[section] = false;
 
-      localStorage.setItem('gr_content_v3_' + section, prose.innerHTML);
+      localStorage.setItem((section === 'regolamento' ? 'gr_content_v4_' : 'gr_content_v3_') + section, prose.innerHTML);
 
       const toast = document.getElementById('toast');
       toast.classList.add('show');
@@ -633,7 +636,7 @@
     async function initPage() {
       // Ripristina contenuti regolamento/termini/privacy da localStorage
       ['regolamento', 'termini', 'privacy'].forEach(function(s) {
-        const saved = localStorage.getItem('gr_content_v3_' + s);
+        const saved = localStorage.getItem((s === 'regolamento' ? 'gr_content_v4_' : 'gr_content_v3_') + s);
         if (saved) document.getElementById('prose-' + s).innerHTML = saved;
       });
 
@@ -680,7 +683,7 @@
 
         // Se il regolamento è quello di default (non custom), aggiorna le date nel testo salvato
         // così che la prossima apertura mostri sempre le date corrette
-        localStorage.setItem('gr_content_v3_regolamento', document.getElementById('prose-regolamento').innerHTML);
+        localStorage.setItem('gr_content_v4_regolamento', document.getElementById('prose-regolamento').innerHTML);
 
       } catch (err) {
         console.warn('[menu_dashboard] Errore caricamento torneo:', err);
@@ -732,7 +735,7 @@
 
       // Aggiorna le date nel regolamento e persisti il contenuto aggiornato
       injectDatesIntoRegolamento();
-      localStorage.setItem('gr_content_v3_regolamento', document.getElementById('prose-regolamento').innerHTML);
+      localStorage.setItem('gr_content_v4_regolamento', document.getElementById('prose-regolamento').innerHTML);
 
       // Toast
       const toast = document.getElementById('toast');
